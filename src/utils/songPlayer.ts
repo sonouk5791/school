@@ -212,19 +212,28 @@ export const SONG_MELODIES: Record<string, { tempo: number; notes: Note[] }> = {
 
 class SongPlayer {
   private ctx: AudioContext | null = null;
+  private masterGain: GainNode | null = null;
+  private activeOscillators: OscillatorNode[] = [];
   private isPlaying: boolean = false;
   private currentSongId: string | null = null;
   private scheduledTimeouts: number[] = [];
 
   private initCtx() {
     if (!this.ctx) {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioCtx) {
         this.ctx = new AudioCtx();
       }
     }
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume();
+    }
+    if (this.ctx && !this.masterGain) {
+      this.masterGain = this.ctx.createGain();
+      this.masterGain.gain.setValueAtTime(1, this.ctx.currentTime);
+      this.masterGain.connect(this.ctx.destination);
     }
   }
 
@@ -235,9 +244,10 @@ class SongPlayer {
   ) {
     this.stop();
     this.initCtx();
-    if (!this.ctx) return;
+    if (!this.ctx || !this.masterGain) return;
 
-    const melodyData = SONG_MELODIES[songId] || SONG_MELODIES['rhyme-1'] || SONG_MELODIES['song-1'];
+    const melodyData =
+      SONG_MELODIES[songId] || SONG_MELODIES['rhyme-1'] || SONG_MELODIES['song-1'];
     this.isPlaying = true;
     this.currentSongId = songId;
 
@@ -270,8 +280,7 @@ class SongPlayer {
 
     const endTimerId = window.setTimeout(() => {
       if (this.isPlaying) {
-        this.isPlaying = false;
-        this.currentSongId = null;
+        this.stop();
         if (onEnded) onEnded();
       }
     }, (accumulatedTime + 0.5) * 1000);
@@ -282,7 +291,7 @@ class SongPlayer {
    * 따뜻하고 포근한 아날로그 오르간/피아노 리드 멜로디 음향
    */
   private scheduleWarmTone(freq: number, startTime: number, duration: number) {
-    if (!this.ctx) return;
+    if (!this.ctx || !this.masterGain) return;
 
     try {
       // 1. 기본음 (온화한 사인파)
@@ -307,16 +316,18 @@ class SongPlayer {
       gain2.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
 
       osc1.connect(gain1);
-      gain1.connect(this.ctx.destination);
+      gain1.connect(this.masterGain);
 
       osc2.connect(gain2);
-      gain2.connect(this.ctx.destination);
+      gain2.connect(this.masterGain);
 
       osc1.start(startTime);
       osc1.stop(startTime + duration);
 
       osc2.start(startTime);
       osc2.stop(startTime + duration);
+
+      this.activeOscillators.push(osc1, osc2);
     } catch {
       // Ignore
     }
@@ -326,7 +337,7 @@ class SongPlayer {
    * 부드러운 배경 반주 화음 (하모니 패드)
    */
   private scheduleSoftChord(freqs: number[], startTime: number, duration: number) {
-    if (!this.ctx) return;
+    if (!this.ctx || !this.masterGain) return;
 
     try {
       freqs.forEach((freq) => {
@@ -340,21 +351,61 @@ class SongPlayer {
         gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
 
         osc.connect(gain);
-        gain.connect(this.ctx!.destination);
+        gain.connect(this.masterGain!);
 
         osc.start(startTime);
         osc.stop(startTime + duration);
+
+        this.activeOscillators.push(osc);
       });
     } catch {
       // Ignore
     }
   }
 
+  /**
+   * 동요/음악 완전 즉시 중지 (하드웨어 오디오 노드 및 타이머 전면 소거)
+   */
   public stop() {
     this.isPlaying = false;
     this.currentSongId = null;
+
+    // 1. 예약된 모든 UI 타이머 즉시 취소
     this.scheduledTimeouts.forEach((id) => clearTimeout(id));
     this.scheduledTimeouts = [];
+
+    // 2. 마스터 볼륨 즉시 0으로 차단 및 연결 해제
+    if (this.masterGain && this.ctx) {
+      try {
+        this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
+        this.masterGain.gain.setValueAtTime(0, this.ctx.currentTime);
+        this.masterGain.disconnect();
+      } catch {
+        // Ignore
+      }
+      this.masterGain = null;
+    }
+
+    // 3. 실행 중이거나 예약된 모든 오실레이터 강제 중단
+    this.activeOscillators.forEach((osc) => {
+      try {
+        osc.stop();
+        osc.disconnect();
+      } catch {
+        // Ignore
+      }
+    });
+    this.activeOscillators = [];
+
+    // 4. 오디오 컨텍스트 닫기 및 초기화 (완전한 무음 보장)
+    if (this.ctx) {
+      try {
+        this.ctx.close();
+      } catch {
+        // Ignore
+      }
+      this.ctx = null;
+    }
   }
 
   public getIsPlaying(): boolean {
