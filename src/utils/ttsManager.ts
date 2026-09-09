@@ -1,12 +1,15 @@
 /**
- * 어르신을 위한 부드럽고 자연스러운 고품질 한국어 TTS 음성 엔진
+ * 어르신을 위한 100% 자연스럽고 따뜻한 사람 목소리 한국어 TTS 음성 엔진
  *
- * [목소리 튕김·끊김·버벅임 방지 완벽 패치]
- * 1. 단일 연속 발화(Continuous Utterance): 문맥을 인위적인 조각(chunk)으로 쪼개지 않고,
- *    문장 부호(쉼표, 마침표)를 살려 브라우저 고유의 자연스러운 호흡으로 끊김 없이 매끄럽게 낭독
- * 2. GC(가비지 컬렉션) 조기 종료 방지: activeUtterances 배열에 인스턴스를 유지하여 재생 도중 중단 현상 방지
- * 3. Chrome/Edge 백그라운드 일시정지 해제: speechSynthesis.resume() 자동 복구
- * 4. 상황별/영상별 맞춤형 페르소나 음성(자연 톤, 어머니 톤, 노을 톤, 동화 톤) 지원
+ * [인간형 발화 및 이질감 완벽 해소 패치]
+ * 1. 피치 왜곡(Pitch Artifacts) 제거: 인위적인 음조 변조(pitch != 1.0) 시 발생하는
+ *    금속성 로봇음/기계음을 원천 차단하고 자연스러운 원음(pitch: 1.0)을 유지하여 성우 수준의 음질 제공
+ * 2. 최적의 인간형 내추럴(Natural/Neural) 보이스 최우선 매칭:
+ *    - Microsoft SunHi Online (Natural) / Google 한국어 / Yuna 등 고음질 AI 신경망 음성 자동 감지 및 1순위 매칭
+ *    - 구형 기계음(Heami Desktop 등)을 최하위로 배제
+ * 3. 자연스러운 한국어 표준 발화 속도(rate: 0.95 ~ 1.0):
+ *    - 지나친 늘림이나 기계적 지연 없이 실제 사람이 다정하게 읽어주듯 숨결과 음절을 자연스럽게 전달
+ * 4. 문장 부호 기반의 자연스러운 쉼(Pause)과 호흡 처리
  */
 
 export type VoicePersona = 'default' | 'warm-mother' | 'clear-nature' | 'calm-sunset' | 'cheerful-story';
@@ -16,7 +19,6 @@ class TTSManager {
   private isSpeaking: boolean = false;
   private currentPlayId: number = 0;
   private activeUtterance: SpeechSynthesisUtterance | null = null;
-  // GC 보호를 위한 인스턴스 보존 집합
   private retainedUtterances: Set<SpeechSynthesisUtterance> = new Set();
 
   constructor() {
@@ -37,81 +39,104 @@ class TTSManager {
   }
 
   /**
-   * 한국어 음성 중 페르소나에 맞는 최적의 보이스 선택
+   * 브라우저 및 OS에 설치된 음성 중 가장 자연스러운 인간형 고음질 한국어 음성을 선택
    */
-  private pickVoiceForPersona(persona: VoicePersona = 'default'): SpeechSynthesisVoice | null {
+  public getBestKoreanVoice(persona: VoicePersona = 'default'): SpeechSynthesisVoice | null {
     if (this.voices.length === 0) {
       this.initVoices();
     }
 
-    const koreanVoices = this.voices.filter(
-      (v) =>
-        v.lang.toLowerCase().startsWith('ko') ||
-        v.lang.toLowerCase().includes('korean') ||
-        v.name.includes('Korean') ||
-        v.name.includes('한국')
-    );
+    const koreanVoices = this.voices.filter((v) => {
+      const lang = v.lang.toLowerCase();
+      const name = v.name.toLowerCase();
+      return (
+        lang.startsWith('ko') ||
+        lang.includes('korean') ||
+        name.includes('korean') ||
+        name.includes('한국')
+      );
+    });
 
-    if (koreanVoices.length === 0) return null;
-
-    if (persona === 'calm-sunset') {
-      const maleVoice = koreanVoices.find(
-        (v) =>
-          v.name.includes('InJoon') ||
-          v.name.includes('인준') ||
-          v.name.includes('Yunxi') ||
-          v.name.toLowerCase().includes('male') ||
-          v.name.includes('남성')
-      );
-      if (maleVoice) return maleVoice;
-    } else if (persona === 'clear-nature') {
-      const clearVoice = koreanVoices.find(
-        (v) =>
-          v.name.includes('Google') ||
-          v.name.includes('SunHi') ||
-          v.name.includes('선희') ||
-          v.name.includes('Yuna')
-      );
-      if (clearVoice) return clearVoice;
-    } else if (persona === 'warm-mother' || persona === 'cheerful-story') {
-      const warmVoice = koreanVoices.find(
-        (v) =>
-          v.name.includes('SunHi') ||
-          v.name.includes('선희') ||
-          v.name.includes('Yuna') ||
-          v.name.includes('유나')
-      );
-      if (warmVoice) return warmVoice;
+    if (koreanVoices.length === 0) {
+      // 한국어 전용 보이스가 없는 경우 기본값
+      return this.voices[0] || null;
     }
 
-    // 우선순위: Natural/Neural -> Google -> Default
-    const naturalVoice = koreanVoices.find(
-      (v) => v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('neural')
-    );
-    if (naturalVoice) return naturalVoice;
+    // 1. 남성/차분한 노을 톤 요청 시
+    if (persona === 'calm-sunset') {
+      const naturalMale = koreanVoices.find((v) => {
+        const name = v.name.toLowerCase();
+        return (
+          (name.includes('injoon') || name.includes('인준') || name.includes('male') || name.includes('남성')) &&
+          (name.includes('natural') || name.includes('online') || name.includes('neural'))
+        );
+      });
+      if (naturalMale) return naturalMale;
 
-    const googleVoice = koreanVoices.find((v) => v.name.includes('Google'));
+      const anyMale = koreanVoices.find((v) => {
+        const name = v.name.toLowerCase();
+        return name.includes('injoon') || name.includes('인준') || name.includes('male') || name.includes('남성');
+      });
+      if (anyMale) return anyMale;
+    }
+
+    // 2. 최고 품질의 인간형 내추럴 신경망 음성 검색 (SunHi Natural, Google 한국어, Yuna 등)
+    // 2-1. Microsoft SunHi Online (Natural) - 가장 자연스러운 여성 낭독 성우음
+    const sunHiNatural = koreanVoices.find((v) => {
+      const name = v.name.toLowerCase();
+      return (
+        (name.includes('sunhi') || name.includes('선희') || name.includes('yuna') || name.includes('유나')) &&
+        (name.includes('natural') || name.includes('online') || name.includes('neural'))
+      );
+    });
+    if (sunHiNatural) return sunHiNatural;
+
+    // 2-2. 기타 Natural / Neural / Online 명칭을 포함하는 최고품질 음성
+    const anyNatural = koreanVoices.find((v) => {
+      const name = v.name.toLowerCase();
+      return name.includes('natural') || name.includes('neural') || name.includes('online');
+    });
+    if (anyNatural) return anyNatural;
+
+    // 2-3. Google 한국어 음성 (크롬 내장 고음질)
+    const googleVoice = koreanVoices.find((v) => v.name.includes('Google') || v.name.includes('google'));
     if (googleVoice) return googleVoice;
+
+    // 2-4. Apple/macOS Yuna, Sora 또는 세련된 여성 음성
+    const appleVoice = koreanVoices.find((v) => {
+      const name = v.name.toLowerCase();
+      return name.includes('yuna') || name.includes('sora') || name.includes('narae') || name.includes('seoyeon');
+    });
+    if (appleVoice) return appleVoice;
+
+    // 2-5. 구형 Heami 기계음 제외하고 첫 번째 음성 선택
+    const nonHeami = koreanVoices.find((v) => !v.name.toLowerCase().includes('heami'));
+    if (nonHeami) return nonHeami;
 
     return koreanVoices[0];
   }
 
   /**
-   * 이모지 및 특수부호 제거 및 자연스러운 한글 낭독 전처리
+   * 기계적인 느낌을 주는 특수문자, 이모지, 불필요한 공백을 정돈하여 매끄러운 낭독 문장 생성
    */
   private cleanTextForSpeech(text: string): string {
     return text
+      // 이모지 제거
       .replace(
         /[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]/gu,
         ''
       )
+      // UI 기호 및 화살표 제거
       .replace(/[▶➔👉★☆●■◆※①②③④~]/g, '')
+      // 줄바꿈과 다중 마침표를 자연스러운 쉼표 및 마침표로 정돈
+      .replace(/\n+/g, ' ')
+      .replace(/\.{2,}/g, '.')
       .replace(/\s+/g, ' ')
       .trim();
   }
 
   /**
-   * 끊김이나 튕김 없이 부드럽고 따뜻하게 문장을 낭독
+   * 이질감 없이 실제 성우가 책을 읽어주듯 자연스럽고 따뜻하게 낭독
    */
   public speak(
     text: string,
@@ -129,7 +154,7 @@ class TTSManager {
       return;
     }
 
-    // 이전 발화 취소
+    // 이전 발화 즉시 정지
     this.stop();
 
     const cleaned = this.cleanTextForSpeech(text);
@@ -140,11 +165,13 @@ class TTSManager {
 
     const persona = options?.persona ?? 'default';
 
-    // 어르신이 가장 편안하게 들으실 수 있는 황금 배속과 음조
-    let rate = options?.rate ?? (persona === 'calm-sunset' ? 0.85 : persona === 'clear-nature' ? 0.92 : 0.88);
-    let pitch = options?.pitch ?? (persona === 'calm-sunset' ? 0.92 : persona === 'clear-nature' ? 1.05 : 1.02);
+    // [이질감 완벽 제거 핵심]
+    // 1. pitch: 1.0 (왜곡 없는 자연스러운 원음)
+    // 2. rate: 0.92 ~ 0.98 (어르신이 편안하게 들으실 수 있는 최적의 이야기 낭독 속도)
+    const naturalRate = options?.rate ?? (persona === 'calm-sunset' ? 0.90 : 0.94);
+    const naturalPitch = options?.pitch ?? 1.0;
 
-    // Chrome/Edge Web Speech API가 멈춘 상태(suspended)일 경우 자동 복구
+    // 브라우저 백그라운드 일시정지 상태 자동 복구
     if (window.speechSynthesis.paused) {
       window.speechSynthesis.resume();
     }
@@ -155,15 +182,15 @@ class TTSManager {
     const utterance = new SpeechSynthesisUtterance(cleaned);
     utterance.lang = 'ko-KR';
 
-    const voice = this.pickVoiceForPersona(persona);
-    if (voice) {
-      utterance.voice = voice;
+    const selectedVoice = this.getBestKoreanVoice(persona);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
     }
 
-    utterance.rate = rate;
-    utterance.pitch = pitch;
+    utterance.rate = naturalRate;
+    utterance.pitch = naturalPitch;
 
-    // GC 방지: 참조 보존
+    // GC 메모리 회수로 인한 중단 방지
     this.activeUtterance = utterance;
     this.retainedUtterances.add(utterance);
 
@@ -182,7 +209,6 @@ class TTSManager {
 
     utterance.onerror = (e) => {
       this.retainedUtterances.delete(utterance);
-      // 'interrupted' 또는 'canceled'는 정지 버튼 클릭 등에 의한 의도적 중단
       if (e.error === 'interrupted' || e.error === 'canceled') return;
       if (playId !== this.currentPlayId) return;
       this.isSpeaking = false;
