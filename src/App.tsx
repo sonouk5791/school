@@ -7,8 +7,13 @@ import { evaluateRoundResult, INITIAL_ENGINE_STATE } from './utils/difficultyEng
 import { getInitialSessionLevel, saveRoundLog } from './utils/logger';
 import { soundManager } from './utils/soundEffect';
 
-import { Header } from './components/Header';
-import { WelcomeScreen } from './components/WelcomeScreen';
+import { Header, type NavTab } from './components/Header';
+import { HomeScreen } from './components/HomeScreen';
+import { CognitiveTrainingHub } from './components/CognitiveTrainingHub';
+import { TodaysLearningView } from './components/TodaysLearningView';
+import { DigitalLearningView } from './components/DigitalLearningView';
+import { LearningRecordsView } from './components/LearningRecordsView';
+
 import { CardGrid } from './components/CardGrid';
 import { SequenceGame } from './components/SequenceGame';
 import { HangeulGame } from './components/HangeulGame';
@@ -20,8 +25,11 @@ import { DevDashboardModal } from './components/DevDashboardModal';
 import { UserGuideModal } from './components/UserGuideModal';
 
 export const App: React.FC = () => {
-  // Navigation screen: 'welcome' | 'card-match' | 'sequence' | 'hangeul' | 'storybook' | 'video-gallery' | 'childhood'
-  const [screen, setScreen] = useState<'welcome' | 'card-match' | 'sequence' | 'hangeul' | 'storybook' | 'video-gallery' | 'childhood'>('welcome');
+  // Navigation Tabs: 'home' | 'today' | 'cognitive' | 'digital' | 'records'
+  const [currentTab, setCurrentTab] = useState<NavTab>('home');
+
+  // Active cognitive game mode (null when browsing tabs)
+  const [activeGame, setActiveGame] = useState<GameType | null>(null);
 
   // Engine state & level management
   const [engineState, setEngineState] = useState<EngineState>(() =>
@@ -170,8 +178,10 @@ export const App: React.FC = () => {
 
   // Handle Game Selection
   const handleSelectGame = (gameType: GameType) => {
+    soundManager.playFlip();
     setRoundNumber(1);
-    setScreen(gameType);
+    setActiveGame(gameType);
+
     if (gameType === 'card-match') {
       startCardMatchRound();
     } else if (gameType === 'sequence') {
@@ -182,10 +192,11 @@ export const App: React.FC = () => {
   };
 
   const handleExitGame = () => {
+    soundManager.playFlip();
     if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
     if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
 
-    setScreen('welcome');
+    setActiveGame(null);
     setIsCompletionModalOpen(false);
   };
 
@@ -217,7 +228,7 @@ export const App: React.FC = () => {
         matchReactionTimesRef.current.push(pairReactionTime);
 
         soundManager.playMatch();
-        setGentleNotice('정답입니다.');
+        setGentleNotice('정답입니다! 👏');
 
         const matchedCards = updatedCards.map((c) =>
           c.pairId === card1.pairId ? { ...c, isMatched: true } : c
@@ -363,11 +374,11 @@ export const App: React.FC = () => {
     const nextRound = roundNumber + 1;
     setRoundNumber(nextRound);
 
-    if (screen === 'card-match') {
+    if (activeGame === 'card-match') {
       startCardMatchRound();
-    } else if (screen === 'sequence') {
+    } else if (activeGame === 'sequence') {
       startSequenceRound();
-    } else if (screen === 'hangeul') {
+    } else if (activeGame === 'hangeul') {
       startHangeulRound();
     }
   };
@@ -382,11 +393,11 @@ export const App: React.FC = () => {
     engineStateRef.current = newState;
     setEngineState(newState);
 
-    if (screen === 'card-match') {
+    if (activeGame === 'card-match') {
       startCardMatchRound(level);
-    } else if (screen === 'sequence') {
+    } else if (activeGame === 'sequence') {
       startSequenceRound(level);
-    } else if (screen === 'hangeul') {
+    } else if (activeGame === 'hangeul') {
       startHangeulRound(level);
     }
   };
@@ -396,11 +407,11 @@ export const App: React.FC = () => {
     engineStateRef.current = initState;
     setEngineState(initState);
 
-    if (screen === 'card-match') {
+    if (activeGame === 'card-match') {
       startCardMatchRound(1);
-    } else if (screen === 'sequence') {
+    } else if (activeGame === 'sequence') {
       startSequenceRound(1);
-    } else if (screen === 'hangeul') {
+    } else if (activeGame === 'hangeul') {
       startHangeulRound(1);
     }
   };
@@ -408,46 +419,43 @@ export const App: React.FC = () => {
   const currentConfig = DIFFICULTY_CONFIGS[engineState.currentLevel] || DIFFICULTY_CONFIGS[1];
   const matchedPairsCount = cards.filter((c) => c.isMatched).length / 2;
 
-  const headerTitle =
-    screen === 'card-match'
-      ? '🧩 그림 카드 맞추기'
-      : screen === 'sequence'
-      ? '🔢 일상 순서 배열하기'
-      : screen === 'hangeul'
-      ? '🔤 한글 낱말 맞추기'
-      : screen === 'storybook'
-      ? '📖 책을 읽어주는 방'
-      : screen === 'video-gallery'
-      ? '🎥 추억 영상 앨범관'
-      : '🧒 나의 어린 시절';
+  const gameTitles: Record<GameType, string> = {
+    'card-match': '🧩 같은 그림 찾기',
+    'sequence': '🔢 일상 순서 배열하기',
+    'hangeul': '🔤 한글 낱말 맞추기',
+    'storybook': '📖 책을 읽어주는 방',
+    'video-gallery': '🎥 추억 영상 앨범관',
+    'childhood': '🧒 나의 어린 시절',
+  };
 
   return (
     <div className="app-root">
-      {screen === 'welcome' ? (
-        <WelcomeScreen
-          onSelectGame={handleSelectGame}
-          onOpenDevModal={() => setIsDevModalOpen(true)}
-          onOpenGuide={() => setIsGuideOpen(true)}
-          currentLevel={engineState.currentLevel}
-          onSetLevel={handleDevSetLevel}
-        />
-      ) : (
-        <div className="game-screen">
-          <Header
-            onExit={handleExitGame}
-            onOpenDevModal={() => setIsDevModalOpen(true)}
-            onOpenGuide={() => setIsGuideOpen(true)}
-            isMuted={isMuted}
-            onToggleSound={toggleSound}
-            title={headerTitle}
-          />
+      {/* Global Top Header */}
+      <Header
+        currentTab={currentTab}
+        onSelectTab={(tab) => {
+          soundManager.playFlip();
+          setCurrentTab(tab);
+        }}
+        activeGame={activeGame}
+        onExitGame={handleExitGame}
+        onOpenDevModal={() => setIsDevModalOpen(true)}
+        onOpenGuide={() => setIsGuideOpen(true)}
+        isMuted={isMuted}
+        onToggleSound={toggleSound}
+        gameTitle={activeGame ? gameTitles[activeGame] : undefined}
+      />
 
-          <main className="game-main">
-            {screen !== 'storybook' && screen !== 'video-gallery' && screen !== 'childhood' && (
+      {/* Main Content Area */}
+      <main className="app-main-content">
+        {activeGame ? (
+          /* Active Cognitive Activity View */
+          <div className="active-activity-container anim-pop">
+            {activeGame !== 'storybook' && activeGame !== 'video-gallery' && activeGame !== 'childhood' && (
               <div className="game-info-bar">
                 <span className="info-round">활동 #{roundNumber}</span>
 
-                {screen === 'card-match' && (
+                {activeGame === 'card-match' && (
                   <>
                     {isPreviewing ? (
                       <div className="preview-badge anim-pop">
@@ -463,7 +471,7 @@ export const App: React.FC = () => {
               </div>
             )}
 
-            {screen === 'card-match' && (
+            {activeGame === 'card-match' && (
               <>
                 {gentleNotice && (
                   <div className="gentle-banner anim-pop" role="status">
@@ -479,7 +487,7 @@ export const App: React.FC = () => {
               </>
             )}
 
-            {screen === 'sequence' && currentSequenceScenario && (
+            {activeGame === 'sequence' && currentSequenceScenario && (
               <SequenceGame
                 key={`seq-round-${roundNumber}-${currentSequenceScenario.id}`}
                 scenario={currentSequenceScenario}
@@ -487,7 +495,7 @@ export const App: React.FC = () => {
               />
             )}
 
-            {screen === 'hangeul' && currentHangeulScenario && (
+            {activeGame === 'hangeul' && currentHangeulScenario && (
               <HangeulGame
                 key={`han-round-${roundNumber}-${currentHangeulScenario.id}`}
                 scenario={currentHangeulScenario}
@@ -495,42 +503,91 @@ export const App: React.FC = () => {
               />
             )}
 
-            {screen === 'storybook' && (
+            {activeGame === 'storybook' && (
               <StorybookGallery onCompleteRound={handleStorybookComplete} />
             )}
 
-            {screen === 'video-gallery' && (
+            {activeGame === 'video-gallery' && (
               <VideoGallery onCompleteRound={handleVideoComplete} />
             )}
 
-            {screen === 'childhood' && (
+            {activeGame === 'childhood' && (
               <ChildhoodMemoryGame />
             )}
-          </main>
-        </div>
-      )}
+          </div>
+        ) : (
+          /* Main Platform Tab Views */
+          <>
+            {currentTab === 'home' && (
+              <HomeScreen
+                onNavigateTab={(tab) => {
+                  soundManager.playFlip();
+                  setCurrentTab(tab);
+                }}
+                onOpenGuide={() => setIsGuideOpen(true)}
+                onOpenCaregiver={() => setIsDevModalOpen(true)}
+              />
+            )}
 
+            {currentTab === 'today' && (
+              <TodaysLearningView
+                onStartActivity={handleSelectGame}
+              />
+            )}
+
+            {currentTab === 'cognitive' && (
+              <CognitiveTrainingHub
+                onSelectGame={handleSelectGame}
+                currentLevel={engineState.currentLevel}
+              />
+            )}
+
+            {currentTab === 'digital' && (
+              <DigitalLearningView
+                onNavigateTab={(tab) => {
+                  soundManager.playFlip();
+                  setCurrentTab(tab);
+                }}
+              />
+            )}
+
+            {currentTab === 'records' && (
+              <LearningRecordsView
+                onOpenCaregiverModal={() => setIsDevModalOpen(true)}
+                onNavigateTab={(tab) => {
+                  soundManager.playFlip();
+                  setCurrentTab(tab);
+                }}
+              />
+            )}
+          </>
+        )}
+      </main>
+
+      {/* Completion Modal */}
       <CompletionModal
         isOpen={isCompletionModalOpen}
         onNextGame={handleNextGame}
         onGoHome={handleExitGame}
         matchCount={
-          screen === 'card-match'
+          activeGame === 'card-match'
             ? currentConfig.pairCount
-            : screen === 'sequence'
+            : activeGame === 'sequence'
             ? currentSequenceScenario?.steps.length || 0
-            : screen === 'hangeul'
+            : activeGame === 'hangeul'
             ? currentHangeulScenario?.tiles.length || 0
             : 1
         }
-        gameType={screen === 'welcome' ? 'card-match' : screen}
+        gameType={activeGame || 'card-match'}
       />
 
+      {/* Senior Easy Guide Modal */}
       <UserGuideModal
         isOpen={isGuideOpen}
         onClose={() => setIsGuideOpen(false)}
       />
 
+      {/* Caregiver Settings & Dashboard Modal */}
       <DevDashboardModal
         isOpen={isDevModalOpen}
         onClose={() => setIsDevModalOpen(false)}
@@ -544,24 +601,24 @@ export const App: React.FC = () => {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
+          background: linear-gradient(180deg, #FAF8F5 0%, #F5FDF8 100%);
         }
 
-        .game-screen {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          background: linear-gradient(180deg, #FAF8F5 0%, #F0FDF4 100%);
-        }
-
-        .game-main {
+        .app-main-content {
           flex: 1;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          padding: 16px;
+          width: 100%;
+        }
+
+        .active-activity-container {
           max-width: 1200px;
           width: 100%;
           margin: 0 auto;
+          padding: 20px 16px 60px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
         .game-info-bar {
@@ -571,10 +628,12 @@ export const App: React.FC = () => {
           justify-content: space-between;
           padding: 8px 16px;
           margin-bottom: 12px;
+          gap: 12px;
+          flex-wrap: wrap;
         }
 
         .info-round {
-          font-size: 24px;
+          font-size: 22px;
           font-weight: 800;
           color: #334155;
           background-color: #FFFFFF;
@@ -587,14 +646,14 @@ export const App: React.FC = () => {
           background-color: #FEF3C7;
           border: 2px solid #F59E0B;
           color: #92400E;
-          font-size: 23px;
+          font-size: 22px;
           font-weight: 800;
           padding: 8px 24px;
           border-radius: 18px;
         }
 
         .progress-badge {
-          font-size: 24px;
+          font-size: 22px;
           font-weight: 800;
           color: #0F766E;
           background-color: #CCFBF1;
