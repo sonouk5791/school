@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 두뇌 학교 - 쉬운 따라하기 보조 교재</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nanum Gothic', sans-serif;
+      background-color: #F8FAFC;
+      color: #0F172A;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .guide-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #FFFFFF;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 2px solid #E2E8F0;
+    }
+
+    .header-bar {
+      text-align: center;
+      border-bottom: 3px double #0D9488;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    .header-bar h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #0F766E;
+      font-family: 'Gowun Batang', serif;
+    }
+
+    .header-bar p {
+      font-size: 18px;
+      font-weight: 700;
+      color: #15803D;
+      margin-top: 8px;
+    }
+
+    .print-controls {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .print-btn {
+      background-color: #0D9488;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 20px;
+      font-weight: 800;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(13, 148, 136, 0.3);
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0F172A;
+      border-left: 6px solid #0D9488;
+      padding-left: 12px;
+      margin-top: 36px;
+      margin-bottom: 16px;
+    }
+
+    .step-box {
+      background-color: #F0FDF4;
+      border: 2px solid #BBF7D0;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .step-box h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #166534;
+      margin-bottom: 8px;
+    }
+
+    .step-box p {
+      font-size: 16px;
+      color: #1f2937;
+    }
+
+    .table-guide {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    .table-guide th, .table-guide td {
+      border: 1px solid #CBD5E1;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .table-guide th {
+      background-color: #CCFBF1;
+      color: #0F766E;
+      font-weight: 800;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #64748B;
+      border-top: 1px solid #E2E8F0;
+      padding-top: 20px;
+    }
+
+    @media print {
+      body {
+        background-color: #FFFFFF;
+        padding: 0;
+      }
+
+      .guide-container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .print-controls {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="guide-container">
+    <div class="print-controls">
+      <button onclick="window.print()" class="print-btn">🖨️ 이 안내서 인쇄하기 (A4)</button>
+    </div>
+
+    <div class="header-bar">
+      <h1>🌸 오늘의 두뇌 학교 - 쉬운 따라하기 보조 교재</h1>
+      <p>어르신 및 디지털 첫 입문자를 위한 큰 글씨 단계별 이용 가이드</p>
+    </div>
+
+    <h2 class="section-title">🌟 기초 화면 조작법</h2>
+    <div class="step-box">
+      <h3>1. 화면 누르기 (터치)</h3>
+      <p>원하는 글자나 그림을 손가락 끝으로 가볍게 살짝 눌러주세요.</p>
+    </div>
+    <div class="step-box">
+      <h3>2. 🔊 소리로 듣기</h3>
+      <p>오른쪽 상단의 소리 버튼을 누르면 칭찬 효과음과 친절한 안내 목소리를 켜거나 끌 수 있습니다.</p>
+    </div>
+
+    <h2 class="section-title">🧩 활동 1: 그림 카드 맞추기</h2>
+    <p style="font-size:16px; margin-bottom:12px;">엎어둔 카드 짝을 기억해서 똑같은 그림을 찾는 기억력 운동입니다.</p>
+    <div class="step-box">
+      <h3>순서 ①: 잠깐 보여주는 그림 기억하기</h3>
+      <p>시작할 때 카드가 3초간 열립니다. 위치를 잘 눈여겨 보세요.</p>
+    </div>
+    <div class="step-box">
+      <h3>순서 ②: 첫 번째 카드 누르고, 짝 맞추기</h3>
+      <p>카드를 열고, 기억해둔 위치의 똑같은 카드 짝을 누르면 완성됩니다!</p>
+    </div>
+
+    <h2 class="section-title">🔢 활동 2: 일상 순서 배열하기</h2>
+    <p style="font-size:16px; margin-bottom:12px;">아침 일과, 외출 준비 등 일상의 차례를 순서대로 고르는 인지 운동입니다.</p>
+    <div class="step-box">
+      <h3>순서 ①: 가장 먼저 해야 할 그림 누르기</h3>
+      <p>가장 첫 번째 그림을 누르면 ①번표가 붙습니다. 순서대로 ②, ③번을 고르면 정답이 확인됩니다.</p>
+    </div>
+
+    <h2 class="section-title">🔤 활동 3: 한글 낱말 맞추기 (천지인 & 손글씨)</h2>
+    <table class="table-guide">
+      <thead>
+        <tr>
+          <th>입력 방식</th>
+          <th>조작 방법</th>
+          <th>예시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>천지인 자판</strong></td>
+          <td>ㅣ, ·, ㅡ 모음 조합 방식</td>
+          <td>'ㅏ' = [ㅣ] + [ · ]<br>'ㅗ' = [ · ] + [ㅡ]</td>
+        </tr>
+        <tr>
+          <td><strong>손글씨 쓰기</strong></td>
+          <td>네모 칸 안에 손가락으로 쓰기</td>
+          <td>잘못 썼을 땐 [지우기] 후 다시 쓰기</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="section-title">📖 활동 4: 추억 책 & 영상 이야기관</h2>
+    <div class="step-box">
+      <h3>옛 추억 감상과 나만의 오디오 이야기 기록</h3>
+      <p>시골 정자나무, 옛 장터 이야기를 감상하고 🎙️ [내 목소리 기록하기]로 추억 소리를 남겨보세요.</p>
+    </div>
+
+    <footer>
+      <p>ⓒ 오늘의 두뇌 학교 · 매일 건강한 두뇌 습관과 함께하세요.</p>
+    </footer>
+  </div>
+</body>
+</html>
