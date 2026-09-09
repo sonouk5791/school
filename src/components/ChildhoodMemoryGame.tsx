@@ -331,7 +331,8 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
     setIsAnswerChecked(true);
 
     if (correct) {
-      soundManager.playMatch();
+      soundManager.playSoundByTheme(currentQuiz.illustrationType);
+      setTimeout(() => soundManager.playMatch(), 200);
       setScore((prev) => prev + 1);
       confetti({
         particleCount: 60,
@@ -528,29 +529,45 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
 
             <h2 className="quiz-question-title">{currentQuiz.question}</h2>
 
-            {/* 소리 힌트 & 음성 듣기 버튼 */}
+            {/* 소리 힌트 & 음성 듣기 & 실제 소리 듣기 버튼 */}
             <div className="quiz-hint-box">
               <div className="hint-content">
                 <Volume2 size={26} color="#D97706" />
                 <span className="hint-text">{currentQuiz.soundHint}</span>
               </div>
-              <button
-                className={`tts-speak-btn ${isSpeaking ? 'speaking' : ''}`}
-                onClick={() =>
-                  handleSpeakText(`${currentQuiz.question} 소리 힌트: ${currentQuiz.soundHint}`)
-                }
-                title="음성으로 문제와 힌트 듣기"
-                aria-label="문제와 힌트를 소리로 들려줍니다"
-              >
-                {isSpeaking ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                <span>{isSpeaking ? '소리 멈춤' : '🔊 소리로 듣기'}</span>
-              </button>
+              <div className="quiz-sound-actions">
+                <button
+                  className="sfx-play-btn"
+                  onClick={() => soundManager.playSoundByTheme(currentQuiz.illustrationType)}
+                  title="실제 추억의 소리 듣기 (예: 구슬치기 딱딱 소리, 딱지 소리)"
+                  aria-label="실제 추억의 소리를 재생합니다"
+                >
+                  <Sparkles size={20} />
+                  <span>🔔 실제 소리 듣기</span>
+                </button>
+                <button
+                  className={`tts-speak-btn ${isSpeaking ? 'speaking' : ''}`}
+                  onClick={() =>
+                    handleSpeakText(`${currentQuiz.question} 소리 힌트: ${currentQuiz.soundHint}`)
+                  }
+                  title="음성으로 문제와 힌트 듣기"
+                  aria-label="문제와 힌트를 소리로 들려줍니다"
+                >
+                  {isSpeaking ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                  <span>{isSpeaking ? '소리 멈춤' : '🔊 문제 읽기'}</span>
+                </button>
+              </div>
             </div>
 
             {/* 정확한 레트로 그래픽 카드 & ①②③④ 깔끔한 번호 보기 그리드 */}
             <div className="quiz-content-grid">
-              <div className="quiz-photo-wrapper">
+              <div
+                className="quiz-photo-wrapper interactive-photo"
+                onClick={() => soundManager.playSoundByTheme(currentQuiz.illustrationType)}
+                title="카드를 누르면 실제 소리가 납니다"
+              >
                 {renderChildhoodIllustration(currentQuiz.illustrationType)}
+                <div className="photo-tap-badge">👆 터치하여 실제 소리 듣기</div>
                 <p className="photo-caption">{currentQuiz.photoCaption}</p>
               </div>
 
@@ -1093,6 +1110,39 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
           color: #B45309;
         }
 
+        .quiz-sound-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+
+        .sfx-play-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 16px;
+          font-size: 17px;
+          font-weight: 800;
+          border: 2px solid #059669;
+          border-radius: 12px;
+          background: #ECFDF5;
+          color: #047857;
+          cursor: pointer;
+          box-shadow: 0 3px 8px rgba(5, 150, 105, 0.15);
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sfx-play-btn:hover {
+          background: #D1FAE5;
+          transform: translateY(-2px) scale(1.03);
+          box-shadow: 0 5px 12px rgba(5, 150, 105, 0.25);
+        }
+
+        .sfx-play-btn:active {
+          transform: translateY(1px) scale(0.98);
+        }
+
         .tts-speak-btn {
           display: inline-flex;
           align-items: center;
@@ -1105,12 +1155,13 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
           background: #FFFFFF;
           color: #B45309;
           cursor: pointer;
+          box-shadow: 0 3px 8px rgba(217, 119, 6, 0.12);
           transition: all 0.2s;
         }
 
         .tts-speak-btn:hover {
           background: #FEF3C7;
-          transform: scale(1.03);
+          transform: translateY(-2px) scale(1.03);
         }
 
         .tts-speak-btn.speaking {
@@ -1137,6 +1188,29 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
           border-radius: 20px;
           overflow: hidden;
           background: #F8FAFC;
+          position: relative;
+        }
+
+        .quiz-photo-wrapper.interactive-photo {
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+
+        .quiz-photo-wrapper.interactive-photo:hover {
+          border-color: #10B981;
+          transform: translateY(-4px);
+          box-shadow: 0 10px 24px rgba(16, 185, 129, 0.2);
+        }
+
+        .photo-tap-badge {
+          text-align: center;
+          background: #F0FDF4;
+          color: #15803D;
+          font-size: 14px;
+          font-weight: 800;
+          padding: 6px 10px;
+          border-top: 1px dashed #86EFAC;
+          border-bottom: 1px dashed #86EFAC;
         }
 
         /* 정밀 레트로 SVG 회상 그래픽 카드 */
