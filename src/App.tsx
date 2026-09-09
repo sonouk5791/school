@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import type { CardState, EngineState, GameType, SequenceScenario, HangeulScenario } from './types/game';
-import { getCardsForLevel, DIFFICULTY_CONFIGS } from './constants/cardData';
+import type { EngineState, GameType, SequenceScenario, HangeulScenario } from './types/game';
+import { DIFFICULTY_CONFIGS } from './constants/cardData';
 import { getSequenceScenarioForLevel } from './constants/sequenceData';
 import { getHangeulScenarioForLevel } from './constants/hangeulData';
 import { evaluateRoundResult, INITIAL_ENGINE_STATE } from './utils/difficultyEngine';
@@ -14,7 +14,7 @@ import { TodaysLearningView } from './components/TodaysLearningView';
 import { DigitalLearningView } from './components/DigitalLearningView';
 import { LearningRecordsView } from './components/LearningRecordsView';
 
-import { CardGrid } from './components/CardGrid';
+import { CardMatchGame } from './components/CardMatchGame';
 import { SequenceGame } from './components/SequenceGame';
 import { HangeulGame } from './components/HangeulGame';
 import { StorybookGallery } from './components/StorybookGallery';
@@ -50,13 +50,8 @@ export const App: React.FC = () => {
   // User guide modal state
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
 
-  // Round Game state (Card Match)
+  // Round Game state (Sequence / Hangeul)
   const [roundNumber, setRoundNumber] = useState<number>(1);
-  const [cards, setCards] = useState<CardState[]>([]);
-  const [flippedCards, setFlippedCards] = useState<CardState[]>([]);
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [isPreviewing, setIsPreviewing] = useState<boolean>(false);
-  const [previewSecondsLeft, setPreviewSecondsLeft] = useState<number>(0);
 
   // Sequence Game State
   const [currentSequenceScenario, setCurrentSequenceScenario] = useState<SequenceScenario | null>(null);
@@ -64,19 +59,11 @@ export const App: React.FC = () => {
   // Hangeul Game State
   const [currentHangeulScenario, setCurrentHangeulScenario] = useState<HangeulScenario | null>(null);
 
-  // Gentle adult notice banner
-  const [gentleNotice, setGentleNotice] = useState<string | null>(null);
-
   // Completion modal state
   const [isCompletionModalOpen, setIsCompletionModalOpen] = useState<boolean>(false);
 
   // Performance trackers
   const roundStartTimeRef = useRef<number>(0);
-  const turnStartTimeRef = useRef<number>(0);
-  const matchReactionTimesRef = useRef<number[]>([]);
-  const attemptCountRef = useRef<number>(0);
-  const previewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const countdownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const initLevel = getInitialSessionLevel();
@@ -90,70 +77,6 @@ export const App: React.FC = () => {
     setIsMuted(muted);
   };
 
-  // Start Card Match round
-  const startCardMatchRound = (overrideLevel?: number) => {
-    const currentLevel = overrideLevel ?? engineStateRef.current.currentLevel;
-    const config = DIFFICULTY_CONFIGS[currentLevel] || DIFFICULTY_CONFIGS[1];
-
-    const rawCards = getCardsForLevel(currentLevel);
-
-    attemptCountRef.current = 0;
-    matchReactionTimesRef.current = [];
-    roundStartTimeRef.current = performance.now();
-    turnStartTimeRef.current = performance.now();
-
-    setFlippedCards([]);
-    setIsProcessing(false);
-    setGentleNotice(null);
-    setIsCompletionModalOpen(false);
-
-    if (config.previewSeconds > 0) {
-      setIsPreviewing(true);
-      setPreviewSecondsLeft(config.previewSeconds);
-
-      setCards(
-        rawCards.map((c) => ({
-          ...c,
-          isFlipped: true,
-          isMatched: false,
-        }))
-      );
-
-      if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = setInterval(() => {
-        setPreviewSecondsLeft((prev) => {
-          if (prev <= 1) {
-            if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-
-      if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
-      previewTimerRef.current = setTimeout(() => {
-        setCards((prevCards) =>
-          prevCards.map((c) => ({
-            ...c,
-            isFlipped: false,
-          }))
-        );
-        setIsPreviewing(false);
-        turnStartTimeRef.current = performance.now();
-      }, config.previewSeconds * 1000);
-    } else {
-      setIsPreviewing(false);
-      setCards(
-        rawCards.map((c) => ({
-          ...c,
-          isFlipped: false,
-          isMatched: false,
-        }))
-      );
-      turnStartTimeRef.current = performance.now();
-    }
-  };
-
   // Start Sequence round
   const startSequenceRound = (overrideLevel?: number) => {
     const currentLevel = overrideLevel ?? engineStateRef.current.currentLevel;
@@ -161,7 +84,6 @@ export const App: React.FC = () => {
 
     setCurrentSequenceScenario(scenario);
     setIsCompletionModalOpen(false);
-    setGentleNotice(null);
     roundStartTimeRef.current = performance.now();
   };
 
@@ -172,7 +94,6 @@ export const App: React.FC = () => {
 
     setCurrentHangeulScenario(scenario);
     setIsCompletionModalOpen(false);
-    setGentleNotice(null);
     roundStartTimeRef.current = performance.now();
   };
 
@@ -183,7 +104,7 @@ export const App: React.FC = () => {
     setActiveGame(gameType);
 
     if (gameType === 'card-match') {
-      startCardMatchRound();
+      // CardMatchGame handles its own lifecycle
     } else if (gameType === 'sequence') {
       startSequenceRound();
     } else if (gameType === 'hangeul') {
@@ -193,102 +114,8 @@ export const App: React.FC = () => {
 
   const handleExitGame = () => {
     soundManager.playFlip();
-    if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
-    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-
     setActiveGame(null);
     setIsCompletionModalOpen(false);
-  };
-
-  // Card Match flip click handler
-  const handleCardClick = (clickedCard: CardState) => {
-    if (isPreviewing || isProcessing || clickedCard.isFlipped || clickedCard.isMatched) return;
-
-    soundManager.playFlip();
-
-    const updatedCards = cards.map((c) => (c.id === clickedCard.id ? { ...c, isFlipped: true } : c));
-    setCards(updatedCards);
-
-    const newFlipped = [...flippedCards, clickedCard];
-    setFlippedCards(newFlipped);
-
-    if (newFlipped.length === 1) {
-      turnStartTimeRef.current = performance.now();
-      return;
-    }
-
-    if (newFlipped.length === 2) {
-      attemptCountRef.current += 1;
-      setIsProcessing(true);
-
-      const [card1, card2] = newFlipped;
-
-      if (card1.pairId === card2.pairId) {
-        const pairReactionTime = performance.now() - turnStartTimeRef.current;
-        matchReactionTimesRef.current.push(pairReactionTime);
-
-        soundManager.playMatch();
-        setGentleNotice('정답입니다! 👏');
-
-        const matchedCards = updatedCards.map((c) =>
-          c.pairId === card1.pairId ? { ...c, isMatched: true } : c
-        );
-        setCards(matchedCards);
-        setFlippedCards([]);
-        setIsProcessing(false);
-
-        const allMatched = matchedCards.every((c) => c.isMatched);
-        if (allMatched) {
-          handleCardMatchComplete();
-        } else {
-          setTimeout(() => setGentleNotice(null), 1200);
-        }
-      } else {
-        soundManager.playMismatch();
-        setGentleNotice('괜찮습니다. 천천히 다시 확인해 보세요.');
-
-        setTimeout(() => {
-          setCards((prev) =>
-            prev.map((c) =>
-              c.id === card1.id || c.id === card2.id ? { ...c, isFlipped: false } : c
-            )
-          );
-          setFlippedCards([]);
-          setIsProcessing(false);
-          setGentleNotice(null);
-        }, 1200);
-      }
-    }
-  };
-
-  const handleCardMatchComplete = () => {
-    const totalTimeMs = Math.round(performance.now() - roundStartTimeRef.current);
-    const avgReactionTimeMs =
-      matchReactionTimesRef.current.length > 0
-        ? Math.round(
-            matchReactionTimesRef.current.reduce((a, b) => a + b, 0) /
-              matchReactionTimesRef.current.length
-          )
-        : totalTimeMs;
-
-    const evaluation = evaluateRoundResult(engineStateRef.current, true, avgReactionTimeMs);
-
-    saveRoundLog({
-      gameType: 'card-match',
-      roundNumber,
-      difficultyLevel: engineStateRef.current.currentLevel,
-      isSuccess: true,
-      reactionTimeMs: avgReactionTimeMs,
-      totalTimeMs,
-      attemptCount: attemptCountRef.current,
-      isSlowResponse: evaluation.isSlowResponse,
-      consecutiveSuccessCount: evaluation.nextState.consecutiveSuccessCount,
-      consecutiveFailureCount: evaluation.nextState.consecutiveFailureCount,
-    });
-
-    engineStateRef.current = evaluation.nextState;
-    setEngineState(evaluation.nextState);
-    setIsCompletionModalOpen(true);
   };
 
   const handleSequenceComplete = (isSuccess: boolean, reactionTimeMs: number) => {
@@ -374,9 +201,7 @@ export const App: React.FC = () => {
     const nextRound = roundNumber + 1;
     setRoundNumber(nextRound);
 
-    if (activeGame === 'card-match') {
-      startCardMatchRound();
-    } else if (activeGame === 'sequence') {
+    if (activeGame === 'sequence') {
       startSequenceRound();
     } else if (activeGame === 'hangeul') {
       startHangeulRound();
@@ -393,9 +218,7 @@ export const App: React.FC = () => {
     engineStateRef.current = newState;
     setEngineState(newState);
 
-    if (activeGame === 'card-match') {
-      startCardMatchRound(level);
-    } else if (activeGame === 'sequence') {
+    if (activeGame === 'sequence') {
       startSequenceRound(level);
     } else if (activeGame === 'hangeul') {
       startHangeulRound(level);
@@ -407,9 +230,7 @@ export const App: React.FC = () => {
     engineStateRef.current = initState;
     setEngineState(initState);
 
-    if (activeGame === 'card-match') {
-      startCardMatchRound(1);
-    } else if (activeGame === 'sequence') {
+    if (activeGame === 'sequence') {
       startSequenceRound(1);
     } else if (activeGame === 'hangeul') {
       startHangeulRound(1);
@@ -417,7 +238,6 @@ export const App: React.FC = () => {
   };
 
   const currentConfig = DIFFICULTY_CONFIGS[engineState.currentLevel] || DIFFICULTY_CONFIGS[1];
-  const matchedPairsCount = cards.filter((c) => c.isMatched).length / 2;
 
   const gameTitles: Record<GameType, string> = {
     'card-match': '🧩 같은 그림 찾기',
@@ -451,40 +271,14 @@ export const App: React.FC = () => {
         {activeGame ? (
           /* Active Cognitive Activity View */
           <div className="active-activity-container anim-pop">
-            {activeGame !== 'storybook' && activeGame !== 'video-gallery' && activeGame !== 'childhood' && (
-              <div className="game-info-bar">
-                <span className="info-round">활동 #{roundNumber}</span>
-
-                {activeGame === 'card-match' && (
-                  <>
-                    {isPreviewing ? (
-                      <div className="preview-badge anim-pop">
-                        🔍 그림의 위치를 천천히 기억해 보세요 ({previewSecondsLeft}초)
-                      </div>
-                    ) : (
-                      <div className="progress-badge">
-                        완료한 그림: {matchedPairsCount} / {currentConfig.pairCount} 쌍
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
+            {activeGame === 'card-match' && (
+              <CardMatchGame onGoBackToHub={handleExitGame} />
             )}
 
-            {activeGame === 'card-match' && (
-              <>
-                {gentleNotice && (
-                  <div className="gentle-banner anim-pop" role="status">
-                    {gentleNotice}
-                  </div>
-                )}
-                <CardGrid
-                  key={`grid-round-${roundNumber}`}
-                  cards={cards}
-                  onCardClick={handleCardClick}
-                  disabled={isPreviewing || isProcessing}
-                />
-              </>
+            {activeGame !== 'card-match' && activeGame !== 'storybook' && activeGame !== 'video-gallery' && activeGame !== 'childhood' && (
+              <div className="game-info-bar">
+                <span className="info-round">활동 #{roundNumber}</span>
+              </div>
             )}
 
             {activeGame === 'sequence' && currentSequenceScenario && (

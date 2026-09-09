@@ -64,9 +64,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
         <div className="hero-action-group">
           <button
-            onClick={() => onNavigateTab('cognitive')}
+            onClick={() => onNavigateTab('today')}
             className="hero-main-cta-btn senior-btn"
-            aria-label="오늘 학습 시작하기. 인지훈련 영역으로 이동합니다."
+            aria-label="오늘 학습 시작하기. 오늘의 추천 학습 코스로 이동합니다."
           >
             <Play size={32} fill="currentColor" />
             <span>오늘 학습 시작하기</span>

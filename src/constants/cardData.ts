@@ -2,12 +2,50 @@ import type { CardData, DifficultyConfig } from '../types/game';
 import { DailyContentManager } from '../utils/dailyContentManager';
 
 // Standard Difficulty Level Configurations
+export type DifficultyKey = 'easy' | 'medium' | 'hard';
+
+export interface DifficultySetting {
+  key: DifficultyKey;
+  label: string;
+  subLabel: string;
+  pairCount: number;
+  previewSeconds: number;
+  badgeColor: string;
+}
+
+export const DIFFICULTY_SETTINGS: Record<DifficultyKey, DifficultySetting> = {
+  easy: {
+    key: 'easy',
+    label: '쉬움',
+    subLabel: '6쌍 (12장) · 처음 하시는 분께 추천',
+    pairCount: 6,
+    previewSeconds: 0,
+    badgeColor: '#166534',
+  },
+  medium: {
+    key: 'medium',
+    label: '보통',
+    subLabel: '8쌍 (16장) · 기본 난이도',
+    pairCount: 8,
+    previewSeconds: 0,
+    badgeColor: '#92400E',
+  },
+  hard: {
+    key: 'hard',
+    label: '어려움',
+    subLabel: '10쌍 (20장) · 익숙해진 분께 추천',
+    pairCount: 10,
+    previewSeconds: 0,
+    badgeColor: '#991B1B',
+  },
+};
+
 export const DIFFICULTY_CONFIGS: Record<number, DifficultyConfig> = {
-  1: { level: 1, pairCount: 2, previewSeconds: 5, similarityLevel: 'distinct' },
-  2: { level: 2, pairCount: 3, previewSeconds: 4, similarityLevel: 'distinct' },
-  3: { level: 3, pairCount: 5, previewSeconds: 2, similarityLevel: 'medium' },
-  4: { level: 4, pairCount: 6, previewSeconds: 1, similarityLevel: 'similar' },
-  5: { level: 5, pairCount: 8, previewSeconds: 0, similarityLevel: 'similar' },
+  1: { level: 1, pairCount: 6, previewSeconds: 0, similarityLevel: 'distinct' },
+  2: { level: 2, pairCount: 8, previewSeconds: 0, similarityLevel: 'medium' },
+  3: { level: 3, pairCount: 10, previewSeconds: 0, similarityLevel: 'similar' },
+  4: { level: 4, pairCount: 10, previewSeconds: 0, similarityLevel: 'similar' },
+  5: { level: 5, pairCount: 10, previewSeconds: 0, similarityLevel: 'similar' },
 };
 
 // Dignified everyday objects with clear icons & respectful Korean labels
@@ -48,25 +86,21 @@ export const ALL_CARDS: CardData[] = [
 ];
 
 /**
- * Get card pairs according to difficulty level.
- * Uses today's approved AI content items (or fallback items if unapproved).
+ * Get card pairs according to pair count or difficulty key
  */
-export function getCardsForLevel(level: number): CardData[] {
-  const config = DIFFICULTY_CONFIGS[level] || DIFFICULTY_CONFIGS[1];
-  const pairCount = config.pairCount;
-
+export function getCardsForPairCount(pairCount: number): CardData[] {
   // Retrieve today's approved AI items (or fallback)
   const { payload } = DailyContentManager.getTodayApprovedContent();
 
   let pool: CardData[] = [];
-  if (payload && payload.items && payload.items.length > 0) {
+  if (payload && payload.items && payload.items.length >= pairCount) {
     pool = payload.items.map((item) => ({
       id: `ai-${item.id}`,
       pairId: item.id,
       emoji: item.emoji,
       label: item.label,
       category: item.category,
-      similarityGroup: level <= 2 ? 'distinct' : level === 3 ? 'medium' : 'similar'
+      similarityGroup: 'distinct'
     }));
   }
 
@@ -91,5 +125,13 @@ export function getCardsForLevel(level: number): CardData[] {
   });
 
   return cardList.sort(() => Math.random() - 0.5);
+}
+
+/**
+ * Get card pairs according to difficulty level.
+ */
+export function getCardsForLevel(level: number): CardData[] {
+  const config = DIFFICULTY_CONFIGS[level] || DIFFICULTY_CONFIGS[1];
+  return getCardsForPairCount(config.pairCount);
 }
 
