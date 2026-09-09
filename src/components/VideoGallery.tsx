@@ -26,15 +26,16 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
   const [activePersona, setActivePersona] = useState<VoicePersona>('clear-nature');
   const [isReadingAloud, setIsReadingAloud] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
 
   // Creation Modal States
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>('');
   const [newDesc, setNewDesc] = useState<string>('');
   const [newNarration, setNewNarration] = useState<string>('');
-  const [newEmoji, setNewEmoji] = useState<string>('🎥');
-  const [newVideoUrl, setNewVideoUrl] = useState<string>('https://www.youtube.com/embed/2OEL4P1Rz04');
-  const [newPersona, setNewPersona] = useState<VoicePersona>('clear-nature');
+  const [newEmoji, setNewEmoji] = useState<string>('🌾');
+  const [newVideoUrl, setNewVideoUrl] = useState<string>('https://www.youtube.com/embed/KvxFPGpKbos');
+  const [newPersona, setNewPersona] = useState<VoicePersona>('warm-mother');
 
   const startTimeRef = React.useRef<number>(performance.now());
 
@@ -112,6 +113,11 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
     soundManager.playMatch();
   };
 
+  const filteredVideos =
+    selectedCategory === '전체'
+      ? videos
+      : videos.filter((v) => v.category === selectedCategory);
+
   return (
     <div className="video-gallery-container anim-pop">
       {/* Header Banner */}
@@ -122,7 +128,7 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
         </div>
         <h2 className="video-gallery-title">🎥 추억 영상 앨범관 🌸</h2>
         <p className="video-gallery-sub">
-          영상 분위기에 맞추어 <strong>다르게 들리는 맞춤 해설 목소리</strong>와 함께 편안한 힐링 시간을 가져보세요.
+          영상 분위기에 맞추어 <strong>다르게 들리는 맞춤 해설 목소리</strong>와 함께 전원일기 다시보기 및 힐링 영상을 감상해보세요.
         </p>
 
         <div className="create-buttons-row">
@@ -135,6 +141,35 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
           </button>
         </div>
       </div>
+
+      {/* 영상 테마 / 전원일기 다시보기 선택 바 */}
+      {!activeVideo && (
+        <div className="video-category-bar">
+          <span className="cat-bar-label">영상 주제 선택:</span>
+          <div className="video-cat-buttons">
+            {[
+              { id: '전체', label: '🌟 전체 영상' },
+              { id: '전원일기 다시보기', label: '🌾 전원일기 다시보기 방' },
+              { id: '자연 힐링', label: '🌊 자연 힐링' },
+              { id: '고향 풍경', label: '🌸 고향 풍경' },
+              { id: '나만의 추억 영상', label: '🎥 나만의 추억 영상' },
+            ].map((cat) => (
+              <button
+                key={cat.id}
+                className={`vid-cat-btn ${selectedCategory === cat.id ? 'active' : ''} ${
+                  cat.id === '전원일기 다시보기' ? 'highlight-jeonwon' : ''
+                }`}
+                onClick={() => {
+                  soundManager.playFlip();
+                  setSelectedCategory(cat.id);
+                }}
+              >
+                <span>{cat.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Video Player Modal View */}
       {activeVideo ? (
@@ -244,8 +279,12 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
         </div>
       ) : (
         <div className="video-grid">
-          {videos.map((vid) => (
-            <div key={vid.id} className="video-card anim-pop" onClick={() => handleOpenVideo(vid)}>
+          {filteredVideos.map((vid) => (
+            <div
+              key={vid.id}
+              className={`video-card anim-pop ${vid.category === '전원일기 다시보기' ? 'card-jeonwon' : ''}`}
+              onClick={() => handleOpenVideo(vid)}
+            >
               <div className="video-cover-icon">{vid.coverEmoji}</div>
               <div className="video-info">
                 <span className="video-tag">{vid.category}</span>
@@ -284,12 +323,27 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
                     type="button"
                     onClick={() => {
                       soundManager.playFlip();
+                      setNewVideoUrl('https://www.youtube.com/embed/KvxFPGpKbos');
+                      setNewPersona('warm-mother');
+                      setNewEmoji('🌾');
+                      setNewTitle('🌾 나의 전원일기 고향 이야기');
+                    }}
+                    className={`sample-vid-btn ${newVideoUrl.includes('KvxFPGpKbos') ? 'active' : ''}`}
+                  >
+                    🌾 1. 전원일기 다시보기 (양촌리 김회장네 고향 이야기)
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundManager.playFlip();
                       setNewVideoUrl('https://www.youtube.com/embed/2OEL4P1Rz04');
                       setNewPersona('clear-nature');
+                      setNewEmoji('🌊');
                     }}
                     className={`sample-vid-btn ${newVideoUrl.includes('2OEL4P1Rz04') ? 'active' : ''}`}
                   >
-                    🌊 1. 맑은 시냇물과 숲속 새소리 영상 (맑고 청아한 목소리 추천)
+                    🌊 2. 맑은 시냇물과 숲속 새소리 영상 (맑고 청아한 목소리 추천)
                   </button>
 
                   <button
@@ -298,10 +352,11 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
                       soundManager.playFlip();
                       setNewVideoUrl('https://www.youtube.com/embed/L_LUpnjgPso');
                       setNewPersona('warm-mother');
+                      setNewEmoji('🌸');
                     }}
                     className={`sample-vid-btn ${newVideoUrl.includes('L_LUpnjgPso') ? 'active' : ''}`}
                   >
-                    🌸 2. 따뜻한 봄날 들꽃 풍경 영상 (다정하고 포근한 목소리 추천)
+                    🌸 3. 따뜻한 봄날 들꽃 풍경 영상 (다정하고 포근한 목소리 추천)
                   </button>
 
                   <button
@@ -310,10 +365,11 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
                       soundManager.playFlip();
                       setNewVideoUrl('https://www.youtube.com/embed/jfKfPfyJRdk');
                       setNewPersona('calm-sunset');
+                      setNewEmoji('🌅');
                     }}
                     className={`sample-vid-btn ${newVideoUrl.includes('jfKfPfyJRdk') ? 'active' : ''}`}
                   >
-                    🌅 3. 노을 지는 저녁 고향 마을 풍경 영상 (그윽하고 차분한 목소리 추천)
+                    🌅 4. 노을 지는 저녁 고향 마을 풍경 영상 (그윽하고 차분한 목소리 추천)
                   </button>
                 </div>
               </div>
@@ -514,21 +570,67 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
           margin-top: 8px;
         }
 
-        .create-video-btn {
-          min-width: 260px;
-          background-color: #9333EA;
-          color: #FFFFFF;
-          border: 3px solid #7E22CE;
-          box-shadow: 0 5px 0 #6B21A8;
-          border-radius: 18px;
-          padding: 14px 22px;
-          font-size: 20px;
-          font-weight: 800;
-          cursor: pointer;
+        .video-category-bar {
+          background: #F8FAFC;
+          border: 2px solid #E2E8F0;
+          border-radius: 20px;
+          padding: 12px 20px;
           display: flex;
           align-items: center;
-          justify-content: center;
+          gap: 14px;
+          width: 100%;
+          box-sizing: border-box;
+          flex-wrap: wrap;
+        }
+
+        .cat-bar-label {
+          font-size: 18px;
+          font-weight: 800;
+          color: #7E22CE;
+        }
+
+        .video-cat-buttons {
+          display: flex;
           gap: 10px;
+          flex-wrap: wrap;
+        }
+
+        .vid-cat-btn {
+          padding: 10px 18px;
+          font-size: 17px;
+          font-weight: 800;
+          border: 2px solid #CBD5E1;
+          border-radius: 14px;
+          background: #FFFFFF;
+          color: #334155;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .vid-cat-btn:hover {
+          background: #FAF5FF;
+          border-color: #C084FC;
+          transform: translateY(-2px);
+        }
+
+        .vid-cat-btn.active {
+          background: #9333EA;
+          border-color: #7E22CE;
+          color: #FFFFFF;
+          box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+        }
+
+        .vid-cat-btn.highlight-jeonwon {
+          border-color: #D97706;
+          background: #FFFBEB;
+          color: #B45309;
+        }
+
+        .vid-cat-btn.highlight-jeonwon.active {
+          background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+          border-color: #78350F;
+          color: #FFFFFF;
+          box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
         }
 
         .video-grid {
@@ -548,6 +650,18 @@ export const VideoGallery: React.FC<VideoGalleryProps> = ({ onCompleteRound }) =
           cursor: pointer;
           box-shadow: 0 6px 18px rgba(147, 51, 234, 0.12);
           transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .video-card.card-jeonwon {
+          border-color: #D97706;
+          background: linear-gradient(135deg, #FFFFFF 0%, #FFFBEB 100%);
+          box-shadow: 0 8px 22px rgba(217, 119, 6, 0.18);
+        }
+
+        .video-card.card-jeonwon:hover {
+          border-color: #B45309;
+          transform: translateY(-4px);
+          box-shadow: 0 14px 28px rgba(217, 119, 6, 0.28);
         }
 
         .video-card:hover {

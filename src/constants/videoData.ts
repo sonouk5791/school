@@ -3,7 +3,7 @@ import type { VoicePersona } from '../utils/ttsManager';
 export interface VideoItem {
   id: string;
   title: string;
-  category: string; // '자연 힐링', '고향 풍경', '나만의 추억 영상'
+  category: string; // '전원일기 다시보기', '자연 힐링', '고향 풍경', '나만의 추억 영상'
   coverEmoji: string;
   description: string;
   videoUrl: string;
@@ -13,6 +13,17 @@ export interface VideoItem {
 }
 
 export const INITIAL_VIDEOS: VideoItem[] = [
+  {
+    id: 'video-jeonwon-1',
+    title: '🌾 [전원일기 다시보기] 양촌리 김회장네와 정겨운 고향 이야기',
+    category: '전원일기 다시보기',
+    coverEmoji: '🌾',
+    description: 'MBC 전설의 국민 드라마 전원일기! 김회장님 댁과 양촌리 이웃들의 따뜻하고 구수한 사람 사는 이야기 다시보기 영상입니다.',
+    videoUrl: 'https://www.youtube.com/embed/KvxFPGpKbos',
+    narrationText: '양촌리 김회장님 댁과 일용이네, 복길이네가 함께 울고 웃던 따뜻한 전원일기입니다. 정겨운 고향 이웃들과 어머니의 푸근한 정이 마음을 따스하게 감싸줍니다.',
+    voicePersona: 'warm-mother',
+    voiceLabel: '🌸 따뜻하고 다정한 고향 목소리',
+  },
   {
     id: 'video-nature-1',
     title: '맑은 시냇물과 숲속 새소리 힐링 영상',
