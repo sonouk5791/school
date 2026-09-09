@@ -4,7 +4,6 @@ import {
   Sparkles,
   HelpCircle,
   Mail,
-  Music,
   CheckCircle2,
   ChevronRight,
   ChevronLeft,
@@ -12,8 +11,6 @@ import {
   Volume2,
   VolumeX,
   Heart,
-  Play,
-  Square,
   Image as ImageIcon,
   Gamepad2,
   Trophy,
@@ -24,7 +21,6 @@ import {
 import {
   CHILDHOOD_QUIZZES,
   REMINISCENCE_TOPICS,
-  CHILDHOOD_SONGS,
   RETRO_PHOTOS,
   type ChildhoodQuizItem,
   type ReminiscenceTopic,
@@ -32,13 +28,12 @@ import {
 } from '../constants/childhoodData';
 import { soundManager } from '../utils/soundEffect';
 import { ttsManager } from '../utils/ttsManager';
-import { songPlayer } from '../utils/songPlayer';
 
 interface ChildhoodMemoryGameProps {
   onCompleteActivity?: () => void;
 }
 
-type SubActivityMode = 'quiz' | 'photos' | 'aigame' | 'postcard' | 'song';
+type SubActivityMode = 'quiz' | 'photos' | 'aigame' | 'postcard';
 
 // ── 테마별 정밀 레트로 SVG/CSS 회상 그래픽 카드 렌더러 ──────────────────
 function renderChildhoodIllustration(type: string) {
@@ -524,65 +519,6 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
     });
   };
 
-  // ── [5] 동요 모드 상태 ─────────────────────────────────────────
-  const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
-  const [currentSongPhotoIndex, setCurrentSongPhotoIndex] = useState<number>(0);
-  const [isPlayingMelody, setIsPlayingMelody] = useState<boolean>(false);
-  const [isReadingLyrics, setIsReadingLyrics] = useState<boolean>(false);
-  const currentSong = CHILDHOOD_SONGS[currentSongIndex];
-
-  const handleSelectSong = (idx: number) => {
-    songPlayer.stop();
-    ttsManager.stop();
-    setIsPlayingMelody(false);
-    setIsReadingLyrics(false);
-    setCurrentSongIndex(idx);
-    setCurrentSongPhotoIndex(0);
-  };
-
-  useEffect(() => {
-    songPlayer.stop();
-    ttsManager.stop();
-    setIsPlayingMelody(false);
-    setIsReadingLyrics(false);
-  }, [activeMode, currentSongIndex]);
-
-  const handleToggleMelody = () => {
-    if (isPlayingMelody) {
-      songPlayer.stop();
-      setIsPlayingMelody(false);
-    } else {
-      ttsManager.stop();
-      setIsReadingLyrics(false);
-      setIsPlayingMelody(true);
-      songPlayer.playSong(
-        currentSong.id,
-        undefined,
-        () => setIsPlayingMelody(false)
-      );
-    }
-  };
-
-  const handleToggleLyrics = () => {
-    if (isReadingLyrics) {
-      ttsManager.stop();
-      setIsReadingLyrics(false);
-    } else {
-      songPlayer.stop();
-      setIsPlayingMelody(false);
-      setIsReadingLyrics(true);
-      const fullLyrics = `${currentSong.title}. ${currentSong.lyrics.join('. ')}`;
-      ttsManager.speak(fullLyrics, {
-        rate: 0.92,
-        pitch: 1.0,
-        persona: 'warm-mother',
-        onStart: () => setIsReadingLyrics(true),
-        onEnd: () => setIsReadingLyrics(false),
-        onError: () => setIsReadingLyrics(false),
-      });
-    }
-  };
-
   const numberBadges = ['①', '②', '③', '④'];
 
   return (
@@ -600,7 +536,7 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
           골목길 동무들과 뛰놀던 정겨운 놀이, 맛있는 간식, 학교 시절 풍경을 사진과 게임으로 만나보세요.
         </p>
 
-        {/* 5대 핵심 서브 활동 탭 */}
+        {/* 4대 핵심 서브 활동 탭 */}
         <nav className="activity-nav-tabs">
           <button
             className={`nav-tab-btn ${activeMode === 'quiz' ? 'active' : ''}`}
@@ -629,13 +565,6 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
           >
             <Mail size={22} />
             <span>💌 4. 추억 엽서</span>
-          </button>
-          <button
-            className={`nav-tab-btn ${activeMode === 'song' ? 'active' : ''}`}
-            onClick={() => setActiveMode('song')}
-          >
-            <Music size={22} />
-            <span>🎶 5. 동요와 사진첩</span>
           </button>
         </nav>
       </header>
@@ -1255,109 +1184,6 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
                   <span>멋진 추억 엽서가 완성되었습니다! 참 잘하셨습니다.</span>
                 </div>
               )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── [모드 5] 그 시절 동요와 사진첩 ── */}
-      {activeMode === 'song' && (
-        <section className="song-section anim-pop">
-          <div className="song-selector-bar">
-            {CHILDHOOD_SONGS.map((s, idx) => (
-              <button
-                key={s.id}
-                className={`song-select-btn ${idx === currentSongIndex ? 'active' : ''}`}
-                onClick={() => handleSelectSong(idx)}
-              >
-                <Music size={20} />
-                <span>{s.title}</span>
-              </button>
-            ))}
-          </div>
-
-          <div className="song-main-card">
-            <div className="song-card-left">
-              <div className="song-photo-frame">
-                <img
-                  src={currentSong.galleryPhotos?.[currentSongPhotoIndex]?.url || currentSong.photoUrl}
-                  alt={currentSong.title}
-                  className="song-main-img"
-                />
-                <div className="song-photo-caption-bar">
-                  <span className="caption-theme">{currentSong.theme}</span>
-                  <span className="caption-desc">
-                    {currentSong.galleryPhotos?.[currentSongPhotoIndex]?.caption || currentSong.photoCaption}
-                  </span>
-                </div>
-              </div>
-
-              {currentSong.galleryPhotos && currentSong.galleryPhotos.length > 1 && (
-                <div className="song-thumb-strip">
-                  {currentSong.galleryPhotos.map((photo, pIdx) => (
-                    <button
-                      key={pIdx}
-                      className={`song-mini-thumb ${pIdx === currentSongPhotoIndex ? 'active' : ''}`}
-                      onClick={() => setCurrentSongPhotoIndex(pIdx)}
-                      title={photo.caption}
-                    >
-                      <img src={photo.url} alt={photo.caption} />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="song-card-right">
-              <div className="song-header">
-                <div>
-                  <h3 className="song-title-large">{currentSong.title}</h3>
-                  <span className="song-composer">{currentSong.composer}</span>
-                </div>
-              </div>
-
-              <div className="song-control-bar">
-                <button
-                  className={`melody-play-btn ${isPlayingMelody ? 'playing' : ''}`}
-                  onClick={handleToggleMelody}
-                >
-                  {isPlayingMelody ? <Square size={24} /> : <Play size={24} />}
-                  <span>{isPlayingMelody ? '음악 멈춤' : '🎵 동요 음악 재생'}</span>
-                </button>
-
-                <button
-                  className={`lyrics-read-btn ${isReadingLyrics ? 'speaking' : ''}`}
-                  onClick={handleToggleLyrics}
-                >
-                  {isReadingLyrics ? <VolumeX size={24} /> : <Volume2 size={24} />}
-                  <span>{isReadingLyrics ? '낭독 멈춤' : '🔊 가사 읽어주기'}</span>
-                </button>
-              </div>
-
-              <div className="lyrics-box">
-                {currentSong.lyrics.map((line, lIdx) => (
-                  <p key={lIdx} className="lyric-line">{line}</p>
-                ))}
-              </div>
-
-              <div className="song-nav-row">
-                <button
-                  className="song-prev-btn"
-                  disabled={currentSongIndex === 0}
-                  onClick={() => handleSelectSong(currentSongIndex - 1)}
-                >
-                  <ChevronLeft size={22} />
-                  <span>이전 동요</span>
-                </button>
-                <button
-                  className="song-next-btn"
-                  disabled={currentSongIndex === CHILDHOOD_SONGS.length - 1}
-                  onClick={() => handleSelectSong(currentSongIndex + 1)}
-                >
-                  <span>다음 동요</span>
-                  <ChevronRight size={22} />
-                </button>
-              </div>
             </div>
           </div>
         </section>
