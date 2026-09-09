@@ -17,7 +17,9 @@ import {
   RotateCcw,
   Sliders,
   Zap,
+  Palette,
 } from 'lucide-react';
+import { ColoringCanvasStudio } from './ColoringCanvasStudio';
 import {
   CHILDHOOD_QUIZZES,
   REMINISCENCE_TOPICS,
@@ -33,7 +35,7 @@ interface ChildhoodMemoryGameProps {
   onCompleteActivity?: () => void;
 }
 
-type SubActivityMode = 'quiz' | 'photos' | 'aigame' | 'postcard';
+type SubActivityMode = 'quiz' | 'photos' | 'aigame' | 'coloring' | 'postcard';
 
 // ── 테마별 정밀 레트로 SVG/CSS 회상 그래픽 카드 렌더러 ──────────────────
 function renderChildhoodIllustration(type: string) {
@@ -243,6 +245,7 @@ function renderChildhoodIllustration(type: string) {
 
 export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onCompleteActivity }) => {
   const [activeMode, setActiveMode] = useState<SubActivityMode>('quiz');
+  const [activeColoringPhoto, setActiveColoringPhoto] = useState<{ url: string; title: string } | null>(null);
 
   // ── [1] 퀴즈 모드 상태 ─────────────────────────────────────────
   const [quizCategory, setQuizCategory] = useState<string>('전체');
@@ -252,6 +255,35 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
+
+  // ── [2] 추억 사진관 (사진으로 보기) 상태 ──────────────────────
+  const [photoCategory, setPhotoCategory] = useState<string>('전체');
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>(0);
+  const [isSpeakingPhotoStory, setIsSpeakingPhotoStory] = useState<boolean>(false);
+
+  // ── [3] AI와 추억 게임방 상태 ─────────────────────────────────
+  const [aiGameType, setAiGameType] = useState<'marbles' | 'ddakji'>('marbles');
+  const [marbleRound, setMarbleRound] = useState<number>(1);
+  const [playerMarbleScore, setPlayerMarbleScore] = useState<number>(0);
+  const [aiMarbleScore, setAiMarbleScore] = useState<number>(0);
+  const [marblePower, setMarblePower] = useState<number>(75);
+  const [isMarbleShooting, setIsMarbleShooting] = useState<boolean>(false);
+  const [marbleTurn, setMarbleTurn] = useState<'player' | 'ai' | 'roundEnd' | 'gameOver'>('player');
+  const [marbleAiDialogue, setMarbleAiDialogue] = useState<string>('할머니, 준비되셨나요? 가운데 타겟 구슬을 향해 힘을 맞춰 튕겨보세요!');
+
+  const [ddakjiRound, setDdakjiRound] = useState<number>(1);
+  const [playerDdakjiScore, setPlayerDdakjiScore] = useState<number>(0);
+  const [aiDdakjiScore, setAiDdakjiScore] = useState<number>(0);
+  const [isDdakjiSlapping, setIsDdakjiSlapping] = useState<boolean>(false);
+  const [isTargetFlipped, setIsTargetFlipped] = useState<boolean>(false);
+  const [ddakjiTurn, setDdakjiTurn] = useState<'player' | 'ai' | 'roundEnd' | 'gameOver'>('player');
+  const [ddakjiAiDialogue, setDdakjiAiDialogue] = useState<string>('할머니! 바람을 가르며 힘차게 바닥으로 내리쳐보세요!');
+
+  // ── [4] 추억 엽서 모드 상태 ─────────────────────────────────────
+  const [selectedTopic, setSelectedTopic] = useState<ReminiscenceTopic>(REMINISCENCE_TOPICS[0]);
+  const [chosenOptionIndex, setChosenOptionIndex] = useState<number>(0);
+  const [customCaregiverNote, setCustomCaregiverNote] = useState<string>('');
+  const [isPostcardSaved, setIsPostcardSaved] = useState<boolean>(false);
 
   const filteredQuizzes =
     quizCategory === '전체'
@@ -325,11 +357,7 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
     }
   };
 
-  // ── [2] 추억 사진관 (사진으로 보기) 상태 ──────────────────────
-  const [photoCategory, setPhotoCategory] = useState<string>('전체');
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>(0);
-  const [isSpeakingPhotoStory, setIsSpeakingPhotoStory] = useState<boolean>(false);
-
+  // ── [2] 추억 사진관 (사진으로 보기) 핸들러 ──────────────────────
   const filteredPhotos =
     photoCategory === '전체'
       ? RETRO_PHOTOS
@@ -354,27 +382,6 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
       });
     }
   };
-
-  // ── [3] AI와 추억 게임방 상태 ─────────────────────────────────
-  const [aiGameType, setAiGameType] = useState<'marbles' | 'ddakji'>('marbles');
-  
-  // 구슬치기 게임 상태
-  const [marbleRound, setMarbleRound] = useState<number>(1);
-  const [playerMarbleScore, setPlayerMarbleScore] = useState<number>(0);
-  const [aiMarbleScore, setAiMarbleScore] = useState<number>(0);
-  const [marblePower, setMarblePower] = useState<number>(75);
-  const [isMarbleShooting, setIsMarbleShooting] = useState<boolean>(false);
-  const [marbleTurn, setMarbleTurn] = useState<'player' | 'ai' | 'roundEnd' | 'gameOver'>('player');
-  const [marbleAiDialogue, setMarbleAiDialogue] = useState<string>('할머니, 준비되셨나요? 가운데 타겟 구슬을 향해 힘을 맞춰 튕겨보세요!');
-
-  // 딱지치기 게임 상태
-  const [ddakjiRound, setDdakjiRound] = useState<number>(1);
-  const [playerDdakjiScore, setPlayerDdakjiScore] = useState<number>(0);
-  const [aiDdakjiScore, setAiDdakjiScore] = useState<number>(0);
-  const [isDdakjiSlapping, setIsDdakjiSlapping] = useState<boolean>(false);
-  const [isTargetFlipped, setIsTargetFlipped] = useState<boolean>(false);
-  const [ddakjiTurn, setDdakjiTurn] = useState<'player' | 'ai' | 'roundEnd' | 'gameOver'>('player');
-  const [ddakjiAiDialogue, setDdakjiAiDialogue] = useState<string>('할머니! 바람을 가르며 힘차게 바닥으로 내리쳐보세요!');
 
   // 구슬치기 어르신 튕기기
   const handlePlayerShootMarble = () => {
@@ -503,12 +510,7 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
     setDdakjiAiDialogue('새 딱지로 다시 한번 대결해봐요! 힘차게 내리쳐보세요!');
   };
 
-  // ── [4] 추억 엽서 모드 상태 ─────────────────────────────────────
-  const [selectedTopic, setSelectedTopic] = useState<ReminiscenceTopic>(REMINISCENCE_TOPICS[0]);
-  const [chosenOptionIndex, setChosenOptionIndex] = useState<number>(0);
-  const [customCaregiverNote, setCustomCaregiverNote] = useState<string>('');
-  const [isPostcardSaved, setIsPostcardSaved] = useState<boolean>(false);
-
+  // ── [4] 추억 엽서 모드 핸들러 ─────────────────────────────────────
   const handleSavePostcard = () => {
     soundManager.playVictory();
     setIsPostcardSaved(true);
@@ -536,7 +538,7 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
           골목길 동무들과 뛰놀던 정겨운 놀이, 맛있는 간식, 학교 시절 풍경을 사진과 게임으로 만나보세요.
         </p>
 
-        {/* 4대 핵심 서브 활동 탭 */}
+        {/* 5대 핵심 서브 활동 탭 */}
         <nav className="activity-nav-tabs">
           <button
             className={`nav-tab-btn ${activeMode === 'quiz' ? 'active' : ''}`}
@@ -560,11 +562,21 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
             <span>🤖 3. AI와 추억 게임</span>
           </button>
           <button
+            className={`nav-tab-btn ${activeMode === 'coloring' ? 'active' : ''}`}
+            onClick={() => {
+              setActiveColoringPhoto(null);
+              setActiveMode('coloring');
+            }}
+          >
+            <Palette size={22} />
+            <span>🎨 4. 터치펜 색칠 교실</span>
+          </button>
+          <button
             className={`nav-tab-btn ${activeMode === 'postcard' ? 'active' : ''}`}
             onClick={() => setActiveMode('postcard')}
           >
             <Mail size={22} />
-            <span>💌 4. 추억 엽서</span>
+            <span>💌 5. 추억 엽서</span>
           </button>
         </nav>
       </header>
@@ -810,7 +822,7 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
                 <p className="story-box-text">{currentPhoto.story}</p>
               </div>
 
-              {/* 소리 및 음성 낭독 액션 바 */}
+              {/* 소리, 음성 낭독 및 터치펜 따라그리기 액션 바 */}
               <div className="photo-actions-row">
                 <button
                   className={`tts-read-story-btn ${isSpeakingPhotoStory ? 'speaking' : ''}`}
@@ -825,6 +837,22 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
                 >
                   <Sparkles size={22} />
                   <span>🔔 실제 소리 재생</span>
+                </button>
+                <button
+                  className="photo-color-btn"
+                  onClick={() => {
+                    ttsManager.stop();
+                    setIsSpeakingPhotoStory(false);
+                    setActiveColoringPhoto({
+                      url: currentPhoto.photoUrl,
+                      title: currentPhoto.title,
+                    });
+                    setActiveMode('coloring');
+                  }}
+                  title="이 사진을 밑그림 삼아 터치펜으로 직접 따라 그리고 색칠하기"
+                >
+                  <Palette size={22} />
+                  <span>🎨 이 사진 따라그리기 &amp; 색칠하기</span>
                 </button>
               </div>
 
@@ -1189,6 +1217,17 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
         </section>
       )}
 
+      {/* ── [모드 5] 터치펜 따라그리기 & 색칠하기 ── */}
+      {activeMode === 'coloring' && (
+        <section className="coloring-section anim-pop">
+          <ColoringCanvasStudio
+            initialPhotoUrl={activeColoringPhoto?.url}
+            initialPhotoTitle={activeColoringPhoto?.title}
+            onClose={() => setActiveMode('photos')}
+          />
+        </section>
+      )}
+
       {/* ── 통합 스타일 ── */}
       <style>{`
         .childhood-container {
@@ -1445,6 +1484,36 @@ export const ChildhoodMemoryGame: React.FC<ChildhoodMemoryGameProps> = ({ onComp
         .tts-speak-btn.speaking {
           background: #DC2626;
           color: #FFFFFF;
+        }
+
+        .photo-actions-row {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+          margin-bottom: 16px;
+        }
+
+        .photo-color-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 18px;
+          font-size: 17px;
+          font-weight: 800;
+          border: 2px solid #D97706;
+          border-radius: 14px;
+          background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+          color: #92400E;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(217, 119, 6, 0.2);
+          transition: all 0.2s;
+        }
+
+        .photo-color-btn:hover {
+          background: linear-gradient(135deg, #FDE68A 0%, #FCD34D 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 14px rgba(217, 119, 6, 0.3);
         }
 
         .quiz-content-grid {

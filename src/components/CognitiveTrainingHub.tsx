@@ -226,8 +226,8 @@ export const CognitiveTrainingHub: React.FC<CognitiveTrainingHubProps> = ({
           <div className="extra-room-card anim-pop">
             <div className="room-icon">🧒</div>
             <div className="room-info">
-              <h3 className="room-title">나의 어린 시절</h3>
-              <p className="room-desc">골목길 놀이 퀴즈와 AI 엽서 만들기, 구슬치기 게임을 즐겨보세요.</p>
+              <h3 className="room-title">나의 어린 시절 &amp; 터치펜 색칠교실</h3>
+              <p className="room-desc">골목길 놀이 퀴즈, 터치펜 따라그리기 및 색칠하기, AI 구슬치기 게임을 즐겨보세요.</p>
             </div>
             <button
               type="button"
