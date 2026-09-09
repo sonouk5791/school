@@ -448,3 +448,116 @@ export const CHILDHOOD_SONGS: ChildhoodSong[] = [
     ],
   },
 ];
+
+// ── 4. [사진으로 보기] 추억 사진관 갤러리 ─────────────────────────
+export interface RetroPhotoItem {
+  id: string;
+  category: '골목놀이' | '추억의물건' | '옛날학교' | '고향풍경';
+  title: string;
+  period: string; // 예: "1960~1970년대"
+  photoUrl: string;
+  themeSound: string;
+  soundLabel: string;
+  summary: string;
+  story: string;
+  conversationPrompt: string; // 보호자/동무와 함께 나눌 회상 질문
+}
+
+export const RETRO_PHOTOS: RetroPhotoItem[] = [
+  {
+    id: 'photo-1',
+    category: '골목놀이',
+    title: '동네 흙마당 유리구슬치기',
+    period: '1960 ~ 1970년대',
+    photoUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1200&auto=format&fit=crop&q=80',
+    themeSound: 'marbles',
+    soundLabel: '🔮 유리구슬 부딪히는 맑은 소리',
+    summary: '주머니 가득 알록달록 무지개 유리알을 넣고 다니며 온종일 쪼그려 앉아 놀던 골목길',
+    story: '마당 한가운데 나뭇가지로 둥근 원을 그리고, 손가락 끝에 온 힘을 모아 톡 튕기면 구슬이 "딱!" 소리를 내며 상대방 구슬을 맞혔습니다. 해 질 녘 어머니가 "밥 먹어라~" 부르실 때까지 시간 가는 줄 몰랐던 정겨운 놀이입니다.',
+    conversationPrompt: '어르신께서는 어릴 때 유리구슬을 바지 주머니에 몇 개나 넣고 다니셨나요?',
+  },
+  {
+    id: 'photo-2',
+    category: '골목놀이',
+    title: '두꺼운 달력 종이로 접은 왕딱지 대결',
+    period: '1970년대 골목길',
+    photoUrl: 'https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=1200&auto=format&fit=crop&q=80',
+    themeSound: 'ddakji',
+    soundLabel: '📦 딱지 바닥 치는 파열음 ("착-팡!")',
+    summary: '두툼한 달력 종이를 꽁꽁 접어 상대방 딱지를 단숨에 뒤집던 승부',
+    story: '딱지가 잘 뒤집히지 않게 하려고 발로 꼭꼭 밟고, 침을 살짝 바르기도 했습니다. 힘차게 내리칠 때 바람을 가르며 "팡!" 하고 바닥을 때리던 그 시원한 손맛이 지금도 생생합니다.',
+    conversationPrompt: '딱지를 많이 따서 신발 상자 가득 모아두었던 기억이 있으신가요?',
+  },
+  {
+    id: 'photo-3',
+    category: '옛날학교',
+    title: '교실 조개탄 난로와 노란 양은 도시락',
+    period: '1960 ~ 1970년대 국민학교',
+    photoUrl: 'https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=1200&auto=format&fit=crop&q=80',
+    themeSound: 'classroom-stove',
+    soundLabel: '🔥 난로 위 장작 타는 소리와 오르간',
+    summary: '겨울철 쉬는 시간마다 도시락 위치를 위아래로 바꿔주던 따스한 교실',
+    story: '난로 바로 위에 놓인 맨 아래 도시락은 바닥이 노릇노릇 누룽지가 되고, 점심시간이 가까워지면 교실 가득 구수한 볶은 김치 냄새가 진동했습니다. 친구들과 옹기종기 모여 반찬을 나누어 먹던 그 맛은 세상 무엇과도 바꿀 수 없었습니다.',
+    conversationPrompt: '학창 시절 도시락 밑에 계란 프라이를 숨겨오셨던 날이 생각나시나요?',
+  },
+  {
+    id: 'photo-4',
+    category: '옛날학교',
+    title: '음악 시간 발풍금 오르간과 합창',
+    period: '1960년대 교실',
+    photoUrl: 'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=1200&auto=format&fit=crop&q=80',
+    themeSound: 'reed-organ',
+    soundLabel: '🎹 선생님의 다정한 발풍금 화음',
+    summary: '양발로 페달을 밟으며 건반을 누르면 온 교실에 울려 퍼지던 정겨운 멜로디',
+    story: '선생님께서 발을 구르며 오르간을 쳐주시면, 모든 아이들이 목청 높여 "나의 살던 고향은~"을 불렀습니다. 낡은 나무 건반에서 나던 따뜻하고 푸근한 소리는 언제 들어도 마음을 뭉클하게 합니다.',
+    conversationPrompt: '학창 시절 음악 시간에 가장 좋아하셨던 노래는 무엇이었나요?',
+  },
+  {
+    id: 'photo-5',
+    category: '추억의물건',
+    title: '연탄불 국자 위 달콤한 달고나 뽑기',
+    period: '1970년대 문방구 앞',
+    photoUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80',
+    themeSound: 'dalgona',
+    soundLabel: '⭐ 달고나 바늘 톡톡 소리',
+    summary: '설탕에 소다를 콕 찍어 부풀려 별 모양을 조심조심 떼어내던 달콤한 간식',
+    story: '바늘 끝에 침을 묻혀가며 별이나 하트 모양 테두리를 톡톡 두드려 금을 냈습니다. 조각이 깨지지 않고 완벽하게 떨어져 나오면 주인아주머니가 "하나 더!"를 주시며 환하게 웃어주셨습니다.',
+    conversationPrompt: '어릴 때 집에서 국자를 태워 먹어 어머니께 야단맞으셨던 적이 있으신가요?',
+  },
+  {
+    id: 'photo-6',
+    category: '옛날학교',
+    title: '가을 운동회 만국기와 박 터뜨리기',
+    period: '1970년대 초등학교 운동장',
+    photoUrl: 'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?w=1200&auto=format&fit=crop&q=80',
+    themeSound: 'sports-day',
+    soundLabel: '🎊 청군 백군 함성과 축하 팡파르',
+    summary: '머리에 청군 백군 띠를 두르고 온 동네 어르신들과 함께 응원하던 큰 축제',
+    story: '하늘 높이 매달린 큰 바구니를 향해 콩주머니를 던져 박이 쩍 갈라질 때, 오색 꽃가루와 함께 "축 우승" 현수막이 펼쳐지던 순간의 환호성은 온 동네를 들썩이게 만들었습니다.',
+    conversationPrompt: '운동회 날 점심시간에 돗자리 깔고 가족들과 함께 드셨던 사이다와 김밥 기억나시나요?',
+  },
+  {
+    id: 'photo-7',
+    category: '추억의물건',
+    title: '골목길 장날 "뻥이요~" 뻥튀기 기계',
+    period: '1960 ~ 1970년대 장터',
+    photoUrl: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1200&auto=format&fit=crop&q=80',
+    themeSound: 'popped-rice',
+    soundLabel: '💥 "뻥이요~" 구수한 폭발음',
+    summary: '쇠 깡통에 쌀과 옥수수를 담아 줄 세워놓고 귀를 틀어막던 정겨운 장날',
+    story: '아저씨가 쇠막대로 밸브를 젖히며 "뻥이요~!" 외치면 모두 귀를 꽉 막았습니다. "콰앙!" 하는 소리와 함께 하얀 김이 피어오르고, 그물망 가득 고소한 튀밥이 쏟아져 나오던 광경은 최고의 볼거리였습니다.',
+    conversationPrompt: '따끈따끈한 튀밥을 두 손 가득 쥐고 친구들과 나누어 드셨던 맛이 기억나시나요?',
+  },
+  {
+    id: 'photo-8',
+    category: '고향풍경',
+    title: '시원한 개울가 멱감기와 물장구',
+    period: '1960년대 시골 마을',
+    photoUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&auto=format&fit=crop&q=80',
+    themeSound: 'river-play',
+    soundLabel: '🏊 첨벙첨벙 시원한 개울물 소리',
+    summary: '여름날 바지를 걷어붙이고 송사리를 잡으며 더위를 잊던 맑은 냇가',
+    story: '다리 밑 그늘에 앉아 발을 담그고, 돌을 들추어 가재와 피라미를 잡았습니다. 물장구를 치며 옷이 흠뻑 젖어도 햇볕에 바위를 말리며 웃음꽃을 피우던 순수한 시절의 풍경입니다.',
+    conversationPrompt: '더운 여름날 동무들과 냇가에서 멱감고 헤엄치던 추억이 있으신가요?',
+  },
+];
