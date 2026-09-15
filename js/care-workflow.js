@@ -342,7 +342,7 @@ function setup5W1HFormEvents(formId, prefix) {
       program: prg,
       durationSeconds: dur * 60,
       pre: { mood: '😊 보통', health: '양호', willingness: '적극적', notes: '' },
-      observation: { participation: '적극적', focus: '높음', performance: '독립 수행', emotion: ['즐거움', '웃음'], communication: '자발적으로 대화함', behavior: ['없음'], notes: '' },
+      observation: { participation: '미기록', focus: '미기록', performance: '미기록', emotion: [], communication: '미기록', behavior: [], notes: '' },
       evaluation: { satisfaction: '😊 매우 좋음', focus: '높음', performance: '독립 수행', next: '같은 활동 유지' }
     };
 
@@ -930,6 +930,14 @@ LessonEngine.finishLessonAndSave=()=>{
 };
 LessonEngine.exitLesson=()=>{if(active&&!confirm('진행 중인 수업을 종료할까요? 저장하지 않은 관찰과 평가는 사라집니다.'))return;active=null;previewLessonId=null;originalExit();};
 
+window.CareAutomationBridge={
+ getActive:()=>active?structuredClone(active):null,
+ getData:()=>load(), getPerson:()=>person, begin,
+ save:commit, draft, show:modal, close, detail, go,
+ updateActive:patch=>{if(active)Object.assign(active,patch)},
+ resume:s=>{if(active)return false;active=structuredClone(s.active);setActivePerson(active.elder_id);previewLessonId=null;close();originalStart(active.programId);LessonEngine.startTime=Date.now();LessonEngine.currentStepIndex=s.step;LessonEngine.selectedAnswers=s.answers||{};LessonEngine.renderCurrentStep();return true},
+ finish:()=>{active=null;previewLessonId=null;originalExit();close();go('records')}
+};
 document.addEventListener('DOMContentLoaded',()=>{
 try{db=load(); setActivePerson(getActivePerson(db.elders));}catch(e){alert('관리 데이터를 읽지 못했습니다. 데이터를 지우지 않고 중단합니다. '+e.message);return;}
 syncPrograms();MonthlySchool.install();installRequestedMonth();$('main.main-wrapper').insertAdjacentHTML('afterbegin','<section id="careRoot" class="care-root"></section>');document.body.insertAdjacentHTML('beforeend','<dialog id="careDialog" class="care-dialog"></dialog><div id="careToast" role="status" aria-live="polite"></div>');
@@ -947,7 +955,7 @@ const actions={
   begin:()=>begin(id),
   pre:()=>pre(id),
   close,
-  launch:()=>{if(!active)return;const p=window.LESSON_CATALOG.find(l=>l.id===id);if(!p)return;active.program=db.programs.find(x=>x.id===id)?.title||p.title;active.programId=id;if(scheduleContext&&id!==scheduleContext.programId)active.schedule_id=null;active.startedAt=Date.now();close();originalStart(id);},
+  launch:()=>{if(!active)return;const p=window.LESSON_CATALOG.find(l=>l.id===id);if(!p)return;active.program=db.programs.find(x=>x.id===id)?.title||p.title;active.programId=id;if(scheduleContext&&id!==scheduleContext.programId)active.schedule_id=null;active.startedAt=Date.now();close();originalStart(id);active.difficulty=window.SchoolDifficulty?.apply(id)||'콘텐츠 기본';},
   observe:observation,
   evaluate,
   replay:()=>LessonEngine.renderCurrentStep(),
@@ -999,9 +1007,9 @@ else if(f.id==='quickJournalForm'||f.id==='directJournalForm'){
     date: data.date || today(),
     program: data.program || 'AI 인지활동',
     durationSeconds: durationSec,
-    pre: { mood: '😊 보통', health: '양호', willingness: '참여 확인됨', notes: '' },
-    observation: { participation: '적극적', focus: '높음', performance: '독립 수행', emotion: ['즐거움', '웃음'], communication: '자발적으로 대화함', behavior: ['없음'], notes: '' },
-    evaluation: { satisfaction: '😊 매우 좋음', focus: '높음', performance: '독립 수행', next: '같은 활동 유지' },
+    pre: { mood: '미기록', health: '미기록', willingness: '미기록', notes: '' },
+    observation: { participation: '미기록', focus: '미기록', performance: '미기록', emotion: [], communication: '미기록', behavior: [], notes: '' },
+    evaluation: { satisfaction: '미기록', focus: '미기록', performance: '미기록', next: '미기록' },
     answers: {},
     aiReport: data.aiReport,
     reviewed: true,
@@ -1015,7 +1023,7 @@ else if(f.id==='quickJournalForm'||f.id==='directJournalForm'){
   }
 }
 else if(f.id==='elderForm'){if(!data.name.trim()){f.elements.name.focus();return;}if(data.birth&&data.birth>today()){alert('생년월일은 오늘 이후일 수 없습니다.');return;}if(Number(data.attention)<0){alert('집중 가능 시간은 0 이상이어야 합니다.');return;}const id=f.dataset.id||uid(),item={...elder(id),...data,name:data.name.trim(),elder_id:id};for(let i=0;i<4;i++)item['consent'+i]=!!data['consent'+i];if(commit(d=>{const index=d.elders.findIndex(e=>e.elder_id===id);if(index<0)d.elders.push(item);else d.elders[index]=item;})){setActivePerson(id);close();go('elders');}}
-else if(f.id==='preForm'){if(data.willingness==='거부'){alert('참여를 거부하셨습니다. 수업을 시작하지 않고 쉬실 수 있도록 도와주세요.');return;}active={schedule_id:scheduleContext?.id||null,session_id:uid(),elder_id:f.dataset.id,pre:data,observation:{},createdAt:new Date().toISOString(),date:today()};if(scheduleContext?.group){modal('60분 활동 준비',`<h3>${esc(scheduleContext.title)}</h3><p>인사 5분 → 회상 15분 → 주제 활동 20분 → 표현 15분 → 마무리 5분</p>${btn('콩이와 60분 활동 시작','launch',scheduleContext.programId,'primary')}`);}else if(pending){const targetId=pending;pending=null;const p=window.LESSON_CATALOG.find(l=>l.id===targetId);if(p){active.program=db.programs.find(x=>x.id===targetId)?.title||p.title;active.programId=targetId;active.startedAt=Date.now();close();originalStart(targetId);}else{programs();}}else programs();}
+else if(f.id==='preForm'){if(data.willingness==='거부'){alert('참여를 거부하셨습니다. 수업을 시작하지 않고 쉬실 수 있도록 도와주세요.');return;}active={schedule_id:scheduleContext?.id||null,session_id:uid(),elder_id:f.dataset.id,pre:data,observation:{},createdAt:new Date().toISOString(),date:today()};if(scheduleContext?.group){modal('60분 활동 준비',`<h3>${esc(scheduleContext.title)}</h3><p>인사 5분 → 회상 15분 → 주제 활동 20분 → 표현 15분 → 마무리 5분</p>${btn('콩이와 60분 활동 시작','launch',scheduleContext.programId,'primary')}`);}else if(pending){const targetId=pending;pending=null;const p=window.LESSON_CATALOG.find(l=>l.id===targetId);if(p){active.program=db.programs.find(x=>x.id===targetId)?.title||p.title;active.programId=targetId;active.startedAt=Date.now();close();originalStart(targetId);active.difficulty=window.SchoolDifficulty?.apply(targetId)||'콘텐츠 기본';}else{programs();}}else programs();}
 else if(f.id==='observationForm'){const fd=new FormData(f),behavior=fd.getAll('behavior');if(behavior.includes('없음')&&behavior.length>1){alert('특이 행동의 없음은 단독으로 선택해주세요.');return;}active.observation={...data,emotion:fd.getAll('emotion'),behavior};close();}
 else if(f.id==='evaluationForm'){if(!active)return;const session={...active,monthlyTracking:MonthlySchool.getTracking(),plannedMinutes:LessonEngine.currentLesson?.plannedMinutes||null,evaluation:data,durationSeconds:Math.round((Date.now()-active.startedAt)/1000),answers:{...LessonEngine.selectedAnswers},aiReport:'',reviewed:false};session.aiReport=draft(session,'5w1h_standard');if(commit(d=>{if(!d.sessions.some(s=>s.session_id===session.session_id))d.sessions.push(session);})){active=null;originalExit();close();go('records');detail(session.session_id);}}
 else if(f.id==='journalForm'){if(!data.aiReport.trim()){alert('초안을 작성하거나 수업일지를 입력해주세요.');return;}if(commit(d=>{const s=d.sessions.find(s=>s.session_id===f.dataset.id);s.aiReport=data.aiReport;s.reviewed=true;s.updatedAt=new Date().toISOString();})){close();go('journals');}}

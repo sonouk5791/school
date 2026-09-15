@@ -1038,3 +1038,4 @@ body {
   }
 }
 
+/* 수업 버튼을 가리는 바로가기는 수업 중에만 숨깁니다. */ body:has(#lessonViewport.active) #floatingActionGroup{display:none;}

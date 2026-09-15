@@ -1660,7 +1660,7 @@ const LESSON_CATALOG = [
         "stepNum": 6,
         "aiMessage": "어깨춤이 절로 나고 가슴이 시원해지는 옛 노래와 우리 민요를 추천해 드릴게요.",
         "screenText": "어깨춤이 절로 나고 가슴이 시원해지는 옛 노래와 우리 민요를 추천해 드릴게요.",
-        "voiceScript": "신명나는 태평가와 아리랑, 그리고 고향의 봄은 들을 때마다 마음을 젊게 만들고 활력을 불어넣어 주는 만병통치약이랍니다.",
+        "voiceScript": "신명나는 태평가와 아리랑, 그리고 고향의 봄은 들을 때마다 추억을 떠올리며 즐겁게 함께 부를 수 있는 노래랍니다.",
         "helpScript": "추천 옛 노래의 매력을 골라보세요.",
         "prompt": "어깨춤이 절로 나는 옛 노래의 매력을 알아보세요.",
         "imageSrc": "assets/images/senior-daylight-old-songs.png",
