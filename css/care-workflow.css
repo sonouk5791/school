@@ -1,0 +1,697 @@
+/* Inherit the original warm classroom palette. */
+[hidden]{display:none!important}.care-root{margin-bottom:36px;scroll-margin-top:190px}.care-nav{display:flex;gap:8px;overflow:auto;padding:10px 24px;border-top:1px solid var(--border-soft)}.care-btn{font:inherit;font-size:18px;font-weight:bold;cursor:pointer;border:1px solid #d8cbb9;border-radius:14px;background:#fffaf2;color:#3c342c;min-height:48px;padding:12px 20px;white-space:normal}.care-btn:hover{background:#e6efdf;border-color:#6a8560}.care-btn.primary{background:#54754f;color:white;border-color:#54754f}.care-nav .care-btn{white-space:nowrap;flex-shrink:0;border:0;background:transparent}.care-nav [aria-current=page]{background:#e6efdf}.care-heading{display:flex;justify-content:space-between;gap:24px;align-items:center;padding:28px 0}.care-heading h1{font-size:30px;margin:8px 0}.care-heading p{font-size:18px;color:#665b50}.care-eyebrow{color:#54754f!important;font-size:15px!important;font-weight:bold}.care-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.care-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:20px 0}.care-card{background:#fffdf9;border:1px solid #e8ded0;border-radius:22px;padding:24px;margin-bottom:18px;box-shadow:0 4px 12px #583d1b06}.care-card h2{font-size:23px;margin-bottom:12px}.care-card p{margin:8px 0;font-size:18px}.stats .care-card{background:#eef3e9}.stats .care-card:nth-child(2){background:#eaf2f6}.stats .care-card:nth-child(3){background:#fff1df}.stats strong{font-size:38px}.care-avatar{font-size:48px}.care-dialog{border:1px solid #d5cab9;border-radius:24px;background:#fffdf9;color:#302921;margin:auto;width:min(940px,94vw);max-height:90vh;padding:28px;font:inherit;overflow:auto;box-shadow:0 24px 80px #30200b33}.care-dialog::backdrop{background:#30292088}.care-dialog header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px}.care-dialog h2{font-size:27px}.care-dialog h3{margin:24px 0 14px;font-size:22px}.care-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.care-field{display:flex;flex-direction:column;gap:7px;font-size:18px;margin:12px 0;flex:1}.care-field input,.care-field select,.care-field textarea{width:100%;min-height:50px;border:1px solid #bdb3a7;border-radius:10px;padding:12px;background:white;color:#302921;font:inherit;box-sizing:border-box}.care-field textarea{resize:vertical;line-height:1.8}.care-field.full{grid-column:1/-1}.care-choices{border:0;border-bottom:1px solid #e8ded0;padding:16px 0;display:flex;flex-wrap:wrap;gap:12px}.care-choices legend{padding-top:20px;font-size:22px;font-weight:bold}.care-choices label,.care-check{display:inline-flex;align-items:center;gap:10px;font-size:20px;padding:10px}.care-choices label{border:1px solid #ddd0bd;border-radius:12px;cursor:pointer}.care-choices label:has(input:checked){background:#e5efde;border-color:#54754f}.care-choices input,.care-check input{width:22px;height:22px;accent-color:#54754f}.category{font-size:28px;min-height:148px;background:#eff3e9}.category small{display:block;font-size:18px;margin-top:12px}.care-filters{display:flex;gap:20px}.record-row{display:flex;justify-content:space-between;align-items:center;gap:20px}.care-chart{display:flex;align-items:flex-end;gap:16px;overflow:auto;min-height:150px;padding:20px 0}.care-chart>div{text-align:center;min-width:55px}.care-chart span{display:block;width:32px;background:#75946a;border-radius:7px 7px 0 0;margin:auto}.care-chart small{font-size:13px}.care-note{color:#685e53;font-size:16px}.print-document p{white-space:pre-wrap}.report-photo{max-width:100%;max-height:360px;object-fit:contain}.lesson-bottom-nav{flex-wrap:wrap}.lesson-bottom-nav .care-btn{font-size:20px;min-height:52px}#careToast{position:fixed;bottom:12px;left:20px;z-index:500;background:#e5efde;border-radius:12px}#careToast:empty{display:none}#careToast:not(:empty){padding:14px}details{margin:24px 0}summary{cursor:pointer}.care-dialog small{display:block}.care-dialog form>button{margin-top:24px}.printed-text{display:none}
+@media(max-width:900px){.care-heading{flex-direction:column;align-items:flex-start}.care-filters{flex-wrap:wrap}.care-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.care-nav{padding:8px}.care-root{scroll-margin-top:230px}.lesson-bottom-nav{gap:8px;padding:12px}.lesson-bottom-nav .care-btn{padding:8px 12px}.care-heading h1{font-size:26px}}
+@media(max-width:600px){.care-grid,.care-form-grid{grid-template-columns:1fr}.care-dialog{padding:18px}.record-row{flex-direction:column;align-items:flex-start}.care-filters{display:block}.care-heading h1{font-size:24px}}
+@media print{body>*{display:none!important}body:has(.care-dialog[open])>.care-dialog[open]{display:block!important;position:static;width:100%;max-height:none;overflow:visible;border:0;box-shadow:none;padding:0}body:not(:has(.care-dialog[open]))>.main-wrapper{display:block!important;width:100%;max-width:none;padding:0}.hero-classroom,.section-lessons,.care-dialog>header,.no-print,.care-actions,.care-nav,.care-btn,.care-filters,details{display:none!important}.care-root{margin:0}.care-card{break-inside:avoid;box-shadow:none}.care-grid{display:block}textarea{display:none!important}.printed-text{display:block;white-space:pre-wrap;overflow-wrap:anywhere}body{font-size:12pt;background:white}.care-dialog::backdrop{background:white}}
+
+/* ==========================================================================
+   관리자 동의 현황 대시보드 방 (Consent Dashboard Room)
+   ========================================================================== */
+
+/* ── 방 컨테이너 ── */
+.consent-dashboard-room {
+  background: #FFFFFF;
+  border: 2.5px solid #D4E3CF;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(84,117,79,0.09);
+  margin: 20px 0 28px;
+}
+
+/* ── 방 헤더 ── */
+.cdn-room-header {
+  background: linear-gradient(135deg, #EEF3E9 0%, #E6EFDF 100%);
+  border-bottom: 2px solid #D4E3CF;
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cdn-room-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cdn-room-icon {
+  font-size: 32px;
+  width: 56px;
+  height: 56px;
+  background: #FFFFFF;
+  border: 2px solid #C4D7C0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cdn-room-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2B3D28;
+  margin-bottom: 4px;
+}
+
+.cdn-room-desc {
+  font-size: 15px;
+  color: #5C7258;
+  font-weight: 600;
+}
+
+/* 전체 동의율 배지 */
+.cdn-overall-badge {
+  font-size: 17px;
+  font-weight: 800;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.cdn-overall-badge.badge-full { background: #E5EFDE; color: #2E5C28; border: 2px solid #A8C8A0; }
+.cdn-overall-badge.badge-mid  { background: #FFF3C4; color: #7A5700; border: 2px solid #E8C84A; }
+.cdn-overall-badge.badge-low  { background: #FFE8D6; color: #B94000; border: 2px solid #F4A87A; }
+
+/* ── 전체 진행 게이지 ── */
+.cdn-gauge-wrap {
+  padding: 18px 28px 14px;
+  background: #F9FCF7;
+  border-bottom: 1.5px solid #E4EEE0;
+}
+
+.cdn-gauge-track {
+  width: 100%;
+  height: 22px;
+  background: #E8EDE6;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cdn-gauge-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #75946A 0%, #54754F 100%);
+  border-radius: 9999px;
+  transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  min-width: 30px;
+}
+
+.cdn-gauge-text {
+  font-size: 12px;
+  font-weight: 800;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.cdn-gauge-meta {
+  font-size: 14px;
+  color: #6B7F68;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: right;
+}
+
+/* ── 항목별 요약 바 ── */
+.consent-summary-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 18px 28px;
+  border-bottom: 1.5px solid #E4EEE0;
+  background: #FAFCF8;
+}
+
+.consent-summary-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border-right: 1px solid #E4EEE0;
+}
+.consent-summary-col:last-child { border-right: none; }
+
+.cs-icon { font-size: 22px; }
+
+.cs-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4A5E47;
+}
+
+.cs-bar-wrap {
+  width: 100%;
+  height: 8px;
+  background: #E0E9DC;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.cs-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #75946A, #54754F);
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+  min-width: 4px;
+}
+
+.cs-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: #3C5239;
+}
+
+/* ── 어르신 카드 그리드 ── */
+.consent-elder-grid {
+  padding: 20px 24px;
+  margin: 0 !important;
+  background: #F9FCF7;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.consent-elder-card {
+  background: #FFFFFF;
+  border: 2px solid #E0EAD8;
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 0.2s ease;
+  margin-bottom: 0 !important;
+}
+
+.consent-elder-card:hover {
+  border-color: #75946A;
+  box-shadow: 0 6px 20px rgba(84,117,79,0.14);
+  transform: translateY(-2px);
+}
+
+/* 카드 상단: 아바타 + 이름 + 배지 */
+.consent-elder-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.consent-elder-avatar {
+  font-size: 36px;
+  width: 52px;
+  height: 52px;
+  background: #EEF3E9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.consent-elder-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.consent-elder-name {
+  font-size: 19px;
+  font-weight: 800;
+  color: #2B3D28;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.consent-elder-sub {
+  font-size: 14px;
+  color: #6B7F68;
+  font-weight: 600;
+}
+
+/* 전체/일부/없음 배지 */
+.consent-elder-badge {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.badge-all     { background: #E5EFDE; color: #2E5C28; border: 1.5px solid #A8C8A0; }
+.badge-partial { background: #FFF3C4; color: #7A5700; border: 1.5px solid #E8C84A; }
+.badge-none    { background: #FFE8D6; color: #B94000; border: 1.5px solid #F4A87A; }
+
+/* ── 동의 칩 행 ── */
+.consent-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.consent-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1.5px solid transparent;
+  transition: all 0.15s;
+}
+
+.chip-ok {
+  background: #E5EFDE;
+  color: #2E5C28;
+  border-color: #A8C8A0;
+}
+
+.chip-no {
+  background: #F5F1EC;
+  color: #8C7B6B;
+  border-color: #D8CEB8;
+}
+
+.chip-icon { font-size: 14px; }
+.chip-label { }
+.chip-status {
+  font-size: 12px;
+  font-weight: 900;
+}
+
+/* ── 카드 하단: 동의 수정 버튼 ── */
+.consent-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #EBE5DC;
+  padding-top: 12px;
+}
+
+.consent-edit-btn {
+  font-size: 15px !important;
+  min-height: 38px !important;
+  padding: 8px 18px !important;
+  background: #F0F5EE;
+  color: #3C5239;
+  border-color: #C4D7C0;
+}
+
+.consent-edit-btn:hover {
+  background: #54754F;
+  color: #FFFFFF;
+  border-color: #54754F;
+}
+
+/* ── 빈 상태 ── */
+.consent-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 24px;
+  color: #7A7060;
+  background: #FAFCF8 !important;
+}
+
+/* 반응형 */
+@media (max-width: 700px) {
+  .consent-summary-row { grid-template-columns: repeat(2, 1fr); }
+  .cdn-room-header { flex-direction: column; align-items: flex-start; }
+  .consent-elder-grid { padding: 16px; }
+}
+@media (max-width: 480px) {
+  .consent-summary-row { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 12px 16px; }
+  .cdn-room-header { padding: 16px; }
+  .cdn-gauge-wrap { padding: 14px 16px; }
+}
+
+/* Keep every menu reachable without a horizontal scrollbar. */
+.site-header .header-container{flex-wrap:wrap;max-width:100%;gap:16px}.site-header .header-actions,.site-header .main-nav{flex-wrap:wrap;min-width:0}.care-nav{display:flex;flex-wrap:wrap;overflow:visible;gap:6px;padding:10px 20px}.care-nav .care-btn{flex:1 1 auto;min-width:0;padding:12px 14px}.consent-room-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}.consent-room-grid button{min-height:108px;font-size:19px;background:#edf3e8}.consent-paper{background:white;padding:26px;border:1px solid #d8cbb9;line-height:1.9}.consent-paper h2{text-align:center}.consent-paper p{white-space:pre-wrap;overflow-wrap:anywhere}.consent-paper h3{margin:16px 0 8px}.consent-file-list{display:grid;gap:10px;margin:14px 0}.consent-file-list a{overflow-wrap:anywhere}.consent-document-row{border-top:1px solid #ddd;padding:18px 0}.consent-room-note{font-size:16px;color:#665b50}.consent-paper dl{display:grid;grid-template-columns:150px 1fr;gap:8px}.consent-paper dd{white-space:pre-wrap}.consent-preview{margin-top:20px}.consent-paper .signature-space{min-height:65px;border-bottom:1px solid #888}.consent-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:1000px){.consent-room-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.site-header .header-container{justify-content:center}.care-nav .care-btn{flex:1 1 21%;font-size:17px}}@media(max-width:600px){.consent-form-grid{grid-template-columns:1fr}.care-nav .care-btn{flex-basis:40%}.consent-paper{padding:14px}.consent-paper dl{grid-template-columns:1fr}.consent-room-grid{grid-template-columns:1fr 1fr}}@media print{.consent-paper{border:0;padding:0;font-size:12pt}.consent-paper h2{font-size:20pt}.consent-paper h3{break-after:avoid}.consent-paper dl,.signature-space{break-inside:avoid}.consent-editor{display:none!important}.care-dialog:has(.consent-paper)>:not(.consent-preview){display:none!important}.consent-preview{margin:0}.consent-paper a{color:black} @page{size:A4;margin:16mm}}
+.school-calendar{margin:20px 0;background:#fffdf9}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:16px 0 24px}.calendar-weekday{text-align:center;font-size:16px;font-weight:700;color:#6a655b;padding:4px 0}.calendar-day{font:inherit;text-align:left;border:1px solid #e6dfd3;border-radius:12px;background:white;min-height:115px;padding:8px;cursor:pointer;color:#39352d;display:flex;flex-direction:column;justify-content:flex-start;min-width:0;transition:background 0.15s ease,border-color 0.15s ease}.calendar-day b{display:block;font-size:16px;font-weight:800;color:#2b251f;margin-bottom:3px}.calendar-day-info{display:flex;flex-direction:column;gap:3px;font-size:13px;width:100%}.calendar-count-badge{font-size:12px;font-weight:800;color:#5a7b51;margin-bottom:1px}.calendar-day.is-today{border:2px solid #658653}.calendar-day.is-selected{background:#e8f1e0;box-shadow:inset 0 0 0 1px #658653}.school-calendar .care-actions{align-items:center}
+.monthly-day-topic{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;font-size:12px;line-height:1.35;padding:2px 5px;border-radius:4px;margin:1px 0}
+.monthly-day-topic.is-am{color:#1b5e20;background:#e8f5e9;border-left:3px solid #43a047}
+.monthly-day-topic.is-pm{color:#b7410e;background:#fff3e0;border-left:3px solid #fb8c00}
+.monthly-day-topic b{display:inline;font-size:11px;font-weight:800;margin-right:2px}
+.calendar-remaining-tag{display:block;font-size:11px;color:#7b7365;margin-top:2px}
+@media(max-width:700px){.calendar-day{padding:4px;min-height:85px;font-size:14px}.calendar-day b{font-size:13px}.calendar-day small{font-size:11px}.school-calendar{padding:14px}.calendar-grid{gap:3px}.monthly-day-topic{font-size:10px;padding:1px 3px}}
+.monthly-pacer{width:100%;max-width:1100px;margin:0 auto 20px;padding:18px 24px;background:#edf3e6;border-radius:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;font-size:22px}.monthly-pacer small{width:100%;font-size:17px}.monthly-pacer>div{display:flex;gap:10px;flex-wrap:wrap}.monthly-plan-list{margin:20px 0 20px 24px}.monthly-plan-list li{padding:12px 0;border-bottom:1px solid #e2dace}.monthly-plan-list b{color:#4e724b;margin-right:12px}@media(max-width:900px){.monthly-pacer{font-size:20px}}
+
+/* ==========================================================================
+   수업 캘린더 — 일자별 수업 목록 및 액션 버튼 정돈
+   ========================================================================== */
+.agenda-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #2b251f;
+  margin: 28px 0 16px;
+}
+
+.agenda-badge-count {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  background: #eef5ea;
+  color: #3b6634;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid #c8ddc2;
+}
+
+.calendar-agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.agenda-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  background: #ffffff;
+  border: 1.5px solid #e7ded1;
+  border-radius: 18px;
+  padding: 20px 24px;
+  box-shadow: 0 3px 10px rgba(88, 61, 27, 0.04);
+  transition: all 0.2s ease;
+}
+
+.agenda-card:hover {
+  border-color: #c5dac0;
+  box-shadow: 0 6px 18px rgba(74, 107, 70, 0.08);
+}
+
+.agenda-card-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.agenda-header-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.agenda-badge-time {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4a3e31;
+  background: #f5eee4;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.agenda-badge-target {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #55493d;
+  background: #fbf7f0;
+  border: 1px solid #e6dcd0;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.agenda-badge-target.is-group {
+  color: #2d5a27;
+  background: #eef6eb;
+  border-color: #c7dec2;
+}
+
+.agenda-badge-status {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #706456;
+  background: #f4efe7;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.agenda-badge-status.done {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.agenda-card-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #201c18;
+  line-height: 1.35;
+}
+
+.agenda-card-notes {
+  font-size: 15px;
+  color: #695e51;
+  line-height: 1.55;
+  background: #faf7f2;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 2px;
+}
+
+/* 4대 액션 버튼 1줄 정돈 */
+.agenda-actions-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.agenda-actions-bar .care-btn {
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 12px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  transition: all 0.2s ease;
+}
+
+.agenda-actions-bar .care-btn.primary {
+  background: linear-gradient(135deg, #4f734b, #3d5e39);
+  color: #ffffff;
+  border: 1px solid #3d5e39;
+  box-shadow: 0 2px 8px rgba(61, 94, 57, 0.25);
+}
+
+.agenda-actions-bar .care-btn.primary:hover {
+  background: linear-gradient(135deg, #3d5e39, #2f4b2c);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(61, 94, 57, 0.35);
+}
+
+.agenda-actions-bar .care-btn-danger {
+  background: #fff8f8;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.agenda-actions-bar .care-btn-danger:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+  color: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.agenda-empty-state {
+  background: #ffffff;
+  border: 1.5px dashed #ded4c5;
+  border-radius: 16px;
+  padding: 32px 20px;
+  text-align: center;
+  color: #786d5f;
+  font-size: 16px;
+}
+
+.agenda-footer-info {
+  background: #f7f4ed;
+  border-left: 4px solid #658653;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 15px;
+  color: #554c41;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.agenda-footer-info .info-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1080px) {
+  .agenda-actions-bar {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 860px) {
+  .agenda-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .agenda-actions-bar {
+    justify-content: flex-start;
+    border-top: 1px solid #ede4d8;
+    padding-top: 14px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ==========================================================================
+   5W1H (육하원칙) 칸칸이 분할 에디터 스타일 (Journal 5W1H Compartments)
+   ========================================================================== */
+.journal-5w1h-wrapper {
+  margin: 18px 0 10px 0;
+}
+.journal-5w1h-top-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.journal-5w1h-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.journal-5w1h-box {
+  background: #FAF8F5;
+  border: 1.5px solid #E5DFD5;
+  border-radius: 12px;
+  padding: 12px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.journal-5w1h-box:focus-within {
+  border-color: #FF7E36;
+  background: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(255, 126, 54, 0.12);
+}
+.journal-5w1h-box.full-width {
+  margin-bottom: 12px;
+}
+.journal-5w1h-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.journal-5w1h-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #2D241E;
+}
+.journal-5w1h-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: #EFE8DE;
+  color: #5C4A3C;
+}
+.journal-5w1h-textarea {
+  width: 100%;
+  border: 1px solid #D6CBC0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #222222;
+  font-family: inherit;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+.journal-5w1h-textarea:focus {
+  outline: none;
+  border-color: #FF7E36;
+  box-shadow: 0 0 0 2.5px rgba(255, 126, 54, 0.18);
+}
+@media (max-width: 680px) {
+  .journal-5w1h-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 5W1H 전용 체크 칩 및 선택 옵션 그룹 */
+.journal-check-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  background: #F3EFE9;
+  border-radius: 8px;
+  border: 1px solid #E4DCD0;
+}
+.journal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid #D5C9B8;
+  color: #3C342C;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+  line-height: 1.2;
+}
+.journal-chip:hover {
+  background: #FFF3E6;
+  border-color: #FF7E36;
+}
+.journal-chip:has(input:checked) {
+  background: #FFEAD9;
+  border-color: #FF7E36;
+  color: #C05621;
+  box-shadow: 0 1px 4px rgba(255, 126, 54, 0.15);
+}
+.journal-chip input {
+  accent-color: #FF7E36;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  cursor: pointer;
+}

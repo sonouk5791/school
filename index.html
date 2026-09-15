@@ -1,13 +1,462 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>디지털 학교 - 인지훈련 카드 매칭 게임</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>디지털 학교 - 오늘의 AI 수업</title>
+  <meta name="description" content="치매, 경도인지장애 및 시니어를 위한 따뜻한 AI 친구와 함께하는 일상 인지 돌봄 디지털 학교 플랫폼">
+  
+  <!-- 스타일시트 -->
+  <link rel="stylesheet" href="css/main.css?v=14">
+  <link rel="stylesheet" href="css/lesson.css?v=14">
+  <link rel="stylesheet" href="css/teacher.css?v=14">
+  <link rel="stylesheet" href="css/care-workflow.css?v=14">
+  <link rel="stylesheet" href="css/friends-and-play.css?v=15">
+  <link rel="stylesheet" href="css/joint-room.css?v=15">
+  <link rel="stylesheet" href="css/karaoke-room.css?v=15">
+  <link rel="stylesheet" href="css/hobby-room.css?v=18">
+  <link rel="stylesheet" href="css/solar-room.css?v=2">
+<link rel="stylesheet" href="css/basic-study-rooms.css?v=2">
+<link rel="stylesheet" href="css/coloring-room.css?v=1">
+</head>
+<body>
+
+  <!-- =======================================================================
+       상단 글로벌 헤더 (Global Header)
+       ======================================================================= -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})" role="button" tabindex="0">
+        <div class="brand-icon">🍊</div>
+        <div class="brand-title">디지털 학교</div>
+      </div>
+
+      <nav class="main-nav" aria-label="메인 메뉴">
+        <a href="#home" class="nav-link active" data-target="home">홈</a>
+        <a href="#lessons" class="nav-link" data-target="lessons">오늘의 수업</a>
+        <a href="#ai-friend" class="nav-link" data-target="ai-friend">AI 친구</a>
+        <a href="#history" class="nav-link" data-target="history">내 활동</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- AI 선생님 전용 상단 고정 접근성 컨트롤 바 (Section 20 & 31) -->
+        <div class="teacher-voice-controls" id="teacherVoiceControls" role="region" aria-label="AI 선생님 음성 컨트롤">
+          <button class="btn-voice-ctrl btn-voice-toggle" id="btnTtsToggle" title="선생님 음성 켜기 또는 끄기" aria-label="선생님 음성 안내 켜짐/꺼짐">
+            <span class="ctrl-icon" id="iconVoiceToggle">🔊</span>
+            <span class="ctrl-text" id="textVoiceToggle">선생님 음성</span>
+          </button>
+          <button class="btn-voice-ctrl btn-voice-pause" id="btnVoicePause" title="선생님 말씀 잠시 일시정지" aria-label="선생님 말씀 일시정지">
+            <span class="ctrl-icon" id="iconVoicePause">⏸️</span>
+            <span class="ctrl-text" id="textVoicePause">일시정지</span>
+          </button>
+          <button class="btn-voice-ctrl btn-voice-replay" id="btnVoiceReplay" title="선생님 말씀 다시 듣기" aria-label="선생님 말씀 다시 듣기">
+            <span class="ctrl-icon">↻</span>
+            <span class="ctrl-text">다시 듣기</span>
+          </button>
+          <button class="btn-voice-ctrl btn-voice-speed" id="btnVoiceSpeed" title="말하는 속도 천천히 또는 보통으로 변경" aria-label="음성 속도 조절">
+            <span class="ctrl-icon" id="iconVoiceSpeed">🐢</span>
+            <span class="ctrl-text" id="textVoiceSpeed">천천히</span>
+          </button>
+          <button class="btn-voice-ctrl btn-voice-help" id="btnVoiceHelp" title="현재 화면 도움말 듣기" aria-label="도움말 듣기">
+            <span class="ctrl-icon">❓</span>
+            <span class="ctrl-text">도움말</span>
+          </button>
+        </div>
+
+        <button class="btn-voice-ctrl" id="btnHeaderJournal" title="육하원칙(5W1H) 업무수행 일지 바로가기" style="background:#FFF1E6; color:#E65100; border:2px solid #FFCCAA; font-weight:800;">
+          <span class="ctrl-icon">📝</span>
+          <span class="ctrl-text">업무수행 일지</span>
+        </button>
+
+        <button class="btn-teacher-space" id="btnTeacherSpace" title="사회복지사 및 선생님 관리 공간">
+          👨‍🏫 선생님 공간
+        </button>
+      </div>
+    </div>
+
+    <!-- 선생님 공간 서브 네비게이션 바 -->
+    <nav class="teacher-subnav" id="teacherSubnav" aria-label="선생님 공간 메뉴" style="display:none;">
+      <div class="teacher-subnav-inner">
+        <button class="subnav-link active" data-subnav="home">홈</button>
+        <button class="subnav-link" data-subnav="users">어르신 관리</button>
+        <button class="subnav-link" data-subnav="today-ai">오늘의 AI 수업</button>
+        <button class="subnav-link" data-subnav="records">수업 기록</button>
+        <button class="subnav-link" data-subnav="ai-journal">AI 수업일지</button>
+        <button class="subnav-link" data-subnav="analysis">변화 분석</button>
+        <button class="subnav-link" data-subnav="report">보호자 보고서</button>
+        <button class="subnav-link" data-subnav="settings">관리자 설정</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =======================================================================
+       메인 컨텐츠 본문 (Main Content)
+       ======================================================================= -->
+  <main class="main-wrapper" id="home">
+    
+    <!-- 1. 히어로 교실 환영 배너 (Hero Classroom Banner) -->
+    <section class="hero-classroom">
+      <div class="hero-content-grid">
+        <div class="hero-robot-wrapper">
+          <!-- 콩이 캐릭터 애니메이션 컨테이너 -->
+          <div class="kongi-character-wrap" id="kongiHero">
+            <!-- 콩이 이미지 (상체 흔들기 애니메이션 적용) -->
+            <img src="assets/images/friend-kongi-talk.png" alt="AI 친구 콩이" class="hero-robot-img" id="kongiHeroImg">
+            <!-- 입 움직임 오버레이 (말할 때 활성화) -->
+
+            <!-- 반짝이는 하트 파티클 -->
+            <div class="kongi-sparkle kongi-sparkle-1">💛</div>
+            <div class="kongi-sparkle kongi-sparkle-2">🐾</div>
+            <div class="kongi-sparkle kongi-sparkle-3">✨</div>
+          </div>
+          <div class="robot-badge-cheer">
+            <span>🐾</span>
+            <span>천천히 해도 괜찮아요</span>
+          </div>
+        </div>
+
+        <div class="hero-speech-container">
+          <div class="speech-bubble-hero">
+            <span class="hero-greeting-tag">🐶 AI 친구 콩이의 인사</span>
+            <h1 class="hero-main-title">
+              "안녕하세요! 오늘도 <span>천천히 같이 해봐요.</span>"
+            </h1>
+            <p class="hero-sub-text">
+              배움이 언제나 즐거운 하루가 됩니다. 새로운 도전이 언제나 멋져요!
+            </p>
+          </div>
+
+          <div class="hero-action-buttons">
+            <button class="btn-hero-action btn-hero-primary" id="btnHeroStart">
+              📖 오늘 수업 시작하기 &gt;
+            </button>
+            <button class="btn-hero-action btn-hero-cream" id="btnHeroMeetAi">
+              🐶 AI 친구 만나기 &gt;
+            </button>
+            <button class="btn-hero-action btn-hero-sage" id="btnHeroHistory">
+              📁 지난 활동 보기 &gt;
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 오늘의 수업 8대 대형 카드 섹션 (Today's Lessons Grid) -->
+    <section class="section-lessons" id="lessons">
+      <div class="section-header-banner">
+        <div class="section-badge">✨ 오늘의 맞춤 활동</div>
+        <h2 class="section-title">오늘은 무엇을 해볼까요?</h2>
+        <p class="section-sub">마음에 드는 수업 카드를 편안하게 꾹 눌러보세요.</p>
+      </div>
+
+      <!-- 1. 핵심 AI 실습 코스 (선생님 음성 안내 8강) -->
+      <div class="course-section-title-wrap" style="margin-bottom: 20px;">
+        <span class="badge-track-highlight">🤖 AI 핵심 실습 코스 (선생님 음성 맞춤 안내)</span>
+      </div>
+      <div class="lessons-grid" id="aiCoursesGrid" style="margin-bottom: 45px;">
+        <!-- 1. AI 기초 -->
+        <article class="lesson-card lesson-card-ai" data-lesson-id="ai_basic" tabindex="0">
+          <div class="lesson-icon-box">🤖</div>
+          <h3 class="lesson-name">AI 기초</h3>
+          <p class="lesson-card-desc">AI가 무엇인지 알아보고 저녁 메뉴 추천 실습</p>
+          <div class="lesson-card-btn">수업 시작 &gt;</div>
+        </article>
+
+        <!-- 2. 내가 알고 싶은 것 질문하기 -->
+        <article class="lesson-card lesson-card-ai" data-lesson-id="prompt_basic" tabindex="0">
+          <div class="lesson-icon-box">💡</div>
+          <h3 class="lesson-name">내가 알고 싶은 것 질문하기</h3>
+          <p class="lesson-card-desc">궁금한 것을 쉬운 말로 물어보기</p>
+          <div class="lesson-card-btn">수업 시작 &gt;</div>
+        </article>
+
+        <!-- 3. 글쓰기 -->
+        <article class="lesson-card lesson-card-ai" data-lesson-id="ai_writing" tabindex="0">
+          <div class="lesson-icon-box">✍️</div>
+          <h3 class="lesson-name">글쓰기</h3>
+          <p class="lesson-card-desc">감사 문자, 편지, 따뜻한 소개글 만들기</p>
+          <div class="lesson-card-btn">수업 시작 &gt;</div>
+        </article>
+
+        <!-- 4. 이미지 만들기 -->
+        <article class="lesson-card lesson-card-ai" data-lesson-id="ai_image" tabindex="0">
+          <div class="lesson-icon-box">🎨</div>
+          <h3 class="lesson-name">이미지 만들기</h3>
+          <p class="lesson-card-desc">말로 설명해 멋진 한 폭의 그림 그리기</p>
+          <div class="lesson-card-btn">수업 시작 &gt;</div>
+        </article>
+
+        <!-- 5. 생활 활용 -->
+        <article class="lesson-card lesson-card-ai" data-lesson-id="ai_life" tabindex="0">
+          <div class="lesson-icon-box">🏡</div>
+          <h3 class="lesson-name">생활 활용</h3>
+          <p class="lesson-card-desc">요리 추천, 여행 일정, 일상 꿀팁 활용</p>
+          <div class="lesson-card-btn">수업 시작 &gt;</div>
+        </article>
+
+        <!-- 8. 퀴즈 -->
+        <article class="lesson-card lesson-card-ai" data-lesson-id="ai_quiz" tabindex="0">
+          <div class="lesson-icon-box">❓</div>
+          <h3 class="lesson-name">퀴즈</h3>
+          <p class="lesson-card-desc">부담 없이 배운 내용을 가볍게 짚어보기</p>
+          <div class="lesson-card-btn">수업 시작 &gt;</div>
+        </article>
+      </div>
+
+      <!-- 2. 시니어 인지 돌봄 코스 (기존 8강 100% 보존) -->
+      <div class="course-section-title-wrap" style="margin-bottom: 20px;">
+        <span class="badge-track-highlight" style="background:#FFF3E0; color:#E65100; border-color:#FFD180;">🧡 정겨운 시니어 인지 돌봄 활동 (8강)</span>
+      </div>
+      <div class="lessons-grid">
+        <!-- 1. AI 친구와 인사하기 -->
+        <article class="lesson-card" data-lesson-id="greeting" tabindex="0">
+          <div class="lesson-icon-box">🧡</div>
+          <h3 class="lesson-name">AI 친구와 인사하기</h3>
+          <p class="lesson-card-desc">반가운 인사와 오늘의 날씨, 기분 나누기</p>
+          <div class="lesson-card-btn">시작하기 &gt;</div>
+        </article>
+
+        <!-- 2. 추억의 사진 이야기 -->
+        <article class="lesson-card" data-lesson-id="photo" tabindex="0">
+          <div class="lesson-icon-box">📷</div>
+          <h3 class="lesson-name">추억의 사진 이야기</h3>
+          <p class="lesson-card-desc">장독대, 해바라기, 고향 마을 사진 추억</p>
+          <div class="lesson-card-btn">시작하기 &gt;</div>
+        </article>
+
+        <!-- 3. 흘러가는 옛노래 -->
+        <article class="lesson-card" data-lesson-id="music" tabindex="0">
+          <div class="lesson-icon-box">🎵</div>
+          <h3 class="lesson-name">흘러가는 옛노래</h3>
+          <p class="lesson-card-desc">내 나이가 어때서, 남행열차, 신나는 트로트</p>
+          <div class="lesson-card-btn">시작하기 &gt;</div>
+        </article>
+
+        <!-- 4. AI 그림 만들기 -->
+        <article class="lesson-card" data-lesson-id="art" tabindex="0">
+          <div class="lesson-icon-box">🎨</div>
+          <h3 class="lesson-name">AI 그림 만들기</h3>
+          <p class="lesson-card-desc">고향 마을과 봄 동산, 해바라기 그림</p>
+          <div class="lesson-card-btn">시작하기 &gt;</div>
+        </article>
+
+        <!-- 5. 기억 놀이 -->
+        <article class="lesson-card" data-lesson-id="memory" tabindex="0">
+          <div class="lesson-icon-box">🧠</div>
+          <h3 class="lesson-name">기억 놀이</h3>
+          <p class="lesson-card-desc">과일 짝 맞추기, 꽃과 계절 두뇌 놀이</p>
+          <div class="lesson-card-btn">시작하기 &gt;</div>
+        </article>
+
+        <!-- 6. 스마트폰 배우기 -->
+        <article class="lesson-card" data-lesson-id="smartphone" tabindex="0">
+          <div class="lesson-icon-box">📱</div>
+          <h3 class="lesson-name">스마트폰 배우기</h3>
+          <p class="lesson-card-desc">글자 키우기, 하트 문자, 전화 받기</p>
+          <div class="lesson-card-btn">시작하기 &gt;</div>
+        </article>
+
+        <!-- 7. AI에게 물어보기 -->
+        <article class="lesson-card" data-lesson-id="ask" tabindex="0">
+          <div class="lesson-icon-box">💬</div>
+          <h3 class="lesson-name">AI에게 물어보기</h3>
+          <p class="lesson-card-desc">건강차, 무릎 체조, 찌개 비법 질문</p>
+          <div class="lesson-card-btn">시작하기 &gt;</div>
+        </article>
+
+        <!-- 8. 이야기 만들기 -->
+        <article class="lesson-card" data-lesson-id="story" tabindex="0">
+          <div class="lesson-icon-box">📖</div>
+          <h3 class="lesson-name">이야기 만들기</h3>
+          <p class="lesson-card-desc">볏단을 나르는 의좋은 형제 전래동화</p>
+          <div class="lesson-card-btn">시작하기 &gt;</div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =======================================================================
+       푸터 (Site Footer)
+       ======================================================================= -->
+  <footer class="site-footer">
+    <div class="footer-comfort-message">
+      "천천히, 쉽고, 즐겁게 배우는 우리 모두의 디지털 학교입니다 🧡"
+    </div>
+    <p>© 2026 디지털 학교. 치매 안심 및 시니어 친화적 인지 돌봄 플랫폼.</p>
+  </footer>
+
+  <!-- =======================================================================
+       몰입형 단계별 수업 뷰포트 모달 (Step-by-Step Lesson Viewport)
+       ======================================================================= -->
+  <div class="lesson-viewport" id="lessonViewport" aria-modal="true" role="dialog">
+    <!-- 상단 바 -->
+    <header class="lesson-topbar">
+      <button class="lesson-exit-btn" onclick="LessonEngine.exitLesson()">
+        <span>◀</span>
+        <span>나가기</span>
+      </button>
+
+      <div class="lesson-title-badge">
+        <span class="lesson-badge-icon" id="lessonBadgeIcon">🧡</span>
+        <span class="lesson-badge-name" id="lessonBadgeName">수업 이름</span>
+      </div>
+
+      <!-- 상단 수업 내 빠른 음성 도구 모음 -->
+      <div class="lesson-topbar-voice-tools">
+        <button class="btn-topbar-voice btn-topbar-pause" id="btnLessonPause" onclick="VoiceManager.togglePause(); window.updateGlobalVoiceUI && window.updateGlobalVoiceUI();" title="선생님 말씀 잠시 일시정지">
+          <span id="textLessonPause">⏸️ 일시정지</span>
+        </button>
+        <button class="btn-topbar-voice" onclick="VoiceManager.replayLastScript()" title="선생님 말씀 다시 듣기">
+          ↻ 다시 듣기
+        </button>
+        <button class="btn-topbar-voice btn-topbar-help" onclick="LessonEngine.speakStepHelp()" title="도움말 듣기">
+          ❓ 도움말
+        </button>
+        <button class="btn-topbar-voice" onclick="VoiceManager.toggleSpeed(); window.updateGlobalVoiceUI && window.updateGlobalVoiceUI();" id="btnLessonSpeed" title="말하는 속도 조절">
+          🐢 천천히
+        </button>
+      </div>
+
+      <div class="lesson-progress-wrap">
+        <span class="step-indicator-text" id="lessonStepIndicator">1 / 4 단계</span>
+      </div>
+    </header>
+
+    <!-- 단일 활동 스테이지 컨테이너 (1화면 1과업) -->
+    <main class="lesson-stage-container" id="lessonStageContainer">
+      <!-- LessonEngine에 의해 동적으로 렌더링됩니다 -->
+    </main>
+
+    <!-- 하단 고정 초대형 내비게이션 바 -->
+    <footer class="lesson-bottom-nav">
+      <button class="btn-nav-step btn-nav-prev" id="btnLessonPrev" onclick="LessonEngine.prevStep()">
+        ◀ 이전
+      </button>
+      <button class="btn-nav-step btn-nav-next" id="btnLessonNext" onclick="LessonEngine.nextStep()">
+        다음 활동 ▶
+      </button>
+    </footer>
+  </div>
+
+  <!-- =======================================================================
+       사회복지사 / 선생님 기록 관리 모달 (Teacher / Care Record Modal)
+       ======================================================================= -->
+  <div class="teacher-modal-viewport" id="teacherModal" aria-modal="true" role="dialog">
+    <div class="teacher-panel-container">
+      <header class="teacher-panel-header">
+        <div class="teacher-title-group">
+          <div class="teacher-icon-badge">👨‍🏫</div>
+          <div>
+            <h2 class="teacher-heading">사회복지사 & 선생님 공간</h2>
+            <p class="teacher-subhead">어르신의 참여도와 정서 상태를 확인하는 따뜻한 돌봄 기록입니다.</p>
+          </div>
+        </div>
+        <button class="btn-close-panel" id="btnCloseTeacherModal" title="닫기">✕</button>
+      </header>
+
+      <div class="teacher-panel-body">
+        <!-- 4종 돌봄 요약 지표 (비경쟁적 지표) -->
+        <section class="care-summary-grid">
+          <div class="care-summary-card">
+            <div class="summary-label">총 참여 수업</div>
+            <div class="summary-value" id="statTotalSessions">0회</div>
+            <div class="summary-desc">누적 참여 횟수</div>
+          </div>
+          <div class="care-summary-card">
+            <div class="summary-label">수업 완료율</div>
+            <div class="summary-value" id="statCompletedSessions">0회 완료</div>
+            <div class="summary-desc">안정적 완료 흐름</div>
+          </div>
+          <div class="care-summary-card">
+            <div class="summary-label">긍정 기분 지수</div>
+            <div class="summary-value" id="statPositiveRate">100%</div>
+            <div class="summary-desc">재미/만족 응답 비율</div>
+          </div>
+          <div class="care-summary-card">
+            <div class="summary-label">활동 이용자 수</div>
+            <div class="summary-value" id="statActiveLearners">0명</div>
+            <div class="summary-desc">등록된 어르신</div>
+          </div>
+        </section>
+
+        <!-- 필터 및 컨트롤 바 -->
+        <div class="records-control-bar">
+          <div class="filter-group">
+            <label class="filter-label" for="selectLearnerFilter">이용자 선택:</label>
+            <select id="selectLearnerFilter" class="care-select">
+              <option value="all">전체 어르신 보기</option>
+            </select>
+          </div>
+          <button class="btn-care-action" onclick="window.print()">
+            🖨️ 돌봄 일지 인쇄 / PDF
+          </button>
+        </div>
+
+        <!-- 수업 기록 테이블 (점수/순위/실패 횟수 절대 배제) -->
+        <div class="records-table-container">
+          <table class="care-table">
+            <thead>
+              <tr>
+                <th>수업 일시</th>
+                <th>이용자명</th>
+                <th>참여 수업</th>
+                <th>완료 여부</th>
+                <th>선택한 기분</th>
+                <th>도움 필요 여부</th>
+                <th>활동 시간</th>
+              </tr>
+            </thead>
+            <tbody id="careRecordsTableBody">
+              <!-- JavaScript에 의해 렌더링 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       우측 하단 고정 바로가기 버튼 (관리자 & TOP)
+       ======================================================================= -->
+  <aside class="floating-action-group" id="floatingActionGroup" aria-label="빠른 바로가기">
+    <button type="button" class="btn-floating btn-floating-admin" id="btnFloatingAdmin" title="관리자 설정 및 돌봄 관리 바로가기" aria-label="관리자 설정">
+      <span class="floating-icon">⚙️</span>
+      <span class="floating-text">관리자</span>
+    </button>
+    <button type="button" class="btn-floating btn-floating-top" id="btnFloatingTop" title="화면 맨 위로 이동" aria-label="맨 위로 이동">
+      <span class="floating-icon">⬆️</span>
+      <span class="floating-text">TOP</span>
+    </button>
+  </aside>
+
+  <script src="js/voice-scripts.js?v=15"></script>
+  <script src="js/voice.js?v=15"></script>
+  <script src="js/karaoke-synth.js?v=15"></script>
+  <script src="js/lesson-data.js?v=16"></script>
+  <script src="js/record-manager.js?v=15"></script>
+  <script src="js/lesson-engine.js?v=16"></script>
+  <script src="js/app.js?v=15"></script>
+  <script src="js/monthly-programs.js?v=15"></script>
+  <script src="js/care-workflow.js?v=15"></script>
+  <!-- Legacy user-profile.js is preserved on disk; consent rooms use the shared elder registry. -->
+  <script src="js/consent-forms.js?v=15"></script>
+  <script src="js/consent-rooms.js?v=15"></script>
+  <script src="js/friends-and-play.js?v=15"></script>
+<script src="js/daily-games.js?v=15"></script><script src="js/extra-games.js?v=16"></script><script src="js/word-search.js?v=16"></script>
+<script src="js/joint-room.js?v=15"></script>
+<script src="js/karaoke-room.js?v=15"></script>
+<script src="js/hobby-room.js?v=19"></script>
+<script src="js/solar-room.js?v=1"></script>
+<script src="js/story-library.js?v=1"></script>
+<script src="js/chatgpt-practice.js?v=1"></script>
+<script src="js/basic-study-rooms.js?v=2"></script>
+<script src="js/coloring-room.js?v=1"></script>
+</body>
 </html>
+
+
+
+
+
+

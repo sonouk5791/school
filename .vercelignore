@@ -1,4 +1,11 @@
-dist
-node_modules
-.git
-.github
+.git/
+.env*
+.vercel/
+.vscode/
+__pycache__/
+node_modules/
+tests/
+*.md
+*.py
+*.lnk
+server.cjs
