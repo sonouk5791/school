@@ -1050,3 +1050,4 @@ body {
 .warmup-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .warmup-actions button{min-height:48px;font-size:20px}
 @media(max-width:760px){.warmup-intro{grid-template-columns:1fr;gap:16px;padding:16px;margin-top:-24px}.warmup-media{width:100%;max-width:520px;margin:auto}.warmup-actions{display:grid;grid-template-columns:1fr 1fr}.warmup-actions button:last-child{grid-column:1/-1}.warmup-copy h2{font-size:23px}.warmup-copy p{font-size:19px}}
+.warmup-chapters{margin-top:18px;font-size:18px;line-height:1.6}.warmup-chapters summary{cursor:pointer;padding:8px 0;color:#526b45}.warmup-chapters label{display:block;margin-top:10px}.warmup-chapters select{display:block;max-width:100%;width:100%;padding:12px;font:inherit;border:1px solid #d8cab5;border-radius:12px;background:#fffdf8;margin:8px 0}.warmup-chapters p{font-size:17px}

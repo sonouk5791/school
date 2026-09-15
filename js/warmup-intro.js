@@ -1,7 +1,12 @@
 (()=>{'use strict';
  const video=document.getElementById('warmupVideo'),play=document.getElementById('warmupPlay'),status=document.getElementById('warmupStatus');
  if(!video)return;
- const start=async()=>{try{await video.play()}catch{status.textContent='영상의 재생 버튼을 눌러주세요.'}};
+ const chapters=['편하게 앉아 준비해요','콩이와 손 인사','토리와 가벼운 박수','나비와 팔 앞으로','보리와 손목 움직이기','함께 쉬어가요','콩이와 팔 굽혔다 펴기','나비와 양손 인사','토리와 느린 박수','보리와 마무리'];
+ const details=document.createElement('details');details.className='warmup-chapters';
+ details.innerHTML='<summary>체조 순서 골라 보기</summary><label for="warmupChapter">시작할 순서</label><select id="warmupChapter">'+chapters.map((title,i)=>`<option value="${i*120}">${String(i*2).padStart(2,'0')}:00 · ${title}</option>`).join('')+'</select><button type="button" class="care-btn" id="warmupJump">선택한 순서부터 보기</button><p>무음 영상입니다. 화면 안내를 보며 편하게 따라해요.<br>20분을 모두 채우지 않아도 괜찮아요.</p>';
+ status.before(details);
+ const start=async()=>{try{video.scrollIntoView({block:'center',behavior:'instant'});await video.play()}catch{status.textContent='영상의 재생 버튼을 눌러주세요.'}};
+ document.getElementById('warmupJump').addEventListener('click',async()=>{const time=Number(document.getElementById('warmupChapter').value);try{if(video.readyState<1){await new Promise((resolve,reject)=>{video.addEventListener('loadedmetadata',resolve,{once:true});video.addEventListener('error',reject,{once:true});video.load()})}video.currentTime=time;await start()}catch{status.textContent='영상을 불러오지 못했어요. 다시 보기로 재시도해주세요.'}});
  play.addEventListener('click',()=>video.paused?start():video.pause());
  document.getElementById('warmupReplay').addEventListener('click',()=>{if(video.error)video.load();video.currentTime=0;start()});
  document.getElementById('warmupClass').addEventListener('click',()=>{video.pause();document.getElementById('btnHeroStart')?.click()});

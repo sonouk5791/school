@@ -12,7 +12,9 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.gif': 'image/gif',
-  '.svg': 'image/svg+xml'
+  '.svg': 'image/svg+xml',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm'
 };
 
 const server = http.createServer((req, res) => {
@@ -31,8 +33,21 @@ const server = http.createServer((req, res) => {
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
+    if (req.headers.range && ['.mp4', '.webm'].includes(ext)) {
+      const match = /^bytes=(\d+)-(\d*)$/.exec(req.headers.range);
+      const start = match ? Number(match[1]) : -1;
+      const end = match && match[2] ? Math.min(Number(match[2]), stats.size - 1) : stats.size - 1;
+      if (start < 0 || start >= stats.size || end < start) {
+        res.writeHead(416, { 'Content-Range': `bytes */${stats.size}` });res.end();return;
+      }
+      res.writeHead(206, { 'Content-Type': contentType, 'Accept-Ranges': 'bytes', 'Content-Range': `bytes ${start}-${end}/${stats.size}`, 'Content-Length': end-start+1 });
+      fs.createReadStream(filePath, {start, end}).pipe(res);return;
+    }
+
     res.writeHead(200, {
       'Content-Type': contentType,
+      'Content-Length': stats.size,
+      'Accept-Ranges': 'bytes',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
       'Expires': '0'
