@@ -9,4 +9,10 @@
 - 기록은 브라우저 localStorage에 저장됩니다. 배포 주소에서는 localhost 기록이 자동으로 옮겨지지 않습니다.
 - 실제 어르신 관리 자료는 서버에 동기화되지 않으며 브라우저별로 분리됩니다.
 
-GitHub/Vercel 로그인 확인 완료. 배포 대상은 사용자 선택 대기 중입니다.
+배포 완료: https://school-tau-pearl.vercel.app
+
+GitHub: https://github.com/sonouk5791/school (main)
+
+교체 전 버전: backup-before-static-school-20260915 태그.
+
+프로덕션 검증: 새 공부방 5개 열기/닫기, 새 이미지 HTTP 200, 자산 오류 및 JS 오류 없음.
