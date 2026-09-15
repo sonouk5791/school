@@ -1,0 +1,18 @@
+(()=>{'use strict';
+ const video=document.getElementById('warmupVideo'),play=document.getElementById('warmupPlay'),status=document.getElementById('warmupStatus');
+ if(!video)return;
+ const start=async()=>{try{await video.play()}catch{status.textContent='영상의 재생 버튼을 눌러주세요.'}};
+ play.addEventListener('click',()=>video.paused?start():video.pause());
+ document.getElementById('warmupReplay').addEventListener('click',()=>{if(video.error)video.load();video.currentTime=0;start()});
+ document.getElementById('warmupClass').addEventListener('click',()=>{video.pause();document.getElementById('btnHeroStart')?.click()});
+ video.addEventListener('play',()=>{play.textContent='Ⅱ 잠시 멈추기';status.textContent='편하게 앉아서 천천히 따라해요.'});
+ video.addEventListener('pause',()=>{play.textContent=video.ended?'▶ 한 번 더 함께하기':'▶ 이어서 보기'});
+ video.addEventListener('ended',()=>{play.textContent='▶ 한 번 더 함께하기';status.textContent='잘하셨어요. 준비되시면 오늘의 수업을 시작해요.'});
+ video.addEventListener('error',()=>{status.textContent='영상을 불러오지 못했어요. 다시 보기 버튼으로 재시도해주세요.'});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause()});
+ new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)video.pause()},{threshold:.05}).observe(video);
+ const hero=document.querySelector('.hero-classroom'),card=document.querySelector('.warmup-intro');
+ const sync=()=>{card.hidden=!!document.querySelector('#lessonViewport.active')||getComputedStyle(hero).display==='none';if(card.hidden)video.pause()};
+ new MutationObserver(sync).observe(hero,{attributes:true,attributeFilter:['class','style']});
+ const viewport=document.getElementById('lessonViewport');if(viewport)new MutationObserver(sync).observe(viewport,{attributes:true,attributeFilter:['class','style']});sync();
+})();

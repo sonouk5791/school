@@ -1039,3 +1039,14 @@ body {
 }
 
 /* 수업 버튼을 가리는 바로가기는 수업 중에만 숨깁니다. */ body:has(#lessonViewport.active) #floatingActionGroup{display:none;}
+/* Quiet optional introduction, using the existing home palette. */
+.warmup-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;padding:24px;margin:-24px 0 40px;background:var(--bg-cream,#fffaf1);border:2px solid var(--border-soft,#eee3d2);border-radius:var(--radius-lg,24px)}
+.warmup-intro[hidden]{display:none}
+.warmup-media{min-width:0}
+.warmup-media video{display:block;width:100%;aspect-ratio:2/1;object-fit:contain;border-radius:18px;background:#fcf6eb}
+.warmup-copy h2{font-size:clamp(22px,2vw,28px);margin:6px 0 12px;line-height:1.45}
+.warmup-copy p{font-size:20px;line-height:1.6;margin:8px 0}
+.warmup-copy .warmup-eyebrow,.warmup-copy .warmup-note{font-size:17px;color:#657352}
+.warmup-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.warmup-actions button{min-height:48px;font-size:20px}
+@media(max-width:760px){.warmup-intro{grid-template-columns:1fr;gap:16px;padding:16px;margin-top:-24px}.warmup-media{width:100%;max-width:520px;margin:auto}.warmup-actions{display:grid;grid-template-columns:1fr 1fr}.warmup-actions button:last-child{grid-column:1/-1}.warmup-copy h2{font-size:23px}.warmup-copy p{font-size:19px}}
