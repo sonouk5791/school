@@ -98,3 +98,17 @@
 - **관련 파일**: [환영 컴포넌트](file:///J:/sh/js/welcome-greeting.js), [환영 스타일](file:///J:/sh/css/welcome-greeting.css), [진입 코드](file:///J:/sh/js/app.js), [연결](file:///J:/sh/index.html), [검증](file:///J:/sh/tests/welcome-greeting.cjs).
 
 - **검증·배포 완료 / 2026-09-16 14:59**: `b00b8f1` (Add character welcome greeting) main 푸시 성공. Vercel 정적 build 통과, `dpl_F8aR1mZDFpu8ZbL4h9CcZf6smfer` READY. 운영 URL https://school-tau-pearl.vercel.app/ 에서 PC 1440 / 태블릿 768 / 모바일 390px, 네 캐릭터·가로 잘림 없음·첫 진입 TTS 없음·음성 없음 안내·오늘 프로그램 연결·기존 메뉴/선생님 공간 검사 통과. 작업 트리 깨끗함 확인.
+
+
+## 작업 20260916-당일정리문서 / 2026-09-16 15:03
+- **사용자 요청 사항**: 오늘 작업 내용을 Markdown 파일에 저장.
+- **수행 내역**: 화면 개선·대상자 방·공단 연결·8종 서류·배경 제거·오전 프로그램·환영 기능·검증·배포 및 제한사항을 별도 문서로 정리. 기존 누적 일지 보존, 릴리즈 폴더 동기화.
+- **관련 파일**: [오늘 작업 정리](file:///J:/sh/오늘_작업_정리_2026-09-16.md).
+
+
+## 작업 20260917-1차구조점검 / 2026-09-17 08:49
+- **사용자 요청 사항**: 30분 단계 개발 마스터의 1차 프로젝트 보호·구조 점검.
+- **수행 내역**: 기술 스택·라우팅·홈·캐릭터·음성·상태관리·관리자·오전 프로그램·배포·브랜치 문서화. 151개 실행 파일 보호 해시 저장, 루트/릴리즈 일치 확인. 기존 UI·기능·데이터 변경 없음. 전날 미커밋 문서 보존.
+- **검증**: 33개 JS 문법, Vercel production 로컬 build, 환영 4개 화면 크기·오전 프로그램·관리자 기록·파일방·서류 양식 회귀 통과.
+- **단계 범위**: 1차만 완료, 2~9차 신규 기능 및 운영 배포는 이번 단계에서 미수행.
+- **관련 파일**: [구조 점검 보고서](file:///J:/sh/PROJECT_STRUCTURE_AUDIT_2026-09-17.md), [회귀 검사](file:///J:/sh/tests/stage-one-baseline.cjs), [보호 기준](file:///J:/sh/tests/stage-one-source-baseline.json).

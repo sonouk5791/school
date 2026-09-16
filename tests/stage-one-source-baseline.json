@@ -1,0 +1,610 @@
+{
+  "date": "2026-09-17",
+  "baseCommit": "bf9c49ed0c301a8ec2ab915481acc191feafe1bb",
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "404ea242baa1deaaa9851b30162eda4783212846d7523a4e7250e3fc90e60508"
+    },
+    {
+      "path": "server.cjs",
+      "sha256": "f5b4456a891dd92110d8642348a5ea478428462f88d1ffff9351e30ffeb4a3fb"
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "4936876cc0bc631b811b4b7e500540e7c5f2f5e74f79f839ed2fa3b2c3fde96d"
+    },
+    {
+      "path": "assets/images/ai-assistant-tablet.png",
+      "sha256": "77a4c9b3bd9b2e98bb624db7f1b22e2e73d1d8a2ef63b2d592831dcf5ee90926"
+    },
+    {
+      "path": "assets/images/ai_friend_avatar.jpg",
+      "sha256": "e00cd5ac1b3c949b6155bfe7d3bc097a2815ed80d7360b566a6a48ad41e6687a"
+    },
+    {
+      "path": "assets/images/ai_friend_classroom.jpg",
+      "sha256": "6203e13dca7a8acb816487d304b98250ffed99b4d097b00b42165cbca19b1355"
+    },
+    {
+      "path": "assets/images/ai_puppy_friend.jpg",
+      "sha256": "72ea180134f65eb10903860a2d4ff899955a03456e0490b50fc1239edf193938"
+    },
+    {
+      "path": "assets/images/ai_puppy_friend_sketch.jpg",
+      "sha256": "d4bb6360aa85f458e50d0705ce6dfccd98c9445a93ca9f77faa8fec21dcfc7ab"
+    },
+    {
+      "path": "assets/images/ai_puppy_heart.jpg",
+      "sha256": "bcfeb5ca39c3a02f84d845ded810ea7cb79a11054e5cc954cd79495de8a2fce7"
+    },
+    {
+      "path": "assets/images/ai_puppy_heart_sketch.jpg",
+      "sha256": "e9f96d48e6120ce25075175850ed34114eb810419858b35dae1843603c490a24"
+    },
+    {
+      "path": "assets/images/arirang_janggu_dance.jpg",
+      "sha256": "7a43ec7647d60403931421354a10b784c489c829bc7bf11ff5d2c4d2865e8c6d"
+    },
+    {
+      "path": "assets/images/autumn-reading-illustration.png",
+      "sha256": "ab0cd565726df39c5b227c9c6f5ff2ae9c6542bc04026fd1a9570c07c4200246"
+    },
+    {
+      "path": "assets/images/baduki_lying_porch.jpg",
+      "sha256": "de88d25fcae74c2fe187e541e757ede367cd4a2b5db4531b54caf8a9924542e7"
+    },
+    {
+      "path": "assets/images/baduki_lying_porch_sketch.jpg",
+      "sha256": "2f19ee0ffc9f9a06ccc90ac6c2431289baeee9dbcadc5c8514190c72371036c2"
+    },
+    {
+      "path": "assets/images/baduki_running_yard.jpg",
+      "sha256": "9279a06794dae5c9232e98447d5427d15bd13a06edc8a99694021a6c83079479"
+    },
+    {
+      "path": "assets/images/baduki_running_yard_sketch.jpg",
+      "sha256": "86941eceb87b24e9b52fd95235163ebb64be6531cab7b72801d0eced01832b12"
+    },
+    {
+      "path": "assets/images/chatgpt_main_interface.png",
+      "sha256": "77a4c9b3bd9b2e98bb624db7f1b22e2e73d1d8a2ef63b2d592831dcf5ee90926"
+    },
+    {
+      "path": "assets/images/chatgpt_tablet_screen.png",
+      "sha256": "cb731e49a411604ec29f4d4882a12ebd58e62c055a318aa1f33c7e8a7b624fa8"
+    },
+    {
+      "path": "assets/images/friend-bori-talk.png",
+      "sha256": "42b5d3fd82b5224377eb4f94b223254cb535e6116c7ae06a96ebd901e5bfc5b7"
+    },
+    {
+      "path": "assets/images/friend-bori.png",
+      "sha256": "42b5d3fd82b5224377eb4f94b223254cb535e6116c7ae06a96ebd901e5bfc5b7"
+    },
+    {
+      "path": "assets/images/friend-kongi-talk.png",
+      "sha256": "612ca7d75bad1ac072f5550f9e7cf450c9b8857f192b07039cc201f8ba315033"
+    },
+    {
+      "path": "assets/images/friend-kongi.png",
+      "sha256": "612ca7d75bad1ac072f5550f9e7cf450c9b8857f192b07039cc201f8ba315033"
+    },
+    {
+      "path": "assets/images/friend-nabi-talk.png",
+      "sha256": "205b32b728c5620f103e233ae6d8bac5fc71be0cbf87e8ea5858f3ff0418034e"
+    },
+    {
+      "path": "assets/images/friend-nabi.png",
+      "sha256": "205b32b728c5620f103e233ae6d8bac5fc71be0cbf87e8ea5858f3ff0418034e"
+    },
+    {
+      "path": "assets/images/friend-tori-talk.png",
+      "sha256": "83fd76c97d4ebec0eab357fea63b2b11ab262c7e2fa9d1e902d70d4a648d7d4e"
+    },
+    {
+      "path": "assets/images/friend-tori.png",
+      "sha256": "83fd76c97d4ebec0eab357fea63b2b11ab262c7e2fa9d1e902d70d4a648d7d4e"
+    },
+    {
+      "path": "assets/images/friends-exercise-guide.png",
+      "sha256": "4d116660ec4ecc98847244b7ba3a19b0dbad825e00f6b345621890d42f524dc7"
+    },
+    {
+      "path": "assets/images/fruits_basket.jpg",
+      "sha256": "ce3871b804d9f9032c4397c23eaf038ac8372c7231e7286a5e702ec83737e075"
+    },
+    {
+      "path": "assets/images/fruits_basket_sketch.jpg",
+      "sha256": "525096e0d6d5108e4e40f137bda4cbe0147139ca84807a91fd9b6a0ef03bb449"
+    },
+    {
+      "path": "assets/images/karaoke_stage.jpg",
+      "sha256": "d74d4f1f8e0750086b6c745fe4e5e70d30a8b95dd37383dbd430a6a728cdb6d3"
+    },
+    {
+      "path": "assets/images/kongi-exercise-guide.png",
+      "sha256": "4d116660ec4ecc98847244b7ba3a19b0dbad825e00f6b345621890d42f524dc7"
+    },
+    {
+      "path": "assets/images/korean_baduki_courtyard.jpg",
+      "sha256": "dd7e9cf192013d1fe107a5e762117d51a244e00f38f57791db25f16f220f4511"
+    },
+    {
+      "path": "assets/images/korean_stew_table.jpg",
+      "sha256": "b5e2fb4e9819a355aeac10c1d2b3195c8d5fc7a155a84de9666fd54fc0d99b41"
+    },
+    {
+      "path": "assets/images/korean_sunflower.jpg",
+      "sha256": "01e8de1d4d4786f3295a83576782d2ddcecea370ff932a7b9b0b0ee551056aad"
+    },
+    {
+      "path": "assets/images/korean_sunflower_sketch.jpg",
+      "sha256": "061f1ebb14cd2d21fc5c1b1a4621fa4ac7eda4ea24ac1f4dd7bc95639cf8e943"
+    },
+    {
+      "path": "assets/images/manuscript-handwriting.png",
+      "sha256": "97ef3427aa165a4f809d1cf9b86879c43f3ae06680398ed5f809a71d381e82c0"
+    },
+    {
+      "path": "assets/images/music-creation-studio.png",
+      "sha256": "1973db4adc1c3e7b7e39e7960f50dc52f7910b520a0a007338dcde5ac674026f"
+    },
+    {
+      "path": "assets/images/nostalgic_village.jpg",
+      "sha256": "3fc96409850a19e72a811fc90fe6bf840b98a2d5c6e2af33339eb0355048f9b9"
+    },
+    {
+      "path": "assets/images/nostalgic_village_sketch.jpg",
+      "sha256": "39e2417899b0a20f56410b5a998accc090f6c05713d763d4d3d73b8517edffa1"
+    },
+    {
+      "path": "assets/images/nostalgic_village_sunset.jpg",
+      "sha256": "7c9a9bc0c48fd53fee3ca85e24b8f43227fa7d76d8fcec2486a123442c607bd1"
+    },
+    {
+      "path": "assets/images/nostalgic_village_sunset_sketch.jpg",
+      "sha256": "84e24bea840bd3999ccc70f55b41f5d590c389c17cf504979b9260c58d063e58"
+    },
+    {
+      "path": "assets/images/retro_turntable.jpg",
+      "sha256": "35ab4fac9bfd2d89a02677b1a17bf6533b6a2aab4a6d88b93d30466c6119df6c"
+    },
+    {
+      "path": "assets/images/senior-daylight-old-songs.png",
+      "sha256": "a302eff58e6b14a7e0af8495ef0bc9c0466427a5f81187eedfbec3f24ab546ec"
+    },
+    {
+      "path": "assets/images/single_azalea_flower.jpg",
+      "sha256": "487bca3b7b6ce2fb1462a7927d42535cb715b0cbb213e36e04b3c1d332223cce"
+    },
+    {
+      "path": "assets/images/small_jujube_teacup.jpg",
+      "sha256": "bfa0f23da37643dc8066e03d2e08c72006c4df6585dbded7189de9a2145efb04"
+    },
+    {
+      "path": "assets/images/smartphone_touch.jpg",
+      "sha256": "4b9d851fe365568660586bc942ac43a4d88cb6d317426c622cccdb4d1bdbaad1"
+    },
+    {
+      "path": "assets/images/spring_apricot_blossom.jpg",
+      "sha256": "59640baeb5b1c3068f38968942788ed88a8fdbfc315e47e932e7a44235a00107"
+    },
+    {
+      "path": "assets/images/spring_apricot_blossom_sketch.jpg",
+      "sha256": "89d0bd2b19cd23f818d4f562642bb551c26e2e6405da439a2924e83ed232cce3"
+    },
+    {
+      "path": "assets/images/spring_flowers.jpg",
+      "sha256": "33cfa95cc977adc04d6cd1528fd3433849d9f695d4fc933e9a441fa2cf9be0bf"
+    },
+    {
+      "path": "assets/images/spring_flowers_sketch.jpg",
+      "sha256": "9b59237b9fa35f29875bae3ed23042ec5476e2dd20c4bae5ad78badebb9b44c2"
+    },
+    {
+      "path": "assets/images/spring_fresh_green_hill.jpg",
+      "sha256": "a3a22c20bc326001ba932c4c99e3ca108058abf8ce6d8cfa54bcaf66d209ed66"
+    },
+    {
+      "path": "assets/images/spring_fresh_green_hill_sketch.jpg",
+      "sha256": "0d2f8a3ab53e6e8d1bc474c2e65a2450f2182a74845710fa197b3fd4dbfabc8d"
+    },
+    {
+      "path": "assets/images/story-brother-bedroom-thought.png",
+      "sha256": "be3f8d3c497ea0b5d8982e194265577020f2d99ea74223ac1d37f250f94ef733"
+    },
+    {
+      "path": "assets/images/story-brother-morning-rice.png",
+      "sha256": "8fe960b501250fb0dbfa5b07dcf6663405b8532349b0bc1ff21e37ba5261339e"
+    },
+    {
+      "path": "assets/images/story-brothers-daytime-introduction.png",
+      "sha256": "240bee6e16a83f93d58b9ace2cf9db20a5b247425aab5b588d7176b45e43d999"
+    },
+    {
+      "path": "assets/images/story-brothers-moonlight-hug.png",
+      "sha256": "8e2fcf94e7c1989af9204611c25bd3fb474b9976a00600b2da46388674fda6ba"
+    },
+    {
+      "path": "assets/images/story_brother_night_decision.jpg",
+      "sha256": "7c31323f9cd6d0614ace4f04b2aac99e9b602c08725e9f5bd7d68f8521003e9e"
+    },
+    {
+      "path": "assets/images/story_brothers.jpg",
+      "sha256": "4364ed33b05fd9637169af56d2eb98c1a79e3f771a8035eae487112f44f6330f"
+    },
+    {
+      "path": "assets/images/story_brothers_dinner.jpg",
+      "sha256": "96b7d02e4d36be63a0e28cf95ae560ac4d5511022a00341426a242210823ad19"
+    },
+    {
+      "path": "assets/images/story_brothers_embrace.jpg",
+      "sha256": "ed953f4f6a6af4eeb1a3d7c004b77546262703c518f5816716133006f369a4f5"
+    },
+    {
+      "path": "assets/images/story_brothers_harvest.jpg",
+      "sha256": "6dfe65c4196ddc178bb484776ca6cbc012326a29635469417fe6f70381a8bd99"
+    },
+    {
+      "path": "assets/images/story_courtyard_mealtime.jpg",
+      "sha256": "13efa022c4df91968d8ff308598fc30dd1ffb16fec47e61421273c0494bf5c64"
+    },
+    {
+      "path": "assets/images/story_courtyard_sunflower.jpg",
+      "sha256": "7785b51077e7bffb31a226112313d1be38f80b23859b998a5c5a20e59352ccd2"
+    },
+    {
+      "path": "assets/images/story_courtyard_vegetables.jpg",
+      "sha256": "13efa022c4df91968d8ff308598fc30dd1ffb16fec47e61421273c0494bf5c64"
+    },
+    {
+      "path": "assets/images/story_hometown_album.jpg",
+      "sha256": "ff38472f53eb80be5c8f754551902034cffe1abe506bff8ab861ac46b5f539b9"
+    },
+    {
+      "path": "assets/images/story_village_brothers.jpg",
+      "sha256": "8bb319405d5598e91e16d68f424fea570dd1aea99f25fe3f586f509de7b9b11e"
+    },
+    {
+      "path": "assets/images/stream_children_playing.jpg",
+      "sha256": "ff43d83e7a89fa141dc3dc85a428ee2148f030ca7fe84c2d6c96fd7e53994200"
+    },
+    {
+      "path": "assets/images/sunflower_near_pots.jpg",
+      "sha256": "61d0cf311d47ff4ac97a47178aabbd6511ebab81684d5b7ed478e8938da229d1"
+    },
+    {
+      "path": "assets/images/sunflower_near_pots_sketch.jpg",
+      "sha256": "2540fdd4df2c030c47a413f031ee647e5c8a2a581d6d3cdfa5b01e3bb121d57a"
+    },
+    {
+      "path": "assets/images/sunflower_seed_head.jpg",
+      "sha256": "811817b759a17ed8845b32fe03ed88e9883652ab30ceebfe3a91eba0a59c790b"
+    },
+    {
+      "path": "assets/images/sunflower_seed_head_sketch.jpg",
+      "sha256": "b68a47bdb21599bc922d306cfa2e435360ce9311e0a43a5ed53e09d764eef82b"
+    },
+    {
+      "path": "assets/images/teacup_ceramic_antique.jpg",
+      "sha256": "f4c29b8c9d5f727fb5780579141eb236a06ac257449bcce37ae410739b466e76"
+    },
+    {
+      "path": "assets/images/teacup_ceramic_antique_sketch.jpg",
+      "sha256": "a1d584870ae7f22c5c112d417731952bfc9faa9b9dc8fd8af6d008bd8bdc8185"
+    },
+    {
+      "path": "assets/images/teacup_jujube_garnish.jpg",
+      "sha256": "2f4ea905b21a885618e54f16686294da07b499cf372c0581d21f480e28cb7ead"
+    },
+    {
+      "path": "assets/images/teacup_jujube_garnish_sketch.jpg",
+      "sha256": "9c517ee7dd1c2720a74fd459f575db9c99361c437d901bef6a037a04ad9ef751"
+    },
+    {
+      "path": "assets/images/thank-you-message.png",
+      "sha256": "2a4d8c2e5347066c70d9a9f840e860b7b9a29c1f418258855c8f705de71f5f61"
+    },
+    {
+      "path": "assets/images/travel-plan-tablet.png",
+      "sha256": "29ea5706fa5794aa757308add810519644fe6cddd82da655739eeeb563c992c6"
+    },
+    {
+      "path": "assets/images/video-walking-editor.png",
+      "sha256": "1822d7d38173abb8442b3280f0dcc940d43ba61c936ed71ee43ff3e201254393"
+    },
+    {
+      "path": "assets/images/village_clear_stream.jpg",
+      "sha256": "b0a52d6045d4758735ef3a375d50488ff52df59fc4af06aee1155d9ee2f6e733"
+    },
+    {
+      "path": "assets/images/village_clear_stream_sketch.jpg",
+      "sha256": "9a0ad1c02ad2c658dca015e7b538b50d093661875a6067c8ae6e62551d2cb7be"
+    },
+    {
+      "path": "assets/images/village_green_mountain.jpg",
+      "sha256": "68fef5f917e207995f600e1643be71c185c469c2d5290b84ffe11326ab283af4"
+    },
+    {
+      "path": "assets/images/village_green_mountain_sketch.jpg",
+      "sha256": "39d75d6f0c8a40ed2bacc93ceba36c5182d2d81ca0f1f403ce86f6c600987e7e"
+    },
+    {
+      "path": "assets/images/warm_jujube_tea.jpg",
+      "sha256": "bfa0f23da37643dc8066e03d2e08c72006c4df6585dbded7189de9a2145efb04"
+    },
+    {
+      "path": "assets/images/warm_jujube_tea_sketch.jpg",
+      "sha256": "748e8720e0093826478909340c8cdb3b53b1369e56df0426ad10c31f3afaf96e"
+    },
+    {
+      "path": "assets/videos/friends-chair-warmup-poster.png",
+      "sha256": "5dc3fed52099cc378698a0c8d3fdc27dab6bcf885168f68a4f2816ab506d2ceb"
+    },
+    {
+      "path": "assets/videos/friends-chair-warmup.webm",
+      "sha256": "01aaa3cd42418f4b576281ee5d312465432588b6dd381adf69ba5beb2578fb47"
+    },
+    {
+      "path": "assets/videos/friends-exercise-20min-chapters.json",
+      "sha256": "59a11747b066d44257b69c76a7766f219e176d395645e40341d49e8a434145f5"
+    },
+    {
+      "path": "assets/videos/friends-exercise-20min-poster.png",
+      "sha256": "2482128acb3f7ea1c74215c0ea1739e6391cc6f73fce3461c4adbda1db5c83f8"
+    },
+    {
+      "path": "assets/videos/friends-exercise-20min.mp4",
+      "sha256": "dae92fd7b54db782d1cbddcd73d824caea0ae8769de2c2054acec4c3725ceb3e"
+    },
+    {
+      "path": "css/basic-study-rooms.css",
+      "sha256": "c3b0960a85fe47ade3adb3f2641fe0c6e1cd4a48a4122242678367de07706a63"
+    },
+    {
+      "path": "css/care-workflow.css",
+      "sha256": "6d575227df06c1c13825c5893ff05449143abda49ed3edcf20bd534443a8162c"
+    },
+    {
+      "path": "css/coloring-room.css",
+      "sha256": "33309eb536167a442b232a791647f003ae5a71cb0807ed009c5282f5ac364510"
+    },
+    {
+      "path": "css/friends-and-play.css",
+      "sha256": "7d72ffa50c7f295773f2c5bb63f58bd20822fabcc01c2ac3bdf679c1c45fc23b"
+    },
+    {
+      "path": "css/hobby-room.css",
+      "sha256": "4607ce867c81b16a5eb81b0bc3add195946f879a898dfd9a37f504eba14dd279"
+    },
+    {
+      "path": "css/joint-room.css",
+      "sha256": "3900af7d900e71931919bf66f339693fef8f88410f3501ba3297dcc8ee127ac5"
+    },
+    {
+      "path": "css/karaoke-room.css",
+      "sha256": "661677198df460fc217b467975017cf6e2301dd746934b722428c28ea0fc43dd"
+    },
+    {
+      "path": "css/lesson.css",
+      "sha256": "4dee0efff4bfbfdbcdd0b161d83c54252db6c6bd1286723667cc5c4430db8a7e"
+    },
+    {
+      "path": "css/longtermcare-handoff.css",
+      "sha256": "e57bc38d8d6b81efa5ee2f3c6e5435430858111977e142055f95800ecd10c99d"
+    },
+    {
+      "path": "css/main.css",
+      "sha256": "36d4dfe28c27e0a77f6b2fa7559189d82f8d26f60044164076ba34ef6a6381cb"
+    },
+    {
+      "path": "css/morning-program.css",
+      "sha256": "38d6d741b723d386d061055d3d7d86addfc1ac4b458e6aaab57bf0123c4e4d51"
+    },
+    {
+      "path": "css/participant-archive.css",
+      "sha256": "3ab5acde041c2e7b6a7e608592a2fb69ccfd062662a9fef18727ce2e2982eab9"
+    },
+    {
+      "path": "css/school-shell.css",
+      "sha256": "4f80794b410f88b72f054a16ef5f4d0ca02b6b7bd0c66e5b0b322522c1b84ae4"
+    },
+    {
+      "path": "css/senior-finish.css",
+      "sha256": "1f84c051493df960d51aaa86c2446609c7ea0f5dd7e3c36067f3c9d39c65fce2"
+    },
+    {
+      "path": "css/solar-room.css",
+      "sha256": "1141f019b593d3d4d1cd1e4f880b5338db6bb36b11833a638b4d8e340477d8fe"
+    },
+    {
+      "path": "css/teacher.css",
+      "sha256": "0cd85c9d54cfa049802678dfddc42a49822f0b34d232016e1415a5ed41420e68"
+    },
+    {
+      "path": "css/user-profile.css",
+      "sha256": "e4467f74c84cffebbeede5b454c0de21e52ddbc2f140a4995f14f39afbb34bab"
+    },
+    {
+      "path": "css/weather-widget.css",
+      "sha256": "e9510cd5ce17e02f964597d8ccea2f8c0f5897d64e869ab64b6c583fac66fe0e"
+    },
+    {
+      "path": "css/welcome-greeting.css",
+      "sha256": "c52f8bef1a45d32705f18a029bc80dc26fecdaea7f2b8158750a90a87b17d8e0"
+    },
+    {
+      "path": "js/app.js",
+      "sha256": "913714fadb37c26ae43fc6ea2728f23483160a4dc631ba1cf057ebc2b7fc733d"
+    },
+    {
+      "path": "js/basic-study-rooms.js",
+      "sha256": "03c4f9cdad0524eb88750cff6753a00274b45e6a6dddc716978a2426f94252cc"
+    },
+    {
+      "path": "js/care-workflow.js",
+      "sha256": "1d4f24b9305a5ee943edcbf4d1d3610c1ae52ef32a6e9b2b18e629cc4eeb8cac"
+    },
+    {
+      "path": "js/chatgpt-practice.js",
+      "sha256": "8c7ddbb8bb52f2b38f90f13a8d0b2cf72c86ac3953f9927c5ae461172bd8d927"
+    },
+    {
+      "path": "js/coloring-room.js",
+      "sha256": "324d458891283657364a46bb006e1bda2ba4fbb6fed6bd564756afc61a7979d6"
+    },
+    {
+      "path": "js/consent-forms.js",
+      "sha256": "3a7c3dd88898775ea8ce90e63bd2cf8fba58fa3bf6a4d1c6724a4dfa2b4f019b"
+    },
+    {
+      "path": "js/consent-rooms.js",
+      "sha256": "252a0f8d9c5e291bb2fd8c3076476ff409835c08436f25200d5ca3af32eb95b3"
+    },
+    {
+      "path": "js/daily-games.js",
+      "sha256": "9409cd0bfafe2f42f201179cc9eeb3b653c49a8ed6745e99cee9f87849f2dc71"
+    },
+    {
+      "path": "js/extra-games.js",
+      "sha256": "51fa9e0f2aa67d03e82d057b5dd2e0f8391d0df1550b71bb918f4870c5e5393d"
+    },
+    {
+      "path": "js/friends-and-play.js",
+      "sha256": "97646acdfe8f29fd5b9abe14c27e6d1fa404835da2adbc4c71285c3733182018"
+    },
+    {
+      "path": "js/hobby-room.js",
+      "sha256": "443f75ca985e3099f47780556dde258f8fb7a8c0ab98aee4a4ec74c5abea7c39"
+    },
+    {
+      "path": "js/joint-room.js",
+      "sha256": "db6e56ee19b9a856ee29632a87982f6bf0069f26c0cfce8e1a5cbd963ee00417"
+    },
+    {
+      "path": "js/karaoke-room.js",
+      "sha256": "93b1400546e9d6eea4384642f7cd038638bf54a48e2570e34ee0a6c97aafa814"
+    },
+    {
+      "path": "js/karaoke-synth.js",
+      "sha256": "94357f033a8184da0fb4aef22fb6fd08c709e98978d747bb9be3ac9d5b03bf10"
+    },
+    {
+      "path": "js/lesson-data.js",
+      "sha256": "df22d5f340b2d23af809f405ed105c2210992c5cd0688576416b725d03a75520"
+    },
+    {
+      "path": "js/lesson-engine.js",
+      "sha256": "a569337f1e0adcf0c4a913d39c7b820410aa5c6f67bfbd12226624abaf6443c6"
+    },
+    {
+      "path": "js/longtermcare-handoff.js",
+      "sha256": "ed8f93426cc52d09b6bedc33932c0925d75a44baba87cf5111fc997b6b35879c"
+    },
+    {
+      "path": "js/monthly-programs.js",
+      "sha256": "aae90c793c432ab4566e2dbdf1fb0f23a4884347090301cbcd7aafb6fac40713"
+    },
+    {
+      "path": "js/morning-program.js",
+      "sha256": "77c063b16d4dc1285dd3194123aed752bd5f0ac9a644278a5ab32895f5d42989"
+    },
+    {
+      "path": "js/participant-archive-store.js",
+      "sha256": "33855b4b3ce362eaaff29cfd0400b0116a3132aee0831c9d389348d854846f81"
+    },
+    {
+      "path": "js/participant-archive.js",
+      "sha256": "029f7b085753218e8af1aca4a64d680333af3ad1fedfb86a82cf38793f440b07"
+    },
+    {
+      "path": "js/record-manager.js",
+      "sha256": "e066488182ac68ebe8cab6da2af2c2e17046c4387df24e66fbe855f2b5c4cffd"
+    },
+    {
+      "path": "js/school-content.js",
+      "sha256": "ed2f94358ffbd7aba879f3a670262367567791bf40b795b42b539050c40a03b9"
+    },
+    {
+      "path": "js/school-shell.js",
+      "sha256": "d8f69276dbb892cc0e9d1ebf20b809ae6a6251f0b7ef34a2fda9251e599a4cbf"
+    },
+    {
+      "path": "js/senior-finish.js",
+      "sha256": "56866359f7083f726065b26c8114697f695d27cac525ec36cd4eb2efb82a3666"
+    },
+    {
+      "path": "js/solar-room.js",
+      "sha256": "75911eb901a9abb0cfe4ea8a906a8be70ce51d054da5a192e2d3994e4a90d103"
+    },
+    {
+      "path": "js/story-library.js",
+      "sha256": "9f8159c6f61ac5cc162aac4ac9d04b2a95c1536ea7d3500da752994609381bf2"
+    },
+    {
+      "path": "js/user-profile.js",
+      "sha256": "74bd40f9988e5be78d5b233c6eb7859209417d3065a77475edb08ffa53c6312d"
+    },
+    {
+      "path": "js/voice-scripts.js",
+      "sha256": "9565773926c4788fc5c51077e16125280aa65ad578aa08b34ecfebfc67614ee1"
+    },
+    {
+      "path": "js/voice.js",
+      "sha256": "b643d40d2ae8bf2235cd22c79e7479689d0f91d0b4bc83ffbf5a2c4cab8216c5"
+    },
+    {
+      "path": "js/warmup-intro.js",
+      "sha256": "b3d6ba5bb01647583807d9baba965f76a70e94fb43b92520b0a53ccbdabd6d25"
+    },
+    {
+      "path": "js/weather-service.js",
+      "sha256": "5813b7d876726e07768f32c85fb0cada855915e335d7c6c75a26a281abd55380"
+    },
+    {
+      "path": "js/welcome-greeting.js",
+      "sha256": "5549e103752b8302f9480c3b38d28ff96cc28715398037e1a86d08b06480e0dc"
+    },
+    {
+      "path": "js/word-search.js",
+      "sha256": "437c008de88bfb07621be7c3a64170e1fd834aecab2e518af74eb7b2be6130b6"
+    },
+    {
+      "path": "js/workflow-automation.js",
+      "sha256": "4ffa2ac78ac0c3dcd1a6905580ed142a2f150a616de3c9e79d27adcbd88b24a9"
+    },
+    {
+      "path": "documents/assessment.html",
+      "sha256": "d85b634d09eb94ecba7674b2d7e389eb277b6b27b1726770388929fa15fd03c3"
+    },
+    {
+      "path": "documents/careplan.html",
+      "sha256": "b110e878f4ab476a85d96bc6eb66b923f957e6b1b4f2b4a50232824215648a09"
+    },
+    {
+      "path": "documents/consent0.html",
+      "sha256": "0362e57f85e3a18da23310d30af78d676cb23a710a107377c14fee6e402383a9"
+    },
+    {
+      "path": "documents/consent1.html",
+      "sha256": "1b7dc336733690529f13918b05d68b26532763accade44fdd75f9b6b2e3ded08"
+    },
+    {
+      "path": "documents/consent2.html",
+      "sha256": "72d0572ed85c4e2652f47bf945b13764a3d7701dfde612c29e08191e83227209"
+    },
+    {
+      "path": "documents/consent3.html",
+      "sha256": "9defae671db70cea5e3b15ede5ff1c8d6cec3ff8863379729eaa58d1a2d45ead"
+    },
+    {
+      "path": "documents/contract.html",
+      "sha256": "56497622dfaa76fcde11bb873b7a427fb34f89611267dcbbcfaf18b8df3b9506"
+    },
+    {
+      "path": "documents/recognition.html",
+      "sha256": "c056e64e83382e02397f2f823a70f398bdff6d7412945c98604fdbb5df5e96d8"
+    }
+  ]
+}
