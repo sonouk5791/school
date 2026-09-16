@@ -11,7 +11,7 @@
 
 const VoiceManager = {
   isMuted: false,
-  speedMode: 'normal', // 'normal' (0.92) | 'slow' (0.82)
+  speedMode: 'slow', // 'normal' (0.92) | 'slow' (0.82)
   synth: window.speechSynthesis,
   koreanVoice: null,
   audioCtx: null,
@@ -23,45 +23,45 @@ const VoiceManager = {
       emoji: '🐶',
       voiceDesc: '밝고 다정한 목소리',
       pitch: 1.02,
-      rate: 0.96,
+      rate: 1.0,
       pauseMultiplier: 1.0,
       voiceIndex: 0,
       chimeNotes: [
         { freq: 523.25, delay: 0.00, dur: 0.14, type: 'sine', gain: 0.08 },
         { freq: 659.25, delay: 0.08, dur: 0.20, type: 'sine', gain: 0.08 }
       ],
-      greeting: "멍멍! 안녕하세요! 다정한 친구 콩이예요. 오늘도 편안하고 즐겁게 함께해요!"
+      greeting: "안녕하세요. 건강 체조 친구 콩이예요. 저랑 천천히 몸을 움직여봐요!"
     },
     tori: {
       name: '토리',
       animal: '토끼',
       emoji: '🐰',
       voiceDesc: '톡톡 튀는 귀여운 목소리',
-      pitch: 1.14,
-      rate: 1.02,
-      pauseMultiplier: 0.85,
+      pitch: 1.02,
+      rate: 1.0,
+      pauseMultiplier: 1.10,
       voiceIndex: 1,
       chimeNotes: [
         { freq: 587.33, delay: 0.00, dur: 0.12, type: 'sine', gain: 0.07 },
         { freq: 783.99, delay: 0.09, dur: 0.18, type: 'sine', gain: 0.08 }
       ],
-      greeting: "깡총깡총! 반가워요! 신나는 친구 토리예요! 오늘도 신나고 재미있게 같이 놀아요!"
+      greeting: "안녕하세요. 마음 친구 토리예요. 오늘 기분은 어떠세요?"
     },
     bori: {
       name: '보리',
       animal: '곰',
       emoji: '🐻',
       voiceDesc: '포근하고 듬직한 목소리',
-      pitch: 0.72,
+      pitch: 1.0,
       malePitch: 0.92,
-      rate: 0.86,
+      rate: 1.0,
       pauseMultiplier: 1.25,
       voiceIndex: 2,
       chimeNotes: [
         { freq: 329.63, delay: 0.00, dur: 0.18, type: 'sine', gain: 0.08 },
         { freq: 392.00, delay: 0.12, dur: 0.25, type: 'sine', gain: 0.08 }
       ],
-      greeting: "우엉~ 안녕, 난 듬직한 곰돌이 보리야. 서두르지 않아도 돼요. 곁에서 든든하게 응원할게요."
+      greeting: "안녕하세요. 음악 친구 보리예요. 좋아하는 노래를 같이 들어봐요!"
     },
     nabi: {
       name: '나비',
@@ -69,7 +69,7 @@ const VoiceManager = {
       emoji: '🐱',
       voiceDesc: '나긋나긋 고운 목소리',
       pitch: 1.08,
-      rate: 0.90,
+      rate: 1.0,
       pauseMultiplier: 1.10,
       voiceIndex: 3,
       chimeNotes: [
@@ -77,7 +77,7 @@ const VoiceManager = {
         { freq: 783.99, delay: 0.08, dur: 0.12, type: 'sine', gain: 0.07 },
         { freq: 880.00, delay: 0.16, dur: 0.20, type: 'sine', gain: 0.08 }
       ],
-      greeting: "야옹~ 만나서 반가워요, 상냥한 나비예요. 조용조용, 사뿐사뿐 편안하게 함께해요."
+      greeting: "안녕하세요. 기억 친구 나비예요. 우리 같이 기억해볼까요?"
     }
   },
   getCharacterVoice() {
@@ -93,14 +93,6 @@ const VoiceManager = {
       v.name && !v.name.includes('Heami') && !v.name.includes('Desktop')
     );
     const candidatePool = naturalVoices.length > 0 ? naturalVoices : voices;
-
-    // 1. 보리(곰): 남성 자연어 음성 (Edge InJoon 등) 최우선 탐색
-    if (charId === 'bori') {
-      const maleVoice = candidatePool.find(v => 
-        v.name && (v.name.includes('InJoon') || v.name.includes('인준') || v.name.toLowerCase().includes('male'))
-      );
-      if (maleVoice) return maleVoice;
-    }
 
     // 2. 토리(토끼), 나비(고양이), 콩이(강아지): 맑은 여성 자연어 음성 (SunHi Online Natural, Google 한국의)
     const femaleVoice = candidatePool.find(v => 
@@ -170,7 +162,7 @@ const VoiceManager = {
     if (savedSpeed === 'slow' || savedSpeed === 'normal') {
       this.speedMode = savedSpeed;
     } else {
-      this.speedMode = 'normal';
+      this.speedMode = 'slow';
     }
 
     // 3. 브라우저 음성 목록 로드

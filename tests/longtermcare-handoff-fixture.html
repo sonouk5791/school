@@ -1,0 +1,13 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>공단 등록 준비 — 가상자료 테스트</title><link rel="stylesheet" href="../css/main.css"><link rel="stylesheet" href="../css/care-workflow.css"><link rel="stylesheet" href="../css/longtermcare-handoff.css"></head><body>
+<h1>가상자료 테스트 · 실제 기록을 사용하지 않습니다</h1>
+<nav class="care-nav"><button aria-current="page" data-value="journals">일지</button></nav>
+<section id="careRoot"><div class="care-heading"><h2>테스트 일지</h2></div><article class="record-row"><div><button data-action="detail" data-value="fixture-1">일지 작성 / 확인</button></div></article></section>
+<dialog id="careDialog"><form id="journalForm" data-id="fixture-1"><label>일지 편집<textarea name="aiReport">가상 일지 본문 &lt;script&gt;텍스트&lt;/script&gt;</textarea></label><button type="button" id="fixtureSave">테스트 일지 저장</button></form></dialog>
+<button id="fixtureEditor" type="button">편집 창 열기</button><button id="fixtureClear" type="button">가상 일지 비우기</button>
+<script>
+const fixtureData={elders:[{elder_id:'fixture-person',name:'가상 대상자'}],sessions:[{session_id:'fixture-1',elder_id:'fixture-person',date:'2026-09-16',program:'검증 프로그램',aiReport:'가상 일지 본문 <script>텍스트<\/script>',reviewed:true}]};
+window.CareAutomationBridge={getData:()=>structuredClone(fixtureData)};
+document.querySelector('#fixtureEditor').onclick=()=>document.querySelector('#careDialog').showModal();
+document.querySelector('#fixtureSave').onclick=()=>{fixtureData.sessions[0].aiReport=document.querySelector('[name=aiReport]').value;};
+document.querySelector('#fixtureClear').onclick=()=>{fixtureData.sessions=[];};
+</script><script src="../js/longtermcare-handoff.js"></script></body></html>

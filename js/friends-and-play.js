@@ -1,10 +1,10 @@
 /* Optional companions and gentle activity formats extend the existing lesson engine. */
 (()=>{'use strict';
 const friends=[
-  {id:'kongi',name:'콩이',animal:'강아지',emoji:'🐶',image:'friend-kongi-talk.png',voiceDesc:'밝고 다정한 목소리',badge:'다정명랑'},
-  {id:'tori',name:'토리',animal:'토끼',emoji:'🐰',image:'friend-tori.png',voiceDesc:'톡톡 튀는 귀여운 목소리',badge:'통통발랄'},
-  {id:'nabi',name:'나비',animal:'고양이',emoji:'🐱',image:'friend-nabi.png',voiceDesc:'나긋나긋 고운 목소리',badge:'상냥우아'},
-  {id:'bori',name:'보리',animal:'곰',emoji:'🐻',image:'friend-bori.png',voiceDesc:'포근하고 듬직한 목소리',badge:'포근듬직'}
+  {id:'kongi',name:'콩이',animal:'강아지',emoji:'🐶',image:'friend-kongi-talk.png',voiceDesc:'밝고 다정한 목소리',badge:'건강 체조 친구',message:'저랑 천천히 몸을 움직여봐요!'},
+  {id:'tori',name:'토리',animal:'토끼',emoji:'🐰',image:'friend-tori.png',voiceDesc:'따뜻하고 다정한 목소리',badge:'마음 친구',message:'오늘 기분은 어떠세요?'},
+  {id:'nabi',name:'나비',animal:'고양이',emoji:'🐱',image:'friend-nabi.png',voiceDesc:'나긋나긋 고운 목소리',badge:'기억 친구',message:'우리 같이 기억해볼까요?'},
+  {id:'bori',name:'보리',animal:'곰',emoji:'🐻',image:'friend-bori.png',voiceDesc:'포근하고 듬직한 목소리',badge:'음악 친구',message:'좋아하는 노래를 같이 들어봐요!'}
 ];
 let selected='kongi';try{selected=localStorage.getItem('digital_school_friend')||'kongi';}catch{}if(!friends.some(f=>f.id===selected))selected='kongi';const friend=()=>friends.find(f=>f.id===selected);
 const path=n=>'assets/images/'+n;
@@ -17,7 +17,8 @@ const course={id:'variety_play',title:'친구와 다양한 놀이',icon:'🧩',s
 {prompt:'오늘 다시 해보고 싶은 놀이는 무엇인가요?',screenText:'내 마음 표현하기',voiceScript:'어떤 놀이가 마음에 드셨나요? 정답은 없어요. 좋아하는 놀이를 골라주세요.',helpScript:'어떤 선택도 괜찮아요. 지금의 마음을 알려주세요.',options:[{text:'그림 놀이',emoji:'🖼️',feedback:'그림 놀이가 마음에 드셨군요. 알려주셔서 고마워요.'},{text:'순서 놀이',emoji:'👐',feedback:'순서 놀이를 다시 함께 해봐요.'},{text:'과일 힌트 놀이',emoji:'🍎',feedback:'다음에도 힌트를 보며 과일을 찾아봐요.'}]}]};
 window.LESSON_CATALOG.push(course);
 let state={},playRun=null,memoryPreviewTimer=null;const defaults=()=>({sequence:[],memory:{cards:['🐰','🐱','🐰','🐱'].map((value,i)=>({value,key:i})).sort(()=>Math.random()-.5),preview:true,open:[],matched:[],mismatch:false},listened:false,textClue:false,heardChoice:null});
-function companion(){const f=friend();VoiceManager.characterId=f.id;document.querySelectorAll('.hero-robot-img,.ai-friend-avatar-img,.completion-robot-img').forEach(img=>{img.src=path(f.image);img.alt=f.animal+' 친구 '+f.name;});document.querySelectorAll('.hero-greeting-tag').forEach(el=>el.textContent=f.emoji+' '+f.name+'의 '+f.voiceDesc);document.querySelectorAll('.ai-friend-name-tag').forEach(el=>el.textContent=f.emoji+' '+f.name);document.querySelectorAll('[data-friend]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.friend===selected)));}
+window.selectSchoolCompanion=id=>{if(friends.some(f=>f.id===id)){selected=id;companion();}};
+function companion(){const f=friend();VoiceManager.characterId=f.id;document.querySelectorAll('.hero-robot-img,.ai-friend-avatar-img,.completion-robot-img').forEach(img=>{img.src=path(f.image);img.alt=f.animal+' 친구 '+f.name;});document.querySelectorAll('.hero-greeting-tag').forEach(el=>el.textContent=f.emoji+' '+f.name+' · '+f.badge);document.querySelectorAll('.ai-friend-name-tag').forEach(el=>el.textContent=f.emoji+' '+f.name);document.querySelectorAll('[data-friend]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.friend===selected)));}
 const button=(label,action,extra='')=>`<button type="button" class="play-button" data-play="${action}" ${extra}>${label}</button>`;
 function announce(text){document.querySelector('#playFeedback').textContent=text;VoiceManager.speak(text);}
 function savePlay(kind,value){LessonEngine.selectedAnswers['play_'+kind]=JSON.parse(JSON.stringify(value));}
@@ -50,7 +51,7 @@ if(kind==='listen'){holder.innerHTML=`<div class="play-clue"><strong>💡 힌트
 
 }
 document.addEventListener('DOMContentLoaded',()=>{
-const section=document.createElement('section');section.className='friend-selection care-card';section.innerHTML=`<h2>오늘 함께할 친구를 골라주세요</h2><p>네 친구마다 저마다의 고유한 목소리와 말투로 다정하게 안내해 드려요.</p><div class="friend-grid">${friends.map(f=>`<button type="button" class="friend-choice" data-friend="${f.id}" aria-pressed="false"><img src="${path(f.image)}" alt="${f.animal} 친구 ${f.name}"><strong>${f.emoji} ${f.name}</strong><span class="friend-role">${f.animal} 친구</span><span class="friend-voice-tag">${f.voiceDesc}</span><span class="friend-voice-hint">🔊 목소리 듣기</span></button>`).join('')}</div><div class="variety-start"><div><h3>🧩 친구와 다양한 놀이</h3><p>원하는 놀이를 골라 바로 시작하거나, 전체 놀이를 차례대로 즐겨보세요.</p><div class="variety-chips-grid"><button type="button" class="variety-chip-btn" data-variety-step="0">🖼️ 같은 그림 찾기</button><button type="button" class="variety-chip-btn" data-variety-step="1">⭕ O / X 놀이</button><button type="button" class="variety-chip-btn" data-variety-step="2">👐 순서 맞추기</button><button type="button" class="variety-chip-btn" data-variety-step="3">🧠 그림 기억 놀이</button><button type="button" class="variety-chip-btn" data-variety-step="4">🍎 힌트로 과일 찾기</button><button type="button" class="variety-chip-btn" data-variety-step="5">💖 내 마음 표현하기</button></div></div><button type="button" class="care-btn primary" id="startVariety">놀이 전체 시작 ▶</button></div><p class="friend-status" role="status"></p>`;document.querySelector('.section-lessons').before(section);
+const section=document.createElement('section');section.className='friend-selection care-card';section.innerHTML=`<h2>오늘 함께할 친구를 골라주세요</h2><p>콩이는 체조, 토리는 마음, 나비는 기억, 보리는 음악을 함께해요.</p><div class="friend-grid">${friends.map(f=>`<button type="button" class="friend-choice" data-friend="${f.id}" aria-pressed="false"><img src="${path(f.image)}" alt="${f.animal} 친구 ${f.name}"><strong>${f.emoji} ${f.name}</strong><span class="friend-role">${f.badge}</span><span class="friend-guide">${f.message}</span><span class="friend-voice-tag">${f.voiceDesc}</span><span class="friend-voice-hint">🔊 목소리 듣기</span></button>`).join('')}</div><div class="variety-start"><div><h3>🧩 친구와 다양한 놀이</h3><p>원하는 놀이를 골라 바로 시작하거나, 전체 놀이를 차례대로 즐겨보세요.</p><div class="variety-chips-grid"><button type="button" class="variety-chip-btn" data-variety-step="0">🖼️ 같은 그림 찾기</button><button type="button" class="variety-chip-btn" data-variety-step="1">⭕ O / X 놀이</button><button type="button" class="variety-chip-btn" data-variety-step="2">👐 순서 맞추기</button><button type="button" class="variety-chip-btn" data-variety-step="3">🧠 그림 기억 놀이</button><button type="button" class="variety-chip-btn" data-variety-step="4">🍎 힌트로 과일 찾기</button><button type="button" class="variety-chip-btn" data-variety-step="5">💖 내 마음 표현하기</button></div></div><button type="button" class="care-btn primary" id="startVariety">놀이 전체 시작 ▶</button></div><p class="friend-status" role="status"></p>`;document.querySelector('.section-lessons').before(section);
 const start=LessonEngine.startLesson.bind(LessonEngine);LessonEngine.startLesson=id=>{if(id==='variety_play')state=defaults();start(id);};
 const render=LessonEngine.renderCurrentStep.bind(LessonEngine);LessonEngine.renderCurrentStep=()=>{render();companion();if(LessonEngine.currentLesson?.id==='variety_play'&&playRun!==LessonEngine.startTime){state=defaults();playRun=LessonEngine.startTime;}renderPlay();};
 const speak=VoiceManager.speak.bind(VoiceManager);VoiceManager.speak=(input,...args)=>{const f=friend();const name=f.name;VoiceManager.characterId=f.id;const replace=v=>typeof v==='string'?v.replaceAll('콩이',name):v;if(input&&typeof input==='object')input={...input,voiceScript:replace(input.voiceScript),text:replace(input.text)};else input=replace(input);return speak(input,...args);};
@@ -131,7 +132,7 @@ VoiceManager.setTeacherSpeaking=value=>{
  document.querySelectorAll('.voice-status-badge').forEach(b=>b.textContent=friend().name+(value?'가 이야기하고 있어요':' 목소리 듣기'));
  if(value&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
    open=true;
-   talkTimer=setInterval(()=>{open=!open;frame(open);},240);
+   talkTimer=setInterval(()=>{open=!open;frame(open);},700);
  }
 };
 const greet=document.createElement('button');

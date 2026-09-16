@@ -1,0 +1,38 @@
+.participant-archive { width:min(1120px,96vw); padding:28px; }
+.participant-archive header { align-items:flex-start; }
+.participant-archive h2 { overflow-wrap:anywhere; }
+.participant-archive h3 { font-size:24px; }
+.archive-eyebrow { color:#536e49; font-size:18px; }
+.archive-entry { display:flex; align-items:center; justify-content:space-between; gap:24px; background:#f0f5e9; }
+.archive-entry > div { min-width:0; }
+.archive-people { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.archive-people .care-card { margin:0; }
+.archive-overview { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:24px 0; }
+.archive-overview article { border-radius:22px; padding:24px; background:#f4ecd9; display:flex; flex-direction:column; align-items:flex-start; gap:12px; font-size:20px; }
+.archive-overview article:nth-child(2) { background:#edf3e8; }
+.archive-overview strong { font-size:32px; }
+.archive-overview small { font-size:18px; }
+.archive-person { font-size:22px!important; font-weight:bold; color:#4e6448; }
+.archive-storage-note { background:#fff3df; padding:18px; border-radius:16px; }
+.archive-check-fields { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.archive-file { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid #e3dacb; }
+.archive-file > div { min-width:0; }
+.archive-file strong { font-size:20px; overflow-wrap:anywhere; }
+.archive-file p { overflow-wrap:anywhere; }
+.archive-file .care-actions { flex-shrink:0; }
+.archive-check { margin:24px 0; padding:20px; border:2px solid #e3dacb; border-radius:20px; min-width:0; }
+.archive-check legend { font-size:23px; font-weight:bold; padding:0 8px; overflow-wrap:anywhere; }
+.archive-summary { padding:16px; background:#edf3e8; border-radius:16px; }
+.participant-archive summary { font-size:20px; min-height:60px; padding:14px 0; }
+.participant-archive input[type=file] { padding:12px 4px; font-size:18px; }
+.participant-archive #archiveStatus:not(:empty) { border-radius:14px; background:#edf3e8; padding:16px; }
+.participant-archive #archiveStatus[data-error=true] { color:#7a2424; background:#fff0ec; }
+.participant-archive .care-field, .participant-archive .care-actions { min-width:0; }
+@media(max-width:700px) {
+ .participant-archive { padding:18px; }
+ .participant-archive header { flex-wrap:wrap; }
+ .archive-people,.archive-overview,.archive-check-fields { grid-template-columns:1fr; }
+ .archive-entry,.archive-file { flex-direction:column; align-items:stretch; }
+ .archive-check { padding:14px; }
+ .participant-archive .care-actions .care-btn { flex:1 1 150px; }
+}

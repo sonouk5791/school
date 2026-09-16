@@ -109,17 +109,17 @@ console.log('✅ VoiceScripts structure passed!');
 console.log('--- 2. Testing VoiceManager Engine (Sections 1-4, 27, 28, 30) ---');
 window.VoiceManager.init();
 assert.equal(window.VoiceManager.isMuted, false, 'Default should not be muted');
-assert.equal(window.VoiceManager.speedMode, 'normal', 'Default speed mode should be normal');
+assert.equal(window.VoiceManager.speedMode, 'slow', 'Default speed mode should be slow for senior guidance');
 assert(window.VoiceManager.koreanVoice, 'Must pick natural Korean voice');
 console.log('Picked Korean voice:', window.VoiceManager.koreanVoice.name);
 
 // Test speed toggle
 window.VoiceManager.toggleSpeed();
-assert.equal(window.VoiceManager.speedMode, 'slow', 'Speed toggle should set to slow');
-assert.equal(localStorage.getItem('digital_school_voice_speed'), 'slow', 'Speed saved in localStorage');
+assert.equal(window.VoiceManager.speedMode, 'normal', 'Speed toggle should set to normal');
+assert.equal(localStorage.getItem('digital_school_voice_speed'), 'normal', 'Speed saved in localStorage');
 
 window.VoiceManager.toggleSpeed();
-assert.equal(window.VoiceManager.speedMode, 'normal', 'Speed toggle should return to normal');
+assert.equal(window.VoiceManager.speedMode, 'slow', 'Speed toggle should return to slow');
 
 // Test mute toggle
 window.VoiceManager.toggleMute();

@@ -2,6 +2,7 @@
 (()=>{'use strict';
 const KEY='digital_school_management_v1',defs=window.CONSENT_FORMS,$=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let type='',elderId='',editing='',attachments=[];
+window.ConsentRooms={open:(key,id)=>{if(defs.some(d=>d.key===key))room(key,id);}};
 const load=()=>JSON.parse(localStorage.getItem(KEY)||'{"elders":[]}');
 const def=()=>defs.find(d=>d.key===type),getElder=()=>load().elders.find(e=>e.elder_id===elderId);
 const button=(label,action,id='')=>`<button type="button" class="care-btn" data-consent="${action}" data-id="${esc(id)}">${label}</button>`;

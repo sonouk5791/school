@@ -17,7 +17,7 @@
  document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause()});
  new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)video.pause()},{threshold:.05}).observe(video);
  const hero=document.querySelector('.hero-classroom'),card=document.querySelector('.warmup-intro');
- const sync=()=>{card.hidden=!!document.querySelector('#lessonViewport.active')||getComputedStyle(hero).display==='none';if(card.hidden)video.pause()};
+ const sync=()=>{card.hidden=!!document.querySelector('#lessonViewport.active')||(document.body.classList.contains('senior-finish') ? document.body.dataset.seniorPage!=='exercise' : getComputedStyle(hero).display==='none');if(card.hidden)video.pause()};
  new MutationObserver(sync).observe(hero,{attributes:true,attributeFilter:['class','style']});
  const viewport=document.getElementById('lessonViewport');if(viewport)new MutationObserver(sync).observe(viewport,{attributes:true,attributeFilter:['class','style']});sync();
 })();
