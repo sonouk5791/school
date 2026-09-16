@@ -390,14 +390,42 @@ function initQuickJournalEvents() {
 
 function go(target){
   page = target;
-  $('.hero-classroom').hidden = target !== 'home';
-  $('.section-lessons').hidden = target !== 'home';
-  document.querySelectorAll('.care-nav button').forEach(b => b.setAttribute('aria-current', b.dataset.value === target ? 'page' : 'false'));
-  const views = { home, elders, records: () => recordPage(false), journals: () => recordPage(true), analysis, reports, admin };
+  const isHome = target === 'home';
+  const hero = document.querySelector('.hero-classroom');
+  const lessons = document.querySelector('.section-lessons');
+  const warmup = document.querySelector('.warmup-intro');
+  const friends = document.querySelector('.friend-selection');
+  const careNav = document.querySelector('.care-nav');
+  const careRoot = document.getElementById('careRoot');
+
+  if (hero) hero.hidden = !isHome;
+  if (lessons) lessons.hidden = !isHome;
+  if (warmup) warmup.hidden = !isHome;
+  if (friends) friends.hidden = !isHome;
+
+  if (careNav) {
+    careNav.style.display = isHome ? 'none' : 'flex';
+    careNav.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.value === target ? 'page' : 'false'));
+  }
+
+  if (isHome) {
+    if (careRoot) {
+      careRoot.style.display = 'none';
+      careRoot.innerHTML = '';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
   if (target === 'lessons') { begin(); return; }
-  $('#careRoot').innerHTML = (views[target] || home)();
-  if (target === 'journals') { setTimeout(initQuickJournalEvents, 50); }
-  if (target !== 'home') $('#careRoot').scrollIntoView({ block: 'start' });
+
+  const views = { home, elders, records: () => recordPage(false), journals: () => recordPage(true), analysis, reports, admin };
+  if (careRoot) {
+    careRoot.style.display = 'block';
+    careRoot.innerHTML = (views[target] || home)();
+    if (target === 'journals') { setTimeout(initQuickJournalEvents, 50); }
+    careRoot.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
 }
 
 function home(){
@@ -940,13 +968,16 @@ window.CareAutomationBridge={
 };
 document.addEventListener('DOMContentLoaded',()=>{
 try{db=load(); setActivePerson(getActivePerson(db.elders));}catch(e){alert('관리 데이터를 읽지 못했습니다. 데이터를 지우지 않고 중단합니다. '+e.message);return;}
-syncPrograms();MonthlySchool.install();installRequestedMonth();$('main.main-wrapper').insertAdjacentHTML('afterbegin','<section id="careRoot" class="care-root"></section>');document.body.insertAdjacentHTML('beforeend','<dialog id="careDialog" class="care-dialog"></dialog><div id="careToast" role="status" aria-live="polite"></div>');
+syncPrograms();MonthlySchool.install();installRequestedMonth();$('main.main-wrapper').insertAdjacentHTML('afterbegin','<section id="careRoot" class="care-root" style="display:none;"></section>');document.body.insertAdjacentHTML('beforeend','<dialog id="careDialog" class="care-dialog"></dialog><div id="careToast" role="status" aria-live="polite"></div>');
 $('#careDialog').addEventListener('close',()=>{if(active&&!active.program)active=null;});
-$('.site-header').insertAdjacentHTML('beforeend',`<nav class="care-nav" aria-label="프로그램 관리">${[['home','홈'],['elders','어르신 관리'],['lessons','오늘의 AI 수업'],['records','수업 기록'],['journals','AI 수업일지'],['analysis','변화 분석'],['reports','보호자 보고서'],['admin','관리자 설정']].map(([id,label])=>btn(label,'nav',id)).join('')}</nav>`);
+$('.site-header').insertAdjacentHTML('beforeend',`<nav class="care-nav" aria-label="프로그램 관리" style="display:none;">${[['home','홈'],['elders','어르신 관리'],['lessons','오늘의 AI 수업'],['records','수업 기록'],['journals','AI 수업일지'],['analysis','변화 분석'],['reports','보호자 보고서'],['admin','관리자 설정']].map(([id,label])=>btn(label,'nav',id)).join('')}</nav>`);
 $('.lesson-bottom-nav').insertAdjacentHTML('afterbegin',`${btn('관찰 기록','observe')}${btn('다시 보기','replay')}${btn('도움 받기','help')}`);
 document.querySelectorAll('.lesson-card').forEach(c=>c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();LessonEngine.startLesson(c.dataset.lessonId);}}));
 document.querySelectorAll('.nav-link').forEach(a=>a.addEventListener('click',()=>{if(['home','lessons'].includes(a.dataset.target))go('home');}));
-$('#btnTeacherSpace').addEventListener('click',()=>{closeTeacherModal();go('admin');});$('#btnHeroHistory').addEventListener('click',()=>{closeTeacherModal();go('records');});
+$('#btnTeacherSpace')?.addEventListener('click',()=>{go('admin');});
+$('#btnHeaderJournal')?.addEventListener('click',()=>{go('journals');});
+$('#btnHeroHistory')?.addEventListener('click',()=>{go('records');});
+$('#btnFloatingAdmin')?.addEventListener('click',()=>{go('admin');});
 document.addEventListener('click',event=>{const b=event.target.closest('[data-action]');if(!b)return;const id=b.dataset.value;
 const actions={
   nav:()=>go(id),
