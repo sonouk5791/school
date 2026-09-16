@@ -14,23 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroActions();
   initFloatingActions();
 
-  // 첫 화면 — 환영 인사 (Section 6 & 29: 첫 접속 시 1회만 재생)
-  setTimeout(() => {
-    if (!window.VoiceManager.isMuted) {
-      const alreadyWelcomed = sessionStorage.getItem('digital_school_welcomed');
-      if (!alreadyWelcomed) {
-        sessionStorage.setItem('digital_school_welcomed', 'true');
-        const welcomeObj = (window.VoiceScripts && window.VoiceScripts.welcome)
-          ? window.VoiceScripts.welcome
-          : {
-              voiceScript: "안녕하세요~ 반갑습니다. AI 디지털 학교에 잘 오셨어요. AI가 처음이라 조금 어렵게 느껴지셔도 괜찮아요. 제가 하나씩, 천천히 같이 해볼게요. 오늘은 어떤 걸 배워볼까요?",
-              emotion: "warm",
-              speed: 0.92
-            };
-        window.VoiceManager.speak(welcomeObj);
-      }
-    }
-  }, 1200);
+  // First-entry greeting is handled by welcome-greeting.js using recordings only.
+
 });
 
 // 상단 내비게이션 탭 처리

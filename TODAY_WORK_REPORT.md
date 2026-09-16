@@ -88,3 +88,11 @@
 - **관련 파일**: [오전 프로그램](file:///J:/sh/js/morning-program.js), [스타일](file:///J:/sh/css/morning-program.css), [화면](file:///J:/sh/index.html), [기존 화면 분류](file:///J:/sh/js/senior-finish.js), [검증](file:///J:/sh/tests/morning-program.cjs).
 
 - **검증·배포 완료 / 2026-09-16 14:53**: 6단계·기분 유지·체조 복귀/정지·기억 놀이 이전/종료·모바일/태블릿/데스크톱 검증 통과. 기존 수업 시작/재개/자동결과/관찰/최종 일지/월간 기록 회귀 통과. 소스 `625505a` 푸시, Vercel `dpl_FiBg5UUAFQw8nBuX12CVzzEFzHea` READY. 운영 파일 4개 일치 확인.
+
+
+## 작업 20260916-첫진입환영 / 2026-09-16 14:57
+- **사용자 요청 사항**: 10분 범위로 기존 UI를 변경하지 않고 네 캐릭터 환영 컴포넌트 추가 및 push/배포.
+- **수행 내역**: 기존 콩이·토리·나비·보리 이미지 그대로 사용, 별도 welcome-greeting.js/css 환영 다이얼로그, 느린 등장과 4px 상하 움직임·그림자·perspective·scale 적용. reduced-motion 존중. 세션 중 닫은 뒤 재표시 없음. 오늘 프로그램 버튼에 연결.
+- **음성**: 프로젝트 MP3 없음 확인. 실제 녹음이 없는 상태에서 네트워크 요청/자동재생/TTS 없이 듣기 버튼에 안내 제공. 기존 app.js 첫 진입 TTS 타이머만 제거; 다른 활동 기능 유지.
+- **빌드**: package.json/build 스크립트가 없는 정적 프로젝트로 Node 문법 검사 및 Vercel 배포의 vercel build 사용.
+- **관련 파일**: [환영 컴포넌트](file:///J:/sh/js/welcome-greeting.js), [환영 스타일](file:///J:/sh/css/welcome-greeting.css), [진입 코드](file:///J:/sh/js/app.js), [연결](file:///J:/sh/index.html), [검증](file:///J:/sh/tests/welcome-greeting.cjs).
