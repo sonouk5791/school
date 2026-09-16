@@ -96,3 +96,5 @@
 - **음성**: 프로젝트 MP3 없음 확인. 실제 녹음이 없는 상태에서 네트워크 요청/자동재생/TTS 없이 듣기 버튼에 안내 제공. 기존 app.js 첫 진입 TTS 타이머만 제거; 다른 활동 기능 유지.
 - **빌드**: package.json/build 스크립트가 없는 정적 프로젝트로 Node 문법 검사 및 Vercel 배포의 vercel build 사용.
 - **관련 파일**: [환영 컴포넌트](file:///J:/sh/js/welcome-greeting.js), [환영 스타일](file:///J:/sh/css/welcome-greeting.css), [진입 코드](file:///J:/sh/js/app.js), [연결](file:///J:/sh/index.html), [검증](file:///J:/sh/tests/welcome-greeting.cjs).
+
+- **검증·배포 완료 / 2026-09-16 14:59**: `b00b8f1` (Add character welcome greeting) main 푸시 성공. Vercel 정적 build 통과, `dpl_F8aR1mZDFpu8ZbL4h9CcZf6smfer` READY. 운영 URL https://school-tau-pearl.vercel.app/ 에서 PC 1440 / 태블릿 768 / 모바일 390px, 네 캐릭터·가로 잘림 없음·첫 진입 TTS 없음·음성 없음 안내·오늘 프로그램 연결·기존 메뉴/선생님 공간 검사 통과. 작업 트리 깨끗함 확인.
