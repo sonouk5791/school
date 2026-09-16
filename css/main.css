@@ -328,9 +328,6 @@ body {
   margin-bottom: 48px;
   position: relative;
   overflow: hidden;
-  background-image: linear-gradient(to bottom, rgba(255,253,249,0.92), rgba(255,245,235,0.96)), url('../assets/images/ai_friend_classroom.jpg');
-  background-size: cover;
-  background-position: center;
 }
 
 .hero-content-grid {
