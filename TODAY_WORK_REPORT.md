@@ -71,3 +71,5 @@
 - **수행 내역**: 기존 4종 동의서 유지, 공단 발급 서류 2종 원본 제출·확인 양식, 기관 이용 계약서 및 욕구사정 기록 추가. 대상자별 작성·첨부·저장·인쇄·빈 양식 다운로드와 작은 방 연결. 체크 목록은 중복 없이 8종 유지.
 - **검증**: 8종 저장·새로고침·첨부, 동의 상태 유지, 390/1040px 양식 화면과 인쇄 스타일, 대상자 파일방 회귀 테스트 통과.
 - **관련 파일**: [양식 정의](file:///J:/sh/js/consent-forms.js), [서류 작성방](file:///J:/sh/js/consent-rooms.js), [대상자 방](file:///J:/sh/js/participant-archive.js), [계약서](file:///J:/sh/documents/contract.html), [상세 보고](file:///J:/sh/DOCUMENT_FORMS_REPORT.md).
+
+- **배포 완료 / 2026-09-16 14:40**: 소스 커밋 `3d15ee5` GitHub main 푸시 성공. Vercel `dpl_D5FXbGLM3DJ8WxeWfkx6qABjNvAb` READY. https://school-tau-pearl.vercel.app/ 에서 8종 HTML 양식 및 실행 파일 4개 HTTP 200·SHA-256 일치 확인.

@@ -16,3 +16,5 @@
 - [개인정보 보호법](https://law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1025128631)
 - [장기요양기관 및 관련 법령 안내](https://easylaw.go.kr/CSP/CnpClsMain.laf?ccfNo=3&cciNo=2&cnpClsNo=1&csmSeq=2038&popMenu=ov)
 - 기관에서 사용하는 기본 작성안이며 공단 공식 서식 또는 기관별 법률 검토를 대신하지 않습니다.
+
+- **배포 완료 / 2026-09-16 14:40**: 소스 커밋 `3d15ee5` GitHub main 푸시 성공. Vercel `dpl_D5FXbGLM3DJ8WxeWfkx6qABjNvAb` READY. https://school-tau-pearl.vercel.app/ 에서 8종 HTML 양식 및 실행 파일 4개 HTTP 200·SHA-256 일치 확인.
