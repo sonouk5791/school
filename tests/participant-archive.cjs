@@ -27,7 +27,7 @@ const assert=require('node:assert/strict');
   await room.locator('[data-archive="checks"]').first().click();
   const first=room.locator('[data-document="consent0"]');
   assert.equal(await first.locator('[name="state"]').inputValue(),'미확인');
-  assert.match(await first.innerText(),/보관 파일 1개 · 기존 동의서 1건/);
+  assert.match(await first.innerText(),/보관 파일 1개 · 작성한 서류 1건/);
   await first.locator('[name="state"]').selectOption('확인 완료');
   await first.locator('[name="date"]').fill('2026-09-16');
   await first.locator('[name="note"]').fill('담당자가 원본 확인 · 사무실 2번 서랍');
