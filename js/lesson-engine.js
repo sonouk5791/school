@@ -120,7 +120,8 @@ const LessonEngine = {
 
     btnNext.innerHTML = `다음 활동 ▶`;
 
-    const step = this.currentLesson.steps[this.currentStepIndex];
+    const sourceStep = this.currentLesson.steps[this.currentStepIndex];
+    const step = window.ReminiscenceImages ? window.ReminiscenceImages.protect(sourceStep, this.currentLesson.id, this.currentStepIndex) : sourceStep;
 
     stepIndicator.textContent = `${this.currentStepIndex + 1} / ${this.totalSteps} 단계`;
 
@@ -294,6 +295,8 @@ const LessonEngine = {
 
       </section>`;
 
+    } else if (step.missingReminiscenceImage) {
+      html += '<p class="photo-memory-unavailable" role="status">준비된 사진이 없습니다.</p>';
     } else if (step.imageSrc && step.customType !== 'karaoke_room') {
       const isSelected = (this.selectedAnswers[this.currentStepIndex] !== undefined);
       const hasSketch = Boolean(step.sketchImageSrc);
@@ -1811,7 +1814,8 @@ const LessonEngine = {
 
     if (window.VoiceManager) window.VoiceManager.resetInactivityTimer();
 
-    const step = this.currentLesson.steps[this.currentStepIndex];
+    const sourceStep = this.currentLesson.steps[this.currentStepIndex];
+    const step = window.ReminiscenceImages ? window.ReminiscenceImages.protect(sourceStep, this.currentLesson.id, this.currentStepIndex) : sourceStep;
 
     step.options.forEach((_, idx) => {
 
@@ -1981,7 +1985,8 @@ const LessonEngine = {
 
     if (!this.currentLesson || !this.currentLesson.steps) return;
 
-    const step = this.currentLesson.steps[this.currentStepIndex];
+    const sourceStep = this.currentLesson.steps[this.currentStepIndex];
+    const step = window.ReminiscenceImages ? window.ReminiscenceImages.protect(sourceStep, this.currentLesson.id, this.currentStepIndex) : sourceStep;
 
     const specificHelp = step ? step.helpScript : null;
 
