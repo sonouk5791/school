@@ -144,3 +144,11 @@
 - **검증**: 네 캐릭터 7벌·새로고침·복원·모바일, 저장 오류/손상 JSON, 얼굴 픽셀 동일성, 기존 방·환영·오전·관리 기록·파일방·서류 회귀 통과. Vercel build 성공.
 - **관련 파일**: [5차 보고서](file:///J:/sh/WARDROBE_STAGE5_REPORT_2026-09-17.md), [옷 입히기](file:///J:/sh/js/character-wardrobe.js), [스타일](file:///J:/sh/css/character-wardrobe.css), [기능 검사](file:///J:/sh/tests/character-wardrobe.cjs).
 - **범위**: 기존 옷 형태를 활용한 MVP. 5차 커밋에서 종료, 6차 인지활동·push·운영 배포 미수행.
+
+## 작업 20260917-6차옷인지활동 / 2026-09-17 09:28
+- **사용자 요청 사항**: 기존 옷 입히기를 유지한 계절·색깔·상황별 인지활동과 완료 후 미리보기.
+- **수행 내역**: 별도 활동 컴포넌트, 세 가지 한 문항 활동과 큰 선택 버튼, 실패를 강조하지 않는 반응·마무리. 기존 옷 선택·캐릭터별 저장 연동, 옷 입히기로 복귀. 새 TTS 없음.
+- **검증**: 활동 선택·반응·저장·복귀, 390/768/1024/1440px 화면, 기존 옷 입히기 및 전체 기존 기능 회귀 검사 통과. Vercel production 로컬 build 성공.
+- **미리보기**: http://127.0.0.1:8085/ 의 콩이 방 계절 옷 고르기 화면을 앱 브라우저에 표시함.
+- **관련 파일**: [6차 보고서](file:///J:/sh/CLOTHING_STAGE6_REPORT_2026-09-17.md), [인지활동](file:///J:/sh/js/clothing-activities.js), [스타일](file:///J:/sh/css/clothing-activities.css), [검사](file:///J:/sh/tests/clothing-activities.cjs).
+- **범위**: 4~6차 기능 완료 및 로컬 미리보기. 커밋 후 종료, 원격 push·운영 배포 미수행.
