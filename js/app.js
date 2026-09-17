@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTeacherModal();
   initHeroActions();
   initFloatingActions();
+  initPrivacyModal();
 
   // First-entry greeting is handled by welcome-greeting.js using recordings only.
 
@@ -466,7 +467,49 @@ function initFloatingActions() {
   }
 }
 
+// 개인정보처리방침 모달 다이얼로그 초기화
+function initPrivacyModal() {
+  const modal = document.getElementById('privacyModal');
+  const btnOpen = document.getElementById('btnOpenPrivacy');
+  const btnClose = document.getElementById('btnClosePrivacy');
+  const btnConfirm = document.getElementById('btnConfirmPrivacy');
+
+  if (!modal) return;
+
+  if (btnOpen) {
+    btnOpen.addEventListener('click', () => {
+      if (typeof modal.showModal === 'function') {
+        modal.showModal();
+      } else {
+        modal.setAttribute('open', '');
+      }
+    });
+  }
+
+  const closeModal = () => {
+    if (typeof modal.close === 'function') {
+      modal.close();
+    } else {
+      modal.removeAttribute('open');
+    }
+  };
+
+  if (btnClose) btnClose.addEventListener('click', closeModal);
+  if (btnConfirm) btnConfirm.addEventListener('click', closeModal);
+
+  // 모달 바깥 배경 클릭 시 닫기
+  modal.addEventListener('click', (e) => {
+    const rect = modal.getBoundingClientRect();
+    const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height
+      && rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+    if (!isInDialog) {
+      closeModal();
+    }
+  });
+}
+
 // 글로벌 등록
 window.openTeacherModal = openTeacherModal;
 window.closeTeacherModal = closeTeacherModal;
 window.initFloatingActions = initFloatingActions;
+window.initPrivacyModal = initPrivacyModal;

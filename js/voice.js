@@ -374,10 +374,10 @@ const VoiceManager = {
     // 고유 발화 세션 토큰 발행 (중복 및 겹침 차단)
     const token = ++this.currentSpeakingToken;
 
-    // 기본 발화 속도 산출 (normal: ~0.92, slow: ~0.82)
-    let baseRate = this.speedMode === 'slow' ? 0.82 : 0.92;
+    // 기본 발화 속도 산출 (normal: 0.98, slow: 0.70)
+    let baseRate = this.speedMode === 'slow' ? 0.70 : 0.98;
     baseRate += speedBonus;
-    if (emotion === 'happy') baseRate += 0.03;
+    if (emotion === 'happy') baseRate += 0.02;
     if (emotion === 'encouraging') baseRate -= 0.02;
 
     // 피치 기본값 (온화하고 안정적인 여성 강사 톤: 1.00)
