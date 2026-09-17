@@ -14,9 +14,10 @@ const RecordManager = {
     if (!localStorage.getItem(this.CURRENT_USER_KEY)) {
       localStorage.setItem(this.CURRENT_USER_KEY, this.LEARNERS[0]);
     }
-    // 초기 샘플 기록이 없으면 따뜻한 기본 데이터 생성
-    if (!localStorage.getItem(this.STORAGE_KEY)) {
-      localStorage.setItem(this.STORAGE_KEY, '[]');
+    // 초기 기록이 없거나 비어있으면 초기 돌봄 기록 시드 생성
+    const raw = localStorage.getItem(this.STORAGE_KEY);
+    if (!raw || raw === '[]') {
+      this.seedInitialRecords();
     }
   },
 
@@ -25,7 +26,15 @@ const RecordManager = {
   },
 
   setCurrentLearner(name) {
-    localStorage.setItem(this.CURRENT_USER_KEY, name);
+    if (name) {
+      localStorage.setItem(this.CURRENT_USER_KEY, name);
+    }
+  },
+
+  getRegisteredLearners() {
+    const records = this.getAllRecords();
+    const set = new Set([...this.LEARNERS, ...records.map(r => r.learner).filter(Boolean)]);
+    return Array.from(set);
   },
 
   getAllRecords() {
@@ -56,6 +65,9 @@ const RecordManager = {
 
     records.unshift(newRecord);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(records));
+    try {
+      window.dispatchEvent(new CustomEvent('care-record-updated', { detail: newRecord }));
+    } catch (e) {}
     return newRecord;
   },
 
@@ -63,7 +75,7 @@ const RecordManager = {
     const initialRecords = [
       {
         id: 'REC_1',
-        date: '2026년 9월 9일 10:15',
+        date: '2026년 9월 16일 10:15',
         learner: '김영자 어르신',
         lessonTitle: '📷 추억의 사진 이야기',
         lessonIcon: '📷',
@@ -76,7 +88,7 @@ const RecordManager = {
       },
       {
         id: 'REC_2',
-        date: '2026년 9월 9일 11:30',
+        date: '2026년 9월 16일 11:30',
         learner: '박순옥 어르신',
         lessonTitle: '🎵 추억의 음악',
         lessonIcon: '🎵',
@@ -89,7 +101,7 @@ const RecordManager = {
       },
       {
         id: 'REC_3',
-        date: '2026년 9월 8일 14:20',
+        date: '2026년 9월 15일 14:20',
         learner: '이종수 어르신',
         lessonTitle: '🎨 AI 그림 만들기',
         lessonIcon: '🎨',
@@ -102,7 +114,7 @@ const RecordManager = {
       },
       {
         id: 'REC_4',
-        date: '2026년 9월 8일 15:10',
+        date: '2026년 9월 15일 15:10',
         learner: '김영자 어르신',
         lessonTitle: '🧠 기억 놀이',
         lessonIcon: '🧠',
@@ -112,6 +124,19 @@ const RecordManager = {
         assistanceNeeded: '스스로 원활히 참여하심',
         durationText: '4분 05초',
         timestamp: Date.now() - 82800000
+      },
+      {
+        id: 'REC_5',
+        date: '2026년 9월 14일 09:40',
+        learner: '정태호 어르신',
+        lessonTitle: '🏃 건강 체조',
+        lessonIcon: '🏃',
+        isCompleted: true,
+        mood: '😊 재미있었어요',
+        moodEmoji: '😊',
+        assistanceNeeded: '동작 안내 가볍게 지원',
+        durationText: '5분 10초',
+        timestamp: Date.now() - 172800000
       }
     ];
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(initialRecords));
@@ -125,15 +150,24 @@ const RecordManager = {
     const totalSessions = filtered.length;
     const completedSessions = filtered.filter(r => r.isCompleted).length;
     
-    // 긍정 기분 비율 계산
-    const positiveMoods = filtered.filter(r => r.mood.includes('재미') || r.mood.includes('괜찮')).length;
+    // 긍정 기분 키워드 판별 (재미, 괜찮, 좋, 행복, 즐거, 만족, 신나, 편안 등)
+    const positiveKeywords = ['재미', '괜찮', '좋', '행복', '즐거', '기쁨', '만족', '신나', '편안', '흐뭇'];
+    const positiveMoods = filtered.filter(r => {
+      const m = String(r.mood || '');
+      return positiveKeywords.some(k => m.includes(k));
+    }).length;
     const positiveRate = totalSessions > 0 ? Math.round((positiveMoods / totalSessions) * 100) : 100;
+
+    const registered = this.getRegisteredLearners();
+    const activeLearnersCount = filterLearner === 'all' 
+      ? Math.max(registered.length, new Set(all.map(r => r.learner)).size)
+      : 1;
 
     return {
       totalSessions,
       completedSessions,
       positiveRate,
-      activeLearnersCount: new Set(all.map(r => r.learner)).size
+      activeLearnersCount
     };
   }
 };

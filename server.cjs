@@ -2,7 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8085;
+const scanWelcomeRecordings = require('./scripts/welcome-recordings.cjs');
+const PORT = Number(process.env.PORT)||8085;
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -13,12 +14,16 @@ const MIME_TYPES = {
   '.jpeg': 'image/jpeg',
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
   '.mp4': 'video/mp4',
   '.webm': 'video/webm'
 };
 
 const server = http.createServer((req, res) => {
   let reqPath = req.url.split('?')[0];
+  if(reqPath === '/character-recordings.json'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(require('./scripts/character-recordings.cjs')(__dirname)));return;}
+  if(reqPath === '/welcome-recordings.json'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(scanWelcomeRecordings(__dirname)));return;}
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
 
   const filePath = path.join(__dirname, decodeURIComponent(reqPath));

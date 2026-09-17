@@ -8,3 +8,6 @@ __pycache__/
 tests/*.png
 tests/*.pdf
 .vercel
+.video-tools/
+.video-build/
+

@@ -14,3 +14,126 @@
 .senior-finish img{max-width:100%;object-fit:contain;}
 @media(max-width:540px){.senior-finish .senior-return>button{flex:1 1 130px;padding:12px 8px;}.senior-finish .teacher-voice-controls{flex-wrap:wrap;}.senior-finish .btn-voice-ctrl{min-height:64px;}.senior-finish .care-dialog{padding:16px;}}
 @media(prefers-reduced-motion:reduce){.senior-finish *, .senior-finish *::before,.senior-finish *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+
+/* 1. 모든 버튼 최소 44px 터치 타깃 보장 (WCAG 2.5.5 Level AAA / 2.5.8 Level AA) */
+button,
+.btn-voice-ctrl,
+.care-btn,
+.nav-link,
+.btn-hero-action,
+.btn-lesson-choice,
+.btn-mood-choice,
+.btn-teacher-space,
+.btn-floating,
+.btn-close-panel,
+.btn-care-action,
+select,
+.care-select,
+input[type="button"],
+input[type="submit"],
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+  box-sizing: border-box;
+}
+
+/* 2. 글자 크기 조절 (Font Size Scaling: 보통 / 크게 / 아주 크게) */
+html.font-scale-large,
+body.font-scale-large {
+  font-size: 115%;
+}
+html.font-scale-large h1, body.font-scale-large h1 { font-size: 2.2rem; }
+html.font-scale-large h2, body.font-scale-large h2 { font-size: 1.8rem; }
+html.font-scale-large p, body.font-scale-large p { font-size: 1.15rem; line-height: 1.7; }
+html.font-scale-large .care-table, body.font-scale-large .care-table { font-size: 1.1rem; }
+
+html.font-scale-xlarge,
+body.font-scale-xlarge {
+  font-size: 130%;
+}
+html.font-scale-xlarge h1, body.font-scale-xlarge h1 { font-size: 2.5rem; }
+html.font-scale-xlarge h2, body.font-scale-xlarge h2 { font-size: 2.1rem; }
+html.font-scale-xlarge p, body.font-scale-xlarge p { font-size: 1.3rem; line-height: 1.8; }
+html.font-scale-xlarge .care-table, body.font-scale-xlarge .care-table { font-size: 1.25rem; }
+
+/* 3. 고대비 모드 (High Contrast Mode) */
+body.high-contrast-mode {
+  background-color: #0d0d0d !important;
+  color: #ffffff !important;
+}
+body.high-contrast-mode :is(
+  .site-header,
+  .teacher-modal-content,
+  .care-summary-card,
+  .speech-bubble-hero,
+  .hero-classroom,
+  .care-table,
+  .care-table th,
+  .care-table td,
+  .records-control-bar,
+  .teacher-panel-header,
+  .care-card,
+  .care-panel,
+  .care-box,
+  .care-section,
+  .care-workflow-container,
+  dialog,
+  .care-dialog,
+  .lesson-card,
+  .lesson-viewport,
+  .lesson-content,
+  .cr-card
+) {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border-color: #ffd600 !important;
+}
+body.high-contrast-mode :is(h1, h2, h3, h4, .summary-value, .brand-title, .ctrl-text, strong) {
+  color: #ffd600 !important;
+}
+body.high-contrast-mode :is(p, span, div, label, li, td, th) {
+  color: #ffffff;
+}
+body.high-contrast-mode button,
+body.high-contrast-mode .btn-voice-ctrl,
+body.high-contrast-mode .care-btn,
+body.high-contrast-mode .nav-link,
+body.high-contrast-mode .subnav-link,
+body.high-contrast-mode .btn-teacher-space,
+body.high-contrast-mode .btn-hero-action {
+  background-color: #000000 !important;
+  color: #ffd600 !important;
+  border: 2px solid #ffd600 !important;
+}
+body.high-contrast-mode .care-select,
+body.high-contrast-mode select,
+body.high-contrast-mode input,
+body.high-contrast-mode textarea {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffd600 !important;
+}
+body.high-contrast-mode .badge-status-completed {
+  background-color: #003300 !important;
+  color: #66ff66 !important;
+  border: 1px solid #66ff66 !important;
+}
+body.high-contrast-mode .badge-help-normal {
+  background-color: #222200 !important;
+  color: #ffff66 !important;
+  border: 1px solid #ffff66 !important;
+}
+body.high-contrast-mode .mood-tag-sm {
+  background-color: #331100 !important;
+  color: #ffaa66 !important;
+  border: 1px solid #ffaa66 !important;
+}
+
+/* 4. 천천히 모드 (Slow Motion Mode - 부드러운 감속 애니메이션/전환) */
+body.slow-motion-mode *,
+html.slow-motion-mode * {
+  transition-duration: 0.7s !important;
+  animation-duration: 3.5s !important;
+}
+

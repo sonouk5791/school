@@ -1,0 +1,6 @@
+/* Only the new audio controls and the currently speaking character are styled. */
+.character-audio-controls { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:12px 0; max-width:100%; }
+.character-audio-controls[hidden] { display:none; }
+.character-audio-controls .care-btn { font-size:20px; min-height:64px; max-width:100%; white-space:normal; }
+.character-audio-speaking { scale:1.03; filter:drop-shadow(0 8px 12px rgba(90,65,35,.24)); transition:scale .6s ease,filter .6s ease; }
+@media(prefers-reduced-motion:reduce) { .character-audio-speaking { scale:1; transition:none; } }

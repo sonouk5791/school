@@ -47,7 +47,7 @@ function initNavigation() {
   });
 }
 
-// 상단 고정 AI 선생님 음성 컨트롤 UI 동기화
+// 상단 고정 AI 선생님 음성 및 접근성 컨트롤 UI 동기화
 function updateGlobalVoiceUI() {
   const isMuted = window.VoiceManager.isMuted;
   const speed = window.VoiceManager.speedMode;
@@ -69,7 +69,7 @@ function updateGlobalVoiceUI() {
     }
   }
 
-  // 2. 음성 속도 토글 버튼
+  // 2. 음성 속도 토글 버튼 및 화면 애니메이션 감속 연동
   const iconSpeed = document.getElementById('iconVoiceSpeed');
   const textSpeed = document.getElementById('textVoiceSpeed');
   const btnLessonSpeed = document.getElementById('btnLessonSpeed');
@@ -81,6 +81,10 @@ function updateGlobalVoiceUI() {
   if (textSpeed) textSpeed.textContent = speedText;
   if (btnLessonSpeed) btnLessonSpeed.innerHTML = `${speedIcon} ${speedText}`;
 
+  // 천천히 모드일 때 전체 UI 전환 및 애니메이션도 여유롭게 감속
+  document.documentElement.classList.toggle('slow-motion-mode', speed === 'slow');
+  document.body.classList.toggle('slow-motion-mode', speed === 'slow');
+
   // 3. 일시정지 / 이어듣기 상태 동기화
   if (window.VoiceManager && window.VoiceManager._updatePauseUI) {
     window.VoiceManager._updatePauseUI();
@@ -88,8 +92,56 @@ function updateGlobalVoiceUI() {
 }
 window.updateGlobalVoiceUI = updateGlobalVoiceUI;
 
+// 글자 크기 및 고대비 접근성 설정 로드 및 동기화
+function initAccessibilityPreferences() {
+  // 1. 글자 크기 (normal, large, xlarge)
+  const savedScale = localStorage.getItem('digital_school_font_scale') || 'normal';
+  applyFontSize(savedScale);
+
+  // 2. 고대비 모드
+  const savedContrast = localStorage.getItem('digital_school_high_contrast') === 'true';
+  applyHighContrast(savedContrast);
+}
+
+function applyFontSize(scale) {
+  document.documentElement.classList.remove('font-scale-large', 'font-scale-xlarge');
+  document.body.classList.remove('font-scale-large', 'font-scale-xlarge');
+
+  if (scale === 'large') {
+    document.documentElement.classList.add('font-scale-large');
+    document.body.classList.add('font-scale-large');
+  } else if (scale === 'xlarge') {
+    document.documentElement.classList.add('font-scale-xlarge');
+    document.body.classList.add('font-scale-xlarge');
+  }
+
+  localStorage.setItem('digital_school_font_scale', scale);
+
+  const textBtn = document.getElementById('textFontSize');
+  if (textBtn) {
+    textBtn.textContent = scale === 'xlarge' ? '글자 아주크게' : scale === 'large' ? '글자 크게' : '글자 보통';
+  }
+}
+
+function applyHighContrast(enabled) {
+  document.documentElement.classList.toggle('high-contrast-mode', enabled);
+  document.body.classList.toggle('high-contrast-mode', enabled);
+
+  localStorage.setItem('digital_school_high_contrast', enabled ? 'true' : 'false');
+
+  const textBtn = document.getElementById('textHighContrast');
+  const btn = document.getElementById('btnHighContrast');
+  if (textBtn) {
+    textBtn.textContent = enabled ? '고대비 켬' : '고대비';
+  }
+  if (btn) {
+    btn.classList.toggle('active', enabled);
+  }
+}
+
 // 상단 고정 접근성 음성 컨트롤 바 이벤트 바인딩 (Section 20 & 31)
 function initVoiceControls() {
+  initAccessibilityPreferences();
   updateGlobalVoiceUI();
 
   // 1. 음성 On/Off 토글
@@ -118,7 +170,7 @@ function initVoiceControls() {
     });
   }
 
-  // 3. 속도 변경 (천천히 ↔ 보통)
+  // 4. 속도 변경 (천천히 ↔ 보통)
   const btnSpeed = document.getElementById('btnVoiceSpeed');
   if (btnSpeed) {
     btnSpeed.addEventListener('click', () => {
@@ -127,7 +179,34 @@ function initVoiceControls() {
     });
   }
 
-  // 4. 도움말 안내
+  // 5. 글자 크기 조절 (보통 ↔ 크게 ↔ 아주크게)
+  const btnFontSize = document.getElementById('btnFontSize');
+  if (btnFontSize) {
+    btnFontSize.addEventListener('click', () => {
+      const current = localStorage.getItem('digital_school_font_scale') || 'normal';
+      const next = current === 'normal' ? 'large' : current === 'large' ? 'xlarge' : 'normal';
+      applyFontSize(next);
+      if (!window.VoiceManager.isMuted) {
+        const desc = next === 'xlarge' ? '글자 크기를 아주 크게 설정했어요.' : next === 'large' ? '글자 크기를 크게 설정했어요.' : '글자 크기를 보통으로 맞췄어요.';
+        window.VoiceManager.speak(desc);
+      }
+    });
+  }
+
+  // 6. 고대비 화면 모드 토글
+  const btnContrast = document.getElementById('btnHighContrast');
+  if (btnContrast) {
+    btnContrast.addEventListener('click', () => {
+      const current = localStorage.getItem('digital_school_high_contrast') === 'true';
+      const next = !current;
+      applyHighContrast(next);
+      if (!window.VoiceManager.isMuted) {
+        window.VoiceManager.speak(next ? '눈이 편안한 고대비 화면을 켰어요.' : '기본 화면으로 돌아왔어요.');
+      }
+    });
+  }
+
+  // 7. 도움말 안내
   const btnHelp = document.getElementById('btnVoiceHelp');
   if (btnHelp) {
     btnHelp.addEventListener('click', () => {
@@ -250,14 +329,23 @@ function initTeacherModal() {
       renderTeacherRecords(selectFilter.value);
     });
   }
+
+  // 수업 완료 등으로 돌봄 기록이 갱신되었을 때 실시간 반영
+  window.addEventListener('care-record-updated', () => {
+    const activeFilter = selectFilter ? selectFilter.value : 'all';
+    populateLearnerFilter(activeFilter);
+    renderTeacherRecords(activeFilter);
+  });
 }
 
 function openTeacherModal() {
   const modal = document.getElementById('teacherModal');
   if (modal) {
     modal.classList.add('active');
-    populateLearnerFilter();
-    renderTeacherRecords('all');
+    const selectFilter = document.getElementById('selectLearnerFilter');
+    const currentFilter = selectFilter ? selectFilter.value : 'all';
+    populateLearnerFilter(currentFilter);
+    renderTeacherRecords(currentFilter);
   }
 }
 
@@ -268,18 +356,20 @@ function closeTeacherModal() {
   }
 }
 
-function populateLearnerFilter() {
+function populateLearnerFilter(selectedVal = 'all') {
   const select = document.getElementById('selectLearnerFilter');
   if (!select) return;
 
-  const records = window.RecordManager.getAllRecords();
-  const learnerNames = Array.from(new Set(records.map(r => r.learner)));
+  const learnerNames = window.RecordManager.getRegisteredLearners ? window.RecordManager.getRegisteredLearners() : ['김영자 어르신', '박순옥 어르신', '이종수 어르신', '정태호 어르신', '최말순 어르신'];
 
-  let html = `<option value="all">전체 어르신 보기</option>`;
+  let html = `<option value="all" ${selectedVal === 'all' ? 'selected' : ''}>전체 어르신 보기</option>`;
   learnerNames.forEach(name => {
-    html += `<option value="${name}">${name}</option>`;
+    html += `<option value="${name}" ${selectedVal === name ? 'selected' : ''}>${name}</option>`;
   });
   select.innerHTML = html;
+  if (selectedVal) {
+    select.value = selectedVal;
+  }
 }
 
 function renderTeacherRecords(filterLearner = 'all') {
@@ -288,10 +378,15 @@ function renderTeacherRecords(filterLearner = 'all') {
   const filtered = filterLearner === 'all' ? records : records.filter(r => r.learner === filterLearner);
 
   // 상단 4종 통계 카드 업데이트
-  document.getElementById('statTotalSessions').textContent = `${stats.totalSessions}회`;
-  document.getElementById('statCompletedSessions').textContent = `${stats.completedSessions}회 완료`;
-  document.getElementById('statPositiveRate').textContent = `${stats.positiveRate}%`;
-  document.getElementById('statActiveLearners').textContent = `${stats.activeLearnersCount}명`;
+  const elTotal = document.getElementById('statTotalSessions');
+  const elCompleted = document.getElementById('statCompletedSessions');
+  const elPositive = document.getElementById('statPositiveRate');
+  const elActive = document.getElementById('statActiveLearners');
+
+  if (elTotal) elTotal.textContent = `${stats.totalSessions}회`;
+  if (elCompleted) elCompleted.textContent = `${stats.completedSessions}회 완료`;
+  if (elPositive) elPositive.textContent = `${stats.positiveRate}%`;
+  if (elActive) elActive.textContent = `${stats.activeLearnersCount}명`;
 
   // 테이블 행 렌더링
   const tbody = document.getElementById('careRecordsTableBody');
@@ -301,7 +396,7 @@ function renderTeacherRecords(filterLearner = 'all') {
     tbody.innerHTML = `
       <tr>
         <td colspan="7" style="text-align: center; padding: 40px; color: var(--color-text-muted);">
-          기록된 수업 내역이 없습니다.
+          선택하신 어르신의 기록된 수업 내역이 없습니다.
         </td>
       </tr>
     `;
@@ -314,11 +409,11 @@ function renderTeacherRecords(filterLearner = 'all') {
       <tr>
         <td><strong>${rec.date}</strong></td>
         <td><span style="font-weight: 700; color: var(--color-orange-main);">${rec.learner}</span></td>
-        <td><span>${rec.lessonIcon} ${rec.lessonTitle}</span></td>
+        <td><span>${rec.lessonIcon || '📖'} ${rec.lessonTitle}</span></td>
         <td><span class="badge-status-completed">✓ ${rec.isCompleted ? '완료' : '진행'}</span></td>
-        <td><span class="mood-tag-sm">${rec.mood}</span></td>
-        <td><span class="badge-help-normal">${rec.assistanceNeeded}</span></td>
-        <td><strong>${rec.durationText}</strong></td>
+        <td><span class="mood-tag-sm">${rec.mood || '😊 재미있었어요'}</span></td>
+        <td><span class="badge-help-normal">${rec.assistanceNeeded || '스스로 원활히 참여하심'}</span></td>
+        <td><strong>${rec.durationText || '3분'}</strong></td>
       </tr>
     `;
   });

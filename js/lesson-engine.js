@@ -492,7 +492,7 @@ const LessonEngine = {
 
     return `
 
-      <div class="retro-music-player">
+      <div class="retro-music-player" data-playback="youtube">
 
         <div class="retro-lp-wrapper">
 
@@ -514,9 +514,11 @@ const LessonEngine = {
 
         <button class="btn-retro-play" id="btnRetroPlay" onclick="LessonEngine.toggleRetroMusic()">
 
-          ▶ 정겨운 옛 노래 재생하기
+          ▶ 노래 듣기
 
         </button>
+
+        <p id="oldSongStatus" role="status" aria-live="polite"></p>
 
         <div class="retro-extra-links">
 
@@ -567,31 +569,7 @@ const LessonEngine = {
   // 레트로 옛 노래 재생 / 정지 토글
 
   toggleRetroMusic() {
-
-    const btn = document.getElementById('btnRetroPlay');
-
-    const lp = document.getElementById('retroLpRecord');
-
-    if (!window.KaraokeEngine) return;
-
-    if (window.KaraokeEngine.isPlaying) {
-
-      window.KaraokeEngine.stopKaraoke();
-
-      if (btn) btn.innerHTML = '▶ 정겨운 옛 노래 재생하기';
-
-      if (lp) lp.classList.remove('spinning');
-
-    } else {
-
-      window.KaraokeEngine.startKaraoke(0); // 고향의 봄 연주 시작
-
-      if (btn) btn.innerHTML = '⏸️ 노래 잠시 멈추기';
-
-      if (lp) lp.classList.add('spinning');
-
-    }
-
+    return window.OldSongPlayer.toggle();
   },
 
   // 신나는 추억의 노래방 & 율동 체조실 HTML 생성 (곡과 완벽히 어울리는 정겨운 배경 적용)
@@ -1880,33 +1858,6 @@ const LessonEngine = {
         </div>
 
       `;
-
-      if (feedbackArea) feedbackArea.innerHTML = feedbackHtml;
-
-      // 16. 정답 맞혔을 때 5종 랜덤 피드백
-
-      window.VoiceManager.speakRandomCorrect();
-
-    } else if (isQuizOrQuestion && chosen.isBest === false) {
-
-      feedbackHtml = `
-
-        <div class="warm-feedback-banner gentle-hint">
-
-          <span>🧡</span>
-
-          <span>${chosen.feedback || '괜찮아요. 한 번만 다시 생각해볼까요?'}</span>
-
-        </div>
-
-      `;
-
-      if (feedbackArea) feedbackArea.innerHTML = feedbackHtml;
-
-      // 17. 오답일 때 5종 랜덤 피드백 ('틀렸습니다' 없이 따뜻하게 격려)
-
-      window.VoiceManager.speakRandomWrong();
-
     } else {
 
       window.VoiceManager.playChime('click');
@@ -2235,4 +2186,3 @@ const LessonEngine = {
 };
 
 window.LessonEngine = LessonEngine;
-

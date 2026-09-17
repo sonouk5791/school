@@ -57,7 +57,7 @@ const render=LessonEngine.renderCurrentStep.bind(LessonEngine);LessonEngine.rend
 const speak=VoiceManager.speak.bind(VoiceManager);VoiceManager.speak=(input,...args)=>{const f=friend();const name=f.name;VoiceManager.characterId=f.id;const replace=v=>typeof v==='string'?v.replaceAll('콩이',name):v;if(input&&typeof input==='object')input={...input,voiceScript:replace(input.voiceScript),text:replace(input.text)};else input=replace(input);return speak(input,...args);};
 document.getElementById('startVariety').onclick=()=>LessonEngine.startLesson('variety_play');
 new MutationObserver(()=>{section.hidden=document.querySelector('.hero-classroom').hidden;}).observe(document.querySelector('.hero-classroom'),{attributes:true,attributeFilter:['hidden']});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-friend]');if(!b)return;const next=b.dataset.friend;let saved=true;try{localStorage.setItem('digital_school_friend',next);}catch{saved=false;}VoiceManager.stopSpeaking();selected=next;VoiceManager.characterId=next;companion();const f=friend();section.querySelector('.friend-status').textContent=f.name+' 친구와 함께해요. ('+f.voiceDesc+')'+(saved?'':' 이번 선택은 브라우저에 저장하지 못했습니다.');VoiceManager.playCharacterChime(next);const greeting=VoiceManager.getCharacterGreeting(next);setTimeout(()=>{VoiceManager.speak(greeting);},220);});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-friend]');if(!b)return;const next=b.dataset.friend;let saved=true;try{localStorage.setItem('digital_school_friend',next);}catch{saved=false;}VoiceManager.stopSpeaking();selected=next;VoiceManager.characterId=next;companion();const f=friend();section.querySelector('.friend-status').textContent=f.name+' 친구와 함께해요. ('+f.voiceDesc+')'+(saved?'':' 이번 선택은 브라우저에 저장하지 못했습니다.');window.CharacterAudioPlayer?.select(next);});
 document.addEventListener('click',e=>{
   const chip=e.target.closest('[data-variety-step]');
   if(chip){
@@ -138,14 +138,7 @@ VoiceManager.setTeacherSpeaking=value=>{
 const greet=document.createElement('button');
 greet.type='button';greet.className='care-btn character-greet';
 greet.textContent='🔊 친구 목소리 듣기';
-greet.onclick=()=>{
- if(VoiceManager.isMuted){VoiceManager.isMuted=false;try{localStorage.setItem('digital_school_voice_enabled','true');localStorage.setItem('digital_school_muted','false');}catch{}window.updateGlobalVoiceUI?.();}
- const f=friend();
- VoiceManager.characterId=f.id;
- VoiceManager.playCharacterChime(f.id);
- const greeting=VoiceManager.getCharacterGreeting(f.id);
- setTimeout(()=>{VoiceManager.speak(greeting);},220);
-};
+greet.onclick=()=>window.CharacterAudioPlayer?.select(friend().id,true);
 document.querySelector('.hero-robot-wrapper').append(greet);
 window.addEventListener('pagehide',()=>{clearInterval(talkTimer);clearInterval(memoryPreviewTimer);});
 });

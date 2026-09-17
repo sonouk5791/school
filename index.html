@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="css/senior-experiences.css?v=1">
   <link rel="stylesheet" href="css/senior-accessibility.css?v=1">
   <link rel="stylesheet" href="css/home-care-recommendations.css?v=1">
+  <link rel="stylesheet" href="css/character-audio.css?v=1">
 </head>
 <body>
 
@@ -68,6 +69,14 @@
           <button class="btn-voice-ctrl btn-voice-speed" id="btnVoiceSpeed" title="말하는 속도 천천히 또는 보통으로 변경" aria-label="음성 속도 조절">
             <span class="ctrl-icon" id="iconVoiceSpeed">🐢</span>
             <span class="ctrl-text" id="textVoiceSpeed">천천히</span>
+          </button>
+          <button class="btn-voice-ctrl btn-voice-fontsize" id="btnFontSize" title="글자 크기 조절 (보통/크게/아주크게)" aria-label="글자 크기 조절">
+            <span class="ctrl-icon" id="iconFontSize">🔤</span>
+            <span class="ctrl-text" id="textFontSize">글자 보통</span>
+          </button>
+          <button class="btn-voice-ctrl btn-voice-contrast" id="btnHighContrast" title="고대비 화면 켜기 또는 끄기" aria-label="고대비 화면 모드">
+            <span class="ctrl-icon" id="iconHighContrast">🌓</span>
+            <span class="ctrl-text" id="textHighContrast">고대비</span>
           </button>
           <button class="btn-voice-ctrl btn-voice-help" id="btnVoiceHelp" title="현재 화면 도움말 듣기" aria-label="도움말 듣기">
             <span class="ctrl-icon">❓</span>
@@ -469,14 +478,14 @@
   <script src="js/record-manager.js?v=15"></script>
   <script src="js/reminiscence-image-manifest.js?v=1"></script>
   <script src="js/reminiscence-image-policy.js?v=1"></script>
-  <script src="js/lesson-engine.js?v=20260917images"></script>
+  <script src="js/lesson-engine.js?v=20260917youtube"></script>
   <script src="js/app.js?v=20260916welcome"></script>
   <script src="js/monthly-programs.js?v=15"></script>
   <script src="js/care-workflow.js?v=20260916"></script>
   <!-- Legacy user-profile.js is preserved on disk; consent rooms use the shared elder registry. -->
   <script src="js/consent-forms.js?v=20260916forms8"></script>
   <script src="js/consent-rooms.js?v=20260916forms8"></script>
-  <script src="js/friends-and-play.js?v=20260916"></script>
+  <script src="js/friends-and-play.js?v=20260917audio"></script>
   <script src="js/daily-games.js?v=15"></script>
   <script src="js/extra-games.js?v=16"></script>
   <script src="js/word-search.js?v=16"></script>
@@ -492,18 +501,20 @@
   <script src="js/workflow-automation.js?v=2"></script>
   <script src="js/warmup-intro.js?v=20260916"></script>
   <script src="js/weather-service.js?v=1"></script>
-  <script src="js/senior-finish.js?v=20260916morning"></script>
+  <script src="js/senior-finish.js?v=20260917mood"></script>
   <script src="js/participant-archive-store.js?v=1"></script>
   <script src="js/participant-archive.js?v=20260916forms8"></script>
   <script src="js/longtermcare-handoff.js?v=1"></script>
   <script src="js/morning-program.js?v=20260917"></script>
-  <script src="js/welcome-recordings.js?v=20260917"></script>
-  <script src="js/welcome-greeting.js?v=20260917"></script>
+  <script src="js/welcome-recordings.js?v=20260917available"></script>
+  <script src="js/welcome-greeting.js?v=20260917characters"></script>
   <script src="js/character-wardrobe.js?v=20260917activities"></script>
   <script src="js/clothing-activities.js?v=1"></script>
   <script src="js/character-rooms.js?v=20260917activities"></script>
   <script src="js/senior-experiences.js?v=1"></script>
   <script src="js/home-care-recommendations.js?v=1"></script>
   <script src="js/home-care-experience.js?v=1"></script>
+  <script src="js/old-song-player.js?v=20260917youtube"></script>
+  <script src="js/character-audio-player.js?v=1"></script>
 </body>
 </html>
