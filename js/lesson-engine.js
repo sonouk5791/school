@@ -185,7 +185,7 @@ const LessonEngine = {
 
         <div class="ai-friend-avatar-box">
 
-          <img src="assets/images/friend-kongi-talk.png" alt="AI 선생님 & 콩이" class="ai-friend-avatar-img">
+          <img src="assets/images/friend-kongi.png" alt="AI 선생님 & 콩이" class="ai-friend-avatar-img">
 
         </div>
 

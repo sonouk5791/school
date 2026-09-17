@@ -1,7 +1,7 @@
 /* Optional companions and gentle activity formats extend the existing lesson engine. */
 (()=>{'use strict';
 const friends=[
-  {id:'kongi',name:'콩이',animal:'강아지',emoji:'🐶',image:'friend-kongi-talk.png',voiceDesc:'밝고 다정한 목소리',badge:'건강 체조 친구',message:'저랑 천천히 몸을 움직여봐요!'},
+  {id:'kongi',name:'콩이',animal:'강아지',emoji:'🐶',image:'friend-kongi.png',voiceDesc:'밝고 다정한 목소리',badge:'건강 체조 친구',message:'저랑 천천히 몸을 움직여봐요!'},
   {id:'tori',name:'토리',animal:'토끼',emoji:'🐰',image:'friend-tori.png',voiceDesc:'따뜻하고 다정한 목소리',badge:'마음 친구',message:'오늘 기분은 어떠세요?'},
   {id:'nabi',name:'나비',animal:'고양이',emoji:'🐱',image:'friend-nabi.png',voiceDesc:'나긋나긋 고운 목소리',badge:'기억 친구',message:'우리 같이 기억해볼까요?'},
   {id:'bori',name:'보리',animal:'곰',emoji:'🐻',image:'friend-bori.png',voiceDesc:'포근하고 듬직한 목소리',badge:'음악 친구',message:'좋아하는 노래를 같이 들어봐요!'}

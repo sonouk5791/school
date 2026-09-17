@@ -44,7 +44,7 @@
       animal: '강아지',
       emoji: '🐶',
       badge: '다정명랑',
-      image: 'assets/images/friend-kongi-talk.png',
+      image: 'assets/images/friend-kongi.png',
       intro: '멍멍! 콩이가 전하는 생생한 날씨 소식이에요!',
       outro: '오늘도 콩이랑 활기차고 건강한 하루 보내세요, 멍멍!'
     },
