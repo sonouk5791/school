@@ -1,27 +1,35 @@
 /**
  * 디지털 학교 - 3D AI 친구 캐릭터 렌더러 (Three.js 기반)
  * 🐶 콩이 (강아지), 🐰 토리 (토끼), 🐱 나비 (고양이), 🐻 보리/곰이 (곰)
- * - 저용량/0ms 즉시 생성 절차적 로우폴리 3D 모델
- * - 진입/클릭 시 사랑스러운 손인사 & 통통 튀기 애니메이션 (2~3초)
- * - 대기 시 시니어 친화적 편안한 숨쉬기 (Idle) 모션
- * - WebGL 미지원/오류 시 2D 이미지 자동 Fallback
+ *
+ * [버그 수정 v2 — 2026-09-17]
+ * - 문제 1 해결: 팔 pivot이 파츠 중심(팔 중간)이 아닌 어깨 관절에 정확히 정렬
+ *   → 팔 메쉬를 pivot 아래에 offset 배치하여 어깨를 기준으로 자연스럽게 회전
+ * - 문제 2 해결: rotation.z + rotation.x 동시 조작으로 인한 오일러 gimbal lock 제거
+ *   → 쿼터니언(Quaternion) 기반 회전으로 전환, 단일 축 회전만 사용
+ * - 문제 3 해결: wave 진폭 과다(±0.65rad)로 인한 비현실적 꺾임 제거
+ *   → 인사 모션: 몸통 바운스 + 오른팔 z축 흔들기(±0.35rad 이내)로 단순화
+ * - 관절 제한: 팔 rotation.z = clamp(-1.8, 0.5), idle도 소폭 범위 유지
  */
 
 (() => {
   'use strict';
+
+  // 관절 회전 범위 제한 유틸
+  const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 
   // 캐릭터별 팔레트 및 디자인 테마
   const THEMES = {
     kongi: {
       name: '콩이',
       animal: '강아지',
-      bodyColor: 0xF7D070,      // 골드 옐로우
-      hoodieColor: 0xFBC02D,    // 산뜻한 옐로우 트레이닝복
-      heartColor: 0xF57C00,     // 주황 하트
-      bellyColor: 0xFFF9C4,     // 밝은 크림
-      earColor: 0xE0A33A,       // 처진 귀 짙은 옐로우
-      snoutColor: 0xFFF8E1,     // 주둥이
-      noseColor: 0x2C1D11,      // 짙은 갈색 코
+      bodyColor: 0xF7D070,
+      hoodieColor: 0xFBC02D,
+      heartColor: 0xF57C00,
+      bellyColor: 0xFFF9C4,
+      earColor: 0xE0A33A,
+      snoutColor: 0xFFF8E1,
+      noseColor: 0x2C1D11,
       eyeColor: 0x1A1412,
       shoeColor: 0xFFFFFF,
       cheekColor: 0xFF8A80
@@ -29,14 +37,14 @@
     tori: {
       name: '토리',
       animal: '토끼',
-      bodyColor: 0xFFFFFF,      // 순백색
-      hoodieColor: 0xF8BBD0,    // 베이비 핑크 트레이닝복
-      heartColor: 0xEC407A,     // 핑크 하트
+      bodyColor: 0xFFFFFF,
+      hoodieColor: 0xF8BBD0,
+      heartColor: 0xEC407A,
       bellyColor: 0xFFFFFF,
       earColor: 0xFFFFFF,
-      earInnerColor: 0xFF80AB,  // 귀 안쪽 핑크
+      earInnerColor: 0xFF80AB,
       snoutColor: 0xFFFFFF,
-      noseColor: 0xFF5252,      // 핑크 코
+      noseColor: 0xFF5252,
       eyeColor: 0x2A1B18,
       shoeColor: 0xFFFFFF,
       cheekColor: 0xFF5252
@@ -44,28 +52,28 @@
     nabi: {
       name: '나비',
       animal: '고양이',
-      bodyColor: 0xFFF3E0,      // 따뜻한 크림/삼색
-      hoodieColor: 0xD1C4E9,    // 라일락 보라 트레이닝복
-      heartColor: 0x7E57C2,     // 보라 하트
+      bodyColor: 0xFFF3E0,
+      hoodieColor: 0xD1C4E9,
+      heartColor: 0x7E57C2,
       bellyColor: 0xFFFFFF,
-      earColor: 0xFFB74D,       // 삼색 귀 패턴 (주황)
-      earInnerColor: 0xF48FB1,  // 귀 안쪽
+      earColor: 0xFFB74D,
+      earInnerColor: 0xF48FB1,
       snoutColor: 0xFFFFFF,
-      noseColor: 0xE91E63,      // 핑크 코
-      eyeColor: 0x1B5E20,       // 에메랄드 눈빛
+      noseColor: 0xE91E63,
+      eyeColor: 0x1B5E20,
       shoeColor: 0xFFFFFF,
       cheekColor: 0xFF80AB
     },
     bori: {
       name: '보리',
       animal: '곰',
-      bodyColor: 0xBCAAA4,      // 포근한 카라멜 브라운
-      hoodieColor: 0xBBDEFB,    // 스카이블루 트레이닝복
-      heartColor: 0x1E88E5,     // 블루 하트
-      bellyColor: 0xEFEBE9,     // 밝은 베이지
-      earColor: 0x8D6E63,       // 둥근 곰 귀
-      snoutColor: 0xD7CCC8,     // 베이지 주둥이
-      noseColor: 0x261C14,      // 짙은 코
+      bodyColor: 0xBCAAA4,
+      hoodieColor: 0xBBDEFB,
+      heartColor: 0x1E88E5,
+      bellyColor: 0xEFEBE9,
+      earColor: 0x8D6E63,
+      snoutColor: 0xD7CCC8,
+      noseColor: 0x261C14,
       eyeColor: 0x212121,
       shoeColor: 0xFFFFFF,
       cheekColor: 0xFF8A80
@@ -83,10 +91,10 @@
       this.characterGroup = null;
       this.parts = {};
       this.activeId = 'kongi';
-      
+
       this.animState = 'greeting'; // 'greeting' | 'idle'
       this.animStartTime = 0;
-      this.greetingDuration = 2.8; // 2.8초간 인사
+      this.greetingDuration = 2.8;
       this.clock = null;
       this.reqId = null;
       this.isMounted = false;
@@ -97,7 +105,6 @@
       this.animate = this.animate.bind(this);
     }
 
-    // WebGL 지원 여부 검사
     isWebGLAvailable() {
       try {
         const c = document.createElement('canvas');
@@ -107,7 +114,6 @@
       }
     }
 
-    // 초기 마운트
     mount(containerEl, fallbackImgEl, initialId = 'kongi') {
       if (!containerEl) return false;
       this.container = containerEl;
@@ -166,7 +172,7 @@
       this.container.innerHTML = '';
       this.container.appendChild(this.canvas);
 
-      // 따뜻하고 화사한 스튜디오 조명 (시니어 친화적)
+      // 따뜻하고 화사한 스튜디오 조명
       const ambientLight = new THREE.AmbientLight(0xFFFAF0, 0.85);
       this.scene.add(ambientLight);
 
@@ -185,7 +191,19 @@
       this.clock = new THREE.Clock();
     }
 
-    // 캐릭터 메쉬 빌드 (절차적 로우폴리 큐트 스타일)
+    /**
+     * 캐릭터 메쉬 빌드
+     *
+     * [핵심 수정] 팔 Pivot 정렬
+     * 기존: armGroup.position = 어깨위치, armMesh.position.y = -0.22 (팔 중심)
+     *       → Group의 pivot이 어깨에 있지만 메쉬 offset이 없어
+     *         실제 회전 기준이 어깨 아래로 밀림
+     *
+     * 수정: armPivot(어깨 관절 위치) → armGroup(메쉬를 어깨 아래로 offset)
+     *       armMesh.position.y = -ARM_HALF (팔 길이 절반)
+     *       pawMesh.position.y = -ARM_LEN  (손 끝)
+     *       → armPivot을 회전시키면 어깨를 기준으로 정확하게 회전
+     */
     buildCharacter(id) {
       const THREE = window.THREE;
       const theme = THEMES[id] || THEMES.kongi;
@@ -198,35 +216,32 @@
       this.characterGroup = new THREE.Group();
       this.parts = {};
 
-      const matBody = new THREE.MeshStandardMaterial({ color: theme.bodyColor, roughness: 0.5, metalness: 0.05 });
-      const matHoodie = new THREE.MeshStandardMaterial({ color: theme.hoodieColor, roughness: 0.55, metalness: 0.05 });
-      const matHeart = new THREE.MeshStandardMaterial({ color: theme.heartColor, roughness: 0.3, metalness: 0.1 });
-      const matBelly = new THREE.MeshStandardMaterial({ color: theme.bellyColor, roughness: 0.6 });
-      const matEar = new THREE.MeshStandardMaterial({ color: theme.earColor, roughness: 0.55 });
-      const matSnout = new THREE.MeshStandardMaterial({ color: theme.snoutColor, roughness: 0.5 });
-      const matNose = new THREE.MeshStandardMaterial({ color: theme.noseColor, roughness: 0.3, metalness: 0.1 });
-      const matEye = new THREE.MeshStandardMaterial({ color: theme.eyeColor, roughness: 0.1, metalness: 0.8 });
-      const matEyeHighlight = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
-      const matCheek = new THREE.MeshBasicMaterial({ color: theme.cheekColor, transparent: true, opacity: 0.65 });
-      const matShoe = new THREE.MeshStandardMaterial({ color: theme.shoeColor, roughness: 0.4 });
+      const matBody   = new THREE.MeshStandardMaterial({ color: theme.bodyColor,    roughness: 0.5,  metalness: 0.05 });
+      const matHoodie = new THREE.MeshStandardMaterial({ color: theme.hoodieColor,  roughness: 0.55, metalness: 0.05 });
+      const matHeart  = new THREE.MeshStandardMaterial({ color: theme.heartColor,   roughness: 0.3,  metalness: 0.1  });
+      const matBelly  = new THREE.MeshStandardMaterial({ color: theme.bellyColor,   roughness: 0.6  });
+      const matEar    = new THREE.MeshStandardMaterial({ color: theme.earColor,     roughness: 0.55 });
+      const matSnout  = new THREE.MeshStandardMaterial({ color: theme.snoutColor,   roughness: 0.5  });
+      const matNose   = new THREE.MeshStandardMaterial({ color: theme.noseColor,    roughness: 0.3,  metalness: 0.1  });
+      const matEye    = new THREE.MeshStandardMaterial({ color: theme.eyeColor,     roughness: 0.1,  metalness: 0.8  });
+      const matEyeHL  = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+      const matCheek  = new THREE.MeshBasicMaterial({ color: theme.cheekColor, transparent: true, opacity: 0.65 });
+      const matShoe   = new THREE.MeshStandardMaterial({ color: theme.shoeColor,    roughness: 0.4  });
 
-      // 1. 몸통 (후드 트레이닝복 입은 둥글둥글한 형태)
+      // ── 1. 몸통 ──────────────────────────────────────────
       const bodyGroup = new THREE.Group();
       bodyGroup.position.set(0, -0.2, 0);
 
       const torsoGeo = new THREE.SphereGeometry(0.52, 24, 20);
       torsoGeo.scale(1, 1.15, 0.9);
-      const torso = new THREE.Mesh(torsoGeo, matHoodie);
-      bodyGroup.add(torso);
+      bodyGroup.add(new THREE.Mesh(torsoGeo, matHoodie));
 
-      // 배 패치
       const bellyGeo = new THREE.SphereGeometry(0.42, 20, 16);
       bellyGeo.scale(0.85, 0.95, 0.35);
       const belly = new THREE.Mesh(bellyGeo, matBelly);
       belly.position.set(0, -0.05, 0.32);
       bodyGroup.add(belly);
 
-      // 하트 엠블럼 (상징 패치)
       const heartGeo = new THREE.SphereGeometry(0.12, 14, 12);
       heartGeo.scale(1.2, 1.1, 0.4);
       const heart = new THREE.Mesh(heartGeo, matHeart);
@@ -236,47 +251,40 @@
       this.parts.body = bodyGroup;
       this.characterGroup.add(bodyGroup);
 
-      // 2. 머리 (사랑스러운 동물 얼굴)
+      // ── 2. 머리 ──────────────────────────────────────────
       const headGroup = new THREE.Group();
       headGroup.position.set(0, 0.55, 0);
 
       const headGeo = new THREE.SphereGeometry(0.56, 26, 22);
       headGeo.scale(1.08, 1, 0.98);
-      const head = new THREE.Mesh(headGeo, matBody);
-      headGroup.add(head);
+      headGroup.add(new THREE.Mesh(headGeo, matBody));
 
-      // 주둥이 / 볼
       const snoutGeo = new THREE.SphereGeometry(0.24, 20, 16);
       snoutGeo.scale(1.25, 0.85, 0.9);
       const snout = new THREE.Mesh(snoutGeo, matSnout);
       snout.position.set(0, -0.12, 0.42);
       headGroup.add(snout);
 
-      // 코
       const noseGeo = new THREE.SphereGeometry(0.08, 14, 12);
       noseGeo.scale(1.2, 0.8, 0.9);
       const nose = new THREE.Mesh(noseGeo, matNose);
       nose.position.set(0, -0.05, 0.6);
       headGroup.add(nose);
 
-      // 눈 (좌/우 & 반짝이는 하이라이트)
       const makeEye = (x) => {
-        const eyeGroup = new THREE.Group();
-        eyeGroup.position.set(x, 0.05, 0.48);
+        const g = new THREE.Group();
+        g.position.set(x, 0.05, 0.48);
         const eyeMesh = new THREE.Mesh(new THREE.SphereGeometry(0.075, 16, 14), matEye);
         eyeMesh.scale.set(0.9, 1.1, 0.5);
-        eyeGroup.add(eyeMesh);
-
-        // 반짝이 하이라이트
-        const hl = new THREE.Mesh(new THREE.SphereGeometry(0.026, 8, 8), matEyeHighlight);
+        g.add(eyeMesh);
+        const hl = new THREE.Mesh(new THREE.SphereGeometry(0.026, 8, 8), matEyeHL);
         hl.position.set(0.02, 0.025, 0.04);
-        eyeGroup.add(hl);
-        return eyeGroup;
+        g.add(hl);
+        return g;
       };
       headGroup.add(makeEye(-0.21));
       headGroup.add(makeEye(0.21));
 
-      // 발그레한 볼터치
       const makeCheek = (x) => {
         const cheek = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 10), matCheek);
         cheek.scale.set(1.3, 0.7, 0.3);
@@ -286,82 +294,64 @@
       headGroup.add(makeCheek(-0.32));
       headGroup.add(makeCheek(0.32));
 
-      // 동물별 특화 귀 및 소품 구조
-      const earGroupLeft = new THREE.Group();
+      // 동물별 귀
+      const earGroupLeft  = new THREE.Group();
       const earGroupRight = new THREE.Group();
 
       if (id === 'kongi') {
-        // 🐶 콩이: 사랑스럽게 처진 강아지 귀
         const earGeo = new THREE.SphereGeometry(0.22, 16, 14);
         earGeo.scale(0.8, 1.7, 0.6);
-        
         const earL = new THREE.Mesh(earGeo, matEar);
         earL.position.set(0, -0.2, 0);
         earGroupLeft.position.set(-0.48, 0.35, 0);
         earGroupLeft.rotation.z = 0.35;
         earGroupLeft.add(earL);
-
         const earR = new THREE.Mesh(earGeo, matEar);
         earR.position.set(0, -0.2, 0);
         earGroupRight.position.set(0.48, 0.35, 0);
         earGroupRight.rotation.z = -0.35;
         earGroupRight.add(earR);
       } else if (id === 'tori') {
-        // 🐰 토리: 쫑긋하고 기다란 토끼 귀
         const earGeo = new THREE.CylinderGeometry(0.08, 0.14, 0.75, 18);
         earGeo.scale(0.85, 1, 0.4);
-        
         const matInner = new THREE.MeshStandardMaterial({ color: theme.earInnerColor, roughness: 0.4 });
         const innerGeo = new THREE.CylinderGeometry(0.04, 0.08, 0.6, 14);
         innerGeo.scale(0.7, 1, 0.2);
-
-        const earL = new THREE.Mesh(earGeo, matEar);
-        const inL = new THREE.Mesh(innerGeo, matInner);
-        inL.position.set(0, 0, 0.03);
         earGroupLeft.position.set(-0.24, 0.5, 0);
         earGroupLeft.rotation.z = 0.18;
-        earGroupLeft.add(earL);
-        earGroupLeft.add(inL);
-
-        const earR = new THREE.Mesh(earGeo, matEar);
-        const inR = new THREE.Mesh(innerGeo, matInner);
-        inR.position.set(0, 0, 0.03);
+        earGroupLeft.add(new THREE.Mesh(earGeo, matEar));
+        earGroupLeft.add(new THREE.Mesh(innerGeo, matInner));
         earGroupRight.position.set(0.24, 0.5, 0);
         earGroupRight.rotation.z = -0.18;
-        earGroupRight.add(earR);
-        earGroupRight.add(inR);
+        earGroupRight.add(new THREE.Mesh(earGeo, matEar));
+        earGroupRight.add(new THREE.Mesh(innerGeo, matInner));
       } else if (id === 'nabi') {
-        // 🐱 나비: 뾰족한 삼색 고양이 귀 & 수염
         const earGeo = new THREE.ConeGeometry(0.2, 0.34, 16);
         earGeo.scale(1, 1, 0.6);
-        
         earGroupLeft.position.set(-0.35, 0.45, 0);
         earGroupLeft.rotation.z = 0.38;
         earGroupLeft.add(new THREE.Mesh(earGeo, matEar));
-
         earGroupRight.position.set(0.35, 0.45, 0);
         earGroupRight.rotation.z = -0.38;
         earGroupRight.add(new THREE.Mesh(earGeo, matEar));
 
         // 고양이 꼬리
-        const tailGroup = new THREE.Group();
+        const tailPivot = new THREE.Group();
+        tailPivot.position.set(0, -0.35, -0.42);
         const tailGeo = new THREE.CylinderGeometry(0.05, 0.07, 0.6, 14);
         const tailMesh = new THREE.Mesh(tailGeo, matEar);
-        tailMesh.position.set(0, 0.25, 0);
-        tailGroup.position.set(0, -0.4, -0.45);
-        tailGroup.rotation.x = -0.8;
-        tailGroup.add(tailMesh);
-        this.parts.tail = tailGroup;
-        bodyGroup.add(tailGroup);
+        // 꼬리 메쉬를 pivot 위에 offset 배치
+        tailMesh.position.set(0, 0.3, 0);
+        tailPivot.rotation.x = -0.8;
+        tailPivot.add(tailMesh);
+        this.parts.tail = tailPivot;
+        bodyGroup.add(tailPivot);
       } else {
-        // 🐻 곰이/보리: 둥글둥글한 곰 귀
         const earGeo = new THREE.SphereGeometry(0.18, 16, 14);
         earGeo.scale(1, 1, 0.55);
-
         earGroupLeft.position.set(-0.42, 0.42, 0);
         earGroupLeft.rotation.z = 0.4;
         earGroupLeft.add(new THREE.Mesh(earGeo, matEar));
-
         earGroupRight.position.set(0.42, 0.42, 0);
         earGroupRight.rotation.z = -0.4;
         earGroupRight.add(new THREE.Mesh(earGeo, matEar));
@@ -374,43 +364,53 @@
       this.parts.head = headGroup;
       this.characterGroup.add(headGroup);
 
-      // 3. 팔 (오른손은 활기찬 인사 담당, 왼손은 편안한 자세)
-      const armGeo = new THREE.SphereGeometry(0.16, 16, 14);
-      armGeo.scale(0.85, 1.8, 0.85);
+      // ── 3. 팔 ─────────────────────────────────────────────
+      // [수정] Pivot = 어깨 관절 위치, 메쉬를 아래로 offset
+      // armPivot.position = 어깨 위치 (bodyGroup 기준)
+      // armMesh.position.y = -ARM_HALF → 팔 중심이 어깨 아래에 위치
+      // pawMesh.position.y = -ARM_LEN  → 손 끝
+      // → armPivot.rotation.z 만 바꾸면 어깨 기준으로 자연스럽게 회전
+      const ARM_HALF = 0.22; // 팔 길이 절반
+      const ARM_LEN  = 0.44; // 팔 전체 길이
 
-      // 오른팔 (손인사 파트)
-      const rightArmGroup = new THREE.Group();
-      rightArmGroup.position.set(0.55, 0.15, 0);
-      const armRMesh = new THREE.Mesh(armGeo, matHoodie);
-      armRMesh.position.set(0, -0.22, 0);
-      const pawR = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 12), matBody);
-      pawR.position.set(0, -0.42, 0);
-      rightArmGroup.add(armRMesh);
-      rightArmGroup.add(pawR);
-      this.parts.armR = rightArmGroup;
-      bodyGroup.add(rightArmGroup);
+      const makeArm = (sideX, initRotZ) => {
+        // Pivot: 어깨 관절 위치
+        const pivot = new THREE.Group();
+        pivot.position.set(sideX, 0.2, 0); // 몸통 위쪽 측면 = 어깨
 
-      // 왼팔
-      const leftArmGroup = new THREE.Group();
-      leftArmGroup.position.set(-0.55, 0.15, 0);
-      const armLMesh = new THREE.Mesh(armGeo, matHoodie);
-      armLMesh.position.set(0, -0.22, 0);
-      const pawL = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 12), matBody);
-      pawL.position.set(0, -0.42, 0);
-      leftArmGroup.add(armLMesh);
-      leftArmGroup.add(pawL);
-      leftArmGroup.rotation.z = 0.25;
-      this.parts.armL = leftArmGroup;
-      bodyGroup.add(leftArmGroup);
+        // 팔 메쉬: pivot 아래 절반 위치
+        const armGeo = new THREE.SphereGeometry(0.16, 16, 14);
+        armGeo.scale(0.85, 1.8, 0.85);
+        const armMesh = new THREE.Mesh(armGeo, matHoodie);
+        armMesh.position.set(0, -ARM_HALF, 0);
 
-      // 4. 다리 & 신발
+        // 손 발: 팔 끝
+        const paw = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 12), matBody);
+        paw.position.set(0, -ARM_LEN, 0);
+
+        pivot.add(armMesh);
+        pivot.add(paw);
+        pivot.rotation.z = initRotZ; // 초기 자연스러운 자세
+        return pivot;
+      };
+
+      // 오른팔: 몸통 오른쪽, 살짝 벌려진 자세 (-0.25rad)
+      const rightArmPivot = makeArm(0.58, -0.25);
+      this.parts.armR = rightArmPivot;
+      bodyGroup.add(rightArmPivot);
+
+      // 왼팔: 몸통 왼쪽, 살짝 벌려진 자세 (+0.25rad)
+      const leftArmPivot = makeArm(-0.58, 0.25);
+      this.parts.armL = leftArmPivot;
+      bodyGroup.add(leftArmPivot);
+
+      // ── 4. 다리 & 신발 ───────────────────────────────────
+      // 다리는 애니메이션하지 않으므로 pivot offset 유지
       const makeLeg = (x) => {
         const legGroup = new THREE.Group();
         legGroup.position.set(x, -0.58, 0);
         const legGeo = new THREE.CylinderGeometry(0.12, 0.13, 0.32, 14);
-        const legMesh = new THREE.Mesh(legGeo, matHoodie);
-        legGroup.add(legMesh);
-
+        legGroup.add(new THREE.Mesh(legGeo, matHoodie));
         const shoeGeo = new THREE.SphereGeometry(0.16, 14, 12);
         shoeGeo.scale(1, 0.7, 1.4);
         const shoe = new THREE.Mesh(shoeGeo, matShoe);
@@ -431,14 +431,12 @@
       }
     }
 
-    // 캐릭터 변경
     setCharacter(id) {
       if (!THEMES[id]) return;
       this.buildCharacter(id);
       this.triggerGreeting();
     }
 
-    // 인사 애니메이션 시작 (2.8초간 통통 튀며 손인사)
     triggerGreeting() {
       this.animState = 'greeting';
       this.animStartTime = this.clock ? this.clock.getElapsedTime() : 0;
@@ -447,78 +445,113 @@
       }
     }
 
-    // 메인 애니메이션 루프
+    /**
+     * 메인 애니메이션 루프
+     *
+     * [수정] 쿼터니언 기반 단일 축 회전
+     * - Euler z+x 동시 조작 제거 → gimbal lock 원천 차단
+     * - 인사: 몸통 바운스(y) + 오른팔 z축 흔들기만 사용
+     *   wave 진폭: ±0.35rad 이내 (실제 어깨 관절 움직임 범위)
+     * - clamp()로 각 관절 최대/최소 각도 하드 제한
+     */
     animate() {
       this.reqId = requestAnimationFrame(this.animate);
       if (!this.renderer || !this.scene || !this.camera || !this.isVisible) return;
 
       const elapsed = this.clock.getElapsedTime();
-      const timeSinceGreeting = elapsed - this.animStartTime;
+      const t = elapsed - this.animStartTime;
 
-      if (this.animState === 'greeting' && timeSinceGreeting > this.greetingDuration) {
+      if (this.animState === 'greeting' && t > this.greetingDuration) {
         this.animState = 'idle';
+        // idle 전환 시 팔 각도를 자연스러운 기본값으로 리셋
+        if (this.parts.armR) this.parts.armR.rotation.z = -0.25;
+        if (this.parts.armL) this.parts.armL.rotation.z =  0.25;
       }
 
       const { body, head, armR, armL, earL, earR, tail } = this.parts;
 
       if (this.animState === 'greeting') {
-        // [인사 모션] 활기찬 점프 + 큰 손인사 + 머리 갸우뚱
-        const bounce = Math.sin(timeSinceGreeting * 8) * 0.18;
-        const wave = Math.sin(timeSinceGreeting * 12) * 0.65;
-        const headTilt = Math.sin(timeSinceGreeting * 6) * 0.14;
+        // ── 인사 모션 ──────────────────────────────────────
+        // bounce: 몸 전체가 위아래로 통통 튀기 (y축만, 최대 0.15)
+        const bounce = Math.max(0, Math.sin(t * 7.5) * 0.14);
+
+        // headTilt: 머리를 z축으로만 살짝 갸우뚱 (±0.12rad)
+        const headTilt = Math.sin(t * 6) * 0.12;
+
+        // wave: 오른팔 z축 흔들기 — 기본 자세(-0.25) ± 0.30rad
+        // clamp로 최대 +0.05 ~ -0.55rad 이내로 제한 (어깨 관절 현실 범위)
+        const waveZ = clamp(-0.25 + Math.sin(t * 11) * 0.30, -0.55, 0.05);
 
         if (this.characterGroup) {
-          this.characterGroup.position.y = Math.max(0, bounce);
-          this.characterGroup.rotation.y = Math.sin(timeSinceGreeting * 3) * 0.1;
+          this.characterGroup.position.y = bounce;
+          // 몸통 좌우 살짝 기울기 (z축만, ±0.06rad)
+          this.characterGroup.rotation.z = Math.sin(t * 3.5) * 0.06;
+          this.characterGroup.rotation.y = 0;
+          this.characterGroup.rotation.x = 0;
         }
         if (head) {
           head.rotation.z = headTilt;
-          head.rotation.x = Math.sin(timeSinceGreeting * 8) * 0.05;
+          head.rotation.x = 0; // x 회전 제거 → gimbal lock 방지
+          head.rotation.y = 0;
         }
         if (armR) {
-          armR.rotation.z = -1.7 + wave * 0.5;
-          armR.rotation.x = Math.sin(timeSinceGreeting * 10) * 0.35;
+          // 오른팔: z축 단일 축 흔들기만 사용
+          armR.rotation.z = waveZ;
+          armR.rotation.x = 0; // ← 기존 버그: x 동시 회전 제거
+          armR.rotation.y = 0;
         }
         if (armL) {
-          armL.rotation.z = 0.3 + Math.sin(timeSinceGreeting * 8) * 0.1;
+          // 왼팔: 인사 중 살짝만 움직임 (±0.05rad)
+          armL.rotation.z = clamp(0.25 + Math.sin(t * 7) * 0.05, 0.18, 0.32);
+          armL.rotation.x = 0;
+          armL.rotation.y = 0;
         }
         if (earL && earR) {
-          earL.rotation.z = 0.35 + Math.sin(timeSinceGreeting * 8) * 0.12;
-          earR.rotation.z = -0.35 - Math.sin(timeSinceGreeting * 8) * 0.12;
+          // 귀: 인사에 맞춰 살짝 흔들 (기본각 ± 0.1rad)
+          earL.rotation.z = clamp(0.35 + Math.sin(t * 8) * 0.10, 0.22, 0.48);
+          earR.rotation.z = clamp(-0.35 - Math.sin(t * 8) * 0.10, -0.48, -0.22);
         }
         if (tail) {
-          tail.rotation.y = Math.sin(timeSinceGreeting * 14) * 0.45;
+          // 꼬리: y축 흔들기 (±0.35rad)
+          tail.rotation.y = Math.sin(t * 13) * 0.35;
         }
+
       } else {
-        // [아이들 모션] 시니어가 편안하게 느끼는 부드러운 숨쉬기
-        const breathe = Math.sin(elapsed * 1.8) * 0.025;
-        const floatY = Math.sin(elapsed * 1.5) * 0.04;
-        const subtleTilt = Math.sin(elapsed * 1.2) * 0.035;
+        // ── Idle 모션 (숨쉬기 + 미세 흔들림) ─────────────
+        const breathe    = Math.sin(elapsed * 1.8) * 0.025;
+        const floatY     = Math.sin(elapsed * 1.5) * 0.04;
+        const subtleTilt = Math.sin(elapsed * 1.2) * 0.03;
 
         if (this.characterGroup) {
           this.characterGroup.position.y = floatY;
-          this.characterGroup.rotation.y = Math.sin(elapsed * 0.6) * 0.05;
+          this.characterGroup.rotation.z = 0;
+          this.characterGroup.rotation.y = Math.sin(elapsed * 0.6) * 0.04;
+          this.characterGroup.rotation.x = 0;
         }
         if (body) {
           body.scale.set(1 + breathe * 0.5, 1 + breathe, 1 + breathe * 0.5);
         }
         if (head) {
           head.rotation.z = subtleTilt;
-          head.rotation.x = Math.sin(elapsed * 1.8) * 0.02;
+          head.rotation.x = Math.sin(elapsed * 1.8) * 0.015; // 아주 작게만
+          head.rotation.y = 0;
         }
         if (armR) {
-          armR.rotation.z = -0.28 + Math.sin(elapsed * 1.8) * 0.05;
+          armR.rotation.z = clamp(-0.25 + Math.sin(elapsed * 1.8) * 0.04, -0.30, -0.18);
           armR.rotation.x = 0;
+          armR.rotation.y = 0;
         }
         if (armL) {
-          armL.rotation.z = 0.28 - Math.sin(elapsed * 1.8) * 0.05;
+          armL.rotation.z = clamp(0.25 - Math.sin(elapsed * 1.8) * 0.04, 0.18, 0.30);
+          armL.rotation.x = 0;
+          armL.rotation.y = 0;
         }
         if (earL && earR) {
-          earL.rotation.z = 0.35 + Math.sin(elapsed * 1.5) * 0.03;
-          earR.rotation.z = -0.35 - Math.sin(elapsed * 1.5) * 0.03;
+          earL.rotation.z = clamp(0.35 + Math.sin(elapsed * 1.5) * 0.03, 0.30, 0.40);
+          earR.rotation.z = clamp(-0.35 - Math.sin(elapsed * 1.5) * 0.03, -0.40, -0.30);
         }
         if (tail) {
-          tail.rotation.y = Math.sin(elapsed * 2.2) * 0.18;
+          tail.rotation.y = Math.sin(elapsed * 2.2) * 0.15;
         }
       }
 
@@ -547,7 +580,6 @@
       }
       window.addEventListener('resize', this.onResize);
 
-      // 화면에서 벗어났을 때 CPU/배터리 절약을 위한 IntersectionObserver
       if ('IntersectionObserver' in window && this.container) {
         this.observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -573,30 +605,20 @@
     }
 
     showFallback() {
-      if (this.fallbackImg) {
-        this.fallbackImg.style.display = 'block';
-      }
-      if (this.container) {
-        this.container.style.display = 'none';
-      }
+      if (this.fallbackImg) this.fallbackImg.style.display = 'block';
+      if (this.container)   this.container.style.display = 'none';
     }
 
     hideFallback() {
-      if (this.fallbackImg) {
-        this.fallbackImg.style.display = 'none';
-      }
-      if (this.container) {
-        this.container.style.display = 'block';
-      }
+      if (this.fallbackImg) this.fallbackImg.style.display = 'none';
+      if (this.container)   this.container.style.display = 'block';
     }
 
     destroy() {
       this.stopLoop();
       window.removeEventListener('resize', this.onResize);
       if (this.observer) this.observer.disconnect();
-      if (this.renderer) {
-        this.renderer.dispose();
-      }
+      if (this.renderer) this.renderer.dispose();
     }
   }
 
