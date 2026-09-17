@@ -136,3 +136,11 @@
 - **검증**: 390/768/1024/1440px 네 방·소품·원본 이미지·넘침·공통 이동·저장 불변 검사, 전체 기존 회귀 검사 및 35개 JS 문법·Vercel build 통과.
 - **관련 파일**: [4차 보고서](file:///J:/sh/CHARACTER_ROOMS_STAGE4_REPORT_2026-09-17.md), [방](file:///J:/sh/js/character-rooms.js), [스타일](file:///J:/sh/css/character-rooms.css), [검사](file:///J:/sh/tests/character-rooms.cjs).
 - **범위**: 4차 커밋에서 종료. 5차 옷 입히기·6차 인지활동 및 push/운영 배포 미수행.
+
+
+## 작업 20260917-5차옷입히기 / 2026-09-17 09:20
+- **사용자 요청 사항**: 캐릭터 방에서 한 번 눌러 옷 변경, 5개 카테고리·7벌, 반응·저장·기본 복원.
+- **수행 내역**: 별도 wardrobe 스크립트/스타일, 기존 이미지 옷 부분에만 SVG 색상·무늬·칼라·단추·리본 적용. 원본 얼굴·손·신발 유지, 캐릭터별 localStorage 저장, 실패 안내 및 기본 운동복 완전 복원. 새 TTS 없음.
+- **검증**: 네 캐릭터 7벌·새로고침·복원·모바일, 저장 오류/손상 JSON, 얼굴 픽셀 동일성, 기존 방·환영·오전·관리 기록·파일방·서류 회귀 통과. Vercel build 성공.
+- **관련 파일**: [5차 보고서](file:///J:/sh/WARDROBE_STAGE5_REPORT_2026-09-17.md), [옷 입히기](file:///J:/sh/js/character-wardrobe.js), [스타일](file:///J:/sh/css/character-wardrobe.css), [기능 검사](file:///J:/sh/tests/character-wardrobe.cjs).
+- **범위**: 기존 옷 형태를 활용한 MVP. 5차 커밋에서 종료, 6차 인지활동·push·운영 배포 미수행.

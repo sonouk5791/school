@@ -1,0 +1,39 @@
+/* Clothing-only SVG layers preserve the original PNG and all face/hand pixels. */
+(()=>{'use strict';
+const KEY='school_character_outfits_v1';
+const outfits=[
+{id:'knit',name:'크림 니트',category:'daily',color:'#dfc29b',kind:'knit'},
+{id:'stripe',name:'빨간 줄무늬 옷',category:'daily',color:'#c66a68',kind:'stripe'},
+{id:'sport',name:'기본 운동복',category:'sport',color:null,kind:'sport'},
+{id:'jacket',name:'남색 외출 재킷',category:'outing',color:'#567798',kind:'jacket'},
+{id:'cardigan',name:'초록 가디건',category:'season',color:'#82a48a',kind:'cardigan'},
+{id:'padded',name:'따뜻한 패딩',category:'season',color:'#bd986c',kind:'padded'},
+{id:'party',name:'리본 잔치 옷',category:'special',color:'#a98bbe',kind:'party'}];
+const categories=[['daily','👕 일상복'],['sport','🎽 운동복'],['outing','👔 외출복'],['season','🧥 계절옷'],['special','🎉 특별한 날']];
+const geometry={
+ kongi:{top:'M400 529 L423 530 L432 555 Q510 552 586 548 L598 530 Q639 534 665 573 L730 651 L716 675 L666 692 L649 677 L649 718 Q512 741 375 718 L370 677 L349 685 L295 660 L302 630 L345 572 Q367 541 400 529Z',pants:'M381 736 Q512 751 641 735 L639 832 Q638 854 622 860 L535 857 L523 788 L507 786 L496 856 L402 855 L388 840Z',x:513,y:566,bottom:705},
+ tori:{top:'M472 674 L494 682 L551 688 L579 673 L615 658 L627 696 Q670 710 711 687 L725 714 Q742 757 701 764 L661 756 L668 834 L654 870 Q526 892 399 858 L394 789 Q350 789 345 758 L353 715 L368 715 Q400 749 449 717 L459 690Z',pants:'M398 883 Q520 900 650 887 L628 1019 L506 1019 L518 940 Q490 981 452 1000 L393 982 L358 948 Q360 913 398 883Z',x:558,y:710,bottom:852},
+ nabi:{top:'M405 512 Q507 530 611 510 L624 529 Q668 538 712 513 L721 548 Q730 599 694 608 L654 594 L652 688 L642 724 Q510 742 376 716 L373 596 Q320 621 304 574 L302 526 L314 514 Q350 541 390 526Z',pants:'M382 735 Q517 750 642 737 L636 870 L535 875 L523 791 L506 790 L496 875 L403 875Z',x:516,y:542,bottom:699},
+ bori:{top:'M366 520 L406 531 Q509 552 592 528 L638 512 L674 482 L721 437 Q751 461 789 490 L765 524 L665 601 L674 721 Q515 752 352 720 L360 620 Q328 656 280 640 L258 615 L259 586 L275 596 Q319 655 362 610 L369 557Z',pants:'M369 742 Q515 760 659 742 L652 869 L536 875 L524 798 L507 798 L491 874 L375 873Z',x:517,y:559,bottom:714}
+};
+let selections={};function load(){try{const v=JSON.parse(localStorage.getItem(KEY)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch{return {}}}selections=load();
+const pick=id=>outfits.find(o=>o.id===selections[id])||outfits[2];
+function save(id,value){selections[id]=value;try{const data=load();data[id]=value;localStorage.setItem(KEY,JSON.stringify(data));return true}catch{return false}}
+let serial=0;
+function layer(id,outfit){if(outfit.id==='sport')return '';const g=geometry[id],uid='cw'+(++serial),rgb=outfit.color.match(/\w\w/g).map(n=>parseInt(n,16)/255),x=g.x,y=g.y;
+const details=outfit.kind==='stripe'?`<path d="M240 ${y+45}h570m-570 45h570m-570 45h570" stroke="#fff5ed" stroke-width="18" opacity=".65"/>`:outfit.kind==='knit'?`<path d="M280 ${y+55}h510m-510 12h510m-510 12h510m-510 12h510m-510 12h510" stroke="#ffefd6" stroke-width="4" opacity=".55"/>`:outfit.kind==='padded'?`<path d="M240 ${y+30}h590m-590 38h590m-590 38h590m-590 38h590" stroke="#70563d" stroke-width="7" opacity=".4"/>`:'';
+const front=['jacket','cardigan','padded'].includes(outfit.kind)?`<path d="M${x} ${y}V${g.bottom}" stroke="#fff5e4" stroke-width="9"/><path d="M${x-67} ${y-17}L${x-20} ${y+64}L${x} ${y+12}L${x+21} ${y+64}L${x+70} ${y-18}" fill="#fff5e4" opacity=".88"/>${[85,120].map(n=>`<circle cx="${x+16}" cy="${Math.min(y+n,g.bottom-10)}" r="7" fill="#6d5340"/>`).join('')}`:'';
+const bow=outfit.kind==='party'?`<path d="M${x} ${y+19}l-39-22v47zM${x} ${y+19}l39-22v47z" fill="#68436c"/><circle cx="${x}" cy="${y+19}" r="9" fill="#fff0c9"/>`:'';
+return `<svg class="cw-overlay" viewBox="0 0 1024 1024" aria-hidden="true"><defs><clipPath id="${uid}clip"><path d="${g.top}"/><path d="${g.pants}"/></clipPath><clipPath id="${uid}top"><path d="${g.top}"/></clipPath><filter id="${uid}tint" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>${['R','G','B'].map((c,i)=>`<feFunc${c} type="linear" slope="${rgb[i]*.8}" intercept="${rgb[i]*.12}"/>`).join('')}</feComponentTransfer></filter></defs><g clip-path="url(#${uid}clip)"><image href="assets/images/friend-${id}.png" width="1024" height="1024" filter="url(#${uid}tint)"/></g><g clip-path="url(#${uid}top)">${details}${front}${bow}</g></svg>`;
+}
+function apply(dialog,id){const image=dialog.querySelector('.cr-character');if(!image)return;let wrap=image.closest('.cw-character');if(!wrap){wrap=document.createElement('div');wrap.className='cw-character';image.before(wrap);wrap.append(image)}wrap.querySelector('svg')?.remove();const o=pick(id);wrap.insertAdjacentHTML('beforeend',layer(id,o));wrap.dataset.outfit=o.id;wrap.setAttribute('role','img');wrap.setAttribute('aria-label',image.alt+' · '+o.name);}
+const reactions={kongi:'우와! 마음에 들어요!',tori:'예쁜 옷을 골라주셨네요!',nabi:'정말 잘 어울려요.',bori:'고마워요!'};
+function mount(dialog,id){if(!geometry[id])return;apply(dialog,id);const panel=document.createElement('section');panel.id='characterWardrobe';panel.className='care-card';let category=pick(id).category;
+panel.innerHTML='<h2>어떤 옷을 입혀줄까요?</h2><div class="cw-categories" aria-label="옷 종류"></div><div class="cw-options" aria-label="옷 선택"></div><p class="cw-status" role="status" aria-live="polite"></p><div class="cw-actions"><button type="button" class="care-btn primary" data-wardrobe="confirm">✅ 이 옷이 좋아요</button><button type="button" class="care-btn" data-wardrobe="more">👕 다른 옷 골라보기</button><button type="button" class="care-btn" data-wardrobe="reset">↩ 기본 옷</button></div>';
+dialog.append(panel);
+function render(){panel.querySelector('.cw-categories').innerHTML=categories.map(([key,label])=>`<button type="button" class="care-btn" data-clothes-category="${key}" aria-pressed="${key===category}">${label}</button>`).join('');panel.querySelector('.cw-options').innerHTML=outfits.filter(o=>o.category===category).map(o=>`<button type="button" class="care-btn cw-option" data-outfit="${o.id}" aria-pressed="${pick(id).id===o.id}"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M30 12L10 30l14 19 9-8v40h35V41l9 8 14-19-21-18Q50 32 30 12Z" fill="${o.color||'#edca70'}" stroke="#735e49" stroke-width="3"/>${o.kind==='stripe'?'<path d="M34 48h32m-32 14h32" stroke="white" stroke-width="6"/>':''}${o.kind==='party'?'<path d="M50 33l-12-6v15zM50 33l12-6v15z" fill="#68436c"/>':''}</svg><span>${o.name}</span></button>`).join('');}
+function choose(value){const saved=save(id,value);category=pick(id).category;apply(dialog,id);render();panel.querySelector('.cw-status').textContent=reactions[id]+' '+pick(id).name+(saved?' · 저장했어요.':' · 이 브라우저에 저장하지 못했어요. 지금 화면에서만 유지돼요.');dialog.querySelector('.cr-description').textContent=panel.querySelector('.cw-status').textContent;dialog.scrollTop=0;const reply=dialog.querySelector('.cr-description');reply.tabIndex=-1;reply.focus({preventScroll:true});}
+panel.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.clothesCategory){category=b.dataset.clothesCategory;render();panel.querySelector(`[data-clothes-category="${category}"]`).focus({preventScroll:true})}else if(b.dataset.outfit)choose(b.dataset.outfit);else if(b.dataset.wardrobe==='reset')choose('sport');else if(b.dataset.wardrobe==='confirm'){const saved=save(id,pick(id).id);panel.querySelector('.cw-status').textContent=saved?pick(id).name+'을 골랐어요. 다음에 와도 그대로예요.':'저장하지 못했어요. 지금 화면에서만 유지돼요.'}else if(b.dataset.wardrobe==='more'){panel.querySelector('[data-clothes-category]').focus();}});render();panel.querySelector('.cw-status').textContent='지금 입은 옷: '+pick(id).name;
+}
+window.CharacterWardrobe={mount};
+})();
