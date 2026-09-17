@@ -120,3 +120,11 @@
 - **검증**: 4개 화면 크기, 기존 프로그램·기록·파일방·서류 회귀, 모의 재생 순서·닫기·재생 거부, Vercel build 통과.
 - **범위**: 2차 커밋까지. 운영 push/배포와 3차 수정 미수행.
 - **관련 파일**: [2차 보고서](file:///J:/sh/WELCOME_STAGE2_REPORT_2026-09-17.md), [환영](file:///J:/sh/js/welcome-greeting.js), [녹음 설정](file:///J:/sh/js/welcome-recordings.js).
+
+
+## 작업 20260917-3차오전흐름 / 2026-09-17 09:01
+- **사용자 요청 사항**: 기존 콘텐츠를 재사용한 인사·날짜·기분·체조·인지활동·마무리 및 큰 버튼/공통 이동.
+- **수행 내역**: 기존 6단계 유지, 지정 문구/마무리 활동 버튼 반영, 이전 버튼 최소 높이 64px, 오전 인사의 자동 TTS 호출 제거. 새 콘텐츠·DB·API 없음.
+- **검증**: 390/768/1024/1440px 모든 단계 홈 이동·글자/버튼 크기·서울 날짜·캐릭터 역할, 기존 체조/기억 놀이·선생님 기록·파일방·서류 회귀 통과. 로드 JS 34개 문법 및 Vercel production build 통과.
+- **관련 파일**: [3차 보고서](file:///J:/sh/MORNING_STAGE3_REPORT_2026-09-17.md), [프로그램](file:///J:/sh/js/morning-program.js), [스타일](file:///J:/sh/css/morning-program.css), [검사](file:///J:/sh/tests/morning-stage3.cjs).
+- **범위**: 3차 커밋에서 종료. push/운영 배포 미수행.
