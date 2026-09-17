@@ -1,0 +1,16 @@
+/* Readability overrides scoped to the existing senior experience. */
+.senior-finish :is(button,.nav-link,summary,[role="button"]){min-height:64px;font-size:20px;white-space:normal;}
+.senior-finish :is(h1,h2){font-size:clamp(30px,3vw,36px);line-height:1.35;overflow-wrap:anywhere;}
+.senior-finish :is(p,.friend-role,.lesson-desc,figcaption){font-size:18px;line-height:1.6;}
+.senior-finish :is(.care-btn,.btn-nav-step,.nav-link){font-size:22px;min-height:64px;}
+.senior-finish .senior-primary button{min-height:100px;}
+.senior-finish :is(.morning-message,.cr-description,.hero-sub-text){font-size:24px;}
+.senior-finish :is(button,a,summary):focus-visible{outline:3px solid #73503d;outline-offset:4px;}
+.senior-finish .senior-return{gap:14px;margin-bottom:20px;}
+.senior-finish :is(.kongi-sparkle,.robot-badge-cheer){animation:none!important;}
+.senior-finish *, .senior-finish *::before, .senior-finish *::after{animation-duration:6s!important;transition-duration:.15s!important;}
+.senior-finish .header-container,.senior-finish .header-actions,.senior-finish .main-nav{flex-wrap:wrap;}
+.senior-finish dialog{max-width:calc(100vw - 24px);box-sizing:border-box;overflow-x:hidden;}
+.senior-finish img{max-width:100%;object-fit:contain;}
+@media(max-width:540px){.senior-finish .senior-return>button{flex:1 1 130px;padding:12px 8px;}.senior-finish .teacher-voice-controls{flex-wrap:wrap;}.senior-finish .btn-voice-ctrl{min-height:64px;}.senior-finish .care-dialog{padding:16px;}}
+@media(prefers-reduced-motion:reduce){.senior-finish *, .senior-finish *::before,.senior-finish *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}

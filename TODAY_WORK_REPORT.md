@@ -158,3 +158,9 @@
 - 관련 파일: [메뉴](file:///J:/sh/js/senior-experiences.js), [스타일](file:///J:/sh/css/senior-experiences.css).
 - 검증: JS 문법 확인. 전체 기능 및 반응형 검사는 8~9차에서 수행.
 
+
+## 8차 치매 친화 UI 점검 / 2026-09-17 09:35
+- 요청 및 수행: 기존 색상·카드 유지, 64px 이상 버튼·큰 제목과 설명, 간격·키보드 초점·반응형 보완, 반짝임 제거 및 느린 모션.
+- 검증: 390/768/1024/1440/1920px 홈·선생님 공간 이동, 기존 환영·오전·기록·서류·옷입히기·인지활동 검사 통과, Vercel 로컬 production build 성공.
+- 관련 파일: [접근성](file:///J:/sh/css/senior-accessibility.css), [검사](file:///J:/sh/tests/senior-experiences.cjs).
+
