@@ -1,0 +1,360 @@
+/* ================================================================
+   디지털 학교 — 메인 안내자 AI 친구 콩이 플로팅 캐릭터 시스템
+   companion-character.css (시니어 친화적 따뜻한 상호작용 및 미세 모션)
+   ================================================================ */
+
+/* ── 플로팅 캐릭터 래퍼 (우측 하단 고정) ───────────────────────── */
+.companion-dock {
+  position: fixed;
+  bottom: 24px;
+  right: 28px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none; /* 말풍선과 캐릭터만 개별 클릭 가능 */
+  user-select: none;
+  transition: transform 0.4s cubic-bezier(0.34, 1.25, 0.64, 1), opacity 0.4s ease;
+}
+
+/* 진입 전 숨김 상태 */
+.companion-dock.hidden-enter {
+  opacity: 0;
+  transform: translateY(40px) scale(0.85);
+}
+
+/* ── 캐릭터 말풍선 (Frosted Glassmorphism Bubble) ─────────────── */
+.companion-speech-bubble {
+  position: relative;
+  background: rgba(255, 255, 255, 0.96);
+  border: 2.5px solid #FFCC80;
+  border-radius: 24px;
+  padding: 16px 22px;
+  max-width: 320px;
+  margin-bottom: 12px;
+  box-shadow:
+    0 12px 32px rgba(138, 75, 18, 0.18),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(12px) scale(0.92);
+  transition: all 0.35s cubic-bezier(0.34, 1.35, 0.64, 1);
+  transform-origin: right bottom;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.companion-speech-bubble.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 말풍선 꼬리 */
+.companion-speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 48px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid rgba(255, 255, 255, 0.96);
+}
+
+.companion-speech-bubble::before {
+  content: "";
+  position: absolute;
+  bottom: -13px;
+  right: 47px;
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 13px solid #FFCC80;
+}
+
+/* 말풍선 헤더 (이름 태그 및 닫기 버튼) */
+.bubble-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.companion-name-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FFF3E0;
+  border: 1px solid #FFE0B2;
+  color: #E65100;
+  font-size: 13.5px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.btn-bubble-close {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  color: #795548;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-bubble-close:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* 말풍선 대사 텍스트 */
+.companion-dialogue-text {
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: #3E2723;
+  font-weight: 600;
+  word-break: keep-all;
+  white-space: pre-line;
+}
+
+/* 다시 듣기 / 음성 상태 아이콘 */
+.bubble-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(230, 81, 0, 0.2);
+}
+
+.btn-bubble-replay {
+  font-size: 13px;
+  font-weight: 700;
+  color: #E65100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.btn-bubble-replay:hover {
+  background: #FFF3E0;
+}
+
+.speaking-indicator {
+  display: none;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  color: #E65100;
+  font-weight: 700;
+}
+.speaking-indicator.active {
+  display: inline-flex;
+}
+
+/* ── 캐릭터 인터랙션 컨테이너 ─────────────────────────────────── */
+.companion-avatar-container {
+  position: relative;
+  width: 175px;
+  height: 215px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.3s cubic-bezier(0.34, 1.35, 0.64, 1);
+}
+
+.companion-avatar-container:hover {
+  transform: translateY(-4px) scale(1.04);
+}
+
+.companion-avatar-container:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* 바닥 타원 부드러운 그림자 (호흡 동기화) */
+.companion-avatar-container::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 125px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(62, 39, 35, 0.28) 0%, rgba(62, 39, 35, 0) 72%);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: companionShadowSway 3.6s ease-in-out infinite;
+}
+
+/* 콩이 PNG 이미지 (투명 배경) */
+.companion-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 10px 18px rgba(118, 87, 52, 0.16));
+  animation: companionGentleBreathe 3.6s ease-in-out infinite;
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+
+/* 캐릭터 클릭 힌트 태그 ("눌러보세요") */
+.companion-hint-pill {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFF8E1;
+  border: 1.5px solid #FFE082;
+  color: #D84315;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2;
+  animation: companionHintPulse 2.4s ease-in-out infinite;
+}
+
+/* ── 캐릭터 상태별 모션 클래스 ───────────────────────────────── */
+
+/* 1. 손 흔들기 인사 모션 */
+.companion-avatar-container.waving .companion-img {
+  animation: companionGreetingWave 1.6s ease-in-out;
+}
+
+/* 2. 말할 때 온화한 바운스 & 입모양 동기화 */
+.companion-avatar-container.speaking .companion-img {
+  animation: companionSpeakBounce 0.65s ease-in-out infinite alternate;
+}
+
+/* 3. 음악에 맞춰 리듬 타기 (좌우 스웨이) */
+.companion-avatar-container.music-sway .companion-img {
+  animation: companionMusicSway 2.0s ease-in-out infinite;
+}
+
+/* 4. 박수/칭찬 모션 */
+.companion-avatar-container.clapping .companion-img {
+  animation: companionHappyClap 1.4s ease-in-out;
+}
+
+/* ── 애니메이션 키프레임 ─────────────────────────────────────── */
+
+/* 평상시 미세 숨쉬기 (2~3.5px 상하 움직임) */
+@keyframes companionGentleBreathe {
+  0%, 100% {
+    transform: translateY(0) scale(1, 1) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-2px) scale(1.008, 0.995) rotate(0.4deg);
+  }
+  50% {
+    transform: translateY(-3.5px) scale(1.012, 0.992) rotate(-0.5deg);
+  }
+  75% {
+    transform: translateY(-1.5px) scale(1.004, 0.998) rotate(0.2deg);
+  }
+}
+
+/* 바닥 그림자 호흡 동기화 */
+@keyframes companionShadowSway {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.85;
+    filter: blur(1.5px);
+  }
+  50% {
+    transform: translateX(-50%) scale(0.86);
+    opacity: 0.52;
+    filter: blur(3.5px);
+  }
+}
+
+/* 손 흔들기 인사 모션 */
+@keyframes companionGreetingWave {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  25% { transform: translateY(-8px) rotate(-3.5deg) scale(1.03); }
+  50% { transform: translateY(-4px) rotate(3.5deg) scale(1.03); }
+  75% { transform: translateY(-6px) rotate(-2.5deg) scale(1.02); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* 말할 때 자연스러운 바운스 */
+@keyframes companionSpeakBounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-3.5px) scale(1.02); }
+}
+
+/* 음악 리듬 스웨이 */
+@keyframes companionMusicSway {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-2px) rotate(-4deg); }
+  75% { transform: translateY(-2px) rotate(4deg); }
+}
+
+/* 칭찬/박수 모션 */
+@keyframes companionHappyClap {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-10px) scale(1.06); }
+  50% { transform: translateY(0) scale(0.98); }
+  75% { transform: translateY(-6px) scale(1.04); }
+}
+
+/* 힌트 펄스 */
+@keyframes companionHintPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.95; }
+  50% { transform: translateX(-50%) scale(1.06); opacity: 1; }
+}
+
+/* ── 모바일 반응형 ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .companion-dock {
+    bottom: 16px;
+    right: 14px;
+  }
+  .companion-avatar-container {
+    width: 135px;
+    height: 165px;
+  }
+  .companion-speech-bubble {
+    max-width: 260px;
+    padding: 12px 16px;
+    font-size: 14.5px;
+    margin-bottom: 8px;
+  }
+  .companion-dialogue-text {
+    font-size: 14.5px;
+  }
+  .companion-name-badge {
+    font-size: 12px;
+  }
+}
+
+/* 접근성: 모션 감소 */
+@media (prefers-reduced-motion: reduce) {
+  .companion-img,
+  .companion-avatar-container::after,
+  .companion-hint-pill {
+    animation: none !important;
+    transform: none !important;
+  }
+}
