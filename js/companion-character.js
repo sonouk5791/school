@@ -271,27 +271,79 @@
     }
 
     /**
-     * TTS 음성 출력 및 말풍선/모션 동기화
+     * TTS 음성 출력 및 말풍선/모션 동기화 (타입캐스트 AI 보이스 우선)
      * @param {string} text - 음성으로 읽을 텍스트
      * @param {string} [displayText] - 말풍선에 표시할 텍스트
      * @param {string} [motion] - 캐릭터 모션 ('waving', 'speaking', 'clapping', 'music-sway')
      */
-    speak(text, displayText = null, motion = 'speaking') {
+    async speak(text, displayText = null, motion = 'speaking') {
       if (!text) return;
 
       this.currentSpeechText = text;
       this.showBubble(displayText || text);
       this.setMotion(motion);
 
-      if (!this.synth) return;
+      // 1. 타입캐스트 AI 보이스 API 호출 시도
+      try {
+        const typecastRes = await fetch('/api/tts/typecast', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Typecast-API-Key': 'tc_681059782dc4759327e3d302'
+          },
+          body: JSON.stringify({
+            text: text,
+            actor_id: '60a761917fba305a2b1660d3', // 호빈이 (콩이 보이스)
+            lang: 'ko',
+            tempo: 0.85,
+            pitch: 0,
+            volume: 100
+          })
+        });
 
-      // 이전 발화 중단
+        const contentType = typecastRes.headers.get('content-type') || '';
+        if (typecastRes.ok && (contentType.includes('audio') || contentType.includes('octet-stream'))) {
+          const blob = await typecastRes.blob();
+          const audioUrl = URL.createObjectURL(blob);
+          const audio = new Audio(audioUrl);
+
+          audio.onplay = () => {
+            this.isSpeaking = true;
+            this.avatarEl?.classList.add('speaking');
+            this.speakingIndicator?.classList.add('active');
+          };
+
+          audio.onended = () => {
+            this.isSpeaking = false;
+            this.avatarEl?.classList.remove('speaking');
+            this.speakingIndicator?.classList.remove('active');
+            if (motion !== 'music-sway') this.setMotion(null);
+            URL.revokeObjectURL(audioUrl);
+          };
+
+          audio.onerror = () => {
+            this._fallbackSpeechSynthesis(text, motion);
+          };
+
+          await audio.play();
+          return;
+        }
+      } catch (e) {
+        console.warn('[Companion] 타입캐스트 서버 통신 실패, 기본 브라우저 TTS로 전환:', e);
+      }
+
+      // 2. Fallback: 브라우저 내장 Web Speech Synthesis
+      this._fallbackSpeechSynthesis(text, motion);
+    }
+
+    _fallbackSpeechSynthesis(text, motion) {
+      if (!this.synth) return;
       this.synth.cancel();
 
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'ko-KR';
-      utterance.rate = 0.83;  // 일반 성인 속도의 약 80~85% (시니어 배려)
-      utterance.pitch = 1.06; // 밝고 따뜻한 톤
+      utterance.rate = 0.83;
+      utterance.pitch = 1.06;
       utterance.volume = 1.0;
 
       if (this.voice) {
