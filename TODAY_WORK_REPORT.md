@@ -409,6 +409,16 @@
   - `school-release/` 릴리즈 폴더 동기화 완료.
 - **관련 파일**: [콩이 말하기 에셋](file:///J:/sh/assets/images/friend-kongi-talk.png), [콩이 대기 에셋](file:///J:/sh/assets/images/friend-kongi.png), [메인 CSS](file:///J:/sh/css/main.css).
 
+## [작업 19] 콩이 정밀 눈 깜빡임(2~3초 주기) & 실시간 립싱크 애니메이션 엔진 및 말하기 테스트 구축 / 2026-09-18 09:55
+- **사용자 요청 사항**: 승인된 오버레이 파츠를 기반으로 2~3초 주기 눈 깜빡임, 말하기 애니메이션 함수(`startKongiTalkingAnimation`), 테스트용 버튼(`💬 말하기 테스트`), 부드러운 대기 숨쉬기 모션 구현 및 브라우저 실환경 검증.
+- **수행 내역**:
+  - `assets/images/kongi-parts/extracted/eyes_closed_overlay.png` (눈 감음 오버레이), `mouth_talk_overlay.png` (입 오버레이) 정밀 배치.
+  - `js/friends-and-play.js`: 2.2~3.5초 주기 눈 깜빡임 타이머, `window.startKongiTalkingAnimation()` 립싱크 엔진, `💬 말하기 테스트` 버튼 추가.
+  - `index.html` & `css/main.css`: 오버레이 마크업 및 애니메이션 스타일 반영.
+  - `school-release/` 릴리즈 폴더 동기화 완료.
+- **관련 파일**: [친구 스크립트](file:///J:/sh/js/friends-and-play.js), [메인 CSS](file:///J:/sh/css/main.css), [눈 감은 파츠](file:///J:/sh/assets/images/kongi-parts/extracted/eyes_closed_overlay.png).
+
+
 
 
 

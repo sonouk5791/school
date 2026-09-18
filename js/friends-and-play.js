@@ -122,29 +122,81 @@ friends.forEach(f=>{
   img.src=path('friend-'+f.id+'-talk.png');
   talkImages[f.id]=img;
 });
-let talkTimer=null,open=false;
+let talkTimer=null,talkStep=0;
 const portraits=()=>document.querySelectorAll('.hero-robot-img,.ai-friend-avatar-img,.completion-robot-img');
-function frame(talking){
+const kongiWraps=()=>document.querySelectorAll('.kongi-character-wrap');
+
+function frame(talking, step=0){
   const f=friend(),asset=talkImages[f.id];
   const src=talking&&asset&&asset.complete&&asset.naturalWidth?asset.src:path(f.image);
   portraits().forEach(img=>{img.src=src;});
+  // 입 모양 오버레이 파츠 교차 (말할 때 다양한 음절 표현)
+  kongiWraps().forEach(w=>{
+    w.classList.toggle('mouth-shape-alt', Boolean(talking && (step % 2 === 1)));
+  });
 }
+
+// ── 1. 눈 깜빡임 애니메이션 (2.2초~3.5초 주기, 0.14초 깜빡임) ──
+let blinkTimer=null;
+function scheduleNextBlink(){
+  const delay = 2200 + Math.random() * 1300;
+  blinkTimer = setTimeout(()=>{
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+      scheduleNextBlink();
+      return;
+    }
+    // 눈 감기 (eyes_closed_overlay 표시)
+    kongiWraps().forEach(w=>w.classList.add('blinking'));
+    setTimeout(()=>{
+      // 눈 뜨기
+      kongiWraps().forEach(w=>w.classList.remove('blinking'));
+      scheduleNextBlink();
+    }, 140);
+  }, delay);
+}
+scheduleNextBlink();
+
+// ── 2. 말하기 애니메이션 함수 (Talking Animation Function) ──
+window.startKongiTalkingAnimation = function(durationMs=3200, onFinish){
+  clearInterval(talkTimer);
+  talkStep = 0;
+  kongiWraps().forEach(w=>w.classList.add('speaking'));
+  frame(true, 0);
+
+  talkTimer = setInterval(()=>{
+    talkStep++;
+    const isOpen = (talkStep % 2 !== 0);
+    frame(isOpen, talkStep);
+  }, 160);
+
+  if(durationMs > 0){
+    setTimeout(()=>{
+      window.stopKongiTalkingAnimation();
+      if(typeof onFinish === 'function') onFinish();
+    }, durationMs);
+  }
+};
+
+window.stopKongiTalkingAnimation = function(){
+  clearInterval(talkTimer);
+  talkTimer = null;
+  talkStep = 0;
+  kongiWraps().forEach(w=>{
+    w.classList.remove('speaking');
+    w.classList.remove('mouth-shape-alt');
+  });
+  frame(false, 0);
+};
+
+// VoiceManager 발화 상태 동기화
 const speaking=VoiceManager.setTeacherSpeaking.bind(VoiceManager);
 VoiceManager.setTeacherSpeaking=value=>{
   speaking(value);
-  clearInterval(talkTimer);
-  talkTimer=null;
-  open=false;
-  document.querySelectorAll('.kongi-character-wrap').forEach(w=>w.classList.toggle('speaking',Boolean(value)));
-  frame(value);
   document.querySelectorAll('.voice-status-badge').forEach(b=>b.textContent=friend().name+(value?'가 이야기하고 있어요':' 목소리 듣기'));
-  if(value&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-    open=true;
-    frame(true);
-    talkTimer=setInterval(()=>{
-      open=!open;
-      frame(open);
-    },180);
+  if(value){
+    window.startKongiTalkingAnimation(0);
+  } else {
+    window.stopKongiTalkingAnimation();
   }
 };
 
@@ -153,18 +205,45 @@ window.speakKongiGreeting=function(){
   if(window.VoiceManager){
     VoiceManager.characterId='kongi';
     VoiceManager.speak(msg,{rate:0.90,pitch:1.06});
+  } else {
+    window.startKongiTalkingAnimation(3000);
   }
 };
 
-const greet=document.createElement('button');
-greet.type='button';
-greet.className='care-btn character-greet';
-greet.textContent='🔊 친구 목소리 듣기';
-greet.onclick=()=>window.speakKongiGreeting();
-document.querySelector('.hero-robot-wrapper')?.append(greet);
+// 컨트롤 버튼 영역 (친구 목소리 듣기 + 말하기 테스트 버튼)
+const heroWrapper = document.querySelector('.hero-robot-wrapper');
+if(heroWrapper){
+  const btnGroup = document.createElement('div');
+  btnGroup.className = 'character-action-buttons';
+  btnGroup.style.cssText = 'display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center;';
 
-document.getElementById('kongiHeroImg')?.addEventListener('click',()=>window.speakKongiGreeting());
+  const greetBtn = document.createElement('button');
+  greetBtn.type = 'button';
+  greetBtn.className = 'care-btn character-greet';
+  greetBtn.textContent = '🔊 친구 목소리 듣기';
+  greetBtn.onclick = () => window.speakKongiGreeting();
+  btnGroup.appendChild(greetBtn);
 
-window.addEventListener('pagehide',()=>{clearInterval(talkTimer);clearInterval(memoryPreviewTimer);});
+  const testBtn = document.createElement('button');
+  testBtn.type = 'button';
+  testBtn.className = 'care-btn character-test-talk';
+  testBtn.textContent = '💬 말하기 테스트';
+  testBtn.title = '콩이 입모양 애니메이션 테스트';
+  testBtn.style.cssText = 'background:#FFF8E7;border-color:#F59E0B;color:#92400E;font-size:15px;padding:6px 14px;';
+  testBtn.onclick = () => {
+    window.startKongiTalkingAnimation(2800);
+  };
+  btnGroup.appendChild(testBtn);
+
+  heroWrapper.appendChild(btnGroup);
+}
+
+document.getElementById('kongiCharacterWrap')?.addEventListener('click',()=>window.speakKongiGreeting());
+
+window.addEventListener('pagehide',()=>{
+  clearInterval(talkTimer);
+  clearTimeout(blinkTimer);
+  clearInterval(memoryPreviewTimer);
+});
 });
 })();

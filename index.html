@@ -131,8 +131,13 @@
     <section class="hero-classroom">
       <div class="hero-content-grid">
         <div class="hero-robot-wrapper">
-          <div class="kongi-character-wrap">
+          <div class="kongi-character-wrap" id="kongiCharacterWrap">
+            <!-- 콩이 기본 베이스 전신 이미지 -->
             <img src="assets/images/friend-kongi.png" alt="AI 친구 콩이" class="hero-robot-img" id="kongiHeroImg">
+            <!-- 눈 감은 오버레이 (자연스러운 깜빡임용) -->
+            <img src="assets/images/kongi-parts/extracted/eyes_closed_overlay.png" alt="눈 깜빡임" class="kongi-part-overlay kongi-eyes-overlay" id="kongiEyesOverlay" aria-hidden="true">
+            <!-- 말할 때 입모양 오버레이 (립싱크용) -->
+            <img src="assets/images/kongi-parts/extracted/mouth_talk_overlay.png" alt="입모양 변화" class="kongi-part-overlay kongi-mouth-overlay" id="kongiMouthOverlay" aria-hidden="true">
             <!-- 반짝이는 파티클 -->
             <div class="kongi-sparkle kongi-sparkle-1">💛</div>
             <div class="kongi-sparkle kongi-sparkle-2">🐾</div>
