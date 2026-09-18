@@ -418,6 +418,15 @@
   - `school-release/` 릴리즈 폴더 동기화 완료.
 - **관련 파일**: [친구 스크립트](file:///J:/sh/js/friends-and-play.js), [메인 CSS](file:///J:/sh/css/main.css), [눈 감은 파츠](file:///J:/sh/assets/images/kongi-parts/extracted/eyes_closed_overlay.png).
 
+## [작업 20] 콩이 눈 깜빡임 좌우 속도/높이 불일치 완벽 수정 (100% 거울 대칭 동시 하강) / 2026-09-18 10:07
+- **사용자 요청 사항**: 기존 UI 유지 전제 하에, 눈 깜빡일 때 좌우 눈꺼풀이 내려오는 속도와 위치가 서로 다른 현상 완벽 수정.
+- **수행 내역**:
+  - `assets/images/kongi-parts/extracted/eyes_closed_overlay.png`: 좌안 기준 정밀 눈웃음 곡선을 수평 반전 미러링하여 좌우 눈꺼풀의 y좌표(208px), 곡률, 속눈썹 라인을 100% 완전 거울 대칭으로 재조정.
+  - `css/main.css`: `.kongi-eyes-overlay`의 전환을 `0.02s linear`로 조정하여 양쪽 눈이 시차 없이 동시에 부드럽게 깜빡이도록 최적화.
+  - `school-release/` 릴리즈 폴더 동기화 완료.
+- **관련 파일**: [눈 감은 대칭 파츠](file:///J:/sh/assets/images/kongi-parts/extracted/eyes_closed_overlay.png), [메인 CSS](file:///J:/sh/css/main.css).
+
+
 
 
 

@@ -408,7 +408,7 @@ body {
   object-fit: contain;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.04s ease-out;
+  transition: opacity 0.02s linear;
   z-index: 2;
   /* 부모와 동일한 호흡 애니메이션 적용 */
   animation:
