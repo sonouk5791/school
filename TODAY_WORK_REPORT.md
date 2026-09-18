@@ -275,3 +275,116 @@
   - 브라우저 서브에이전트 실환경 검증 (음성 속도 토글, 글자 크기 순환, 고대비 모드 토글, 20분 체조 영상 재생 및 타이머 작동, 개인정보처리방침 모달 열기/닫기, 선생님/케어 대시보드 통계 및 일지 확인 완료).
 - **관련 파일**: [메인 마크업](file:///J:/sh/index.html), [앱 컨트롤러](file:///J:/sh/js/app.js), [음성 엔진](file:///J:/sh/js/voice.js), [접근성 스타일](file:///J:/sh/css/senior-accessibility.css).
 
+
+## Three.js 3D 캐릭터 렌더러 히어로 통합 및 배포 완료 / 2026-09-17 12:17
+- **사용자 요청 사항**: 이전 세션 미완료 작업 이어서 완료.
+- **수행 내역**:
+  - `index.html` 히어로 영역 3D 캔버스 컨테이너(`hero3DContainer`) 삽입, 2D Fallback 이미지 공존.
+  - `js/vendor/three.min.js` + `js/character-3d-renderer.js` 스크립트 연결 및 초기화.
+  - `school-release/` 동기화 (4개 신규 파일 + 8개 수정 파일).
+- **3D 렌더러**: 콩이·토리·나비·보리 로우폴리 3D, 손인사/Idle 애니메이션, WebGL Fallback.
+- **배포**: GitHub `99db793` 푸시, Vercel `dpl_HAsWyzvTGZydpaY7fgVLXS1gAyCa` READY.
+- **운영 주소**: https://school-tau-pearl.vercel.app/
+
+## 3D 캐릭터 관절/피벗 꺾임 현상 수정 및 자연스러운 인사 모션 개선 / 2026-09-17 13:30
+- **사용자 요청 사항**: 콩이/토리/나비/보리 3D 캐릭터의 인사 애니메이션에서 팔다리/관절이 이상한 각도로 꺾이는 현상 디버깅 및 수정.
+- **수행 내역**:
+  - `js/character-3d-renderer.js`: 어깨, 팔꿈치, 손, 골반 및 무릎 관절의 피벗 오프셋 정밀 재조정 (부모-자식 계층 그룹 기반 피벗 분리). 오일러 각 짐벌락 방지 및 쿼터니언/삼각함수 스무딩(Cubic ease) 적용.
+  - `school-release/` 동기화 완료.
+- **관련 파일**: [3D 렌더러](file:///J:/sh/js/character-3d-renderer.js), [3D CSS](file:///J:/sh/css/character-3d.css).
+
+## Live2D 음성 인터랙티브 가상 에이전트 웹 애플리케이션 구축 (`live2d-agent/`) / 2026-09-17 14:00
+- **사용자 요청 사항**: Live2D Cubism Web SDK 및 WebGL 기반 2.5D 캐릭터 렌더링 프론트엔드 프로젝트 구조 및 음성 상호작용(STT+TTS) 에이전트 구축.
+- **수행 내역**:
+  - `live2d-agent/index.html`: WebGL Live2D 캔버스, 헤더 상태 뱃지, 채팅 오버레이, interim 음성 텍스트 표시기, 마이크 펄스 버튼, 다국어 메뉴, 토스트 알림.
+  - `live2d-agent/css/style.css`: 글래스모피즘(`backdrop-filter`), 네온 글로우, 오디오 비주얼라이저 물결 애니메이션, 반응형 레이아웃.
+  - `live2d-agent/js/live2d-manager.js`: PixiJS v6 + `pixi-live2d-display` Cubism 4 로더 및 Canvas 2D 고해상도 캐릭터 Fallback 렌더러.
+  - `live2d-agent/js/speech-agent.js`: Web Speech API (`SpeechRecognition` + `SpeechSynthesis`) 엔진, 다국어 처리, 지능형 컨텍스트 응답.
+  - `live2d-agent/js/app.js`: Live2DManager + SpeechAgent 상태 머신 코디네이터, 별빛 파티클 배경, 키보드 단축키(Space/Esc).
+  - `live2d-agent/models/README.md`: 실제 Cubism 4 모델 파일 배치 가이드.
+- **검증**: 로컬 HTTP 서버(`http://127.0.0.1:3001`) 구동 및 UI 무결성 검증 완료.
+- **관련 파일**: [에이전트 마크업](file:///J:/sh/live2d-agent/index.html), [에이전트 스타일](file:///J:/sh/live2d-agent/css/style.css), [Live2D 매니저](file:///J:/sh/live2d-agent/js/live2d-manager.js), [음성 엔진](file:///J:/sh/live2d-agent/js/speech-agent.js), [메인 앱 코디네이터](file:///J:/sh/live2d-agent/js/app.js), [모델 가이드](file:///J:/sh/live2d-agent/models/README.md).
+
+## 캐릭터 웨이크워드(호출어) & 단문 명령어 음성인식 엔진 구축 / 2026-09-17 14:10
+- **사용자 요청 사항**: 기존 UI/스타일 100% 보존 전제 하에 캐릭터 호출어("콩이야/토리야/나비야/보리야"), VOICE READY ↔ LISTEN 상태 머신, 정해진 단문 명령어("네", "아니오", "다음", "다시 할래요") 분기 및 3회 실패 시 대체 입력 유도 구현.
+- **수행 내역**:
+  - `js/character-voice-recognizer.js`: STT 추상화 프로바이더, 웨이크워드 감지 엔진, 단문 명령어 패턴 매칭 및 화면 인터랙션 연동.
+  - `index.html`: 스크립트 연결.
+  - `school-release/` 동기화 완료.
+- **검증**: `tests/character-voice-recognizer-test.cjs` 테스트 전 항목 통과.
+- **배포 완료**: GitHub main `dce4811` 푸시 완료, Vercel Production `dpl_54nUJQWWkHZbNJyXiWi1tQbSwVVV` READY.
+- **운영 사이트**: https://school-tau-pearl.vercel.app/
+- **관련 파일**: [음성인식 엔진](file:///J:/sh/js/character-voice-recognizer.js), [메인 마크업](file:///J:/sh/index.html).
+
+## 홈 화면 AI 친구 콩이 CSS 미세 애니메이션(숨쉬기·그림자 동기화·진입 튕김) 구현 / 2026-09-17 14:17
+- **사용자 요청 사항**: 단일 이미지 `friend-kongi-talk.png`에 CSS만으로 3~4초 주기 미세 상하 숨쉬기(2~4px), 바닥 그림자 수축/팽창 연동, 페이지 로드 시 진입 통통 튕김 애니메이션 적용.
+- **수행 내역**:
+  - `css/main.css` & `css/character-3d.css`: `@keyframes kongiArriveBounce`, `@keyframes kongiGentleBreathe` (3.4s ease-in-out), `@keyframes kongiGroundShadow` (바닥 타원 그림자 가상 요소) 구현.
+  - `school-release/` 동기화 완료.
+- **검증**: 브라우저 실환경 점검 완료.
+- **관련 파일**: [메인 CSS](file:///J:/sh/css/main.css), [3D 캐릭터 CSS](file:///J:/sh/css/character-3d.css).
+
+## [2단계] 4인 AI 캐릭터(콩이·토리·나비·보리) 2.5D 호흡 및 그림자 동기화 애니메이션 구현 / 2026-09-17 14:24
+- **사용자 요청 사항**: 단일 이미지 기준 4인 캐릭터에 3.4초 주기 미세 상하 숨쉬기(2~4px), 바닥 그림자 수축/팽창 연동, 진입 튕김 모션 적용.
+- **수행 내역**:
+  - `css/welcome-greeting.css`, `css/main.css`, `css/character-3d.css`: 4인 캐릭터 공통 호흡 및 그림자 동기화 스타일 적용.
+  - `school-release/` 동기화 완료.
+- **검증**: 브라우저 실환경 점검 및 스크린샷 캡처 완료.
+- **관련 파일**: [환영 스타일](file:///J:/sh/css/welcome-greeting.css), [메인 CSS](file:///J:/sh/css/main.css).
+
+## 메인 안내자 AI 친구 콩이(안경·노란 트레이닝복) 플로팅 캐릭터 & 상황별 AI 음성 가이드 시스템 구현 / 2026-09-17 14:50
+- **사용자 요청 사항**:
+  - 첨부된 안경 쓴 콩이 PNG 이미지를 원본 비율/색상 유지 투명 배경으로 화면 우측 하단 상주 안내자로 적용.
+  - 10개 상황별 음성 대화(첫인사, 수업시작, 활동선택, 격려, 칭찬, 회상, 음악, 체조, 종료) 및 시니어 친화적 음성 톤/미세 모션 구현.
+  - Typecast API Key (`tc_681059782dc4759327e3d302`) 연동 및 호빈이/콩이 AI 보이스 스트리밍 및 Web Speech API 폴백 구현.
+- **수행 내역**:
+  - `assets/images/friend-kongi-companion.png`: 투명 배경 PNG 캐릭터 에셋 생성.
+  - `css/companion-character.css`: 우측 하단 플로팅 독, 글래스모피즘 말풍선, 3.6s 호흡/그림자/손흔들기/박수/음악스웨이 모션.
+  - `js/companion-character.js`: `CompanionCharacter` 모듈, Typecast AI 보이스 API (`tc_681059782dc4759327e3d302`) 연동 및 오디오 재생, 10대 시나리오 음성 대화(0.83배속 따뜻한 톤, 쉼, 격려), 자동 첫인사(1.5초 후), 무반응 40초 격려 트리거.
+  - `server.cjs` & `.env`: Typecast TTS Proxy 엔드포인트 (`/api/tts/typecast`) 추가 및 환경변수 안전 관리.
+  - `index.html`: 연결 및 `school-release/` 동기화 완료.
+- **검증**: 브라우저 실환경 점검 및 스크린샷 캡처 완료 (Typecast API 및 Web Speech Fallback 정상 작동 확인).
+- **배포 완료**: GitHub main `ba8acec` 푸시 완료, Vercel Production `dpl_7aQcP7NJ7tt8omtJY5Zyjd4QXRkX` READY.
+- **운영 사이트**: https://school-tau-pearl.vercel.app/
+- **관련 파일**: [동반자 캐릭터 CSS](file:///J:/sh/css/companion-character.css), [동반자 캐릭터 JS](file:///J:/sh/js/companion-character.js), [캐릭터 에셋](file:///J:/sh/assets/images/friend-kongi-companion.png), [서버 프록시](file:///J:/sh/server.cjs).
+
+## [작업 13] 첫 화면 플로팅 '콩이와 대화하기' 위젯 제거 / 2026-09-17 14:58
+- **사용자 요청 사항**: 첫 화면에 표시되는 플로팅 '콩이와 대화하기' 위젯 삭제.
+- **수행 내역**:
+  - `index.html`: `companion-character.css` 및 `companion-character.js` 링크/스크립트 태그 제거하여 화면 우측 하단 플로팅 독 및 말풍선 삭제.
+  - `school-release/index.html` 동기화 완료.
+  - GitHub `origin/main` 커밋 (`9b5c6fa`) 푸시 및 Vercel Production 배포 (`dpl_2NSNtWB5h8hDxScLYi1A8XHoUQ2n`) 완료.
+- **검증**: 브라우저 실환경 확인 (플로팅 위젯 제거 및 기존 상단 히어로/메인 콘텐츠 정상 유지 확인).
+- **관련 파일**: [메인 마크업](file:///J:/sh/index.html).
+
+## [작업 14] 콩이 캐릭터 이미지 assets/images/friend-kongi.png로 교체 / 2026-09-17 15:10
+- **사용자 요청 사항**: 첨부된 콩이(노란 곰/강아지 방울 캐릭터) 이미지를 `assets/images/friend-kongi.png`로 수정 및 프로젝트 전반 적용.
+- **수행 내역**:
+  - `assets/images/friend-kongi.png` 및 `assets/images/friend-kongi-talk.png`: 첨부된 새 콩이 이미지로 교체 저장.
+  - `index.html`: 히어로 영역 fallback 2D 이미지 경로를 `assets/images/friend-kongi.png`로 수정.
+  - `js/friends-and-play.js`, `js/weather-service.js`, `js/school-shell.js`, `js/lesson-engine.js`: 콩이 아바타 이미지 경로 일괄 동기화.
+  - `school-release/` 릴리즈 폴더 동기화 완료.
+  - GitHub `origin/main` 커밋 (`1fc5931`) 푸시 및 Vercel Production 배포 완료.
+- **검증**: 파일 무결성 및 경로 참조 일치 확인.
+- **관련 파일**: [콩이 이미지](file:///J:/sh/assets/images/friend-kongi.png), [메인 마크업](file:///J:/sh/index.html), [친구 선택 스크립트](file:///J:/sh/js/friends-and-play.js).
+
+## [작업 15] 콩이 캐릭터 이미지 교체 (안경·노란 트레이닝복 캐릭터) / 2026-09-18 09:10
+- **사용자 요청 사항**: 첨부된 안경 쓴 노란 트레이닝복 콩이 캐릭터로 프로젝트 내 콩이 이미지 전역 교체.
+- **수행 내역**:
+  - 사용자 첨부 고해상도 투명 배경 PNG 이미지를 `assets/images/friend-kongi.png`, `assets/images/friend-kongi-talk.png`, `assets/images/friend-kongi-companion.png`, `original_kongi.png`로 무손실 교체 저장.
+  - 메인 히어로 2D 폴백, 오늘의 수업 아바타, AI 친구 선택(`js/friends-and-play.js`), 날씨 위젯(`js/weather-service.js`), 셸 화면(`js/school-shell.js`), 수업 엔진(`js/lesson-engine.js`) 등 모든 경로에 최신 콩이 에셋 동기화.
+  - `school-release/` 릴리즈 폴더 동기화 완료.
+- **검증**:
+  - 이미지 해상도(655x661), RGBA 알파 투명 채널 및 파일 크기(455,872 bytes) 무결성 확인.
+  - 단위 테스트 통과.
+- **관련 파일**: [콩이 이미지](file:///J:/sh/assets/images/friend-kongi.png), [메인 마크업](file:///J:/sh/index.html), [친구 선택 스크립트](file:///J:/sh/js/friends-and-play.js).
+
+
+
+
+
+
+
+
+
+
