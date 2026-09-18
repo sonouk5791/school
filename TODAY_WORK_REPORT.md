@@ -389,6 +389,17 @@
   - 홈 화면 메인 히어로 영역에 첨부된 최신 콩이 캐릭터가 투명 배경과 함께 선명하게 렌더링됨을 확인.
 - **관련 파일**: [메인 마크업](file:///J:/sh/index.html), [메인 CSS](file:///J:/sh/css/main.css), [콩이 이미지](file:///J:/sh/assets/images/friend-kongi.png).
 
+## [작업 17] 콩이 환영 음성 및 실시간 립싱크(입모양 연동) 발화 시스템 구현 / 2026-09-18 09:28
+- **사용자 요청 사항**: 첨부된 콩이 캐릭터를 이용하여 *"안녕하세요, 여러분! 디지털 AI학교에 오신 것을 환영합니다."* 라는 음성을 입모양(립싱크)에 맞추어 발화.
+- **수행 내역**:
+  - `assets/images/friend-kongi.png`: 평상시 대기 상태의 다문 미소 표정 에셋 배치.
+  - `assets/images/friend-kongi-talk.png`: 발화 시 열린 입 표정 에셋 배치.
+  - `js/voice.js`: 콩이 공식 greeting 문구 업데이트.
+  - `js/friends-and-play.js`: 180ms 최적 주기 립싱크 타이머 구현, 발화 시 몸통 바운스 및 입모양 실시간 전환, `window.speakKongiGreeting()` 바인딩 완료.
+  - `school-release/` 릴리즈 폴더 동기화 완료.
+- **관련 파일**: [음성 엔진](file:///J:/sh/js/voice.js), [친구 스크립트](file:///J:/sh/js/friends-and-play.js), [콩이 기본 이미지](file:///J:/sh/assets/images/friend-kongi.png).
+
+
 
 
 

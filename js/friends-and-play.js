@@ -117,29 +117,54 @@ document.addEventListener('click',e=>{
 });
 companion();
 const talkImages={};
-friends.forEach(f=>{const img=new Image();img.src=path('friend-'+f.id+'-talk.png');talkImages[f.id]=img;});
+friends.forEach(f=>{
+  const img=new Image();
+  img.src=path('friend-'+f.id+'-talk.png');
+  talkImages[f.id]=img;
+});
 let talkTimer=null,open=false;
 const portraits=()=>document.querySelectorAll('.hero-robot-img,.ai-friend-avatar-img,.completion-robot-img');
 function frame(talking){
- const f=friend(),asset=talkImages[f.id];
- const src=talking&&asset.complete&&asset.naturalWidth?asset.src:path(f.image);
- portraits().forEach(img=>img.src=src);
+  const f=friend(),asset=talkImages[f.id];
+  const src=talking&&asset&&asset.complete&&asset.naturalWidth?asset.src:path(f.image);
+  portraits().forEach(img=>{img.src=src;});
 }
 const speaking=VoiceManager.setTeacherSpeaking.bind(VoiceManager);
 VoiceManager.setTeacherSpeaking=value=>{
- speaking(value);clearInterval(talkTimer);talkTimer=null;open=false;
- frame(value);
- document.querySelectorAll('.voice-status-badge').forEach(b=>b.textContent=friend().name+(value?'가 이야기하고 있어요':' 목소리 듣기'));
- if(value&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-   open=true;
-   talkTimer=setInterval(()=>{open=!open;frame(open);},700);
- }
+  speaking(value);
+  clearInterval(talkTimer);
+  talkTimer=null;
+  open=false;
+  document.querySelectorAll('.kongi-character-wrap').forEach(w=>w.classList.toggle('speaking',Boolean(value)));
+  frame(value);
+  document.querySelectorAll('.voice-status-badge').forEach(b=>b.textContent=friend().name+(value?'가 이야기하고 있어요':' 목소리 듣기'));
+  if(value&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    open=true;
+    frame(true);
+    talkTimer=setInterval(()=>{
+      open=!open;
+      frame(open);
+    },180);
+  }
 };
+
+window.speakKongiGreeting=function(){
+  const msg="안녕하세요, 여러분! 디지털 AI학교에 오신 것을 환영합니다.";
+  if(window.VoiceManager){
+    VoiceManager.characterId='kongi';
+    VoiceManager.speak(msg,{rate:0.90,pitch:1.06});
+  }
+};
+
 const greet=document.createElement('button');
-greet.type='button';greet.className='care-btn character-greet';
+greet.type='button';
+greet.className='care-btn character-greet';
 greet.textContent='🔊 친구 목소리 듣기';
-greet.onclick=()=>window.CharacterAudioPlayer?.select(friend().id,true);
-document.querySelector('.hero-robot-wrapper').append(greet);
+greet.onclick=()=>window.speakKongiGreeting();
+document.querySelector('.hero-robot-wrapper')?.append(greet);
+
+document.getElementById('kongiHeroImg')?.addEventListener('click',()=>window.speakKongiGreeting());
+
 window.addEventListener('pagehide',()=>{clearInterval(talkTimer);clearInterval(memoryPreviewTimer);});
 });
 })();

@@ -30,7 +30,7 @@ const VoiceManager = {
         { freq: 523.25, delay: 0.00, dur: 0.14, type: 'sine', gain: 0.08 },
         { freq: 659.25, delay: 0.08, dur: 0.20, type: 'sine', gain: 0.08 }
       ],
-      greeting: "안녕하세요. 건강 체조 친구 콩이예요. 저랑 천천히 몸을 움직여봐요!"
+      greeting: "안녕하세요, 여러분! 디지털 AI학교에 오신 것을 환영합니다."
     },
     tori: {
       name: '토리',
