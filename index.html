@@ -43,7 +43,6 @@
   <link rel="stylesheet" href="css/senior-accessibility.css?v=1">
   <link rel="stylesheet" href="css/home-care-recommendations.css?v=1">
   <link rel="stylesheet" href="css/character-audio.css?v=1">
-  <link rel="stylesheet" href="css/character-3d.css?v=20260917">
 </head>
 <body>
 
@@ -132,14 +131,8 @@
     <section class="hero-classroom">
       <div class="hero-content-grid">
         <div class="hero-robot-wrapper">
-          <!-- 콩이 캐릭터 — 3D 렌더러 (WebGL) + 2D Fallback -->
-          <div class="hero-3d-character-wrapper">
-            <!-- Three.js 3D 캔버스 컨테이너 -->
-            <div class="hero-3d-canvas-container" id="hero3DContainer" aria-hidden="true"></div>
-            <!-- 2D Fallback (WebGL 미지원 환경) -->
-            <img src="assets/images/friend-kongi.png" alt="AI 친구 콩이" class="hero-robot-img fallback-2d" id="kongiHeroImg">
-            <!-- 클릭 힌트 태그 -->
-            <div class="character-3d-hint-tag" id="hero3DHint">👆 눌러보세요!</div>
+          <div class="kongi-character-wrap">
+            <img src="assets/images/friend-kongi.png" alt="AI 친구 콩이" class="hero-robot-img" id="kongiHeroImg">
             <!-- 반짝이는 파티클 -->
             <div class="kongi-sparkle kongi-sparkle-1">💛</div>
             <div class="kongi-sparkle kongi-sparkle-2">🐾</div>
@@ -584,37 +577,7 @@
   <script src="js/home-care-experience.js?v=1"></script>
   <script src="js/old-song-player.js?v=20260917youtube"></script>
   <script src="js/character-audio-player.js?v=1"></script>
-  <!-- Three.js 3D 캐릭터 렌더러 -->
-  <script src="js/vendor/three.min.js"></script>
-  <script src="js/character-3d-renderer.js?v=20260917"></script>
   <!-- 캐릭터 음성인식 & 웨이크워드 엔진 (Web Speech API STT) -->
   <script src="js/character-voice-recognizer.js?v=20260917"></script>
-  <script>
-    // 3D 캐릭터 히어로 초기화
-    (function() {
-      function init3DHero() {
-        var container = document.getElementById('hero3DContainer');
-        var fallbackImg = document.getElementById('kongiHeroImg');
-        var hint = document.getElementById('hero3DHint');
-        if (!container || !window.Character3DRenderer) return;
-        var mounted = window.Character3DRenderer.mount(container, fallbackImg, 'kongi');
-        if (mounted && hint) {
-          // 2초 후 힌트 태그 숨김
-          setTimeout(function() {
-            hint.style.opacity = '0';
-            hint.style.transition = 'opacity 0.8s';
-            setTimeout(function() { hint.style.display = 'none'; }, 800);
-          }, 4000);
-        } else if (!mounted && hint) {
-          hint.style.display = 'none';
-        }
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init3DHero);
-      } else {
-        init3DHero();
-      }
-    })();
-  </script>
 </body>
 </html>
