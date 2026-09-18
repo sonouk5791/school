@@ -440,3 +440,19 @@
 
 
 
+
+
+---
+
+## 📌 [작업 7] 실시간 3D 콩이 아바타 플랫폼 구현 및 Meshy AI 3D GLB 모델 연동 / 2026-09-18 10:23
+- **사용자 요청 사항**: Three.js와 GLTFLoader, Web Audio API 주파수 분석기(Analyser), 모프 타겟/오디오 리액티브 모션, 환영 음성 발화가 포함된 실시간 3D 아바타 플랫폼 페이지 구축 및 3D 모델 연동.
+- **수행 내역**:
+  - `assets/models/kongi_3d.glb`: 사용자 다운로드 3D 캐릭터 모델(`Meshy_AI_Cute_Puppy_Character_0918011705_image-to-3d-texture.glb`)을 프로젝트 에셋 경로로 무손실 임포트.
+  - `avatar-3d.html`:
+    - Three.js, GLTFLoader, OrbitControls CDN 로드 및 자동 씬/스튜디오 조명(Ambient + Key + Fill + 38bdf8 림라이트 + 사이버 원형 스테이지) 구성.
+    - 바운딩 박스 기반 3D 캐릭터 자동 센터링 및 높이/스케일 최적화.
+    - Web Audio API `createAnalyser()` 및 Web Speech API TTS, 실시간 마이크 립싱크 모드(`navigator.mediaDevices.getUserMedia`) 연동.
+    - 발화 및 오디오 볼륨 진폭에 연동되는 3D 콩이 모션(미세 호흡, 바운스, 헤드 끄덕임, 볼륨 반응형 스케일 펄스, BlendShape 지원) 및 HUD 오디오 미터 구현.
+    - 입장 오버레이 모달 및 '입장하기 & 음성 듣기' 원클릭 시작 인터랙션 구현.
+  - `school-release/` 릴리즈 폴더 동기화 완료.
+- **관련 파일**: [3D 아바타 플랫폼](file:///J:/sh/avatar-3d.html), [3D GLB 모델](file:///J:/sh/assets/models/kongi_3d.glb).
