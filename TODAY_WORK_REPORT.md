@@ -399,6 +399,17 @@
   - `school-release/` 릴리즈 폴더 동기화 완료.
 - **관련 파일**: [음성 엔진](file:///J:/sh/js/voice.js), [친구 스크립트](file:///J:/sh/js/friends-and-play.js), [콩이 기본 이미지](file:///J:/sh/assets/images/friend-kongi.png).
 
+## [작업 18] 콩이 배경 투명화 일체화 및 말할 때 팔 내리기 모션 에셋 적용 / 2026-09-18 09:37
+- **사용자 요청 사항**: 캐릭터 배경을 홈페이지 상단 배경과 자연스럽게 맞추고, 말할 때 안경을 잡던 손(보는 사람 기준 왼쪽 팔)을 내린 포즈로 변경.
+- **수행 내역**:
+  - `assets/images/friend-kongi-talk.png`: 안경 잡던 팔을 자연스럽게 내리고 활짝 웃으며 말하는 포즈의 2.5D 캐릭터를 100% 투명 배경(RGBA)으로 정밀 누끼 및 클린업하여 제작/교체.
+  - 대기 시(`friend-kongi.png`): 안경을 만지며 은은하게 미소 짓는 포즈.
+  - 말할 때(`friend-kongi-talk.png`): 양 팔을 가지런히 내리고 입을 열어 활기차게 말하는 포즈.
+  - 상단 히어로 배너 배경과 100% 투명 일체화 완료.
+  - `school-release/` 릴리즈 폴더 동기화 완료.
+- **관련 파일**: [콩이 말하기 에셋](file:///J:/sh/assets/images/friend-kongi-talk.png), [콩이 대기 에셋](file:///J:/sh/assets/images/friend-kongi.png), [메인 CSS](file:///J:/sh/css/main.css).
+
+
 
 
 
