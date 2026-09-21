@@ -867,3 +867,19 @@
 - [오늘_작업_일지_2026-09-21.md](./오늘_작업_일지_2026-09-21.md)
 
 </details>
+
+## 자동 저장 / 2026-09-21 11:59:26 — GitHub·Vercel 운영 배포 완료
+- **수행 내역**: GitHub main e256e06 푸시 성공. Vercel dpl_42xe5itho97oR6GUogNeUoTMUb1j production READY, school-tau-pearl.vercel.app 연결. 운영 URL 27개 HTTP 200 및 SHA-256 일치, 모바일 홈페이지와 20장 표시 확인. Markdown 커밋 자동 기록 작동 확인.
+
+## 자동 저장 / 2026-09-21 11:59:27 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 5
+<details><summary>변경 파일 목록</summary>
+
+- [.githooks/pre-commit](./.githooks/pre-commit)
+- [DEPLOYMENT.md](./DEPLOYMENT.md)
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [배포_작업_보고서_2026-09-21.md](./배포_작업_보고서_2026-09-21.md)
+- [오늘_작업_일지_2026-09-21.md](./오늘_작업_일지_2026-09-21.md)
+
+</details>

@@ -25,3 +25,12 @@ GitHub: https://github.com/sonouk5791/school (main)
 - **운영 검증**: HTML 및 신규 JS/CSS 8개 HTTP 200과 로컬 소스 SHA-256 일치, 20분 체조 영상 HTTP 200 및 23,005,436바이트 확인. 공단 자동 저장은 여전히 미연동이며 등록 준비 기능이 배포됨.
 
 대상자 자료는 브라우저별 저장 방식입니다. 공단 연결은 공식 로그인 및 수동 등록 준비를 지원하며 자동 저장 연동을 의미하지 않습니다.
+
+## 2026-09-21 캐릭터 및 자동 기록 운영 배포
+
+- 운영 코드 커밋 `e256e06989f4e2cbbdcff5750ac0e35415b7b862`, GitHub main 반영 확인.
+- Vercel `dpl_42xe5itho97oR6GUogNeUoTMUb1j`, production READY, https://school-tau-pearl.vercel.app/ 별칭 연결 확인.
+- 27개 운영 URL HTTP 200 및 SHA-256 일치, 모바일 홈페이지 및 20장 입모양 미리보기 정상 확인.
+- 20분 체조 자료는 음성 검토용이며 캐릭터 운동 시범 영상은 미완성으로 명시.
+- 상세 보고서: `배포_작업_보고서_2026-09-21.md`.
+- `.githooks/pre-commit` / `scripts/save-work-report.cjs`가 커밋 전에 오늘의 Markdown 일지를 자동 저장한다. 현재 release 저장소에 core.hooksPath 설정 완료.
