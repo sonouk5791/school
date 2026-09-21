@@ -1,0 +1,229 @@
+{
+  "title": "디지털 AI 학교 어르신 체조 (통합 연속 프로그램)",
+  "version": "3.0.0",
+  "description": "SCENE 1부터 SCENE 10까지 하나의 연속된 영상 프로그램으로 자동 재생되는 치매·인지저하 어르신 맞춤 AI 체조",
+  "voice": {
+    "gender": "female",
+    "language": "ko-KR",
+    "speed": 0.75,
+    "pitch": 1.05
+  },
+  "scenes": [
+    {
+      "id": "scene01_intro",
+      "index": 1,
+      "title": "시작 인사",
+      "displayTitle": "1 / 10 시작 인사",
+      "subtitle": "오늘도 천천히 함께해요",
+      "character": "콩이",
+      "characterColor": "#e6a100",
+      "characterDesc": "노란색 운동복의 안경 쓴 강아지",
+      "image": "scene01_intro.jpg",
+      "duration": 25,
+      "motionType": "wave",
+      "speechSteps": [
+        { "text": "안녕하세요. 오늘도 만나서 반갑습니다.", "caption": "안녕하세요.\n오늘도 만나서 반갑습니다.", "at": 1.0, "count": null, "lead": "시작 인사" },
+        { "text": "지금부터 천천히 몸을 움직여 볼게요. 편안하게 의자에 앉아 주세요.", "caption": "지금부터 천천히 몸을 움직여 볼게요.\n편안하게 의자에 앉아 주세요.", "at": 8.0, "count": null, "lead": "바른 자세" },
+        { "text": "무리하지 않고 할 수 있는 만큼만 따라오시면 됩니다.", "caption": "무리하지 않고\n할 수 있는 만큼만 따라오시면 됩니다.", "at": 16.0, "count": null, "lead": "안전 안내" }
+      ]
+    },
+    {
+      "id": "scene02_breathing",
+      "index": 2,
+      "title": "심호흡",
+      "displayTitle": "2 / 10 심호흡",
+      "subtitle": "배에 손을 얹고 깊게 숨쉬어요",
+      "character": "보리",
+      "characterColor": "#2b6cb0",
+      "characterDesc": "파란색 운동복의 곰",
+      "image": "scene02_breathing.jpg",
+      "duration": 60,
+      "motionType": "breathe",
+      "speechSteps": [
+        { "text": "먼저 심호흡을 해볼게요. 코로 천천히 숨을 들이마십니다.", "caption": "먼저 심호흡을 해볼게요.\n코로 천천히 숨을 들이마십니다.", "at": 1.0, "count": null, "lead": "심호흡 준비" },
+        { "text": "하나. 둘. 셋.", "caption": "숨을 들이마셔요\n하나, 둘, 셋", "at": 8.0, "count": 1, "lead": "숨 들이마시기 (1차)" },
+        { "text": "이번에는 입으로 천천히 내쉬어 주세요. 하나. 둘. 셋.", "caption": "입으로 천천히 후~ 내쉬어 주세요.\n하나, 둘, 셋", "at": 16.0, "count": 2, "lead": "숨 내쉬기 (1차)" },
+        { "text": "좋습니다. 한 번 더 해볼게요. 코로 깊게 들이마십니다.", "caption": "좋습니다. 한 번 더 해볼게요.\n코로 천천히 들이마십니다.", "at": 26.0, "count": null, "lead": "심호흡 반복" },
+        { "text": "하나. 둘. 셋.", "caption": "가슴과 배를 채워요\n하나, 둘, 셋", "at": 34.0, "count": 3, "lead": "숨 들이마시기 (2차)" },
+        { "text": "천천히 편안하게 내쉽니다. 하나. 둘. 셋. 아주 잘하고 계세요.", "caption": "천천히 내쉽니다.\n하나, 둘, 셋. 아주 잘하고 계세요.", "at": 42.0, "count": 4, "lead": "숨 내쉬기 (2차)" }
+      ]
+    },
+    {
+      "id": "scene03_neck",
+      "index": 3,
+      "title": "목 운동",
+      "displayTitle": "3 / 10 목 운동",
+      "subtitle": "목을 좌우로 천천히 기울여요",
+      "character": "콩이",
+      "characterColor": "#e6a100",
+      "characterDesc": "노란색 운동복의 안경 쓴 강아지",
+      "image": "scene03_neck.jpg",
+      "duration": 85,
+      "motionType": "tilt",
+      "speechSteps": [
+        { "text": "이제 목을 천천히 움직여 볼게요.", "caption": "이제 목을 천천히 움직여 볼게요.", "at": 1.0, "count": null, "lead": "목 운동 준비" },
+        { "text": "고개를 왼쪽으로 살짝 기울입니다. 하나, 둘.", "caption": "고개를 왼쪽으로 살짝 기울입니다.\n하나, 둘", "at": 7.0, "count": 1, "lead": "왼쪽 기울이기" },
+        { "text": "천천히 가운데로 돌아옵니다.", "caption": "천천히 가운데로 돌아옵니다.", "at": 17.0, "count": null, "lead": "가운데" },
+        { "text": "이번에는 오른쪽입니다. 하나, 둘.", "caption": "이번에는 오른쪽입니다.\n하나, 둘", "at": 24.0, "count": 2, "lead": "오른쪽 기울이기" },
+        { "text": "다시 가운데로 돌아옵니다.", "caption": "다시 가운데로 돌아옵니다.", "at": 34.0, "count": null, "lead": "가운데" },
+        { "text": "한 번 더 왼쪽으로 천천히 기울여 주세요.", "caption": "한 번 더 왼쪽으로\n천천히 기울여 주세요.", "at": 41.0, "count": 3, "lead": "왼쪽 기울이기 (2차)" },
+        { "text": "가운데로 돌아와서, 이번에는 오른쪽입니다.", "caption": "가운데로 돌아와서,\n이번에는 오른쪽입니다.", "at": 53.0, "count": 4, "lead": "오른쪽 기울이기 (2차)" },
+        { "text": "다시 가운데. 서두르지 않으셔도 됩니다. 아주 잘하고 계세요.", "caption": "다시 가운데.\n서두르지 않으셔도 됩니다. 아주 잘하고 계세요.", "at": 67.0, "count": null, "lead": "마무리 및 격려" }
+      ]
+    },
+    {
+      "id": "scene04_shoulders",
+      "index": 4,
+      "title": "어깨 운동",
+      "displayTitle": "4 / 10 어깨 운동",
+      "subtitle": "어깨를 천천히 올리고 돌려요",
+      "character": "토리",
+      "characterColor": "#d53f8c",
+      "characterDesc": "분홍색 운동복의 토끼",
+      "image": "scene04_shoulders.jpg",
+      "duration": 85,
+      "motionType": "shrug",
+      "speechSteps": [
+        { "text": "이번에는 어깨입니다.", "caption": "이번에는 어깨 운동입니다.", "at": 1.0, "count": null, "lead": "어깨 준비" },
+        { "text": "양쪽 어깨를 귀 가까이 천천히 올려볼게요. 하나. 둘.", "caption": "양쪽 어깨를 귀 가까이 천천히 올려볼게요.\n하나, 둘", "at": 6.0, "count": 1, "lead": "어깨 올리기" },
+        { "text": "힘을 빼면서 천천히 내려놓습니다. 좋아요.", "caption": "힘을 빼면서 천천히 내려놓습니다.\n좋아요.", "at": 18.0, "count": 2, "lead": "어깨 내리기" },
+        { "text": "다시 한 번 어깨를 으쓱 올려볼게요. 하나. 둘.", "caption": "다시 한 번 어깨를 으쓱 올려봅니다.\n하나, 둘", "at": 28.0, "count": 3, "lead": "어깨 올리기" },
+        { "text": "천천히 툭 내려놓습니다.", "caption": "천천히 툭 내려놓습니다.", "at": 40.0, "count": 4, "lead": "어깨 내리기" },
+        { "text": "이번에는 어깨를 부드럽게 돌려볼게요.", "caption": "이번에는 어깨를 부드럽게 돌려볼게요.", "at": 49.0, "count": null, "lead": "어깨 돌리기" },
+        { "text": "앞에서 뒤로 천천히, 천천히 움직입니다. 아주 잘하셨어요.", "caption": "앞에서 뒤로 천천히,\n천천히 움직입니다. 아주 잘하셨어요.", "at": 59.0, "count": null, "lead": "어깨 롤링" }
+      ]
+    },
+    {
+      "id": "scene05_arms",
+      "index": 5,
+      "title": "팔 운동",
+      "displayTitle": "5 / 10 팔 운동",
+      "subtitle": "두 팔을 앞으로 뻗고 위로 펼쳐요",
+      "character": "나비",
+      "characterColor": "#805ad5",
+      "characterDesc": "보라색 운동복의 고양이",
+      "image": "scene05_arms.jpg",
+      "duration": 105,
+      "motionType": "reach",
+      "speechSteps": [
+        { "text": "팔 운동을 해볼게요. 두 팔을 천천히 앞으로 뻗습니다.", "caption": "팔 운동을 해볼게요.\n두 팔을 천천히 앞으로 뻗습니다.", "at": 1.0, "count": null, "lead": "팔 운동 준비" },
+        { "text": "하나. 둘.", "caption": "두 팔을 앞으로 쭉~\n하나, 둘", "at": 10.0, "count": 1, "lead": "앞으로 뻗기" },
+        { "text": "다시 천천히 몸쪽으로 돌아옵니다.", "caption": "다시 천천히 몸쪽으로 돌아옵니다.", "at": 19.0, "count": 2, "lead": "가슴으로 모으기" },
+        { "text": "이번에는 두 팔을 양옆으로 펼쳐볼게요.", "caption": "이번에는 두 팔을\n양옆으로 넓게 펼쳐볼게요.", "at": 29.0, "count": 3, "lead": "양옆으로 벌리기" },
+        { "text": "좋습니다. 다시 천천히 가슴 앞으로 모아옵니다.", "caption": "좋습니다. 다시 천천히\n가슴 앞으로 모아옵니다.", "at": 42.0, "count": 4, "lead": "모으기" },
+        { "text": "가능한 만큼만 팔을 위로 살며시 올려볼까요?", "caption": "가능한 만큼만\n팔을 위로 살며시 올려볼까요?", "at": 55.0, "count": null, "lead": "위로 올리기" },
+        { "text": "무리하지 않으셔도 됩니다. 천천히 제자리로 내려놓습니다. 참 잘하셨어요.", "caption": "무리하지 않으셔도 됩니다.\n천천히 제자리로 내려놓습니다. 참 잘하셨어요.", "at": 72.0, "count": null, "lead": "제자리 내리기" }
+      ]
+    },
+    {
+      "id": "scene06_clapping",
+      "index": 6,
+      "title": "박수 운동",
+      "displayTitle": "6 / 10 박수 운동",
+      "subtitle": "손뼉을 천천히 리듬에 맞춰 쳐요",
+      "character": "보리",
+      "characterColor": "#2b6cb0",
+      "characterDesc": "파란색 운동복의 곰",
+      "image": "scene06_clapping.jpg",
+      "duration": 85,
+      "motionType": "clap",
+      "speechSteps": [
+        { "text": "이번에는 즐겁게 박수를 쳐볼게요.", "caption": "이번에는 즐겁게 박수를 쳐볼게요.", "at": 1.0, "count": null, "lead": "박수 준비" },
+        { "text": "하나.", "caption": "하나! 짝!", "at": 7.0, "count": 1, "lead": "하나 (박수)" },
+        { "text": "둘.", "caption": "둘! 짝!", "at": 13.0, "count": 2, "lead": "둘 (박수)" },
+        { "text": "셋.", "caption": "셋! 짝!", "at": 19.0, "count": 3, "lead": "셋 (박수)" },
+        { "text": "넷.", "caption": "넷! 짝!", "at": 25.0, "count": 4, "lead": "넷 (박수)" },
+        { "text": "다시 해볼게요. 하나.", "caption": "다시 해볼게요.\n하나! 짝!", "at": 32.0, "count": 1, "lead": "하나 (2차)" },
+        { "text": "둘.", "caption": "둘! 짝!", "at": 41.0, "count": 2, "lead": "둘 (2차)" },
+        { "text": "셋.", "caption": "셋! 짝!", "at": 48.0, "count": 3, "lead": "셋 (2차)" },
+        { "text": "넷.", "caption": "넷! 짝!", "at": 55.0, "count": 4, "lead": "넷 (2차)" },
+        { "text": "손바닥이 따뜻해집니다. 아주 잘하고 계세요.", "caption": "손바닥이 따뜻해집니다.\n아주 잘하고 계세요.", "at": 64.0, "count": null, "lead": "격려" }
+      ]
+    },
+    {
+      "id": "scene07_knees",
+      "index": 7,
+      "title": "무릎 운동",
+      "displayTitle": "7 / 10 무릎 운동",
+      "subtitle": "의자에 앉아 무릎을 번갈아 들어요",
+      "character": "콩이",
+      "characterColor": "#e6a100",
+      "characterDesc": "노란색 운동복의 안경 쓴 강아지",
+      "image": "scene07_knees.jpg",
+      "duration": 105,
+      "motionType": "kneelift",
+      "speechSteps": [
+        { "text": "이번에는 다리를 움직여 볼게요. 의자를 손으로 살며시 잡아주세요.", "caption": "이번에는 다리를 움직여 볼게요.\n의자를 손으로 살며시 잡아주세요.", "at": 1.0, "count": null, "lead": "다리 준비" },
+        { "text": "오른쪽 무릎을 천천히 들어봅니다. 하나.", "caption": "오른쪽 무릎을 천천히 들어봅니다.\n하나", "at": 10.0, "count": 1, "lead": "오른쪽 무릎" },
+        { "text": "천천히 내려놓습니다.", "caption": "천천히 내려놓습니다.", "at": 20.0, "count": null, "lead": "내리기" },
+        { "text": "이번에는 왼쪽입니다. 둘.", "caption": "이번에는 왼쪽입니다.\n둘", "at": 28.0, "count": 2, "lead": "왼쪽 무릎" },
+        { "text": "천천히 내려놓습니다.", "caption": "천천히 내려놓습니다.", "at": 38.0, "count": null, "lead": "내리기" },
+        { "text": "오른쪽, 왼쪽. 천천히 번갈아 움직여 주세요.", "caption": "오른쪽, 왼쪽.\n천천히 번갈아 움직여 주세요.", "at": 47.0, "count": null, "lead": "번갈아 들기" },
+        { "text": "오른쪽 무릎 셋. 천천히 내리고.", "caption": "오른쪽 무릎 셋.\n천천히 내리고.", "at": 60.0, "count": 3, "lead": "오른쪽 (2차)" },
+        { "text": "왼쪽 무릎 넷. 천천히 내려놓습니다. 무리하지 않으셔도 됩니다.", "caption": "왼쪽 무릎 넷.\n천천히 내려놓습니다. 무리하지 마세요.", "at": 73.0, "count": 4, "lead": "왼쪽 (2차)" }
+      ]
+    },
+    {
+      "id": "scene08_ankles",
+      "index": 8,
+      "title": "발목 운동",
+      "displayTitle": "8 / 10 발목 운동",
+      "subtitle": "발끝을 들고 발목을 부드럽게 움직여요",
+      "character": "토리 & 나비",
+      "characterColor": "#d53f8c",
+      "characterDesc": "토리와 나비",
+      "image": "scene08_ankles.jpg",
+      "duration": 85,
+      "motionType": "ankle",
+      "speechSteps": [
+        { "text": "발목도 천천히 움직여 볼게요.", "caption": "발목도 천천히 움직여 볼게요.", "at": 1.0, "count": null, "lead": "발목 준비" },
+        { "text": "뒤꿈치는 편안하게 바닥에 두고, 발끝을 천천히 들어주세요. 하나.", "caption": "뒤꿈치는 편안하게 두고\n발끝을 천천히 들어주세요. 하나", "at": 7.0, "count": 1, "lead": "발끝 올리기" },
+        { "text": "다시 편안하게 내려놓습니다. 둘.", "caption": "다시 내려놓습니다.\n둘", "at": 19.0, "count": 2, "lead": "발끝 내리기" },
+        { "text": "한 번 더. 발끝을 천천히 들어봅니다. 셋.", "caption": "한 번 더.\n발끝을 천천히 들어봅니다. 셋", "at": 29.0, "count": 3, "lead": "발끝 올리기 (2차)" },
+        { "text": "다시 제자리로 내려놓습니다. 넷.", "caption": "다시 내려놓습니다.\n넷", "at": 41.0, "count": 4, "lead": "발끝 내리기 (2차)" },
+        { "text": "이번에는 발목을 부드럽게 움직입니다. 천천히 하시면 됩니다.", "caption": "이번에는 발목을 부드럽게 움직입니다.\n천천히 하시면 됩니다.", "at": 53.0, "count": null, "lead": "발목 회전/유연성" }
+      ]
+    },
+    {
+      "id": "scene09_hands",
+      "index": 9,
+      "title": "손 운동",
+      "displayTitle": "9 / 10 손 운동",
+      "subtitle": "손을 주먹 쥐었다 활짝 펴고 손목을 돌려요",
+      "character": "콩이 & 토리",
+      "characterColor": "#e6a100",
+      "characterDesc": "콩이와 토리",
+      "image": "scene09_hands.jpg",
+      "duration": 105,
+      "motionType": "hands",
+      "speechSteps": [
+        { "text": "이번에는 손 운동입니다. 손을 천천히 쥐어볼게요. 하나.", "caption": "이번에는 손 운동입니다.\n손을 천천히 쥐어볼게요. 하나", "at": 1.0, "count": 1, "lead": "주먹 쥐기" },
+        { "text": "이번에는 손가락을 활짝 펴주세요. 둘.", "caption": "이번에는 손가락을 활짝 펴주세요.\n둘", "at": 13.0, "count": 2, "lead": "손가락 펴기" },
+        { "text": "다시 쥐고 셋.", "caption": "다시 쥐고\n셋", "at": 25.0, "count": 3, "lead": "주먹 쥐기 (2차)" },
+        { "text": "다시 펴봅니다. 넷. 좋아요.", "caption": "다시 펴봅니다.\n넷. 좋아요.", "at": 36.0, "count": 4, "lead": "손가락 펴기 (2차)" },
+        { "text": "이번에는 손목을 천천히 돌려볼게요.", "caption": "이번에는 손목을 천천히 돌려볼게요.", "at": 48.0, "count": null, "lead": "손목 돌리기" },
+        { "text": "한쪽으로 천천히 돌리고, 반대쪽도 천천히 움직입니다.", "caption": "한쪽으로 천천히,\n반대쪽도 천천히 움직입니다.", "at": 60.0, "count": null, "lead": "손목 회전" },
+        { "text": "손가락 잼잼! 뇌 건강에 참 좋은 손 운동입니다. 잘하셨어요.", "caption": "손가락 잼잼!\n뇌 건강에 참 좋은 손 운동입니다. 잘하셨어요.", "at": 75.0, "count": null, "lead": "격려" }
+      ]
+    },
+    {
+      "id": "scene10_ending",
+      "index": 10,
+      "title": "마무리 인사",
+      "displayTitle": "10 / 10 마무리 인사",
+      "subtitle": "오늘도 정말 잘하셨어요 · 다음에 또 만나요",
+      "character": "콩이·토리·나비·보리",
+      "characterColor": "#3d683c",
+      "characterDesc": "네 친구와 어르신 모두 함께",
+      "image": "scene10_ending.jpg",
+      "duration": 60,
+      "motionType": "endingwave",
+      "speechSteps": [
+        { "text": "이제 마지막입니다.", "caption": "이제 마지막입니다.", "at": 1.0, "count": null, "lead": "마무리 준비" },
+        { "text": "코로 천천히 숨을 들이마시고, 입으로 천천히 내쉬어 주세요.", "caption": "코로 천천히 숨을 들이마시고,\n입으로 천천히 내쉬어 주세요.", "at": 7.0, "count": null, "lead": "마무리 심호흡" },
+        { "text": "오늘도 정말 잘하셨습니다. 무리하지 않고 함께해 주셔서 고맙습니다.", "caption": "오늘도 정말 잘하셨습니다.\n무리하지 않고 함께해 주셔서 고맙습니다.", "at": 19.0, "count": null, "lead": "감사 인사" },
+        { "text": "오늘도 건강하고 편안한 하루 보내세요. 다음 시간에 또 만나요.", "caption": "오늘도 정말 잘하셨어요\n다음에 또 만나요", "at": 32.0, "count": null, "lead": "작별 인사" }
+      ]
+    }
+  ]
+}

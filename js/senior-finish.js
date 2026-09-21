@@ -13,8 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const voiceControls = document.querySelector('.teacher-voice-controls');
   const voiceMore = document.createElement('details'); voiceMore.className='senior-voice-more';
   voiceMore.innerHTML='<summary>음성 안내 더보기</summary><div></div>';
-  [...voiceControls.children].slice(1).forEach(el=>voiceMore.querySelector('div').append(el));
-  voiceControls.append(voiceMore);
+  if (voiceControls) {
+    [...voiceControls.children].slice(1).forEach(el=>voiceMore.querySelector('div').append(el));
+    voiceControls.append(voiceMore);
+  }
   document.querySelector('.hero-main-title').textContent = '안녕하세요!';
   document.querySelector('.hero-sub-text').textContent = '오늘도 함께 즐겁게 시작해볼까요?';
   const oldActions = document.querySelector('.hero-action-buttons');

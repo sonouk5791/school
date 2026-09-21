@@ -1,0 +1,628 @@
+:root {
+  --se-primary: #2d5a27;
+  --se-primary-hover: #22471e;
+  --se-primary-light: #e8f5e9;
+  --se-bg: #fff9ed;
+  --se-surface: #ffffff;
+  --se-text-main: #2b2520;
+  --se-text-muted: #5c534b;
+  --se-border: #e0d8c3;
+  --se-accent-gold: #e6a100;
+  --se-accent-blue: #2b6cb0;
+  --se-accent-pink: #d53f8c;
+  --se-accent-purple: #805ad5;
+  --se-shadow: 0 10px 30px rgba(78, 59, 30, 0.08);
+  font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  color-scheme: light;
+  color: var(--se-text-main);
+  background-color: var(--se-bg);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--se-bg);
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.se-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+/* Header */
+.se-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 2px solid var(--se-border);
+}
+
+.se-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--se-primary);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: var(--se-primary-light);
+  transition: all 0.2s ease;
+}
+
+.se-back-link:hover {
+  background: #c8e6c9;
+}
+
+.se-school-badge {
+  font-size: 19px;
+  font-weight: 800;
+  color: #634f36;
+  background: #fdf3dc;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #ebdcbc;
+}
+
+/* Banner / Intro */
+.se-hero {
+  text-align: center;
+  padding: 24px 16px 28px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 2px solid var(--se-border);
+  box-shadow: var(--se-shadow);
+  margin-bottom: 24px;
+}
+
+.se-characters-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #3b5a32;
+  background: #eef7ee;
+  padding: 6px 18px;
+  border-radius: 30px;
+  margin-bottom: 12px;
+}
+
+.se-hero h1 {
+  font-size: clamp(28px, 4.5vw, 44px);
+  color: #1f361a;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  word-break: keep-all;
+}
+
+.se-hero-lead {
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 800;
+  color: var(--se-primary);
+  margin-bottom: 16px;
+}
+
+.se-safety-box {
+  max-width: 900px;
+  margin: 16px auto 20px;
+  background: #fbf7ee;
+  border: 2px solid #ecdcb9;
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 19px;
+  line-height: 1.6;
+  color: #4a3e30;
+  text-align: left;
+}
+
+.se-safety-box strong {
+  display: block;
+  color: #8a5800;
+  margin-bottom: 4px;
+  font-size: 20px;
+}
+
+.se-main-start-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: min(100%, 540px);
+  min-height: 76px;
+  background: linear-gradient(135deg, #2d7a22, #1b5314);
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  border: 0;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(34, 100, 24, 0.3);
+  transition: all 0.2s ease;
+}
+
+.se-main-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(34, 100, 24, 0.4);
+}
+
+.se-main-start-btn:active {
+  transform: translateY(1px);
+}
+
+/* Video / Stage Player */
+.se-player-card {
+  background: #ffffff;
+  border: 3px solid var(--se-border);
+  border-radius: 24px;
+  box-shadow: var(--se-shadow);
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.se-stage-wrapper {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #fbf2e3;
+  overflow: hidden;
+}
+
+.se-scene-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1.2s ease-in-out;
+  transform-origin: center center;
+}
+
+/* --- Natural Gentle Motion Keyframes for Dementia Seniors --- */
+.motion-wave {
+  animation: se-motion-wave 6s ease-in-out infinite alternate;
+}
+@keyframes se-motion-wave {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.02) rotate(0.8deg); }
+  100% { transform: scale(1) rotate(-0.8deg); }
+}
+
+.motion-breathe {
+  animation: se-motion-breathe 8s ease-in-out infinite;
+}
+@keyframes se-motion-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.motion-tilt {
+  animation: se-motion-tilt 7s ease-in-out infinite alternate;
+}
+@keyframes se-motion-tilt {
+  0% { transform: rotate(-1.5deg) scale(1.01); }
+  50% { transform: rotate(0deg) scale(1.02); }
+  100% { transform: rotate(1.5deg) scale(1.01); }
+}
+
+.motion-shrug {
+  animation: se-motion-shrug 6s ease-in-out infinite;
+}
+@keyframes se-motion-shrug {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.02); }
+}
+
+.motion-reach {
+  animation: se-motion-reach 7s ease-in-out infinite;
+}
+@keyframes se-motion-reach {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.035) translateY(-4px); }
+}
+
+.motion-clap {
+  animation: se-motion-clap 4s ease-in-out infinite;
+}
+@keyframes se-motion-clap {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.025); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.025); }
+}
+
+.motion-kneelift {
+  animation: se-motion-kneelift 7s ease-in-out infinite;
+}
+@keyframes se-motion-kneelift {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.02); }
+}
+
+.motion-ankle {
+  animation: se-motion-ankle 6s ease-in-out infinite;
+}
+@keyframes se-motion-ankle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.motion-hands {
+  animation: se-motion-hands 5s ease-in-out infinite;
+}
+@keyframes se-motion-hands {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.motion-endingwave {
+  animation: se-motion-ending 6s ease-in-out infinite alternate;
+}
+@keyframes se-motion-ending {
+  0% { transform: scale(1) rotate(-0.6deg); }
+  100% { transform: scale(1.025) rotate(0.6deg); }
+}
+
+/* Stage Overlay Badges */
+.se-stage-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.se-scene-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 900;
+  color: #1b4515;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  border: 2px solid #3d683c;
+}
+
+.se-character-tag {
+  font-size: 18px;
+  padding: 6px 14px;
+  border-radius: 16px;
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Big Count Badge */
+.se-count-badge {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 96px;
+  height: 96px;
+  background: rgba(255, 224, 130, 0.96);
+  border: 4px solid #b78103;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 58px;
+  font-weight: 900;
+  color: #4a2c00;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  z-index: 6;
+  animation: se-pulse 1s infinite alternate;
+}
+
+.se-count-badge[hidden] {
+  display: none !important;
+}
+
+@keyframes se-pulse {
+  0% { transform: scale(0.94); }
+  100% { transform: scale(1.1); }
+}
+
+/* Captions Area */
+.se-caption-container {
+  background: #fffdf7;
+  border-top: 2px solid var(--se-border);
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 160px;
+}
+
+.se-caption-text-group {
+  flex: 1;
+}
+
+.se-cue-lead {
+  font-size: 22px;
+  font-weight: 800;
+  color: #2d6b24;
+  margin-bottom: 6px;
+}
+
+.se-caption-h2 {
+  font-size: clamp(28px, 3.8vw, 42px);
+  font-weight: 900;
+  line-height: 1.35;
+  color: #1a1612;
+  white-space: pre-line;
+  word-break: keep-all;
+}
+
+.se-caption-container.large-text .se-caption-h2 {
+  font-size: clamp(32px, 4.6vw, 50px);
+  color: #0d2806;
+}
+
+/* Timeline */
+.se-timeline-bar {
+  background: #f7f3e8;
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--se-border);
+}
+
+.se-progress {
+  flex: 1;
+  height: 16px;
+  border-radius: 10px;
+  accent-color: var(--se-primary);
+  cursor: pointer;
+}
+
+.se-time-indicator {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #443c33;
+  white-space: nowrap;
+}
+
+/* Controls Grid */
+.se-controls-grid {
+  padding: 18px 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  background: #ffffff;
+  border-top: 2px solid var(--se-border);
+}
+
+.se-btn {
+  font-size: 22px;
+  font-weight: 800;
+  min-height: 72px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  border: 2px solid #ccc5b0;
+  background: #fbf9f2;
+  color: #363028;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  word-break: keep-all;
+}
+
+.se-btn:hover:not(:disabled) {
+  background: #f1ede0;
+  border-color: #b5ac91;
+  transform: translateY(-1px);
+}
+
+.se-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.se-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.se-btn-primary {
+  grid-column: span 2;
+  background: #2d6b24;
+  color: #ffffff;
+  border-color: #21551a;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.se-btn-primary:hover:not(:disabled) {
+  background: #23571c;
+}
+
+.se-status-msg {
+  padding: 12px 28px 20px;
+  font-size: 21px;
+  font-weight: 700;
+  color: #483d31;
+  background: #ffffff;
+}
+
+/* Scene Navigator Thumbnails */
+.se-gallery-section {
+  background: #ffffff;
+  border: 2px solid var(--se-border);
+  border-radius: 20px;
+  padding: 24px 20px;
+  margin-bottom: 30px;
+  box-shadow: var(--se-shadow);
+}
+
+.se-gallery-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #294622;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.se-scene-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.se-thumb-card {
+  border: 2px solid #dfd8c4;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fffdf9;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.se-thumb-card:hover {
+  transform: translateY(-3px);
+  border-color: #2d6b24;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+
+.se-thumb-card.active {
+  border-color: #2d6b24;
+  border-width: 3.5px;
+  background: #f0f7ee;
+  box-shadow: 0 0 0 3px rgba(45, 107, 36, 0.25);
+}
+
+.se-thumb-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.se-thumb-info {
+  padding: 10px 12px;
+}
+
+.se-thumb-num {
+  font-size: 15px;
+  font-weight: 800;
+  color: #2d6b24;
+  margin-bottom: 2px;
+}
+
+.se-thumb-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #24201a;
+  line-height: 1.3;
+}
+
+/* Fullscreen Mode */
+.se-player-card:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  border: 0;
+  border-radius: 0;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.se-player-card:fullscreen .se-stage-wrapper {
+  flex: 1;
+  max-height: 68vh;
+  aspect-ratio: unset;
+}
+
+.se-player-card:fullscreen .se-scene-layer {
+  object-fit: contain;
+}
+
+.se-player-card:fullscreen .se-caption-container {
+  background: #1a1714;
+  color: #ffffff;
+  border-top-color: #332d25;
+  padding: 16px 32px;
+  min-height: 110px;
+}
+
+.se-player-card:fullscreen .se-cue-lead {
+  color: #8ed684;
+}
+
+.se-player-card:fullscreen .se-caption-h2 {
+  color: #ffffff;
+  font-size: clamp(26px, 3.4vw, 42px);
+}
+
+.se-player-card:fullscreen .se-timeline-bar {
+  background: #110f0d;
+  color: #e0d8c3;
+  padding: 8px 32px;
+}
+
+.se-player-card:fullscreen .se-controls-grid {
+  background: #1a1714;
+  border-top-color: #332d25;
+  padding: 10px 24px;
+}
+
+.se-player-card:fullscreen .se-btn {
+  background: #2b2722;
+  color: #ffffff;
+  border-color: #4a4237;
+}
+
+.se-player-card:fullscreen .se-btn-primary {
+  background: #2d6b24;
+}
+
+.se-player-card:fullscreen .se-status-msg {
+  display: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 800px) {
+  .se-controls-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .se-btn-primary {
+    grid-column: span 2;
+  }
+  .se-caption-container {
+    padding: 16px;
+    min-height: 140px;
+  }
+  .se-scene-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

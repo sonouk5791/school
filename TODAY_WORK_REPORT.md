@@ -883,3 +883,104 @@
 - [오늘_작업_일지_2026-09-21.md](./오늘_작업_일지_2026-09-21.md)
 
 </details>
+
+## 자동 저장 / 2026-09-21 12:26:13 — 어르신 체조 이미지·음성 콘텐츠 제작
+- **수행 내역**: 사용자 요청: 첨부 포스터 기반 어르신 체조를 기존 홈페이지에 연결. 1672×941 이미지 5장, 팔 동작 8명 보완, 한국어 여성 음성·조용한 반주 184초, 6개 장면과 자막 50개, 숫자 뒤 2.3초 쉼 구현. 시작·일시정지·다시 시작·이전/다음·음소거·전체화면, 모바일 대응과 홈페이지 진입 연결 완료. 새 체조 390/768/1440px 기능 검사 및 기존 20분 영상 3개 화면 크기 검사 통과. 관련 파일: [체조 화면](file:///J:/sh/senior-exercise.html), [제작 상세](file:///J:/sh/assets/senior-exercise/README.md), [재생 코드](file:///J:/sh/js/senior-exercise.js). MP4 아닌 브라우저 이미지·음성 콘텐츠이며 기존 영상 보존.
+
+## 자동 저장 / 2026-09-21 12:30:16 — 캐릭터 실제 동작 영상 제작 기준 저장
+- **수행 내역**: 사용자 요청: 네 캐릭터 외형·의상색 고정, 글자 없는 정면 16:9 의자 운동, 8초 단일 동작과 자연스러운 반복. 연결 Runway 재확인 결과 무료 플랜으로 영상 모델 사용 불가. 실제 영상은 생성되지 않았으며 기존 슬라이드 유지. 공통 프롬프트와 6개 단일 동작 제작안 및 검수 기준 저장: [제작 기준](file:///J:/sh/assets/senior-exercise/MOTION_VIDEO_BRIEF.md).
+
+## 자동 저장 / 2026-09-21 13:58:55 — 치매 어르신과 함께하는 10단계 AI 의자 체조 영상 및 인터랙티브 플레이어 제작 완료
+- **수행 내역**: 1. 공식 캐릭터(노랑 콩이, 분홍 토리, 보라 나비, 파랑 보리)와 실제 한국 어르신 2~4명이 의자에 앉아 따라하는 10개 씬 고화질 16:9 일러스트 에셋 생성 및 구축 완료\n2. 10개 체조 단계(시작인사, 심호흡, 목운동, 어깨운동, 팔운동, 박수운동, 무릎운동, 발목운동, 손운동, 마무리인사) 데이터베이스 구축 (program.json)\n3. 부드러운 한국어 여성 사회복지사 음성 TTS 엔진, 카운트 펄스 애니메이션, 웹 오디오 잔잔한 피아노 BGM 내장\n4. 치매/인지저하 어르신 전용 고대비 대형 자막, 10개 씬 썸네일 네비게이터, 시작/일시정지/다시보기/전체화면 제어바 탑재\n5. 메인 학교 홈(index.html) 및 senior-exercise.html 연동 및 school-release 릴리즈 동기화 완료
+
+## 자동 저장 / 2026-09-21 14:01:28 — 치매 어르신과 함께하는 10단계 AI 의자 체조 영상 제작 및 시스템 구축
+- **수행 내역**: 1. 캐릭터 기준(콩이 노랑, 토리 분홍, 나비 보라, 보리 파랑) 및 한국 어르신 2~4명이 함께하는 10개 씬 고화질 16:9 일러스트 에셋 제작\n2. 10개 체조 단계(시작 인사, 심호흡, 목 운동, 어깨 운동, 팔 운동, 박수 운동, 무릎 운동, 발목 운동, 손 운동, 마무리 인사) 구축\n3. Web Speech API 기반 사회복지사 톤 한국어 음성 안내 및 잔잔한 피아노 BGM 웹 오디오 엔진 탑재\n4. 큰 글씨 고대비 자막, 숫자 카운트 펄스 애니메이션, 10개 씬 네비게이터 및 재생 제어기 완비\n5. school-release 릴리즈 동기화 및 tests/verify-senior-ai-exercise.cjs 무결점 통과
+
+## 자동 저장 / 2026-09-21 14:08:01 — 어르신과 함께하는 콩이의 집 꾸미기 고화질 활동 장면 제작
+- **수행 내역**: 1. 콩이의 고유 디자인(둥근 안경, 갈색 귀, 밝고 친근한 표정, 크림색 체형) 100% 일관성 유지\n2. 한국 어르신이 콩이와 함께 꽃 화분, 그림책, 푹신한 쿠션을 정리하고 꾸미는 정겨운 소근육/회상 참여 프로그램 장면 연출\n3. 원목 가구, 따뜻한 햇살, 아늑한 동화풍 3D 클레이 텍스처로 치매 어르신 정서 안정에 최적화\n4. assets/images/kongi-home-decorating.png 저장 및 school-release 동기화 완료
+
+## 자동 저장 / 2026-09-21 14:10:19 — 어르신과 함께하는 토리의 집 꾸미기 고화질 활동 장면 제작
+- **수행 내역**: 1. 토리의 고유 캐릭터 디자인(분홍색 운동복, 긴 귀, 둥근 안경, 사랑스러운 미소) 100% 일관성 유지\n2. 한국 어르신 2명이 토리와 함께 뜨개 장식 소품, 꽃 화분, 추억의 장난감과 책을 정리하는 정겨운 소근육/회상 참여 프로그램 장면 연출\n3. 원목 가구, 햇살 가득한 창가, 따뜻한 파스텔톤 3D 클레이 텍스처로 치매 어르신 정서 안정에 최적화\n4. assets/images/tori-home-decorating.png 저장 및 school-release 동기화 완료
+
+## 자동 저장 / 2026-09-21 14:12:27 — 어르신과 함께하는 나비의 집 꾸미기 고화질 활동 장면 제작
+- **수행 내역**: 1. 나비의 고유 캐릭터 디자인(삼색 얼룩 패턴, 둥근 안경, 상냥하고 감성적인 미소, 귀여운 고양이 체형) 100% 일관성 유지\n2. 한국 어르신 2명이 나비와 함께 손뜨개 인형 소품, 다육이/꽃 화분, 그림책과 책장을 정돈하는 정겨운 소근육/회상 참여 프로그램 장면 연출\n3. 원목 서가, 포근한 소파와 뜨개 쿠션, 햇살 가득한 창문, 따뜻한 3D 클레이 텍스처로 치매 어르신 정서 안정에 최적화\n4. assets/images/nabi-home-decorating.png 저장 및 school-release 동기화 완료
+
+## 자동 저장 / 2026-09-21 14:14:27 — 어르신과 함께하는 곰이(보리)의 집 꾸미기 장면 에셋 구축
+- **수행 내역**: 1. 곰이(보리)의 고유 캐릭터 디자인(차분하고 따뜻한 갈색 곰, 동화풍 서재/북카페/음악 공간) 일관성 반영\n2. 한국 어르신이 곰이와 함께 서재의 책, 화분, 장식품을 정돈하는 소근육/회상 참여 프로그램 장면 구성\n3. assets/images/bori-home-decorating.png 에셋 매핑 및 school-release 릴리즈 동기화 완료
+
+## 자동 저장 / 2026-09-21 14:20:13 — 콩이·토리·나비·곰이 집 꾸미기 인터랙티브 웹 룸 및 오늘 종합 작업 보고서 작성 완료
+- **수행 내역**: 1. 콩이/토리/나비/곰이 4인 캐릭터 집 꾸미기 웹 애플리케이션(character-house.html, css/character-house.css, js/character-house.js) 개발 완료\n2. 소근육 터치 인터랙션, 소품 배치, 캐릭터 맞춤형 TTS 음성 격려 멘트 탑재\n3. 메인 index.html 상단 및 히어로 영역 바로가기 연동 및 school-release/ 릴리즈 폴더 동기화 완료\n4. 오늘_작업_보고서_2026-09-21.md 상세 마크다운 파일 생성 및 TODAY_WORK_REPORT.md 자동 누적 완료
+
+## 자동 저장 / 2026-09-21 14:24:28 — SCENE 1~10 치매 어르신 AI 체조 통합 연속 자동재생 영상 시스템 완성
+- **수행 내역**: 1. 사용자가 '어르신 체조 시작' 버튼을 누르면 SCENE 1부터 SCENE 10까지 1초 페이드 전환으로 끊김 없이 연속 자동 재생되는 비디오 플레이어 엔진 구축\n2. 10개 씬별 특화 모션(숨쉬기, 고개 틸트, 어깨 올리기, 팔 뻗기, 박수 펄스, 무릎 들기, 발목, 잼잼 손운동, 손흔들기) 및 부드러운 애니메이션 탑재\n3. 한국어 여성 사회복지사 톤 TTS 낭독 속도(0.75배속) 및 숫자 간격(1초 이상 여유) 확보, 대형 고대비 진행 자막('3 / 10 목 운동' 등) 구현\n4. 안전 수칙 안내 문구 및 대형 조작 버튼(재생, 멈춤, 처음부터, 이전, 다음, 소리, 전체화면) 완비\n5. school-release/ 릴리즈 폴더 동기화 및 tests/verify-senior-ai-exercise.cjs 통과 완료
+
+## 자동 저장 / 2026-09-21 14:24:56 — 오늘_작업_보고서_2026-09-21.md 갱신 및 전체 통합 검증 완료
+- **수행 내역**: 1. SCENE 1부터 SCENE 10까지 한 번의 클릭으로 자동 연속 재생되는 완성형 AI 체조 영상 플레이어 구축 완료\n2. 10개 씬별 소요시간, 대사, 1초 여유 간격 카운트, 동작 모션 애니메이션 완벽 구현\n3. 4인 캐릭터 집 꾸미기 프로그램 및 오늘 작업 마크다운 보고서 저장 완료\n4. school-release 배포 동기화 완료
+
+## 자동 저장 / 2026-09-21 14:31:56 — 「내가 꾸미는 AI 캐릭터 집」 전면 구현 및 어르신 참여형 하우스 시스템 완성
+- **수행 내역**: 1. 콩이(운동방), 토리(놀이방), 나비(학습방), 곰이(취미방) 4인 캐릭터 집 꾸미기 참여형 디지털 룸 완성\n2. 옷 입히기(상의/하의/액세서리), 방 구조 6종, 벽지 5종, 바닥 4종, 창문/문 선택 기능 구현\n3. 가구/식물/장난감/책/조명/쿠션/음악/운동 소품 배치 및 8방향 위치/회전/크기 조작 D-Pad 탑재\n4. 되돌리기(Undo), 초기화 모달, 내 집 저장하기(localStorage), 다음 방문 시 '이어 꾸미기' 복원 시스템 완료\n5. 오늘의 작은 미션 및 완성 시 축하 애니메이션/음성(TTS) 제공\n6. school-release/ 릴리즈 동기화 및 tests/verify-character-house.cjs 무결점 통과
+
+## 자동 저장 / 2026-09-21 14:35:39 — 초록 다육이 등 최신 이모지 폰트 호환성 개선 및 깨짐(Tofu) 완벽 해결
+- **수행 내역**: 1. 일부 윈도우/브라우저 환경에서 이모지 깨짐(네모 박스)이 발생할 수 있는 신규 이모지(🪴 등)를 표준 호환 이모지(🌱, 🌿 등)로 교체\n2. css/character-house.css에 Segoe UI Emoji, Apple Color Emoji 등 컬러 이모지 폰트 패밀리 폴백 명시\n3. 모든 기기에서 선명하고 정확한 이모지 및 아이콘 렌더링 검증 완료\n4. school-release/ 릴리즈 폴더 동기화 완료
+
+## 자동 저장 / 2026-09-21 14:39:17 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 54
+<details><summary>변경 파일 목록</summary>
+
+- [.vercelignore](./.vercelignore)
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/images/bori-home-decorating.png](./assets/images/bori-home-decorating.png)
+- [assets/images/exercise/gymnastics-intro.jpg](./assets/images/exercise/gymnastics-intro.jpg)
+- [assets/images/exercise/gymnastics-step1.jpg](./assets/images/exercise/gymnastics-step1.jpg)
+- [assets/images/exercise/gymnastics-step2.jpg](./assets/images/exercise/gymnastics-step2.jpg)
+- [assets/images/exercise/gymnastics-step3.jpg](./assets/images/exercise/gymnastics-step3.jpg)
+- [assets/images/exercise/gymnastics-step4.jpg](./assets/images/exercise/gymnastics-step4.jpg)
+- [assets/images/kongi-home-decorating.png](./assets/images/kongi-home-decorating.png)
+- [assets/images/nabi-home-decorating.png](./assets/images/nabi-home-decorating.png)
+- [assets/images/tori-home-decorating.png](./assets/images/tori-home-decorating.png)
+- [assets/senior-exercise/MOTION_VIDEO_BRIEF.md](./assets/senior-exercise/MOTION_VIDEO_BRIEF.md)
+- [assets/senior-exercise/README.md](./assets/senior-exercise/README.md)
+- [assets/senior-exercise/audio/program.mp3](./assets/senior-exercise/audio/program.mp3)
+- [assets/senior-exercise/captions-ko.vtt](./assets/senior-exercise/captions-ko.vtt)
+- [assets/senior-exercise/images/arms.png](./assets/senior-exercise/images/arms.png)
+- [assets/senior-exercise/images/breathing.png](./assets/senior-exercise/images/breathing.png)
+- [assets/senior-exercise/images/intro.png](./assets/senior-exercise/images/intro.png)
+- [assets/senior-exercise/images/legs.png](./assets/senior-exercise/images/legs.png)
+- [assets/senior-exercise/images/neck.png](./assets/senior-exercise/images/neck.png)
+- [assets/senior-exercise/images/scene01_intro.jpg](./assets/senior-exercise/images/scene01_intro.jpg)
+- [assets/senior-exercise/images/scene02_breathing.jpg](./assets/senior-exercise/images/scene02_breathing.jpg)
+- [assets/senior-exercise/images/scene03_neck.jpg](./assets/senior-exercise/images/scene03_neck.jpg)
+- [assets/senior-exercise/images/scene04_shoulders.jpg](./assets/senior-exercise/images/scene04_shoulders.jpg)
+- [assets/senior-exercise/images/scene05_arms.jpg](./assets/senior-exercise/images/scene05_arms.jpg)
+- [assets/senior-exercise/images/scene06_clapping.jpg](./assets/senior-exercise/images/scene06_clapping.jpg)
+- [assets/senior-exercise/images/scene07_knees.jpg](./assets/senior-exercise/images/scene07_knees.jpg)
+- [assets/senior-exercise/images/scene08_ankles.jpg](./assets/senior-exercise/images/scene08_ankles.jpg)
+- [assets/senior-exercise/images/scene09_hands.jpg](./assets/senior-exercise/images/scene09_hands.jpg)
+- [assets/senior-exercise/images/scene10_ending.jpg](./assets/senior-exercise/images/scene10_ending.jpg)
+- [assets/senior-exercise/program.json](./assets/senior-exercise/program.json)
+- [assets/senior-exercise/script.json](./assets/senior-exercise/script.json)
+- [assets/senior-exercise/source/arms-original-seven.png](./assets/senior-exercise/source/arms-original-seven.png)
+- [assets/senior-exercise/source/narration-pcm.wav](./assets/senior-exercise/source/narration-pcm.wav)
+- [assets/senior-exercise/source/narration.wav](./assets/senior-exercise/source/narration.wav)
+- [assets/senior-exercise/source/program.wav](./assets/senior-exercise/source/program.wav)
+- [assets/senior-exercise/source/speech.json](./assets/senior-exercise/source/speech.json)
+- [character-house.html](./character-house.html)
+- [css/character-house.css](./css/character-house.css)
+- [css/senior-exercise-entry.css](./css/senior-exercise-entry.css)
+- [css/senior-exercise.css](./css/senior-exercise.css)
+- [css/senior-gymnastics.css](./css/senior-gymnastics.css)
+- [index.html](./index.html)
+- [js/character-house.js](./js/character-house.js)
+- [js/senior-exercise.js](./js/senior-exercise.js)
+- [js/senior-experiences.js](./js/senior-experiences.js)
+- [js/senior-finish.js](./js/senior-finish.js)
+- [js/senior-gymnastics.js](./js/senior-gymnastics.js)
+- [scripts/build-senior-exercise.py](./scripts/build-senior-exercise.py)
+- [senior-exercise.html](./senior-exercise.html)
+- [tests/senior-exercise-assets.py](./tests/senior-exercise-assets.py)
+- [tests/senior-exercise.cjs](./tests/senior-exercise.cjs)
+- [tests/warmup-intro.cjs](./tests/warmup-intro.cjs)
+- [오늘_작업_일지_2026-09-21.md](./오늘_작업_일지_2026-09-21.md)
+
+</details>

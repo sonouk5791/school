@@ -45,6 +45,8 @@
   <link rel="stylesheet" href="css/character-audio.css?v=1">
   <link rel="stylesheet" href="css/animated-character.css?v=20260921">
   <link rel="stylesheet" href="css/official-characters.css?v=20260921-hd">
+  <link rel="stylesheet" href="css/senior-exercise-entry.css?v=20260921">
+  <link rel="stylesheet" href="css/senior-gymnastics.css?v=20260921">
 </head>
 <body>
 
@@ -61,12 +63,11 @@
       <nav class="main-nav" aria-label="메인 메뉴">
         <a href="#home" class="nav-link active" data-target="home">홈</a>
         <a href="#lessons" class="nav-link" data-target="lessons">오늘의 수업</a>
+        <a class="senior-exercise-nav" href="senior-exercise.html">어르신 체조</a>
         <a href="#ai-friend" class="nav-link" data-target="ai-friend">AI 친구</a>
         <a href="#history" class="nav-link" data-target="history">내 활동</a>
       </nav>
-
       <div class="header-actions">
-        <!-- AI 선생님 전용 상단 고정 접근성 컨트롤 바 (Section 20 & 31) -->
         <div class="teacher-voice-controls" id="teacherVoiceControls" role="region" aria-label="AI 선생님 음성 컨트롤">
           <button class="btn-voice-ctrl btn-voice-toggle" id="btnTtsToggle" title="선생님 음성 켜기 또는 끄기" aria-label="선생님 음성 안내 켜짐/꺼짐">
             <span class="ctrl-icon" id="iconVoiceToggle">🔊</span>
@@ -97,6 +98,16 @@
             <span class="ctrl-text">도움말</span>
           </button>
         </div>
+
+        <a href="character-house.html" class="btn-voice-ctrl" id="btnHeaderCharHouse" title="어르신과 함께하는 콩이·토리·나비·곰이 집 꾸미기" style="background:#FFF8E1; color:#F57F17; border:2px solid #FFE082; font-weight:800; text-decoration:none; display:inline-flex; align-items:center;">
+          <span class="ctrl-icon">🏡</span>
+          <span class="ctrl-text">캐릭터 집 꾸미기</span>
+        </a>
+
+        <a href="senior-exercise.html" class="btn-voice-ctrl" id="btnHeaderSeniorExercise" title="치매 어르신과 함께하는 10단계 AI 의자 체조 영상 바로가기" style="background:#E8F5E9; color:#1B5E20; border:2px solid #A5D6A7; font-weight:800; text-decoration:none; display:inline-flex; align-items:center;">
+          <span class="ctrl-icon">🧘‍♂️</span>
+          <span class="ctrl-text">AI 어르신 체조</span>
+        </a>
 
         <button class="btn-voice-ctrl" id="btnHeaderJournal" title="육하원칙(5W1H) 업무수행 일지 바로가기" style="background:#FFF1E6; color:#E65100; border:2px solid #FFCCAA; font-weight:800;">
           <span class="ctrl-icon">📝</span>
@@ -166,6 +177,12 @@
             <button class="btn-hero-action btn-hero-primary" id="btnHeroStart">
               📖 오늘 수업 시작하기 &gt;
             </button>
+            <a href="senior-exercise.html" class="btn-hero-action btn-hero-sage" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; background:#E8F5E9; color:#1B5E20; border:2px solid #A5D6A7; font-weight:800;">
+              🧘‍♂️ AI 어르신 체조 &gt;
+            </a>
+            <a href="character-house.html" class="btn-hero-action btn-hero-cream" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; background:#FFF8E1; color:#F57F17; border-color:#FFE082;">
+              🏡 캐릭터 집 꾸미기 &gt;
+            </a>
             <button class="btn-hero-action btn-hero-cream" id="btnHeroMeetAi">
               🐶 AI 친구 만나기 &gt;
             </button>
@@ -177,6 +194,18 @@
       </div>
     </section>
 
+    <!-- 함께하는 10단계 AI 의자 체조 배너 -->
+    <section class="warmup-banner" style="background: linear-gradient(135deg, #f0f7ee, #e3f2dc); border: 2px solid #b7deb0; border-radius: 20px; padding: 22px 26px; margin: 24px 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; box-shadow: 0 4px 15px rgba(46,102,40,0.08);">
+      <div style="flex: 1; min-width: 280px;">
+        <span style="background: #2e6628; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 15px;">🌸 치매·인지저하 어르신 맞춤 체조</span>
+        <h2 style="font-size: 24px; color: #1e4519; margin: 8px 0 4px; font-weight: 800;">콩이·토리·나비·보리와 함께하는 10단계 AI 의자 체조</h2>
+        <p style="font-size: 17px; color: #435b3e; line-height: 1.5; margin: 0;">의자에 앉아서 천천히 따라하는 따뜻하고 안전한 체조 영상입니다. (음성 안내 & 자막 지원)</p>
+      </div>
+      <a href="senior-exercise.html" style="background: #2e6628; color: white; padding: 14px 26px; border-radius: 14px; font-size: 19px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 12px rgba(46,102,40,0.25); white-space: nowrap; display: inline-flex; align-items: center; gap: 8px;">
+        ▶ 체조 영상 보기
+      </a>
+    </section>
+
     <section class="warmup-intro" aria-labelledby="warmupTitle">
       <div class="warmup-media">
         <video id="warmupVideo" controls muted playsinline preload="none" poster="assets/videos/friends-exercise-20min-poster.png" aria-label="운동복을 입은 네 친구(콩이, 토리, 나비, 보리)와 함께하는 준비와 휴식을 포함한 20분 무음 체조">
@@ -185,12 +214,13 @@
         </video>
       </div>
       <div class="warmup-copy">
+        <a class="warmup-exercise-entry" href="senior-exercise.html">🧘‍♂️ 치매 어르신 AI 의자 체조 (10단계) 바로가기</a>
         <p class="warmup-eyebrow">함께하는 20분 체조 · 준비와 휴식 포함</p>
-        <h2 id="warmupTitle">친구들과 천천히 20분 체조해요</h2>
+        <h2 id="warmupTitle">친구들과 천천히 체조해요</h2>
         <p>콩이, 토리, 나비, 보리와 함께<br>편하게 앉아서 천천히 따라해요.</p>
         <div class="warmup-actions">
-          <button class="care-btn primary" id="warmupPlay" type="button" aria-controls="warmupVideo">▶ 체조 시작하기</button>
-          <button class="care-btn" id="warmupReplay" type="button" aria-controls="warmupVideo">다시 보기</button>
+          <a href="senior-exercise.html" class="care-btn primary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">▶ AI 체조 시작하기</a>
+          <button class="care-btn" id="warmupPlay" type="button" aria-controls="warmupVideo">소개 영상 보기</button>
           <button class="care-btn" id="warmupClass" type="button">오늘의 수업 시작하기</button>
         </div>
         <p class="warmup-note" id="warmupStatus" role="status">불편한 동작은 쉬어가셔도 괜찮아요.</p>
@@ -572,7 +602,7 @@
   <script src="js/workflow-automation.js?v=2"></script>
   <script src="js/warmup-intro.js?v=20260916"></script>
   <script src="js/weather-service.js?v=1"></script>
-  <script src="js/senior-finish.js?v=20260917mood"></script>
+  <script src="js/senior-finish.js?v=20260921exercise"></script>
   <script src="js/participant-archive-store.js?v=1"></script>
   <script src="js/participant-archive.js?v=20260916forms8"></script>
   <script src="js/longtermcare-handoff.js?v=1"></script>
@@ -582,7 +612,7 @@
   <script src="js/character-wardrobe.js?v=20260921-reference"></script>
   <script src="js/clothing-activities.js?v=1"></script>
   <script src="js/character-rooms.js?v=20260917activities"></script>
-  <script src="js/senior-experiences.js?v=1"></script>
+  <script src="js/senior-experiences.js?v=20260921exercise"></script>
   <script src="js/home-care-recommendations.js?v=1"></script>
   <script src="js/home-care-experience.js?v=1"></script>
   <script src="js/old-song-player.js?v=20260917youtube"></script>
