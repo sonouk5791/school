@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroActions();
   initFloatingActions();
   initPrivacyModal();
+  initDailyRecommendations();
 
   // First-entry greeting is handled by welcome-greeting.js using recordings only.
 
@@ -508,8 +509,52 @@ function initPrivacyModal() {
   });
 }
 
+// 3차 고도화: 일일 추천 활동 및 요일별 테마, 출석 인사 초기화
+function initDailyRecommendations() {
+  const themeBadge = document.getElementById('dailyDayThemeBadge');
+  if (themeBadge) {
+    const day = new Date().getDay(); // 0: 일, 1: 월, 2: 화, 3: 수, 4: 목, 5: 금, 6: 토
+    const dayThemes = [
+      '🌿 일요일: 편안한 휴식과 따뜻한 대화의 날',
+      '🌸 월요일: 새로운 꽃 향기 가득한 날',
+      '👕 화요일: 멋진 새 옷을 입어보는 날',
+      '🧸 수요일: 신나는 새로운 놀이의 날',
+      '🎨 목요일: 고운 새 그림을 감상하는 날',
+      '🎵 금요일: 정겨운 새 음악을 들려주는 날',
+      '🏃 토요일: 활기찬 기지개와 스트레칭의 날'
+    ];
+    themeBadge.textContent = dayThemes[day] || dayThemes[1];
+  }
+
+  // 카드 클릭 시 캐릭터별 정겨운 출석 음성 안내
+  const cards = document.querySelectorAll('.daily-rec-card');
+  const greetings = [
+    '콩이: 오늘도 만나서 반가워요! 편안하게 5분 체조를 함께해봐요.',
+    '토리: 오늘도 같이 놀아요! 알록달록 같은 꽃을 맞춰봐요.',
+    '나비: 오늘은 무엇을 알아볼까요? 차근차근 계절을 알아봐요.',
+    '곰이: 오늘도 편안하게 함께해요. 좋아하는 정겨운 음악을 들어요.'
+  ];
+
+  cards.forEach((card, idx) => {
+    card.style.cursor = 'pointer';
+    card.setAttribute('tabindex', '0');
+    card.addEventListener('click', () => {
+      if (window.VoiceManager && typeof window.VoiceManager.speakText === 'function') {
+        window.VoiceManager.speakText(greetings[idx]);
+      } else if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(greetings[idx]);
+        utter.lang = 'ko-KR';
+        utter.rate = 0.85;
+        window.speechSynthesis.speak(utter);
+      }
+    });
+  });
+}
+
 // 글로벌 등록
 window.openTeacherModal = openTeacherModal;
 window.closeTeacherModal = closeTeacherModal;
 window.initFloatingActions = initFloatingActions;
 window.initPrivacyModal = initPrivacyModal;
+window.initDailyRecommendations = initDailyRecommendations;

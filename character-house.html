@@ -5,14 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fffbf0">
   <title>내가 꾸미는 AI 캐릭터 집 · 디지털 AI 학교</title>
-  <link rel="stylesheet" href="css/character-house.css">
+  <link rel="stylesheet" href="css/character-house.css?v=20260921-v3">
 </head>
 <body>
   <div class="ch-container">
-    <!-- Top Header -->
+    <!-- Top Global Header -->
     <header class="ch-header">
-      <a class="ch-back-link" href="index.html">← 디지털 AI 학교로 돌아가기</a>
-      <span class="ch-header-badge">🏡 내가 꾸미는 AI 캐릭터 집</span>
+      <div class="ch-header-left">
+        <a class="ch-back-link" href="index.html" aria-label="디지털 AI 학교 홈으로 가기">
+          🏠 처음으로
+        </a>
+        <span id="chLocationBadge" class="ch-location-badge">지금은 <strong>캐릭터 친구 선택</strong> 화면이에요</span>
+      </div>
+      <div class="ch-header-right">
+        <button id="btnTtsHelp" class="ch-voice-btn" type="button" aria-label="화면 설명 듣기">
+          <span class="ctrl-icon">🔊</span>
+          <span>설명 듣기</span>
+        </button>
+        <span class="ch-header-badge">🏡 내가 꾸미는 AI 캐릭터 집</span>
+      </div>
     </header>
 
     <!-- Resume Banner (지난번 저장 데이터가 있을 때 노출) -->
@@ -32,12 +43,13 @@
          ======================================================== -->
     <section id="selectScreen">
       <div class="ch-hero">
+        <span class="ch-hero-tag">🐾 AI 친구들과 함께하는 따뜻한 공간</span>
         <h1>누구의 집을 꾸며볼까요?</h1>
         <p>마음에 드는 친구의 방 카드를 편안하게 꾹 눌러보세요.</p>
       </div>
 
       <div id="charSelectGrid" class="ch-char-grid">
-        <!-- Dynamically rendered 4 character cards -->
+        <!-- Dynamically rendered 4 character cards (콩이, 토리, 나비, 곰이) -->
       </div>
     </section>
 
@@ -84,12 +96,31 @@
 
         <!-- Right: Tool & Option Panels -->
         <div class="ch-tools-card">
+          <!-- Mode Switch Bar (쉬운 꾸미기 vs 자유롭게 꾸미기) -->
+          <div class="ch-mode-switch-bar">
+            <span class="ch-mode-label">꾸미기 방식:</span>
+            <button id="btnModeEasy" class="ch-mode-btn active" type="button">
+              ✨ 쉬운 꾸미기 (추천)
+            </button>
+            <button id="btnModeFree" class="ch-mode-btn" type="button">
+              🎨 자유롭게 꾸미기
+            </button>
+          </div>
+
           <!-- Step Category Tabs -->
-          <nav class="ch-category-tabs">
+          <nav class="ch-category-tabs" aria-label="꾸미기 카테고리">
             <button class="ch-cat-tab active" data-cat="outfit" type="button">👕 옷 입히기</button>
             <button class="ch-cat-tab" data-cat="structure" type="button">🏠 방 구조</button>
             <button class="ch-cat-tab" data-cat="interior" type="button">🎨 벽/바닥</button>
-            <button class="ch-cat-tab" data-cat="furniture" type="button">🪑 가구/소품</button>
+            <button class="ch-cat-tab" data-cat="furniture" type="button">🪑 가구</button>
+            <button class="ch-cat-tab" data-cat="plants" type="button">🌷 꽃</button>
+            <button class="ch-cat-tab" data-cat="toys" type="button">🧸 장난감</button>
+            <button class="ch-cat-tab" data-cat="books" type="button">📚 책</button>
+            <button class="ch-cat-tab" data-cat="frames" type="button">🖼 그림</button>
+            <button class="ch-cat-tab" data-cat="lights" type="button">💡 조명</button>
+            <button class="ch-cat-tab" data-cat="cushions" type="button">🛋 쿠션</button>
+            <button class="ch-cat-tab" data-cat="music" type="button">🎵 음악</button>
+            <button class="ch-cat-tab" data-cat="exercise" type="button">🏃 운동</button>
           </nav>
 
           <!-- Options Grid -->
@@ -98,7 +129,20 @@
             <div id="optionsGrid" class="ch-options-grid"></div>
           </div>
 
-          <!-- Selected Item Position Controls (D-Pad) -->
+          <!-- Easy Mode Auto-Position Bar (쉬운 꾸미기 모드일 때 물건 선택 시 표시) -->
+          <div id="easyPositionBar" class="ch-easy-position-bar" hidden>
+            <div class="ch-easy-title">
+              <span id="easyItemName">선택한 물건: 나무 테이블</span>
+              <span>방의 어디에 놓아둘까요?</span>
+            </div>
+            <div class="ch-easy-btns">
+              <button id="btnPlaceLeft" class="ch-easy-btn" type="button">👈 [왼쪽]에 놓기</button>
+              <button id="btnPlaceCenter" class="ch-easy-btn primary" type="button">🌟 [가운데]에 놓기</button>
+              <button id="btnPlaceRight" class="ch-easy-btn" type="button">👉 [오른쪽]에 놓기</button>
+            </div>
+          </div>
+
+          <!-- Free Mode D-Pad Controls (자유롭게 꾸미기 모드일 때 선택된 물건 제어) -->
           <div id="itemController" class="ch-item-controller" hidden>
             <div class="ch-ctrl-header">
               <span id="selectedItemName">선택된 물건: 나무 테이블</span>
@@ -145,21 +189,24 @@
       </div>
     </div>
 
-    <!-- Complete View Modal -->
+    <!-- Complete View Modal (칭찬 & 도장 발급) -->
     <div id="completeView" class="ch-complete-view" hidden>
-      <div class="ch-complete-header">
-        <h2 id="completeTitle">🎉 정말 멋진 우리 집이 완성되었어요!</h2>
-        <p>어르신의 따뜻한 손길로 방이 반짝반짝 빛납니다.</p>
-      </div>
+      <div class="ch-complete-card">
+        <div class="ch-complete-header">
+          <div class="ch-stamp-badge" id="chStampBadge">🌸 참 잘하셨어요! 도장 획득</div>
+          <h2 id="completeTitle">🎉 오늘도 정말 잘하셨어요!</h2>
+          <p id="completeDesc">어르신의 따뜻한 손길로 방이 반짝반짝 빛납니다.</p>
+        </div>
 
-      <div class="ch-complete-stage">
-        <img id="completeCharImg" src="assets/images/kongi-home-decorating.png" style="width: 100%; height: 100%; object-fit: cover;" alt="완성된 집">
-      </div>
+        <div class="ch-complete-stage">
+          <img id="completeCharImg" src="assets/images/kongi-home-decorating.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;" alt="완성된 집">
+        </div>
 
-      <div>
-        <button id="btnCloseComplete" class="ch-modal-btn primary" type="button" style="font-size: 26px; padding: 16px 36px;">
-          📷 집 구경 마치기
-        </button>
+        <div class="ch-complete-footer">
+          <button id="btnCloseComplete" class="ch-modal-btn primary" type="button" style="font-size: 24px; padding: 16px 36px;">
+            👏 자랑스럽게 집 구경 마치기
+          </button>
+        </div>
       </div>
     </div>
 
@@ -169,6 +216,6 @@
     </div>
   </div>
 
-  <script src="js/character-house.js"></script>
+  <script src="js/character-house.js?v=20260921-v3"></script>
 </body>
 </html>

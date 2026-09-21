@@ -1096,3 +1096,301 @@ body {
 .warmup-actions button{min-height:48px;font-size:20px}
 @media(max-width:760px){.warmup-intro{grid-template-columns:1fr;gap:16px;padding:16px;margin-top:-24px}.warmup-media{width:100%;max-width:520px;margin:auto}.warmup-actions{display:grid;grid-template-columns:1fr 1fr}.warmup-actions button:last-child{grid-column:1/-1}.warmup-copy h2{font-size:23px}.warmup-copy p{font-size:19px}}
 .warmup-chapters{margin-top:18px;font-size:18px;line-height:1.6}.warmup-chapters summary{cursor:pointer;padding:8px 0;color:#526b45}.warmup-chapters label{display:block;margin-top:10px}.warmup-chapters select{display:block;max-width:100%;width:100%;padding:12px;font:inherit;border:1px solid #d8cab5;border-radius:12px;background:#fffdf8;margin:8px 0}.warmup-chapters p{font-size:17px}
+
+/* ==========================================================================
+   신규 3차 고도화: 1. 일일 추천 활동 섹션 (오늘은 무엇을 해볼까요?)
+   ========================================================================== */
+.daily-recommend-section {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF9F0 100%);
+  border: 2.5px solid #FFD8A8;
+  border-radius: var(--radius-lg, 28px);
+  padding: 28px 24px;
+  margin: 32px 0;
+  box-shadow: 0 10px 30px rgba(90, 60, 30, 0.08);
+}
+
+.daily-rec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.daily-rec-badge {
+  background: #E85D04;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+.daily-rec-day-theme {
+  background: #FFF3E0;
+  color: #E65100;
+  border: 1px solid #FFCC80;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.daily-rec-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: #2B241F;
+  margin: 6px 0 4px;
+}
+
+.daily-rec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin: 20px 0;
+}
+
+.daily-rec-card {
+  background: #FFFFFF;
+  border: 2px solid #EFE6D8;
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(90, 60, 30, 0.05);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.daily-rec-card:hover {
+  transform: translateY(-4px);
+  border-color: #E85D04;
+}
+
+.daily-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.daily-char-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #FFE082;
+}
+
+.daily-char-name {
+  font-size: 20px;
+  font-weight: 900;
+  color: #3E2723;
+}
+
+.daily-activity-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2E7D32;
+  background: #E8F5E9;
+  padding: 6px 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.daily-greeting-bubble {
+  background: #FAF6EE;
+  border: 1.5px solid #E2D7BE;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #5D4037;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.daily-rec-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.btn-daily-start {
+  background: linear-gradient(135deg, #E85D04, #D9480F);
+  color: #FFFFFF;
+  border: 0;
+  min-height: 56px;
+  padding: 12px 32px;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(232, 93, 4, 0.35);
+  transition: transform 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-daily-start:hover {
+  transform: scale(1.03);
+}
+
+/* ==========================================================================
+   신규 3차 고도화: 2. 4대 캐릭터 룸 도어 섹션 (오늘은 누구를 만나볼까요?)
+   ========================================================================== */
+.character-doors-section {
+  margin: 40px 0 50px;
+}
+
+.doors-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.doors-header h2 {
+  font-size: 34px;
+  font-weight: 900;
+  color: #2B241F;
+  margin-bottom: 6px;
+}
+
+.doors-header p {
+  font-size: 21px;
+  color: #5C524B;
+}
+
+.doors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.character-door-card {
+  background: #FFFFFF;
+  border: 3px solid #EFE6D8;
+  border-radius: 28px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(90, 60, 30, 0.08);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.character-door-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(90, 60, 30, 0.16);
+}
+
+/* 방별 테마 색상 */
+.door-kongi { border-color: #FFE082; background: linear-gradient(180deg, #FFFDE7 0%, #FFFFFF 60%); }
+.door-kongi:hover { border-color: #FBC02D; }
+.door-tori { border-color: #F8BBD0; background: linear-gradient(180deg, #FCE4EC 0%, #FFFFFF 60%); }
+.door-tori:hover { border-color: #EC407A; }
+.door-nabi { border-color: #E1BEE7; background: linear-gradient(180deg, #F3E5F5 0%, #FFFFFF 60%); }
+.door-nabi:hover { border-color: #AB47BC; }
+.door-bori { border-color: #BBDEFB; background: linear-gradient(180deg, #E3F2FD 0%, #FFFFFF 60%); }
+.door-bori:hover { border-color: #42A5F5; }
+
+.door-avatar-wrap {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.door-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.door-room-title {
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.door-kongi .door-room-title { color: #E65100; }
+.door-tori .door-room-title { color: #C2185B; }
+.door-nabi .door-room-title { color: #6A1B9A; }
+.door-bori .door-room-title { color: #1565C0; }
+
+.door-room-desc {
+  font-size: 18px;
+  font-weight: 700;
+  color: #5D4037;
+  margin-bottom: 14px;
+}
+
+.door-contents-box {
+  width: 100%;
+  background: #FAF6EE;
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  text-align: left;
+  flex: 1;
+}
+
+.door-contents-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: #795548;
+  margin-bottom: 6px;
+}
+
+.door-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.door-tag-pill {
+  background: #FFFFFF;
+  border: 1px solid #D7CCC8;
+  border-radius: 10px;
+  padding: 3px 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4E342E;
+}
+
+.door-btn-enter {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: 900;
+  color: #FFFFFF;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  transition: transform 0.15s;
+}
+
+.door-btn-enter:hover {
+  transform: scale(1.02);
+}
+
+.door-kongi .door-btn-enter { background: #E65100; }
+.door-tori .door-btn-enter { background: #D81B60; }
+.door-nabi .door-btn-enter { background: #7B1FA2; }
+.door-bori .door-btn-enter { background: #1976D2; }
+

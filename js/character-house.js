@@ -1,12 +1,17 @@
 /**
- * 「내가 꾸미는 AI 캐릭터 집」 인터랙티브 시스템
- * - 치매·인지저하 어르신 맞춤형 참여·소근육·회상 활동
- * - 4인 캐릭터(콩이/토리/나비/곰이), 옷 입히기, 방 구조/벽/바닥/창문, 가구 배치, 이동/회전 조작, 저장/복원
+ * 「내가 꾸미는 AI 캐릭터 집」 고도화 인터랙티브 시스템 (v3)
+ * - 치매·인지저하 어르신 맞춤형 직관적 인터랙션
+ * - 4인 캐릭터(콩이, 토리, 나비, 곰이), 원클릭 의상 변경
+ * - 6대 방 구조, 9대 가구/소품 카테고리
+ * - 쉬운 꾸미기 모드(좌/중/우 자동배치, 기본값) & 자유 꾸미기 모드
+ * - 되돌리기(Undo), 저장/이어하기, 칭찬 및 꽃/별 도장 시스템
+ * - 음성 안내(TTS) 및 어르신 친화적 접근성 보장
  */
 (() => {
   'use strict';
 
   const STORAGE_KEY = 'senior_character_house_data_v1';
+  const STAMPS_KEY = 'senior_stamps_v1';
   const $ = id => document.getElementById(id);
 
   // --- DATA DEFINITIONS ---
@@ -17,10 +22,11 @@
       charName: '콩이',
       theme: '운동방',
       avatar: 'assets/images/friend-kongi.png',
+      completeImg: 'assets/images/kongi-home-decorating.png',
       color: '#e6a100',
       badge: '🏃 건강한 운동방',
-      greeting: '어서 오세요! 오늘은 제 방을 어떻게 꾸며볼까요?',
-      mission: '노란 꽃 하나를 예쁘게 놓아볼까요?',
+      greeting: '어서 오세요! 오늘은 제 운동방을 어떻게 꾸며볼까요?',
+      mission: '노란 꽃이나 운동 기구를 하나 놓아볼까요?',
       reactions: [
         '와, 여기 놓으니까 정말 잘 어울려요!',
         '어르신 덕분에 방이 아주 활기차졌어요!',
@@ -33,10 +39,11 @@
       charName: '토리',
       theme: '놀이방',
       avatar: 'assets/images/friend-tori.png',
+      completeImg: 'assets/images/tori-home-decorating.png',
       color: '#d53f8c',
       badge: '🧸 신나는 놀이방',
       greeting: '반가워요! 오늘은 토리방을 재미있게 꾸며봐요.',
-      mission: '토리가 좋아할 폭신한 쿠션을 골라주세요.',
+      mission: '토리가 좋아할 폭신한 쿠션이나 장난감을 골라주세요.',
       reactions: [
         '정말 예뻐졌어요! 토리는 너무 좋아요.',
         '알록달록 방이 반짝반짝 빛나요!',
@@ -49,6 +56,7 @@
       charName: '나비',
       theme: '학습방',
       avatar: 'assets/images/friend-nabi.png',
+      completeImg: 'assets/images/nabi-home-decorating.png',
       color: '#805ad5',
       badge: '📚 지혜로운 학습방',
       greeting: '잘 오셨어요. 오늘은 어떤 공부방을 만들어볼까요?',
@@ -65,10 +73,11 @@
       charName: '곰이',
       theme: '취미방',
       avatar: 'assets/images/friend-bori.png',
+      completeImg: 'assets/images/bori-home-decorating.png',
       color: '#2b6cb0',
       badge: '🎵 평온한 취미방',
-      greeting: '오늘은 편안하게 좋아하는 것으로 방을 꾸며봐요.',
-      mission: '편안한 의자 하나를 골라주세요.',
+      greeting: '오늘은 편안하게 좋아하는 음악과 소품으로 방을 꾸며봐요.',
+      mission: '편안한 의자나 라디오를 하나 골라주세요.',
       reactions: [
         '아늑해서 마음에 쏙 들어요.',
         '정겨운 옛 노래가 흘러나올 것 같아요.',
@@ -80,34 +89,34 @@
   // Wardrobe Options
   const OUTFITS = {
     tops: [
+      { id: 'top_sport', name: '편안한 운동복', icon: '🏃', color: '#c8e6c9' },
+      { id: 'top_knit', name: '따뜻한 니트', icon: '🧶', color: '#f8bbd0' },
       { id: 'top_cardigan', name: '노란 가디건', icon: '🧥', color: '#fff9c4' },
-      { id: 'top_knit', name: '분홍 니트', icon: '🧶', color: '#f8bbd0' },
-      { id: 'top_shirt', name: '파란 셔츠', icon: '👔', color: '#bbdefb' },
-      { id: 'top_vest', name: '꽃무늬 조끼', icon: '👚', color: '#ffe0b2' },
-      { id: 'top_sport', name: '편안한 운동복', icon: '🏃', color: '#c8e6c9' }
+      { id: 'top_vest', name: '꽃무늬 옷', icon: '👚', color: '#ffe0b2' },
+      { id: 'top_shirt', name: '단정한 셔츠', icon: '👔', color: '#bbdefb' }
     ],
     bottoms: [
       { id: 'bot_pants', name: '편안한 바지', icon: '👖', color: '#cfd8dc' },
       { id: 'bot_sport', name: '운동복 바지', icon: '👖', color: '#d7ccc8' },
-      { id: 'bot_skirt', name: '예쁜 치마', icon: '👗', color: '#f48fb1' },
-      { id: 'bot_overall', name: '귀여운 멜빵', icon: '👖', color: '#90caf9' }
+      { id: 'bot_overall', name: '귀여운 멜빵바지', icon: '👖', color: '#90caf9' },
+      { id: 'bot_skirt', name: '화사한 치마', icon: '👗', color: '#f48fb1' }
     ],
     accs: [
       { id: 'acc_hat', name: '멋진 모자', icon: '👒' },
-      { id: 'acc_glasses', name: '단정한 안경', icon: '👓' },
       { id: 'acc_scarf', name: '따뜻한 스카프', icon: '🧣' },
-      { id: 'acc_bag', name: '작은 가방', icon: '👜' }
+      { id: 'acc_glasses', name: '단정한 안경', icon: '👓' },
+      { id: 'acc_bag', name: '작은 손가방', icon: '👜' }
     ]
   };
 
-  // Room Architecture Options
+  // 6 Room Architecture Options
   const ROOM_TYPES = [
-    { id: 'room_spacious', name: '넓은 한 개의 방', icon: '🏠', desc: '탁 트인 시원한 방' },
-    { id: 'room_living', name: '거실 + 작은 방', icon: '🏡', desc: '아늑한 2개 공간' },
-    { id: 'room_window', name: '창가가 넓은 방', icon: '☀️', desc: '햇살 가득한 창가' },
-    { id: 'room_books', name: '책장이 많은 방', icon: '📚', desc: '지혜가 샘솟는 서재' },
-    { id: 'room_garden', name: '정원이 보이는 방', icon: '🌳', desc: '푸른 뜰이 보이는 방' },
-    { id: 'room_hanok', name: '따뜻한 한옥방', icon: '🏮', desc: '정겨운 전통 공간' }
+    { id: 'room_spacious', name: '구조 1: 넓은 한 개의 방', icon: '🏠', desc: '탁 트인 시원하고 넓은 방' },
+    { id: 'room_living', name: '구조 2: 거실 + 작은 방', icon: '🏡', desc: '아늑하게 나뉜 2개 공간' },
+    { id: 'room_window', name: '구조 3: 큰 창문이 있는 방', icon: '☀️', desc: '따스한 햇살 가득한 창가 방' },
+    { id: 'room_garden', name: '구조 4: 정원이 보이는 방', icon: '🌳', desc: '푸른 나무와 뜰이 보이는 방' },
+    { id: 'room_hanok', name: '구조 5: 따뜻한 한옥방', icon: '🏮', desc: '고즈넉하고 정겨운 전통 방' },
+    { id: 'room_books', name: '구조 6: 책장이 많은 방', icon: '📚', desc: '지혜와 이야기 가득한 서재' }
   ];
 
   // Wall, Floor, Window, Door
@@ -126,31 +135,19 @@
     { id: 'f_hanok', name: '전통 한옥 바닥', icon: '🏮', color: '#d9b48f' }
   ];
 
-  const WINDOW_STYLES = [
-    { id: 'win_big', name: '큰 창문', icon: '☀️', emoji: '☀️' },
-    { id: 'win_small', name: '작은 창문', icon: '🌤️', emoji: '🌤️' },
-    { id: 'win_hanok', name: '한옥 창문', icon: '🏮', emoji: '🏮' },
-    { id: 'win_garden', name: '정원 창문', icon: '🌳', emoji: '🌳' }
-  ];
-
-  const DOOR_STYLES = [
-    { id: 'door_wood', name: '기본 나무문', icon: '🚪', color: '#a1887f' },
-    { id: 'door_light', name: '밝은 나무문', icon: '🚪', color: '#d7ccc8' },
-    { id: 'door_hanok', name: '한옥 전통문', icon: '🚪', color: '#8d6e63' }
-  ];
-
-  // Furniture & Decor Catalog
+  // 9 Furniture & Decor Catalogs
   const ITEM_CATALOG = {
     furniture: [
-      { id: 'f_chair', name: '편안한 의자', icon: '🛋️' },
+      { id: 'f_chair', name: '편안한 의자', icon: '🪑' },
       { id: 'f_table', name: '나무 테이블', icon: '☕' },
       { id: 'f_bookshelf', name: '원목 책장', icon: '📚' },
       { id: 'f_drawer', name: '서랍 수납장', icon: '🗄️' },
-      { id: 'f_mat', name: '포근한 방석매트', icon: '🛋️' }
+      { id: 'f_sofa', name: '폭신한 소파', icon: '🛋️' }
     ],
     plants: [
       { id: 'p_flower', name: '화사한 꽃화분', icon: '🌷' },
       { id: 'p_sunflower', name: '노란 해바라기', icon: '🌻' },
+      { id: 'p_rose', name: '분홍 장미', icon: '🌹' },
       { id: 'p_succulent', name: '초록 다육이', icon: '🌱' },
       { id: 'p_tree', name: '공기정화 화분', icon: '🌿' }
     ],
@@ -185,7 +182,8 @@
     ],
     exercise: [
       { id: 'e_ball', name: '스트레칭 볼', icon: '⚽' },
-      { id: 'e_dumbbell', name: '가벼운 아령', icon: '💪' }
+      { id: 'e_dumbbell', name: '가벼운 아령', icon: '💪' },
+      { id: 'e_mat', name: '운동 매트', icon: '🧘' }
     ]
   };
 
@@ -193,6 +191,7 @@
   let state = {
     screen: 'select', // 'select' | 'studio'
     currentCharId: 'kongi',
+    mode: 'easy', // 'easy' (default) | 'free'
     outfit: { top: 'top_cardigan', bottom: 'bot_pants', acc: 'acc_glasses' },
     roomType: 'room_spacious',
     wallStyle: 'w_cream',
@@ -201,6 +200,7 @@
     doorStyle: 'door_wood',
     placedItems: [], // Array of { uid, id, name, icon, x, y, scale, rot }
     selectedItemUid: null,
+    pendingEasyItem: null, // item chosen in easy mode waiting for L/C/R button
     lastUpdated: null
   };
 
@@ -216,12 +216,13 @@
       doorStyle: state.doorStyle,
       placedItems: state.placedItems
     }));
-    if (historyStack.length > 20) historyStack.shift();
+    if (historyStack.length > 25) historyStack.shift();
   }
 
   function undoHistory() {
     if (historyStack.length === 0) {
       showToast('처음 상태입니다.');
+      speak('더 이상 되돌릴 이전 작업이 없습니다.');
       return;
     }
     const prev = JSON.parse(historyStack.pop());
@@ -233,23 +234,26 @@
     state.doorStyle = prev.doorStyle;
     state.placedItems = prev.placedItems;
     state.selectedItemUid = null;
+    state.pendingEasyItem = null;
+    $('easyPositionBar').hidden = true;
+    $('itemController').hidden = true;
     renderCanvas();
     renderToolsPanel();
     showToast('↩ 방금 전으로 되돌렸어요.');
     speak('방금 전으로 되돌렸습니다.');
   }
 
-  // Speech Helper
+  // TTS Helper
   function speak(text) {
     if (!window.speechSynthesis) return;
     try {
       window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = 'ko-KR';
-      utter.rate = 0.78;
+      utter.rate = 0.82;
       utter.pitch = 1.05;
       const voices = window.speechSynthesis.getVoices();
-      const koVoice = voices.find(v => v.lang.startsWith('ko') && (v.name.includes('Yuna') || v.name.includes('SunHi') || v.name.includes('Heami') || v.name.includes('Korean')));
+      const koVoice = voices.find(v => v.lang.startsWith('ko') && (v.name.includes('Yuna') || v.name.includes('SunHi') || v.name.includes('Heami') || v.name.includes('Korean') || v.name.includes('Google 한국어')));
       if (koVoice) utter.voice = koVoice;
       window.speechSynthesis.speak(utter);
     } catch (e) {
@@ -282,6 +286,23 @@
     }
   }
 
+  // Stamp Award System
+  function awardStamp() {
+    try {
+      const current = JSON.parse(localStorage.getItem(STAMPS_KEY) || '[]');
+      const newStamp = {
+        type: Math.random() > 0.5 ? 'flower' : 'star',
+        title: `${CHARACTERS[state.currentCharId].charName}의 방 꾸미기 완료`,
+        date: new Date().toISOString()
+      };
+      current.push(newStamp);
+      localStorage.setItem(STAMPS_KEY, JSON.stringify(current));
+      $('chStampBadge').textContent = newStamp.type === 'flower' ? '🌸 향긋한 꽃 도장 획득!' : '⭐ 반짝이는 별 도장 획득!';
+    } catch (e) {
+      console.warn('Stamp storage error:', e);
+    }
+  }
+
   // --- RENDER VIEWS ---
   function init() {
     const saved = loadFromStorage();
@@ -301,322 +322,515 @@
 
     Object.values(CHARACTERS).forEach(c => {
       const card = document.createElement('article');
-      card.className = `ch-char-card char-${c.id}`;
-      card.tabIndex = 0;
+      card.className = 'ch-char-card';
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `${c.charName}의 ${c.theme} 꾸미기 시작`);
       card.innerHTML = `
-        <img class="ch-char-avatar" src="${c.avatar}" alt="${c.name}">
-        <div class="ch-char-details">
-          <span class="ch-char-badge">${c.badge}</span>
-          <h3>${c.name}</h3>
-          <p>${c.greeting}</p>
+        <div class="ch-char-avatar-box">
+          <img src="${c.avatar}" alt="${c.charName}" class="ch-char-img">
+        </div>
+        <div class="ch-char-badge" style="background:${c.color}22; color:${c.color}; border-color:${c.color}44;">
+          ${c.badge}
+        </div>
+        <h2 class="ch-char-name">${c.name}</h2>
+        <p class="ch-char-desc">${c.greeting}</p>
+        <div class="ch-char-btn" style="background:${c.color};">
+          ${c.charName} 방 꾸미기 시작 &gt;
         </div>
       `;
-      card.addEventListener('click', () => {
-        startDecorating(c.id, false);
+
+      const startAction = () => selectCharacter(c.id);
+      card.addEventListener('click', startAction);
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          startAction();
+        }
       });
       grid.appendChild(card);
     });
+
+    $('chLocationBadge').innerHTML = '지금은 <strong>캐릭터 친구 선택</strong> 화면이에요';
   }
 
-  function startDecorating(charId, isResume = false) {
+  function selectCharacter(charId, resumeData = null) {
     state.currentCharId = charId;
     state.screen = 'studio';
 
-    if (!isResume) {
-      pushHistory();
-      // Default items for each room
-      state.placedItems = [
-        { uid: 'init_1', id: 'f_table', name: '나무 테이블', icon: '🪵', x: 28, y: 55, scale: 1, rot: 0 },
-        { uid: 'init_2', id: 'p_flower', name: '화사한 꽃화분', icon: '🌷', x: 30, y: 46, scale: 1, rot: 0 }
-      ];
+    if (resumeData) {
+      state.outfit = resumeData.outfit || state.outfit;
+      state.roomType = resumeData.roomType || state.roomType;
+      state.wallStyle = resumeData.wallStyle || state.wallStyle;
+      state.floorStyle = resumeData.floorStyle || state.floorStyle;
+      state.windowStyle = resumeData.windowStyle || state.windowStyle;
+      state.doorStyle = resumeData.doorStyle || state.doorStyle;
+      state.placedItems = resumeData.placedItems || [];
+    } else {
+      // Default initialization
+      state.placedItems = [];
+      state.selectedItemUid = null;
+      state.pendingEasyItem = null;
     }
 
+    pushHistory();
+
     $('selectScreen').hidden = true;
+    $('resumeBanner').hidden = true;
     $('studioScreen').hidden = false;
 
     const charInfo = CHARACTERS[charId];
     $('stageTitle').textContent = `🏡 ${charInfo.name} (${charInfo.theme})`;
-    $('missionText').textContent = `💡 미션: ${charInfo.mission}`;
+    $('stageTitle').style.color = charInfo.color;
+    $('speechName').textContent = charInfo.charName;
     $('speechMsg').textContent = charInfo.greeting;
     $('speechAvatar').textContent = charId === 'kongi' ? '🐶' : charId === 'tori' ? '🐰' : charId === 'nabi' ? '🐱' : '🐻';
-    $('speechName').textContent = charInfo.charName;
+    $('charAvatar').src = charInfo.avatar;
+    $('missionText').textContent = `💡 미션: ${charInfo.mission}`;
+
+    $('chLocationBadge').innerHTML = `지금은 <strong>${charInfo.charName}의 방</strong>을 꾸미고 있어요`;
 
     renderCanvas();
     renderToolsPanel('outfit');
-    speak(`${charInfo.greeting} 오늘의 작은 미션은 ${charInfo.mission}`);
+
+    speak(`${charInfo.charName}의 방에 오신 것을 환영합니다. ${charInfo.greeting}`);
   }
 
-  // --- CANVAS RENDERING ---
+  // --- CANVAS & STAGE RENDERING ---
   function renderCanvas() {
     const wall = $('roomWall');
     const floor = $('roomFloor');
-    const win = $('windowElem');
-    const door = $('doorElem');
-    const itemsLayer = $('itemsLayer');
-    const charAvatar = $('charAvatar');
+    const windowEl = $('windowElem');
+    const doorEl = $('doorElem');
+    const charWrap = $('charAvatarWrap');
+    const badge = $('avatarOutfitBadge');
 
-    // Wall & Floor
-    const wallObj = WALL_STYLES.find(w => w.id === state.wallStyle) || WALL_STYLES[0];
-    const floorObj = FLOOR_STYLES.find(f => f.id === state.floorStyle) || FLOOR_STYLES[0];
-    wall.style.backgroundColor = wallObj.color;
-    floor.style.backgroundColor = floorObj.color;
+    // Wall Color
+    const wInfo = WALL_STYLES.find(w => w.id === state.wallStyle) || WALL_STYLES[0];
+    wall.style.backgroundColor = wInfo.color;
 
-    // Window & Door
-    const winObj = WINDOW_STYLES.find(w => w.id === state.windowStyle) || WINDOW_STYLES[0];
-    win.textContent = winObj.emoji;
-    const doorObj = DOOR_STYLES.find(d => d.id === state.doorStyle) || DOOR_STYLES[0];
-    door.style.backgroundColor = doorObj.color;
+    // Floor Color
+    const fInfo = FLOOR_STYLES.find(f => f.id === state.floorStyle) || FLOOR_STYLES[0];
+    floor.style.backgroundColor = fInfo.color;
 
-    // Character Avatar
-    const charInfo = CHARACTERS[state.currentCharId];
-    charAvatar.src = charInfo.avatar;
+    // Window Emojis & Styling
+    if (state.roomType === 'room_garden') {
+      windowEl.textContent = '🌳';
+    } else if (state.roomType === 'room_hanok') {
+      windowEl.textContent = '🏮';
+    } else if (state.roomType === 'room_books') {
+      windowEl.textContent = '📚';
+    } else {
+      windowEl.textContent = '☀️';
+    }
+
+    // Outfit Badge
     const topObj = OUTFITS.tops.find(t => t.id === state.outfit.top);
-    $('avatarOutfitBadge').textContent = topObj ? topObj.name : '기본 의상';
+    const botObj = OUTFITS.bottoms.find(b => b.id === state.outfit.bottom);
+    const accObj = OUTFITS.accs.find(a => a.id === state.outfit.acc);
+
+    const outfitParts = [];
+    if (topObj) outfitParts.push(topObj.name);
+    if (botObj) outfitParts.push(botObj.name);
+    if (accObj) outfitParts.push(accObj.name);
+
+    badge.textContent = outfitParts.join(' · ') || '기본 평상복';
 
     // Placed Items
+    const itemsLayer = $('itemsLayer');
     itemsLayer.innerHTML = '';
+
     state.placedItems.forEach(item => {
       const el = document.createElement('div');
-      el.className = `ch-placed-item ${item.uid === state.selectedItemUid ? 'selected' : ''}`;
-      el.textContent = item.icon;
-      el.title = item.name;
+      el.className = `ch-placed-item ${state.selectedItemUid === item.uid ? 'selected' : ''}`;
+      el.dataset.uid = item.uid;
       el.style.left = `${item.x}%`;
       el.style.top = `${item.y}%`;
-      el.style.transform = `scale(${item.scale || 1}) rotate(${item.rot || 0}deg)`;
+      el.style.transform = `translate(-50%, -50%) scale(${item.scale}) rotate(${item.rot}deg)`;
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', `${item.name}, 선택하여 위치 이동`);
 
-      // Click to select
-      el.addEventListener('click', (e) => {
+      el.innerHTML = `
+        <span class="ch-placed-icon">${item.icon}</span>
+        <span class="ch-placed-label">${item.name}</span>
+      `;
+
+      el.addEventListener('click', e => {
         e.stopPropagation();
-        selectPlacedItem(item.uid);
+        selectItemOnCanvas(item.uid);
       });
+
+      // Drag in free mode
+      setupItemDrag(el, item);
 
       itemsLayer.appendChild(el);
     });
-
-    // Update Controller
-    updateItemController();
   }
 
-  function selectPlacedItem(uid) {
+  function selectItemOnCanvas(uid) {
     state.selectedItemUid = uid;
     renderCanvas();
-    const item = state.placedItems.find(it => it.uid === uid);
-    if (item) {
-      showToast(`[${item.name}]이 선택되었어요. 위치를 움직여보세요.`);
-    }
-  }
 
-  function updateItemController() {
-    const ctrl = $('itemController');
-    const label = $('selectedItemName');
-    const item = state.placedItems.find(it => it.uid === state.selectedItemUid);
+    const item = state.placedItems.find(i => i.uid === uid);
+    if (!item) return;
 
-    if (item) {
-      ctrl.hidden = false;
-      label.textContent = `선택된 물건: ${item.name} (${item.icon})`;
+    if (state.mode === 'free') {
+      $('itemController').hidden = false;
+      $('selectedItemName').textContent = `선택된 물건: ${item.name}`;
+      speak(`${item.name}이 선택되었습니다. 조작 버튼으로 움직여보세요.`);
     } else {
-      ctrl.hidden = true;
+      $('itemController').hidden = true;
+      speak(`${item.name}이 선택되었습니다.`);
     }
   }
 
-  // --- TOOLS & CATEGORIES ---
-  let currentCategory = 'outfit'; // 'outfit' | 'structure' | 'interior' | 'furniture'
+  function setupItemDrag(elem, item) {
+    let isDragging = false;
+    let startX = 0, startY = 0;
+
+    const onStart = e => {
+      if (state.mode !== 'free') return;
+      isDragging = true;
+      const evt = e.touches ? e.touches[0] : e;
+      startX = evt.clientX;
+      startY = evt.clientY;
+      selectItemOnCanvas(item.uid);
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onEnd);
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onEnd);
+    };
+
+    const onMove = e => {
+      if (!isDragging) return;
+      if (e.cancelable) e.preventDefault();
+      const evt = e.touches ? e.touches[0] : e;
+      const dx = evt.clientX - startX;
+      const dy = evt.clientY - startY;
+      startX = evt.clientX;
+      startY = evt.clientY;
+
+      const viewport = $('roomViewport');
+      const rect = viewport.getBoundingClientRect();
+      const pctX = (dx / rect.width) * 100;
+      const pctY = (dy / rect.height) * 100;
+
+      item.x = Math.max(8, Math.min(92, item.x + pctX));
+      item.y = Math.max(12, Math.min(88, item.y + pctY));
+
+      elem.style.left = `${item.x}%`;
+      elem.style.top = `${item.y}%`;
+    };
+
+    const onEnd = () => {
+      if (isDragging) {
+        isDragging = false;
+        pushHistory();
+      }
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onEnd);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onEnd);
+    };
+
+    elem.addEventListener('mousedown', onStart);
+    elem.addEventListener('touchstart', onStart, { passive: false });
+  }
+
+  // --- TOOLS PANEL & CATEGORY RENDERING ---
+  let currentCategory = 'outfit';
 
   function renderToolsPanel(cat = currentCategory) {
     currentCategory = cat;
+
+    // Update Category Tabs
     document.querySelectorAll('.ch-cat-tab').forEach(t => {
       t.classList.toggle('active', t.dataset.cat === cat);
     });
 
-    const titleEl = $('optionsTitle');
-    const gridEl = $('optionsGrid');
-    gridEl.innerHTML = '';
+    const grid = $('optionsGrid');
+    grid.innerHTML = '';
+    const title = $('optionsTitle');
 
     if (cat === 'outfit') {
-      titleEl.textContent = '👕 오늘은 어떤 옷을 입혀볼까요?';
-      
-      // Tops
-      OUTFITS.tops.forEach(top => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `ch-opt-btn ${state.outfit.top === top.id ? 'active' : ''}`;
-        btn.innerHTML = `<span class="ch-opt-icon">${top.icon}</span><span class="ch-opt-label">${top.name}</span>`;
-        btn.addEventListener('click', () => {
-          pushHistory();
-          state.outfit.top = top.id;
-          renderCanvas();
-          renderToolsPanel('outfit');
-          react(`${top.name}을 입었어요! 참 멋져요.`);
-        });
-        gridEl.appendChild(btn);
-      });
-
-      // Bottoms
-      OUTFITS.bottoms.forEach(bot => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `ch-opt-btn ${state.outfit.bottom === bot.id ? 'active' : ''}`;
-        btn.innerHTML = `<span class="ch-opt-icon">${bot.icon}</span><span class="ch-opt-label">${bot.name}</span>`;
-        btn.addEventListener('click', () => {
-          pushHistory();
-          state.outfit.bottom = bot.id;
-          renderCanvas();
-          renderToolsPanel('outfit');
-          react(`${bot.name}을 골라주셨네요!`);
-        });
-        gridEl.appendChild(btn);
-      });
+      title.textContent = '👕 오늘은 어떤 옷을 입혀볼까요?';
+      renderOutfitOptions(grid);
     } else if (cat === 'structure') {
-      titleEl.textContent = '🏠 방 모양과 구조 바꾸기';
-      ROOM_TYPES.forEach(r => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `ch-opt-btn ${state.roomType === r.id ? 'active' : ''}`;
-        btn.innerHTML = `<span class="ch-opt-icon">${r.icon}</span><span class="ch-opt-label">${r.name}</span>`;
-        btn.addEventListener('click', () => {
-          pushHistory();
-          state.roomType = r.id;
-          renderCanvas();
-          renderToolsPanel('structure');
-          react(`[${r.name}] 구조로 바꾸었어요! 시원하고 좋습니다.`);
-        });
-        gridEl.appendChild(btn);
-      });
+      title.textContent = '🏠 어떤 집으로 꾸며볼까요? (6가지 방 구조)';
+      renderStructureOptions(grid);
     } else if (cat === 'interior') {
-      titleEl.textContent = '🎨 벽지 / 바닥 / 창문 고르기';
-      
-      // Walls
-      WALL_STYLES.forEach(w => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `ch-opt-btn ${state.wallStyle === w.id ? 'active' : ''}`;
-        btn.innerHTML = `<span class="ch-opt-icon">${w.icon}</span><span class="ch-opt-label">${w.name}</span>`;
-        btn.addEventListener('click', () => {
-          pushHistory();
-          state.wallStyle = w.id;
-          renderCanvas();
-          renderToolsPanel('interior');
-          react(`벽을 ${w.name}로 바꿨어요.`);
-        });
-        gridEl.appendChild(btn);
-      });
-
-      // Floors
-      FLOOR_STYLES.forEach(f => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `ch-opt-btn ${state.floorStyle === f.id ? 'active' : ''}`;
-        btn.innerHTML = `<span class="ch-opt-icon">${f.icon}</span><span class="ch-opt-label">${f.name}</span>`;
-        btn.addEventListener('click', () => {
-          pushHistory();
-          state.floorStyle = f.id;
-          renderCanvas();
-          renderToolsPanel('interior');
-          react(`바닥을 ${f.name}로 깔았어요.`);
-        });
-        gridEl.appendChild(btn);
-      });
-    } else if (cat === 'furniture') {
-      titleEl.textContent = '🪑 가구와 소품을 방에 놓아보세요';
-      
-      // All Categories flatten
-      const allItems = [
-        ...ITEM_CATALOG.furniture,
-        ...ITEM_CATALOG.plants,
-        ...ITEM_CATALOG.toys,
-        ...ITEM_CATALOG.books,
-        ...ITEM_CATALOG.frames,
-        ...ITEM_CATALOG.cushions,
-        ...ITEM_CATALOG.music,
-        ...ITEM_CATALOG.exercise
-      ];
-
-      allItems.forEach(item => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'ch-opt-btn';
-        btn.innerHTML = `<span class="ch-opt-icon">${item.icon}</span><span class="ch-opt-label">${item.name}</span>`;
-        btn.addEventListener('click', () => {
-          pushHistory();
-          const newItem = {
-            uid: 'item_' + Date.now(),
-            id: item.id,
-            name: item.name,
-            icon: item.icon,
-            x: 35 + Math.floor(Math.random() * 25),
-            y: 35 + Math.floor(Math.random() * 30),
-            scale: 1,
-            rot: 0
-          };
-          state.placedItems.push(newItem);
-          state.selectedItemUid = newItem.uid;
-          renderCanvas();
-          react(`[${item.name}]을 방에 놓았어요!`);
-        });
-        gridEl.appendChild(btn);
-      });
+      title.textContent = '🎨 따뜻한 벽지와 바닥을 골라보세요';
+      renderInteriorOptions(grid);
+    } else if (ITEM_CATALOG[cat]) {
+      const catNames = {
+        furniture: '🪑 편안한 가구',
+        plants: '🌷 화사한 꽃과 식물',
+        toys: '🧸 재미있는 장난감',
+        books: '📚 지혜의 책',
+        frames: '🖼️ 추억의 액자와 시계',
+        lights: '💡 따뜻한 조명',
+        cushions: '🛋️ 폭신한 쿠션',
+        music: '🎵 정겨운 음악 소품',
+        exercise: '🏃 건강 운동 소품'
+      };
+      title.textContent = `${catNames[cat] || '소품'}을 골라보세요`;
+      renderCatalogOptions(grid, ITEM_CATALOG[cat]);
     }
   }
 
-  function react(msg) {
+  function renderOutfitOptions(grid) {
+    const wrap = document.createElement('div');
+    wrap.style.display = 'flex';
+    wrap.style.flexDirection = 'column';
+    wrap.style.gap = '16px';
+    wrap.style.width = '100%';
+
+    const makeSection = (secTitle, items, field) => {
+      const sec = document.createElement('div');
+      sec.innerHTML = `<h4 style="font-size:20px; font-weight:800; color:#5d4037; margin-bottom:10px;">${secTitle}</h4>`;
+      const itemGrid = document.createElement('div');
+      itemGrid.className = 'ch-options-grid';
+
+      items.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `ch-opt-card ${state.outfit[field] === item.id ? 'active' : ''}`;
+        btn.innerHTML = `
+          <div class="ch-opt-icon">${item.icon}</div>
+          <div class="ch-opt-name">${item.name}</div>
+        `;
+        btn.addEventListener('click', () => {
+          pushHistory();
+          state.outfit[field] = item.id;
+          renderCanvas();
+          renderToolsPanel('outfit');
+          showToast(`✨ ${item.name}으로 입혔어요!`);
+          speak(`${item.name}을 입혔습니다.`);
+        });
+        itemGrid.appendChild(btn);
+      });
+
+      sec.appendChild(itemGrid);
+      return sec;
+    };
+
+    wrap.appendChild(makeSection('상의 (옷)', OUTFITS.tops, 'top'));
+    wrap.appendChild(makeSection('하의 (바지/치마)', OUTFITS.bottoms, 'bottom'));
+    wrap.appendChild(makeSection('소품 및 장신구', OUTFITS.accs, 'acc'));
+    grid.appendChild(wrap);
+  }
+
+  function renderStructureOptions(grid) {
+    ROOM_TYPES.forEach(r => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `ch-opt-card ${state.roomType === r.id ? 'active' : ''}`;
+      btn.innerHTML = `
+        <div class="ch-opt-icon">${r.icon}</div>
+        <div class="ch-opt-name">${r.name}</div>
+        <div style="font-size:15px; color:#795548; font-weight:600; margin-top:4px;">${r.desc}</div>
+      `;
+      btn.addEventListener('click', () => {
+        pushHistory();
+        state.roomType = r.id;
+        renderCanvas();
+        renderToolsPanel('structure');
+        showToast(`🏠 [${r.name}] 구조로 변경했어요!`);
+        speak(`${r.name} 구조로 변경되었습니다.`);
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  function renderInteriorOptions(grid) {
+    const wrap = document.createElement('div');
+    wrap.style.display = 'flex';
+    wrap.style.flexDirection = 'column';
+    wrap.style.gap = '16px';
+    wrap.style.width = '100%';
+
+    // Walls
+    const wallSec = document.createElement('div');
+    wallSec.innerHTML = `<h4 style="font-size:20px; font-weight:800; color:#5d4037; margin-bottom:10px;">벽지 색상</h4>`;
+    const wallGrid = document.createElement('div');
+    wallGrid.className = 'ch-options-grid';
+    WALL_STYLES.forEach(w => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `ch-opt-card ${state.wallStyle === w.id ? 'active' : ''}`;
+      btn.innerHTML = `
+        <div class="ch-opt-icon" style="background:${w.color}; width:44px; height:44px; border-radius:12px; border:2px solid #ccc; margin:0 auto 6px;"></div>
+        <div class="ch-opt-name">${w.name}</div>
+      `;
+      btn.addEventListener('click', () => {
+        pushHistory();
+        state.wallStyle = w.id;
+        renderCanvas();
+        renderToolsPanel('interior');
+        showToast(`🎨 [${w.name}]로 벽지를 바꿨어요!`);
+      });
+      wallGrid.appendChild(btn);
+    });
+    wallSec.appendChild(wallGrid);
+    wrap.appendChild(wallSec);
+
+    // Floors
+    const floorSec = document.createElement('div');
+    floorSec.innerHTML = `<h4 style="font-size:20px; font-weight:800; color:#5d4037; margin-bottom:10px;">바닥 원목</h4>`;
+    const floorGrid = document.createElement('div');
+    floorGrid.className = 'ch-options-grid';
+    FLOOR_STYLES.forEach(f => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `ch-opt-card ${state.floorStyle === f.id ? 'active' : ''}`;
+      btn.innerHTML = `
+        <div class="ch-opt-icon" style="background:${f.color}; width:44px; height:44px; border-radius:12px; border:2px solid #ccc; margin:0 auto 6px;"></div>
+        <div class="ch-opt-name">${f.name}</div>
+      `;
+      btn.addEventListener('click', () => {
+        pushHistory();
+        state.floorStyle = f.id;
+        renderCanvas();
+        renderToolsPanel('interior');
+        showToast(`🟫 [${f.name}]로 바닥을 바꿨어요!`);
+      });
+      floorGrid.appendChild(btn);
+    });
+    floorSec.appendChild(floorGrid);
+    wrap.appendChild(floorSec);
+
+    grid.appendChild(wrap);
+  }
+
+  function renderCatalogOptions(grid, items) {
+    items.forEach(item => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ch-opt-card';
+      btn.innerHTML = `
+        <div class="ch-opt-icon">${item.icon}</div>
+        <div class="ch-opt-name">${item.name}</div>
+      `;
+      btn.addEventListener('click', () => {
+        handleCatalogItemClick(item);
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  function handleCatalogItemClick(item) {
+    if (state.mode === 'easy') {
+      // Show Easy Mode placement bar
+      state.pendingEasyItem = item;
+      $('easyPositionBar').hidden = false;
+      $('easyItemName').textContent = `선택한 물건: ${item.name} ${item.icon}`;
+      $('easyPositionBar').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      speak(`${item.name}을 선택하셨습니다. 왼쪽, 가운데, 오른쪽 중 원하는 위치 버튼을 눌러주세요.`);
+    } else {
+      // Free mode direct drop
+      pushHistory();
+      const uid = 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+      const newItem = {
+        uid,
+        id: item.id,
+        name: item.name,
+        icon: item.icon,
+        x: 45 + (Math.random() * 10 - 5),
+        y: 65 + (Math.random() * 10 - 5),
+        scale: 1.0,
+        rot: 0
+      };
+      state.placedItems.push(newItem);
+      state.selectedItemUid = uid;
+      renderCanvas();
+      $('itemController').hidden = false;
+      $('selectedItemName').textContent = `선택된 물건: ${item.name}`;
+      showToast(`🪑 [${item.name}]을 방에 놓았어요!`);
+      speak(`${item.name}을 방에 놓았습니다.`);
+    }
+  }
+
+  function placeEasyItem(pos) {
+    if (!state.pendingEasyItem) return;
+    pushHistory();
+
+    const item = state.pendingEasyItem;
+    const uid = 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+
+    let x = 50, y = 70;
+    if (pos === 'left') {
+      x = 22; y = 68;
+    } else if (pos === 'center') {
+      x = 50; y = 74;
+    } else if (pos === 'right') {
+      x = 78; y = 68;
+    }
+
+    const newItem = {
+      uid,
+      id: item.id,
+      name: item.name,
+      icon: item.icon,
+      x,
+      y,
+      scale: 1.0,
+      rot: 0
+    };
+
+    state.placedItems.push(newItem);
+    state.selectedItemUid = uid;
+    state.pendingEasyItem = null;
+    $('easyPositionBar').hidden = true;
+
+    renderCanvas();
+
+    const posNames = { left: '왼쪽', center: '가운데', right: '오른쪽' };
+    showToast(`✨ [${item.name}]을 방의 ${posNames[pos]}에 예쁘게 놓았어요!`);
+    speak(`${item.name}을 방의 ${posNames[pos]}에 배치했습니다.`);
+
+    // Reaction Speech
     const charInfo = CHARACTERS[state.currentCharId];
     const reaction = charInfo.reactions[Math.floor(Math.random() * charInfo.reactions.length)];
-    const fullMsg = `${msg} ${reaction}`;
-    $('speechMsg').textContent = fullMsg;
-    showToast(msg);
-    speak(fullMsg);
+    $('speechMsg').textContent = reaction;
   }
 
-  // --- ITEM MOVEMENT CONTROLS ---
-  function moveSelectedItem(dx, dy) {
-    const item = state.placedItems.find(it => it.uid === state.selectedItemUid);
-    if (!item) return;
-    pushHistory();
-    item.x = Math.max(5, Math.min(85, item.x + dx));
-    item.y = Math.max(10, Math.min(75, item.y + dy));
-    renderCanvas();
-  }
-
-  function rotateSelectedItem() {
-    const item = state.placedItems.find(it => it.uid === state.selectedItemUid);
-    if (!item) return;
-    pushHistory();
-    item.rot = ((item.rot || 0) + 45) % 360;
-    renderCanvas();
-  }
-
-  function scaleSelectedItem(delta) {
-    const item = state.placedItems.find(it => it.uid === state.selectedItemUid);
-    if (!item) return;
-    pushHistory();
-    item.scale = Math.max(0.6, Math.min(2.0, (item.scale || 1) + delta));
-    renderCanvas();
-  }
-
-  function deleteSelectedItem() {
-    if (!state.selectedItemUid) return;
-    pushHistory();
-    state.placedItems = state.placedItems.filter(it => it.uid !== state.selectedItemUid);
-    state.selectedItemUid = null;
-    renderCanvas();
-    showToast('🗑 물건을 치웠어요.');
-    speak('물건을 치웠습니다.');
-  }
-
-  // --- GLOBAL EVENT LISTENERS ---
+  // --- GLOBAL EVENTS SETUP ---
   function setupGlobalEvents() {
-    // Resume Banner Actions
-    $('btnResumeWork').addEventListener('click', () => {
-      const saved = loadFromStorage();
-      if (saved) {
-        state = saved;
-        startDecorating(state.currentCharId, true);
+    // Top TTS
+    $('btnTtsHelp').addEventListener('click', () => {
+      if (state.screen === 'select') {
+        speak('누구의 집을 꾸며볼까요? 콩이의 운동방, 토리의 놀이방, 나비의 학습방, 곰이의 취미방 중 마음에 드는 친구를 선택해주세요.');
+      } else {
+        const charInfo = CHARACTERS[state.currentCharId];
+        speak(`지금은 ${charInfo.charName}의 방을 꾸미고 있습니다. 상단의 카테고리를 눌러 옷을 입히거나 가구와 꽃을 골라 방을 예쁘게 꾸며보세요.`);
       }
     });
 
-    $('btnNewWork').addEventListener('click', () => {
-      $('resumeBanner').hidden = true;
+    // Mode switch
+    $('btnModeEasy').addEventListener('click', () => {
+      state.mode = 'easy';
+      $('btnModeEasy').classList.add('active');
+      $('btnModeFree').classList.remove('active');
+      $('itemController').hidden = true;
+      showToast('✨ 쉬운 꾸미기 모드 (버튼으로 쏙쏙 배치)');
+      speak('쉬운 꾸미기 모드로 변경되었습니다.');
     });
+
+    $('btnModeFree').addEventListener('click', () => {
+      state.mode = 'free';
+      $('btnModeFree').classList.add('active');
+      $('btnModeEasy').classList.remove('active');
+      $('easyPositionBar').hidden = true;
+      if (state.selectedItemUid) $('itemController').hidden = false;
+      showToast('🎨 자유롭게 꾸미기 모드 (자유 이동 및 조절)');
+      speak('자유롭게 꾸미기 모드로 변경되었습니다.');
+    });
+
+    // Easy Placement Buttons
+    $('btnPlaceLeft').addEventListener('click', () => placeEasyItem('left'));
+    $('btnPlaceCenter').addEventListener('click', () => placeEasyItem('center'));
+    $('btnPlaceRight').addEventListener('click', () => placeEasyItem('right'));
 
     // Category Tabs
     document.querySelectorAll('.ch-cat-tab').forEach(tab => {
@@ -625,24 +839,16 @@
       });
     });
 
-    // D-Pad Position Controls
-    $('btnMoveLeft').addEventListener('click', () => moveSelectedItem(-5, 0));
-    $('btnMoveRight').addEventListener('click', () => moveSelectedItem(5, 0));
-    $('btnMoveUp').addEventListener('click', () => moveSelectedItem(0, -5));
-    $('btnMoveDown').addEventListener('click', () => moveSelectedItem(0, 5));
-    $('btnRotate').addEventListener('click', rotateSelectedItem);
-    $('btnScaleUp').addEventListener('click', () => scaleSelectedItem(0.2));
-    $('btnScaleDown').addEventListener('click', () => scaleSelectedItem(-0.2));
-    $('btnDeleteItem').addEventListener('click', deleteSelectedItem);
-
-    // Bottom Fixed Actions
+    // Bottom Action Buttons
     $('btnBottomHome').addEventListener('click', () => {
-      $('studioScreen').hidden = true;
-      $('selectScreen').hidden = false;
-      state.screen = 'select';
+      if (confirm('홈 화면(디지털 AI 학교)으로 이동할까요? 현재 상태는 안전하게 저장할 수 있습니다.')) {
+        saveToStorage();
+        window.location.href = 'index.html';
+      }
     });
 
     $('btnBottomUndo').addEventListener('click', undoHistory);
+
     $('btnBottomSave').addEventListener('click', saveToStorage);
 
     $('btnBottomReset').addEventListener('click', () => {
@@ -655,8 +861,8 @@
       state.placedItems = [];
       state.selectedItemUid = null;
       renderCanvas();
-      showToast('처음 모습으로 돌아갔어요.');
-      speak('처음 모습으로 돌아갔습니다.');
+      showToast('🔄 처음 모습으로 비웠어요.');
+      speak('방의 모든 물건을 처음 모습으로 정리했습니다.');
     });
 
     $('btnConfirmResetNo').addEventListener('click', () => {
@@ -664,30 +870,111 @@
     });
 
     $('btnBottomHelp').addEventListener('click', () => {
-      const msg = '원하는 옷이나 물건을 한 번 눌러보세요. 제가 방에 예쁘게 놓아드릴게요!';
-      $('speechMsg').textContent = msg;
-      speak(msg);
+      speak('마음에 드는 물건을 누르면 방에 놓을 수 있습니다. 실수를 하셔도 언제든지 하단의 되돌리기 버튼을 누르시면 됩니다.');
+      showToast('💡 원하는 물건을 꾹 누르고 위치를 골라보세요.');
     });
 
-    // Complete Decorating View
+    // Completion View
     $('btnBottomComplete').addEventListener('click', () => {
       saveToStorage();
-      const view = $('completeView');
-      view.hidden = false;
-
+      awardStamp();
       const charInfo = CHARACTERS[state.currentCharId];
-      $('completeCharImg').src = charInfo.avatar;
-      $('completeTitle').textContent = `🎉 정말 멋진 [${charInfo.name}]이 완성되었어요!`;
-      
-      const congrats = '어르신, 정말 멋진 집이 되었어요! 함께 꾸며줘서 진심으로 고마워요.';
-      speak(congrats);
+      $('completeCharImg').src = charInfo.completeImg;
+      $('completeDesc').textContent = `어르신의 따뜻한 손길로 ${charInfo.charName}의 ${charInfo.theme}이 반짝반짝 완성되었습니다.`;
+      $('completeView').hidden = false;
+      speak(`오늘도 정말 잘하셨어요! 어르신 덕분에 ${charInfo.charName}의 방이 최고로 멋지게 완성되었습니다.`);
     });
 
     $('btnCloseComplete').addEventListener('click', () => {
       $('completeView').hidden = true;
     });
+
+    // Resume Banner Buttons
+    $('btnResumeWork').addEventListener('click', () => {
+      const saved = loadFromStorage();
+      if (saved) {
+        selectCharacter(saved.currentCharId, saved);
+        showToast('▶ 지난번 집을 그대로 불러왔어요.');
+      }
+    });
+
+    $('btnNewWork').addEventListener('click', () => {
+      $('resumeBanner').hidden = true;
+      showToast('새로운 친구의 집을 골라주세요.');
+    });
+
+    // D-Pad Controller Events
+    const getSelectedItem = () => state.placedItems.find(i => i.uid === state.selectedItemUid);
+
+    $('btnMoveLeft').addEventListener('click', () => {
+      const item = getSelectedItem();
+      if (!item) return;
+      pushHistory();
+      item.x = Math.max(8, item.x - 6);
+      renderCanvas();
+    });
+
+    $('btnMoveRight').addEventListener('click', () => {
+      const item = getSelectedItem();
+      if (!item) return;
+      pushHistory();
+      item.x = Math.min(92, item.x + 6);
+      renderCanvas();
+    });
+
+    $('btnMoveUp').addEventListener('click', () => {
+      const item = getSelectedItem();
+      if (!item) return;
+      pushHistory();
+      item.y = Math.max(12, item.y - 6);
+      renderCanvas();
+    });
+
+    $('btnMoveDown').addEventListener('click', () => {
+      const item = getSelectedItem();
+      if (!item) return;
+      pushHistory();
+      item.y = Math.min(88, item.y + 6);
+      renderCanvas();
+    });
+
+    $('btnRotate').addEventListener('click', () => {
+      const item = getSelectedItem();
+      if (!item) return;
+      pushHistory();
+      item.rot = (item.rot + 15) % 360;
+      renderCanvas();
+    });
+
+    $('btnScaleUp').addEventListener('click', () => {
+      const item = getSelectedItem();
+      if (!item) return;
+      pushHistory();
+      item.scale = Math.min(2.0, item.scale + 0.15);
+      renderCanvas();
+    });
+
+    $('btnScaleDown').addEventListener('click', () => {
+      const item = getSelectedItem();
+      if (!item) return;
+      pushHistory();
+      item.scale = Math.max(0.6, item.scale - 0.15);
+      renderCanvas();
+    });
+
+    $('btnDeleteItem').addEventListener('click', () => {
+      const item = getSelectedItem();
+      if (!item) return;
+      pushHistory();
+      state.placedItems = state.placedItems.filter(i => i.uid !== item.uid);
+      state.selectedItemUid = null;
+      $('itemController').hidden = true;
+      renderCanvas();
+      showToast(`🗑 [${item.name}]을 치웠어요.`);
+      speak(`${item.name}을 치웠습니다.`);
+    });
   }
 
-  // Run
-  init();
+  // Auto initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', init);
 })();

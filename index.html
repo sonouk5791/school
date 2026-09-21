@@ -194,6 +194,208 @@
       </div>
     </section>
 
+    <!-- =======================================================================
+         신규 3차 고도화: 1. 일일 추천 활동 (오늘은 무엇을 해볼까요?)
+         ======================================================================= -->
+    <section class="daily-recommend-section" id="dailyRecommendSection" aria-label="오늘의 맞춤 추천 활동">
+      <div class="daily-rec-header">
+        <div>
+          <span class="daily-rec-badge">✨ 매일 새로운 하루</span>
+          <h2 class="daily-rec-title">오늘은 무엇을 해볼까요?</h2>
+          <p style="font-size: 19px; color: #5C524B; margin: 0;">4명의 친구들이 어르신을 위해 준비한 오늘의 추천 활동이에요.</p>
+        </div>
+        <div id="dailyDayThemeBadge" class="daily-rec-day-theme">
+          🌸 오늘의 테마: 향긋한 꽃과 활기찬 하루
+        </div>
+      </div>
+
+      <div class="daily-rec-grid">
+        <!-- 1. 콩이 추천 -->
+        <div class="daily-rec-card">
+          <div class="daily-card-head">
+            <img src="assets/images/friend-kongi.png" alt="콩이" class="daily-char-avatar">
+            <div>
+              <div class="daily-char-name">🐶 콩이</div>
+              <div style="font-size:14px; color:#E65100; font-weight:800;">운동 친구</div>
+            </div>
+          </div>
+          <div class="daily-activity-title">오늘의 5분 체조</div>
+          <div class="daily-greeting-bubble">"오늘도 만나서 반가워요! 가볍게 몸을 풀어볼까요?"</div>
+        </div>
+
+        <!-- 2. 토리 추천 -->
+        <div class="daily-rec-card">
+          <div class="daily-card-head">
+            <img src="assets/images/friend-tori.png" alt="토리" class="daily-char-avatar">
+            <div>
+              <div class="daily-char-name">🐰 토리</div>
+              <div style="font-size:14px; color:#C2185B; font-weight:800;">놀이 친구</div>
+            </div>
+          </div>
+          <div class="daily-activity-title">같은 꽃 찾기</div>
+          <div class="daily-greeting-bubble">"오늘도 같이 놀아요! 알록달록 꽃을 맞춰봐요."</div>
+        </div>
+
+        <!-- 3. 나비 추천 -->
+        <div class="daily-rec-card">
+          <div class="daily-card-head">
+            <img src="assets/images/friend-nabi.png" alt="나비" class="daily-char-avatar">
+            <div>
+              <div class="daily-char-name">🐱 나비</div>
+              <div style="font-size:14px; color:#6A1B9A; font-weight:800;">학습 친구</div>
+            </div>
+          </div>
+          <div class="daily-activity-title">오늘의 계절 알아보기</div>
+          <div class="daily-greeting-bubble">"오늘은 무엇을 알아볼까요? 차근차근 생각해봐요."</div>
+        </div>
+
+        <!-- 4. 곰이 추천 -->
+        <div class="daily-rec-card">
+          <div class="daily-card-head">
+            <img src="assets/images/friend-bori.png" alt="곰이" class="daily-char-avatar">
+            <div>
+              <div class="daily-char-name">🐻 곰이</div>
+              <div style="font-size:14px; color:#1565C0; font-weight:800;">취미 친구</div>
+            </div>
+          </div>
+          <div class="daily-activity-title">좋아하는 음악 듣기</div>
+          <div class="daily-greeting-bubble">"오늘도 편안하게 함께해요. 정겨운 옛 노래를 들어요."</div>
+        </div>
+      </div>
+
+      <div class="daily-rec-footer">
+        <a href="senior-exercise.html" class="btn-daily-start" id="btnStartDailyActivity">
+          ▶ 오늘 활동 시작하기 &gt;
+        </a>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         신규 3차 고도화: 2. 4대 캐릭터 룸 도어 (오늘은 누구를 만나볼까요?)
+         ======================================================================= -->
+    <section class="character-doors-section" id="characterDoors" aria-label="4대 캐릭터 방">
+      <div class="doors-header">
+        <span class="badge-track-highlight" style="background:#FFF3E0; color:#E65100; border-color:#FFD180; font-size:17px; padding:6px 18px; margin-bottom:10px;">
+          🚪 4개의 정겨운 캐릭터 방
+        </span>
+        <h2>오늘은 누구를 만나볼까요?</h2>
+        <p>원하는 친구의 방 문을 열고 들어가 함께 이야기하고 활동해요.</p>
+      </div>
+
+      <div class="doors-grid">
+        <!-- 1. 🐶 콩이의 운동방 -->
+        <article class="character-door-card door-kongi" tabindex="0">
+          <div class="door-avatar-wrap">
+            <img src="assets/images/friend-kongi.png" alt="콩이" class="door-avatar-img">
+          </div>
+          <h3 class="door-room-title">🐶 콩이의 운동방</h3>
+          <p class="door-room-desc">몸을 천천히 움직여요</p>
+          <div class="door-contents-box">
+            <div class="door-contents-label">주요 활동:</div>
+            <div class="door-tags-list">
+              <span class="door-tag-pill">오늘의 운동</span>
+              <span class="door-tag-pill">의자 체조</span>
+              <span class="door-tag-pill">목 운동</span>
+              <span class="door-tag-pill">어깨 운동</span>
+              <span class="door-tag-pill">팔 운동</span>
+              <span class="door-tag-pill">박수 운동</span>
+              <span class="door-tag-pill">손 운동</span>
+              <span class="door-tag-pill">무릎 운동</span>
+              <span class="door-tag-pill">발목 운동</span>
+              <span class="door-tag-pill">심호흡</span>
+              <span class="door-tag-pill">10분 체조</span>
+              <span class="door-tag-pill">20분 체조</span>
+            </div>
+          </div>
+          <a href="senior-exercise.html" class="door-btn-enter">
+            [콩이 만나러 가기] &gt;
+          </a>
+        </article>
+
+        <!-- 2. 🐰 토리의 놀이방 -->
+        <article class="character-door-card door-tori" tabindex="0">
+          <div class="door-avatar-wrap">
+            <img src="assets/images/friend-tori.png" alt="토리" class="door-avatar-img">
+          </div>
+          <h3 class="door-room-title">🐰 토리의 놀이방</h3>
+          <p class="door-room-desc">재미있게 놀아봐요</p>
+          <div class="door-contents-box">
+            <div class="door-contents-label">주요 활동:</div>
+            <div class="door-tags-list">
+              <span class="door-tag-pill">같은 그림 찾기</span>
+              <span class="door-tag-pill">색깔 맞추기</span>
+              <span class="door-tag-pill">큰 그림 퍼즐</span>
+              <span class="door-tag-pill">틀린 그림 찾기</span>
+              <span class="door-tag-pill">동물 맞히기</span>
+              <span class="door-tag-pill">옛날 물건 맞히기</span>
+              <span class="door-tag-pill">박수 따라하기</span>
+              <span class="door-tag-pill">손동작 따라하기</span>
+              <span class="door-tag-pill">계절 놀이</span>
+              <span class="door-tag-pill">토리 집 꾸미기</span>
+            </div>
+          </div>
+          <a href="character-house.html" class="door-btn-enter">
+            [토리 만나러 가기] &gt;
+          </a>
+        </article>
+
+        <!-- 3. 🐱 나비의 학습방 -->
+        <article class="character-door-card door-nabi" tabindex="0">
+          <div class="door-avatar-wrap">
+            <img src="assets/images/friend-nabi.png" alt="나비" class="door-avatar-img">
+          </div>
+          <h3 class="door-room-title">🐱 나비의 학습방</h3>
+          <p class="door-room-desc">천천히 생각해봐요</p>
+          <div class="door-contents-box">
+            <div class="door-contents-label">주요 활동:</div>
+            <div class="door-tags-list">
+              <span class="door-tag-pill">오늘 날짜</span>
+              <span class="door-tag-pill">계절 알아보기</span>
+              <span class="door-tag-pill">숫자</span>
+              <span class="door-tag-pill">글자</span>
+              <span class="door-tag-pill">속담</span>
+              <span class="door-tag-pill">사진 회상</span>
+              <span class="door-tag-pill">옛날 학교</span>
+              <span class="door-tag-pill">고향 이야기</span>
+              <span class="door-tag-pill">음식 이름</span>
+              <span class="door-tag-pill">기억 카드</span>
+              <span class="door-tag-pill">나비 집 꾸미기</span>
+            </div>
+          </div>
+          <a href="#lessons" class="door-btn-enter">
+            [나비 만나러 가기] &gt;
+          </a>
+        </article>
+
+        <!-- 4. 🐻 곰이의 취미방 -->
+        <article class="character-door-card door-bori" tabindex="0">
+          <div class="door-avatar-wrap">
+            <img src="assets/images/friend-bori.png" alt="곰이" class="door-avatar-img">
+          </div>
+          <h3 class="door-room-title">🐻 곰이의 취미방</h3>
+          <p class="door-room-desc">좋아하는 것을 함께해요</p>
+          <div class="door-contents-box">
+            <div class="door-contents-label">주요 활동:</div>
+            <div class="door-tags-list">
+              <span class="door-tag-pill">음악 감상</span>
+              <span class="door-tag-pill">옛 노래</span>
+              <span class="door-tag-pill">그림 보기</span>
+              <span class="door-tag-pill">색칠하기</span>
+              <span class="door-tag-pill">꽃 꾸미기</span>
+              <span class="door-tag-pill">원예</span>
+              <span class="door-tag-pill">사진 보기</span>
+              <span class="door-tag-pill">악기 소리</span>
+              <span class="door-tag-pill">집 꾸미기</span>
+              <span class="door-tag-pill">추억 이야기</span>
+            </div>
+          </div>
+          <a href="character-house.html" class="door-btn-enter">
+            [곰이 만나러 가기] &gt;
+          </a>
+        </article>
+      </div>
+    </section>
+
     <!-- 함께하는 10단계 AI 의자 체조 배너 -->
     <section class="warmup-banner" style="background: linear-gradient(135deg, #f0f7ee, #e3f2dc); border: 2px solid #b7deb0; border-radius: 20px; padding: 22px 26px; margin: 24px 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; box-shadow: 0 4px 15px rgba(46,102,40,0.08);">
       <div style="flex: 1; min-width: 280px;">
@@ -230,8 +432,8 @@
     <!-- 2. 오늘의 수업 8대 대형 카드 섹션 (Today's Lessons Grid) -->
     <section class="section-lessons" id="lessons">
       <div class="section-header-banner">
-        <div class="section-badge">✨ 오늘의 맞춤 활동</div>
-        <h2 class="section-title">오늘은 무엇을 해볼까요?</h2>
+        <div class="section-badge">✨ 선생님과 함께하는 수업</div>
+        <h2 class="section-title">선생님과 함께하는 인지 돌봄 수업</h2>
         <p class="section-sub">마음에 드는 수업 카드를 편안하게 꾹 눌러보세요.</p>
       </div>
 

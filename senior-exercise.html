@@ -5,19 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff9ed">
   <title>디지털 AI 학교 어르신 체조 (SCENE 1 ~ 10 연속 영상)</title>
-  <link rel="stylesheet" href="css/senior-exercise.css">
+  <link rel="stylesheet" href="css/senior-exercise.css?v=20260921-v3">
 </head>
 <body>
   <div class="se-container">
     <!-- Top Header -->
     <header class="se-header">
-      <a class="se-back-link" href="index.html">← 디지털 AI 학교로 돌아가기</a>
-      <span class="se-school-badge">🏫 치매·인지건강 어르신 운동교실</span>
+      <div class="se-header-left" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <a class="se-back-link" href="index.html" style="font-size: 20px; font-weight: 800; min-height: 48px; display: inline-flex; align-items: center;">
+          🏠 처음으로
+        </a>
+        <span class="se-location-badge" style="background:#FFF9C4; color:#E65100; padding:8px 16px; border-radius:12px; font-weight:800; font-size:18px; border:1px solid #FFE082;">
+          지금은 <strong>콩이의 운동방 (10단계 AI 의자 체조)</strong> 이에요
+        </span>
+      </div>
+      <div class="se-header-right" style="display:flex; align-items:center; gap:12px;">
+        <button id="btnTtsExerciseHelp" type="button" style="min-height:48px; padding:8px 16px; font-size:18px; font-weight:800; background:#E0F2FE; color:#0369A1; border:2px solid #BAE6FD; border-radius:14px; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+          <span>🔊</span>
+          <span>설명 듣기</span>
+        </button>
+        <span class="se-school-badge">🏫 치매·인지건강 어르신 운동교실</span>
+      </div>
     </header>
 
     <!-- Hero / Intro -->
     <section class="se-hero">
-      <div class="se-characters-tag">🐾 콩이(노랑) · 토리(분홍) · 나비(보라) · 보리(파랑)와 함께</div>
+      <div class="se-characters-tag">🐾 콩이(노랑) · 토리(분홍) · 나비(보라) · 곰이(파랑)와 함께</div>
       <h1>디지털 AI 학교 어르신 체조</h1>
       <p class="se-hero-lead">천천히, 안전하게, 즐겁게 함께 움직여요</p>
       
@@ -92,13 +105,36 @@
       </div>
     </section>
 
+    <!-- Completion Celebration Modal (도장 & 칭찬) -->
+    <div id="exerciseCompleteModal" style="position:fixed; inset:0; background:rgba(0,0,0,0.65); display:flex; align-items:center; justify-content:center; padding:20px; z-index:999;" hidden>
+      <div style="background:#fff; border-radius:28px; padding:36px 28px; max-width:560px; width:100%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.3);">
+        <div id="exerciseStampBadge" style="display:inline-block; background:#E8F5E9; color:#2E7D32; border:2px solid #81C784; padding:8px 20px; border-radius:20px; font-size:22px; font-weight:900; margin-bottom:14px;">
+          🌸 건강 꽃 도장 획득!
+        </div>
+        <h2 style="font-size:32px; font-weight:900; color:#1B5E20; margin-bottom:10px;">
+          🎉 오늘도 정말 잘하셨어요!
+        </h2>
+        <p style="font-size:20px; color:#4E342E; line-height:1.6; margin-bottom:24px;">
+          콩이, 토리, 나비, 곰이와 함께 10가지 건강 의자 체조를 모두 끝마치셨습니다. 몸도 마음도 튼튼해졌어요!
+        </p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <button id="btnReplayExercise" type="button" style="min-height:54px; font-size:20px; font-weight:800; background:#FFF8E1; color:#F57F17; border:2px solid #FFE082; padding:12px 24px; border-radius:16px; cursor:pointer;">
+            🔄 다시 운동하기
+          </button>
+          <a href="index.html" style="min-height:54px; font-size:20px; font-weight:800; background:#2D6B24; color:#FFFFFF; border:0; padding:12px 28px; border-radius:16px; text-decoration:none; display:inline-flex; align-items:center;">
+            🏠 학교 홈으로 가기
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
-    <footer style="text-align: center; color: #6b6255; font-size: 18px; line-height: 1.6;">
-      <p>💡 콩이(노랑), 토리(분홍), 나비(보라), 보리(파랑) 캐릭터와 어르신이 함께하는 연속 자동재생 AI 체조 영상입니다.</p>
-      <p style="margin-top: 8px;"><a href="index.html" class="se-back-link">학교 메인 홈으로 돌아가기</a></p>
+    <footer style="text-align: center; color: #6b6255; font-size: 18px; line-height: 1.6; margin-top: 40px; padding-bottom: 30px;">
+      <p>💡 콩이(노랑), 토리(분홍), 나비(보라), 곰이(파랑) 캐릭터와 어르신이 함께하는 연속 자동재생 AI 체조 영상입니다.</p>
+      <p style="margin-top: 8px;"><a href="index.html" class="se-back-link" style="display:inline-block;">학교 메인 홈으로 돌아가기</a></p>
     </footer>
   </div>
 
-  <script src="js/senior-exercise.js"></script>
+  <script src="js/senior-exercise.js?v=20260921-v3"></script>
 </body>
 </html>

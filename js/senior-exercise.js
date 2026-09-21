@@ -335,6 +335,26 @@
     captionText.textContent = '오늘도 정말 잘하셨어요!\n다음에 또 만나요.';
     cueLead.textContent = '마무리 인사';
     countBadge.hidden = true;
+
+    // Award Stamp & Show Complete Modal
+    try {
+      const stamps = JSON.parse(localStorage.getItem('senior_stamps_v1') || '[]');
+      const newStamp = {
+        type: 'flower',
+        title: '10단계 AI 어르신 의자 체조 완료',
+        date: new Date().toISOString()
+      };
+      stamps.push(newStamp);
+      localStorage.setItem('senior_stamps_v1', JSON.stringify(stamps));
+    } catch (e) {
+      console.warn('Stamp save error:', e);
+    }
+
+    const modal = document.getElementById('exerciseCompleteModal');
+    if (modal) {
+      modal.hidden = false;
+      speakText('오늘도 정말 잘하셨습니다! 열 가지 건강 의자 체조를 모두 마치셨습니다.');
+    }
   }
 
   function updateControls() {
@@ -423,6 +443,25 @@
       accum += scenes[i].duration;
     }
   });
+
+  // Replay from modal
+  const btnReplay = document.getElementById('btnReplayExercise');
+  if (btnReplay) {
+    btnReplay.addEventListener('click', () => {
+      const modal = document.getElementById('exerciseCompleteModal');
+      if (modal) modal.hidden = true;
+      jumpToScene(0);
+      play();
+    });
+  }
+
+  // TTS Help Button
+  const btnTtsHelp = document.getElementById('btnTtsExerciseHelp');
+  if (btnTtsHelp) {
+    btnTtsHelp.addEventListener('click', () => {
+      speakText('디지털 에이아이 학교 어르신 체조 교실입니다. 의자에 편안하게 앉으신 뒤 어르신 체조 시작 버튼을 누르시면 1번 시작 인사부터 10번 마무리까지 천천히 자동으로 진행됩니다.');
+    });
+  }
 
   // Keyboard accessibility
   document.addEventListener('keydown', (e) => {
