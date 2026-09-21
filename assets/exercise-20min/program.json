@@ -1,0 +1,2485 @@
+{
+  "duration": 1200,
+  "bpm": 75,
+  "chapters": [
+    {
+      "title": "인사와 준비운동",
+      "character": "kongi",
+      "start": 0,
+      "end": 120,
+      "duration": 120
+    },
+    {
+      "title": "목과 어깨",
+      "character": "tori",
+      "start": 120,
+      "end": 300,
+      "duration": 180
+    },
+    {
+      "title": "손과 팔",
+      "character": "tori",
+      "start": 300,
+      "end": 480,
+      "duration": 180
+    },
+    {
+      "title": "상체 체조",
+      "character": "nabi",
+      "start": 480,
+      "end": 660,
+      "duration": 180
+    },
+    {
+      "title": "다리와 발목",
+      "character": "bori",
+      "start": 660,
+      "end": 840,
+      "duration": 180
+    },
+    {
+      "title": "박수·리듬·인지",
+      "character": "nabi",
+      "start": 840,
+      "end": 1020,
+      "duration": 180
+    },
+    {
+      "title": "함께하는 복합 체조",
+      "character": "kongi",
+      "start": 1020,
+      "end": 1140,
+      "duration": 120
+    },
+    {
+      "title": "정리운동과 칭찬",
+      "character": "bori",
+      "start": 1140,
+      "end": 1200,
+      "duration": 60
+    }
+  ],
+  "events": [
+    {
+      "duration": 16,
+      "text": "안녕하세요! 콩이에요. 오늘도 저와 함께 천천히 몸을 움직여 볼까요? 편안하게 따라 해주세요.",
+      "move": "wave",
+      "character": "kongi",
+      "phrase": 0,
+      "start": 0,
+      "end": 16,
+      "chapter": 0
+    },
+    {
+      "duration": 12,
+      "text": "통증이나 어지러움이 느껴지면 운동을 멈추고 쉬어주세요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 1,
+      "start": 16,
+      "end": 28,
+      "chapter": 0
+    },
+    {
+      "duration": 8,
+      "text": "필요한 경우 보호자 또는 직원과 함께 진행해주세요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 2,
+      "start": 28,
+      "end": 36,
+      "chapter": 0
+    },
+    {
+      "duration": 8,
+      "text": "튼튼한 의자에 편안하게 앉아 주세요. 두 발은 바닥에 둡니다.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 3,
+      "start": 36,
+      "end": 44,
+      "chapter": 0
+    },
+    {
+      "duration": 6,
+      "text": "두 손을 무릎 위에 올려볼게요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 4,
+      "start": 44,
+      "end": 50,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "숨을 천천히 들이마시고.",
+      "move": "inhale",
+      "character": "kongi",
+      "phrase": 5,
+      "start": 50,
+      "end": 54,
+      "chapter": 0
+    },
+    {
+      "duration": 5,
+      "text": "후, 편안하게 내쉬어요.",
+      "move": "exhale",
+      "character": "kongi",
+      "phrase": 6,
+      "start": 54,
+      "end": 59,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "숨을 천천히 들이마시고.",
+      "move": "inhale",
+      "character": "kongi",
+      "phrase": 5,
+      "start": 59,
+      "end": 63,
+      "chapter": 0
+    },
+    {
+      "duration": 5,
+      "text": "후, 편안하게 내쉬어요.",
+      "move": "exhale",
+      "character": "kongi",
+      "phrase": 6,
+      "start": 63,
+      "end": 68,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "숨을 천천히 들이마시고.",
+      "move": "inhale",
+      "character": "kongi",
+      "phrase": 5,
+      "start": 68,
+      "end": 72,
+      "chapter": 0
+    },
+    {
+      "duration": 5,
+      "text": "후, 편안하게 내쉬어요.",
+      "move": "exhale",
+      "character": "kongi",
+      "phrase": 6,
+      "start": 72,
+      "end": 77,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 살짝 올려요.",
+      "move": "shoulder-up",
+      "character": "kongi",
+      "phrase": 7,
+      "start": 77,
+      "end": 81,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 8,
+      "start": 81,
+      "end": 85,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 살짝 올려요.",
+      "move": "shoulder-up",
+      "character": "kongi",
+      "phrase": 7,
+      "start": 85,
+      "end": 89,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 8,
+      "start": 89,
+      "end": 93,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 살짝 올려요.",
+      "move": "shoulder-up",
+      "character": "kongi",
+      "phrase": 7,
+      "start": 93,
+      "end": 97,
+      "chapter": 0
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 8,
+      "start": 97,
+      "end": 101,
+      "chapter": 0
+    },
+    {
+      "duration": 8,
+      "text": "잘하고 계세요. 조금만 움직여도 좋아요.",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 9,
+      "start": 101,
+      "end": 109,
+      "chapter": 0
+    },
+    {
+      "duration": 11,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 10,
+      "start": 109,
+      "end": 120,
+      "chapter": 0
+    },
+    {
+      "duration": 8,
+      "text": "이번에는 토리와 함께 목과 어깨를 움직여요. 목은 작게 움직여요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 11,
+      "start": 120,
+      "end": 128,
+      "chapter": 1
+    },
+    {
+      "duration": 6,
+      "text": "고개를 천천히 오른쪽으로.",
+      "move": "neck-right",
+      "character": "tori",
+      "phrase": 12,
+      "start": 128,
+      "end": 134,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "다시 가운데.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 13,
+      "start": 134,
+      "end": 138,
+      "chapter": 1
+    },
+    {
+      "duration": 6,
+      "text": "이번에는 왼쪽으로.",
+      "move": "neck-left",
+      "character": "tori",
+      "phrase": 14,
+      "start": 138,
+      "end": 144,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "다시 가운데.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 13,
+      "start": 144,
+      "end": 148,
+      "chapter": 1
+    },
+    {
+      "duration": 6,
+      "text": "고개를 천천히 오른쪽으로.",
+      "move": "neck-right",
+      "character": "tori",
+      "phrase": 12,
+      "start": 148,
+      "end": 154,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "다시 가운데.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 13,
+      "start": 154,
+      "end": 158,
+      "chapter": 1
+    },
+    {
+      "duration": 6,
+      "text": "이번에는 왼쪽으로.",
+      "move": "neck-left",
+      "character": "tori",
+      "phrase": 14,
+      "start": 158,
+      "end": 164,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "다시 가운데.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 13,
+      "start": 164,
+      "end": 168,
+      "chapter": 1
+    },
+    {
+      "duration": 6,
+      "text": "고개를 천천히 오른쪽으로.",
+      "move": "neck-right",
+      "character": "tori",
+      "phrase": 12,
+      "start": 168,
+      "end": 174,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "다시 가운데.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 13,
+      "start": 174,
+      "end": 178,
+      "chapter": 1
+    },
+    {
+      "duration": 6,
+      "text": "이번에는 왼쪽으로.",
+      "move": "neck-left",
+      "character": "tori",
+      "phrase": 14,
+      "start": 178,
+      "end": 184,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "다시 가운데.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 13,
+      "start": 184,
+      "end": 188,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 살짝 올려요.",
+      "move": "shoulder-up",
+      "character": "tori",
+      "phrase": 7,
+      "start": 188,
+      "end": 192,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 8,
+      "start": 192,
+      "end": 196,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 살짝 올려요.",
+      "move": "shoulder-up",
+      "character": "tori",
+      "phrase": 7,
+      "start": 196,
+      "end": 200,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 8,
+      "start": 200,
+      "end": 204,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 살짝 올려요.",
+      "move": "shoulder-up",
+      "character": "tori",
+      "phrase": 7,
+      "start": 204,
+      "end": 208,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 8,
+      "start": 208,
+      "end": 212,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 살짝 올려요.",
+      "move": "shoulder-up",
+      "character": "tori",
+      "phrase": 7,
+      "start": 212,
+      "end": 216,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 8,
+      "start": 216,
+      "end": 220,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 살짝 올려요.",
+      "move": "shoulder-up",
+      "character": "tori",
+      "phrase": 7,
+      "start": 220,
+      "end": 224,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 8,
+      "start": 224,
+      "end": 228,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 앞으로 작게 돌려요.",
+      "move": "shoulder-front",
+      "character": "tori",
+      "phrase": 15,
+      "start": 228,
+      "end": 232,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 232,
+      "end": 236,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 앞으로 작게 돌려요.",
+      "move": "shoulder-front",
+      "character": "tori",
+      "phrase": 15,
+      "start": 236,
+      "end": 240,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 240,
+      "end": 244,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 앞으로 작게 돌려요.",
+      "move": "shoulder-front",
+      "character": "tori",
+      "phrase": 15,
+      "start": 244,
+      "end": 248,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 248,
+      "end": 252,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 앞으로 작게 돌려요.",
+      "move": "shoulder-front",
+      "character": "tori",
+      "phrase": 15,
+      "start": 252,
+      "end": 256,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 256,
+      "end": 260,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 뒤로 작게 돌려요.",
+      "move": "shoulder-back",
+      "character": "tori",
+      "phrase": 16,
+      "start": 260,
+      "end": 264,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 264,
+      "end": 268,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 뒤로 작게 돌려요.",
+      "move": "shoulder-back",
+      "character": "tori",
+      "phrase": 16,
+      "start": 268,
+      "end": 272,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 272,
+      "end": 276,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 뒤로 작게 돌려요.",
+      "move": "shoulder-back",
+      "character": "tori",
+      "phrase": 16,
+      "start": 276,
+      "end": 280,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 280,
+      "end": 284,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "어깨를 뒤로 작게 돌려요.",
+      "move": "shoulder-back",
+      "character": "tori",
+      "phrase": 16,
+      "start": 284,
+      "end": 288,
+      "chapter": 1
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 288,
+      "end": 292,
+      "chapter": 1
+    },
+    {
+      "duration": 8,
+      "text": "아주 좋아요. 천천히 하시면 됩니다.",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 17,
+      "start": 292,
+      "end": 300,
+      "chapter": 1
+    },
+    {
+      "duration": 8,
+      "text": "이번에는 손과 팔을 움직여요. 두 손을 편하게 보여주세요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 18,
+      "start": 300,
+      "end": 308,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손가락을 활짝 펴요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 19,
+      "start": 308,
+      "end": 312,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "살짝 쥐어요.",
+      "move": "hands-close",
+      "character": "tori",
+      "phrase": 20,
+      "start": 312,
+      "end": 316,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손가락을 활짝 펴요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 19,
+      "start": 316,
+      "end": 320,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "살짝 쥐어요.",
+      "move": "hands-close",
+      "character": "tori",
+      "phrase": 20,
+      "start": 320,
+      "end": 324,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손가락을 활짝 펴요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 19,
+      "start": 324,
+      "end": 328,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "살짝 쥐어요.",
+      "move": "hands-close",
+      "character": "tori",
+      "phrase": 20,
+      "start": 328,
+      "end": 332,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손가락을 활짝 펴요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 19,
+      "start": 332,
+      "end": 336,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "살짝 쥐어요.",
+      "move": "hands-close",
+      "character": "tori",
+      "phrase": 20,
+      "start": 336,
+      "end": 340,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손가락을 활짝 펴요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 19,
+      "start": 340,
+      "end": 344,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "살짝 쥐어요.",
+      "move": "hands-close",
+      "character": "tori",
+      "phrase": 20,
+      "start": 344,
+      "end": 348,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손가락을 활짝 펴요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 19,
+      "start": 348,
+      "end": 352,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "살짝 쥐어요.",
+      "move": "hands-close",
+      "character": "tori",
+      "phrase": 20,
+      "start": 352,
+      "end": 356,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손가락을 활짝 펴요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 19,
+      "start": 356,
+      "end": 360,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "살짝 쥐어요.",
+      "move": "hands-close",
+      "character": "tori",
+      "phrase": 20,
+      "start": 360,
+      "end": 364,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손가락을 활짝 펴요.",
+      "move": "hands-open",
+      "character": "tori",
+      "phrase": 19,
+      "start": 364,
+      "end": 368,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "살짝 쥐어요.",
+      "move": "hands-close",
+      "character": "tori",
+      "phrase": 20,
+      "start": 368,
+      "end": 372,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손목을 작게 돌려요.",
+      "move": "wrist-right",
+      "character": "tori",
+      "phrase": 21,
+      "start": 372,
+      "end": 376,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손목을 작게 돌려요.",
+      "move": "wrist-right",
+      "character": "tori",
+      "phrase": 21,
+      "start": 376,
+      "end": 380,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손목을 작게 돌려요.",
+      "move": "wrist-right",
+      "character": "tori",
+      "phrase": 21,
+      "start": 380,
+      "end": 384,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손목을 작게 돌려요.",
+      "move": "wrist-right",
+      "character": "tori",
+      "phrase": 21,
+      "start": 384,
+      "end": 388,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "손목을 작게 돌려요.",
+      "move": "wrist-right",
+      "character": "tori",
+      "phrase": 21,
+      "start": 388,
+      "end": 392,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "반대로 작게 돌려요.",
+      "move": "wrist-left",
+      "character": "tori",
+      "phrase": 22,
+      "start": 392,
+      "end": 396,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "반대로 작게 돌려요.",
+      "move": "wrist-left",
+      "character": "tori",
+      "phrase": 22,
+      "start": 396,
+      "end": 400,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "반대로 작게 돌려요.",
+      "move": "wrist-left",
+      "character": "tori",
+      "phrase": 22,
+      "start": 400,
+      "end": 404,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "반대로 작게 돌려요.",
+      "move": "wrist-left",
+      "character": "tori",
+      "phrase": 22,
+      "start": 404,
+      "end": 408,
+      "chapter": 2
+    },
+    {
+      "duration": 4,
+      "text": "반대로 작게 돌려요.",
+      "move": "wrist-left",
+      "character": "tori",
+      "phrase": 22,
+      "start": 408,
+      "end": 412,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "두 팔을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "tori",
+      "phrase": 23,
+      "start": 412,
+      "end": 417,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "다시 편안하게.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 24,
+      "start": 417,
+      "end": 422,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "두 팔을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "tori",
+      "phrase": 23,
+      "start": 422,
+      "end": 427,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "다시 편안하게.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 24,
+      "start": 427,
+      "end": 432,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "두 팔을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "tori",
+      "phrase": 23,
+      "start": 432,
+      "end": 437,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "다시 편안하게.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 24,
+      "start": 437,
+      "end": 442,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "두 팔을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "tori",
+      "phrase": 23,
+      "start": 442,
+      "end": 447,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "다시 편안하게.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 24,
+      "start": 447,
+      "end": 452,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "두 팔을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "tori",
+      "phrase": 23,
+      "start": 452,
+      "end": 457,
+      "chapter": 2
+    },
+    {
+      "duration": 5,
+      "text": "다시 편안하게.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 24,
+      "start": 457,
+      "end": 462,
+      "chapter": 2
+    },
+    {
+      "duration": 8,
+      "text": "정말 잘하셨어요. 손을 편안하게 내려요.",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 25,
+      "start": 462,
+      "end": 470,
+      "chapter": 2
+    },
+    {
+      "duration": 10,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "tori",
+      "phrase": 10,
+      "start": 470,
+      "end": 480,
+      "chapter": 2
+    },
+    {
+      "duration": 8,
+      "text": "이번에는 나비와 상체를 움직여요. 팔은 편안한 높이까지만 올려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 26,
+      "start": 480,
+      "end": 488,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "두 손을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "nabi",
+      "phrase": 27,
+      "start": 488,
+      "end": 493,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "다시 가슴 앞으로.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 28,
+      "start": 493,
+      "end": 498,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "두 손을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "nabi",
+      "phrase": 27,
+      "start": 498,
+      "end": 503,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "다시 가슴 앞으로.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 28,
+      "start": 503,
+      "end": 508,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "두 손을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "nabi",
+      "phrase": 27,
+      "start": 508,
+      "end": 513,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "다시 가슴 앞으로.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 28,
+      "start": 513,
+      "end": 518,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "두 손을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "nabi",
+      "phrase": 27,
+      "start": 518,
+      "end": 523,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "다시 가슴 앞으로.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 28,
+      "start": 523,
+      "end": 528,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "두 손을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "nabi",
+      "phrase": 27,
+      "start": 528,
+      "end": 533,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "다시 가슴 앞으로.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 28,
+      "start": 533,
+      "end": 538,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "두 손을 앞으로 쭉.",
+      "move": "arms-forward",
+      "character": "nabi",
+      "phrase": 27,
+      "start": 538,
+      "end": 543,
+      "chapter": 3
+    },
+    {
+      "duration": 5,
+      "text": "다시 가슴 앞으로.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 28,
+      "start": 543,
+      "end": 548,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "오른손을 편안한 높이로.",
+      "move": "arm-right",
+      "character": "nabi",
+      "phrase": 29,
+      "start": 548,
+      "end": 552,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 8,
+      "start": 552,
+      "end": 556,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "오른손을 편안한 높이로.",
+      "move": "arm-right",
+      "character": "nabi",
+      "phrase": 29,
+      "start": 556,
+      "end": 560,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 8,
+      "start": 560,
+      "end": 564,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "오른손을 편안한 높이로.",
+      "move": "arm-right",
+      "character": "nabi",
+      "phrase": 29,
+      "start": 564,
+      "end": 568,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 8,
+      "start": 568,
+      "end": 572,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "오른손을 편안한 높이로.",
+      "move": "arm-right",
+      "character": "nabi",
+      "phrase": 29,
+      "start": 572,
+      "end": 576,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 8,
+      "start": 576,
+      "end": 580,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "왼손을 편안한 높이로.",
+      "move": "arm-left",
+      "character": "nabi",
+      "phrase": 30,
+      "start": 580,
+      "end": 584,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 8,
+      "start": 584,
+      "end": 588,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "왼손을 편안한 높이로.",
+      "move": "arm-left",
+      "character": "nabi",
+      "phrase": 30,
+      "start": 588,
+      "end": 592,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 8,
+      "start": 592,
+      "end": 596,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "왼손을 편안한 높이로.",
+      "move": "arm-left",
+      "character": "nabi",
+      "phrase": 30,
+      "start": 596,
+      "end": 600,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 8,
+      "start": 600,
+      "end": 604,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "왼손을 편안한 높이로.",
+      "move": "arm-left",
+      "character": "nabi",
+      "phrase": 30,
+      "start": 604,
+      "end": 608,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "천천히 내려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 8,
+      "start": 608,
+      "end": 612,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "옆으로 활짝.",
+      "move": "arms-side",
+      "character": "nabi",
+      "phrase": 31,
+      "start": 612,
+      "end": 615,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "다시 모아요.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 32,
+      "start": 615,
+      "end": 618,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "옆으로 활짝.",
+      "move": "arms-side",
+      "character": "nabi",
+      "phrase": 31,
+      "start": 618,
+      "end": 621,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "다시 모아요.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 32,
+      "start": 621,
+      "end": 624,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "옆으로 활짝.",
+      "move": "arms-side",
+      "character": "nabi",
+      "phrase": 31,
+      "start": 624,
+      "end": 627,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "다시 모아요.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 32,
+      "start": 627,
+      "end": 630,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "옆으로 활짝.",
+      "move": "arms-side",
+      "character": "nabi",
+      "phrase": 31,
+      "start": 630,
+      "end": 633,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "다시 모아요.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 32,
+      "start": 633,
+      "end": 636,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "옆으로 활짝.",
+      "move": "arms-side",
+      "character": "nabi",
+      "phrase": 31,
+      "start": 636,
+      "end": 639,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "다시 모아요.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 32,
+      "start": 639,
+      "end": 642,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "옆으로 활짝.",
+      "move": "arms-side",
+      "character": "nabi",
+      "phrase": 31,
+      "start": 642,
+      "end": 645,
+      "chapter": 3
+    },
+    {
+      "duration": 3,
+      "text": "다시 모아요.",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 32,
+      "start": 645,
+      "end": 648,
+      "chapter": 3
+    },
+    {
+      "duration": 8,
+      "text": "아주 좋아요. 조금만 움직여도 좋아요.",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 33,
+      "start": 648,
+      "end": 656,
+      "chapter": 3
+    },
+    {
+      "duration": 4,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 10,
+      "start": 656,
+      "end": 660,
+      "chapter": 3
+    },
+    {
+      "duration": 10,
+      "text": "보리와 다리를 움직여요. 앉은 채로 의자를 가볍게 잡아주세요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 34,
+      "start": 660,
+      "end": 670,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "오른발 뒤꿈치를 살짝 들어요.",
+      "move": "heel-right",
+      "character": "bori",
+      "phrase": 35,
+      "start": 670,
+      "end": 675,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "내리고, 왼발 뒤꿈치를 들어요.",
+      "move": "heel-left",
+      "character": "bori",
+      "phrase": 36,
+      "start": 675,
+      "end": 680,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "오른발 뒤꿈치를 살짝 들어요.",
+      "move": "heel-right",
+      "character": "bori",
+      "phrase": 35,
+      "start": 680,
+      "end": 685,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "내리고, 왼발 뒤꿈치를 들어요.",
+      "move": "heel-left",
+      "character": "bori",
+      "phrase": 36,
+      "start": 685,
+      "end": 690,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "오른발 뒤꿈치를 살짝 들어요.",
+      "move": "heel-right",
+      "character": "bori",
+      "phrase": 35,
+      "start": 690,
+      "end": 695,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "내리고, 왼발 뒤꿈치를 들어요.",
+      "move": "heel-left",
+      "character": "bori",
+      "phrase": 36,
+      "start": 695,
+      "end": 700,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "오른발 뒤꿈치를 살짝 들어요.",
+      "move": "heel-right",
+      "character": "bori",
+      "phrase": 35,
+      "start": 700,
+      "end": 705,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "내리고, 왼발 뒤꿈치를 들어요.",
+      "move": "heel-left",
+      "character": "bori",
+      "phrase": 36,
+      "start": 705,
+      "end": 710,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "뒤꿈치는 두고 발끝을 들어요.",
+      "move": "toes",
+      "character": "bori",
+      "phrase": 37,
+      "start": 710,
+      "end": 715,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "발끝을 천천히 내려요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 38,
+      "start": 715,
+      "end": 720,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "뒤꿈치는 두고 발끝을 들어요.",
+      "move": "toes",
+      "character": "bori",
+      "phrase": 37,
+      "start": 720,
+      "end": 725,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "발끝을 천천히 내려요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 38,
+      "start": 725,
+      "end": 730,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "뒤꿈치는 두고 발끝을 들어요.",
+      "move": "toes",
+      "character": "bori",
+      "phrase": 37,
+      "start": 730,
+      "end": 735,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "발끝을 천천히 내려요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 38,
+      "start": 735,
+      "end": 740,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "뒤꿈치는 두고 발끝을 들어요.",
+      "move": "toes",
+      "character": "bori",
+      "phrase": 37,
+      "start": 740,
+      "end": 745,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "발끝을 천천히 내려요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 38,
+      "start": 745,
+      "end": 750,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "뒤꿈치는 두고 발끝을 들어요.",
+      "move": "toes",
+      "character": "bori",
+      "phrase": 37,
+      "start": 750,
+      "end": 755,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "발끝을 천천히 내려요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 38,
+      "start": 755,
+      "end": 760,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "뒤꿈치는 두고 발끝을 들어요.",
+      "move": "toes",
+      "character": "bori",
+      "phrase": 37,
+      "start": 760,
+      "end": 765,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "발끝을 천천히 내려요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 38,
+      "start": 765,
+      "end": 770,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "뒤꿈치는 두고 발끝을 들어요.",
+      "move": "toes",
+      "character": "bori",
+      "phrase": 37,
+      "start": 770,
+      "end": 775,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "발끝을 천천히 내려요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 38,
+      "start": 775,
+      "end": 780,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "뒤꿈치는 두고 발끝을 들어요.",
+      "move": "toes",
+      "character": "bori",
+      "phrase": 37,
+      "start": 780,
+      "end": 785,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "발끝을 천천히 내려요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 38,
+      "start": 785,
+      "end": 790,
+      "chapter": 4
+    },
+    {
+      "duration": 10,
+      "text": "가능한 분만 무릎을 조금 들어요. 힘드시면 발을 바닥에 두세요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 39,
+      "start": 790,
+      "end": 800,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "오른쪽 무릎을 조금만.",
+      "move": "knee-right",
+      "character": "bori",
+      "phrase": 40,
+      "start": 800,
+      "end": 805,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "내리고, 왼쪽을 조금만.",
+      "move": "knee-left",
+      "character": "bori",
+      "phrase": 41,
+      "start": 805,
+      "end": 810,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "오른쪽 무릎을 조금만.",
+      "move": "knee-right",
+      "character": "bori",
+      "phrase": 40,
+      "start": 810,
+      "end": 815,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "내리고, 왼쪽을 조금만.",
+      "move": "knee-left",
+      "character": "bori",
+      "phrase": 41,
+      "start": 815,
+      "end": 820,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "오른쪽 무릎을 조금만.",
+      "move": "knee-right",
+      "character": "bori",
+      "phrase": 40,
+      "start": 820,
+      "end": 825,
+      "chapter": 4
+    },
+    {
+      "duration": 5,
+      "text": "내리고, 왼쪽을 조금만.",
+      "move": "knee-left",
+      "character": "bori",
+      "phrase": 41,
+      "start": 825,
+      "end": 830,
+      "chapter": 4
+    },
+    {
+      "duration": 10,
+      "text": "조금만 움직여도 아주 잘하고 계세요. 다리를 편히 쉬어요.",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 42,
+      "start": 830,
+      "end": 840,
+      "chapter": 4
+    },
+    {
+      "duration": 8,
+      "text": "나비와 함께 가볍게 박수를 쳐볼까요?",
+      "move": "hands-chest",
+      "character": "nabi",
+      "phrase": 43,
+      "start": 840,
+      "end": 848,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 848,
+      "end": 853,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 853,
+      "end": 858,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 858,
+      "end": 863,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 863,
+      "end": 868,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 868,
+      "end": 873,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 873,
+      "end": 878,
+      "chapter": 5
+    },
+    {
+      "duration": 10,
+      "text": "오른쪽이면 오른손, 왼쪽이면 왼손이에요. 한 손씩 해볼게요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 45,
+      "start": 878,
+      "end": 888,
+      "chapter": 5
+    },
+    {
+      "duration": 6,
+      "text": "오른쪽!",
+      "move": "arm-right",
+      "character": "nabi",
+      "phrase": 46,
+      "start": 888,
+      "end": 894,
+      "chapter": 5
+    },
+    {
+      "duration": 6,
+      "text": "왼쪽!",
+      "move": "arm-left",
+      "character": "nabi",
+      "phrase": 47,
+      "start": 894,
+      "end": 900,
+      "chapter": 5
+    },
+    {
+      "duration": 6,
+      "text": "오른쪽!",
+      "move": "arm-right",
+      "character": "nabi",
+      "phrase": 46,
+      "start": 900,
+      "end": 906,
+      "chapter": 5
+    },
+    {
+      "duration": 6,
+      "text": "왼쪽!",
+      "move": "arm-left",
+      "character": "nabi",
+      "phrase": 47,
+      "start": 906,
+      "end": 912,
+      "chapter": 5
+    },
+    {
+      "duration": 6,
+      "text": "오른쪽!",
+      "move": "arm-right",
+      "character": "nabi",
+      "phrase": 46,
+      "start": 912,
+      "end": 918,
+      "chapter": 5
+    },
+    {
+      "duration": 6,
+      "text": "왼쪽!",
+      "move": "arm-left",
+      "character": "nabi",
+      "phrase": 47,
+      "start": 918,
+      "end": 924,
+      "chapter": 5
+    },
+    {
+      "duration": 4,
+      "text": "짝.",
+      "move": "clap-one",
+      "character": "nabi",
+      "phrase": 48,
+      "start": 924,
+      "end": 928,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 928,
+      "end": 933,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "잠시 기다려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 49,
+      "start": 933,
+      "end": 938,
+      "chapter": 5
+    },
+    {
+      "duration": 4,
+      "text": "짝.",
+      "move": "clap-one",
+      "character": "nabi",
+      "phrase": 48,
+      "start": 938,
+      "end": 942,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 942,
+      "end": 947,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "잠시 기다려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 49,
+      "start": 947,
+      "end": 952,
+      "chapter": 5
+    },
+    {
+      "duration": 4,
+      "text": "짝.",
+      "move": "clap-one",
+      "character": "nabi",
+      "phrase": 48,
+      "start": 952,
+      "end": 956,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 956,
+      "end": 961,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "잠시 기다려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 49,
+      "start": 961,
+      "end": 966,
+      "chapter": 5
+    },
+    {
+      "duration": 4,
+      "text": "짝.",
+      "move": "clap-one",
+      "character": "nabi",
+      "phrase": 48,
+      "start": 966,
+      "end": 970,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 970,
+      "end": 975,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "잠시 기다려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 49,
+      "start": 975,
+      "end": 980,
+      "chapter": 5
+    },
+    {
+      "duration": 4,
+      "text": "짝.",
+      "move": "clap-one",
+      "character": "nabi",
+      "phrase": 48,
+      "start": 980,
+      "end": 984,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 984,
+      "end": 989,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "잠시 기다려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 49,
+      "start": 989,
+      "end": 994,
+      "chapter": 5
+    },
+    {
+      "duration": 4,
+      "text": "짝.",
+      "move": "clap-one",
+      "character": "nabi",
+      "phrase": 48,
+      "start": 994,
+      "end": 998,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 998,
+      "end": 1003,
+      "chapter": 5
+    },
+    {
+      "duration": 5,
+      "text": "잠시 기다려요.",
+      "move": "rest",
+      "character": "nabi",
+      "phrase": 49,
+      "start": 1003,
+      "end": 1008,
+      "chapter": 5
+    },
+    {
+      "duration": 12,
+      "text": "최고예요! 틀려도 괜찮아요. 함께 움직여서 즐거워요.",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 50,
+      "start": 1008,
+      "end": 1020,
+      "chapter": 5
+    },
+    {
+      "duration": 8,
+      "text": "이번에는 모두 함께 해볼까요? 앉아서 천천히 따라 해요.",
+      "move": "wave",
+      "character": "kongi",
+      "phrase": 51,
+      "start": 1020,
+      "end": 1028,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "손 흔들고.",
+      "move": "wave",
+      "character": "kongi",
+      "phrase": 52,
+      "start": 1028,
+      "end": 1034,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "두 손을 편안한 높이로.",
+      "move": "both-up",
+      "character": "tori",
+      "phrase": 53,
+      "start": 1034,
+      "end": 1040,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 1040,
+      "end": 1046,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "최고!",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 54,
+      "start": 1046,
+      "end": 1052,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "손 흔들고.",
+      "move": "wave",
+      "character": "kongi",
+      "phrase": 52,
+      "start": 1052,
+      "end": 1058,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "두 손을 편안한 높이로.",
+      "move": "both-up",
+      "character": "tori",
+      "phrase": 53,
+      "start": 1058,
+      "end": 1064,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 1064,
+      "end": 1070,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "최고!",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 54,
+      "start": 1070,
+      "end": 1076,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "손 흔들고.",
+      "move": "wave",
+      "character": "kongi",
+      "phrase": 52,
+      "start": 1076,
+      "end": 1082,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "두 손을 편안한 높이로.",
+      "move": "both-up",
+      "character": "tori",
+      "phrase": 53,
+      "start": 1082,
+      "end": 1088,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 1088,
+      "end": 1094,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "최고!",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 54,
+      "start": 1094,
+      "end": 1100,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "손 흔들고.",
+      "move": "wave",
+      "character": "kongi",
+      "phrase": 52,
+      "start": 1100,
+      "end": 1106,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "두 손을 편안한 높이로.",
+      "move": "both-up",
+      "character": "tori",
+      "phrase": 53,
+      "start": 1106,
+      "end": 1112,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "짝, 짝.",
+      "move": "clap",
+      "character": "nabi",
+      "phrase": 44,
+      "start": 1112,
+      "end": 1118,
+      "chapter": 6
+    },
+    {
+      "duration": 6,
+      "text": "최고!",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 54,
+      "start": 1118,
+      "end": 1124,
+      "chapter": 6
+    },
+    {
+      "duration": 8,
+      "text": "정말 잘하셨어요. 잠시 쉬어볼까요?",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 55,
+      "start": 1124,
+      "end": 1132,
+      "chapter": 6
+    },
+    {
+      "duration": 8,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 10,
+      "start": 1132,
+      "end": 1140,
+      "chapter": 6
+    },
+    {
+      "duration": 4,
+      "text": "이제 마지막이에요.",
+      "move": "rest",
+      "character": "kongi",
+      "phrase": 56,
+      "start": 1140,
+      "end": 1144,
+      "chapter": 7
+    },
+    {
+      "duration": 4,
+      "text": "숨을 천천히 들이마시고.",
+      "move": "inhale",
+      "character": "kongi",
+      "phrase": 5,
+      "start": 1144,
+      "end": 1148,
+      "chapter": 7
+    },
+    {
+      "duration": 5,
+      "text": "후, 편안하게 내쉬어요.",
+      "move": "exhale",
+      "character": "kongi",
+      "phrase": 6,
+      "start": 1148,
+      "end": 1153,
+      "chapter": 7
+    },
+    {
+      "duration": 4,
+      "text": "숨을 천천히 들이마시고.",
+      "move": "inhale",
+      "character": "kongi",
+      "phrase": 5,
+      "start": 1153,
+      "end": 1157,
+      "chapter": 7
+    },
+    {
+      "duration": 5,
+      "text": "후, 편안하게 내쉬어요.",
+      "move": "exhale",
+      "character": "kongi",
+      "phrase": 6,
+      "start": 1157,
+      "end": 1162,
+      "chapter": 7
+    },
+    {
+      "duration": 4,
+      "text": "숨을 천천히 들이마시고.",
+      "move": "inhale",
+      "character": "kongi",
+      "phrase": 5,
+      "start": 1162,
+      "end": 1166,
+      "chapter": 7
+    },
+    {
+      "duration": 5,
+      "text": "후, 편안하게 내쉬어요.",
+      "move": "exhale",
+      "character": "kongi",
+      "phrase": 6,
+      "start": 1166,
+      "end": 1171,
+      "chapter": 7
+    },
+    {
+      "duration": 10,
+      "text": "오늘 정말 잘하셨어요. 조금이라도 몸을 움직이셨다면 성공이에요.",
+      "move": "thumbsup",
+      "character": "bori",
+      "phrase": 57,
+      "start": 1171,
+      "end": 1181,
+      "chapter": 7
+    },
+    {
+      "duration": 8,
+      "text": "다음 시간에도 우리 함께 만나요. 안녕히 계세요!",
+      "move": "wave",
+      "character": "kongi",
+      "phrase": 58,
+      "start": 1181,
+      "end": 1189,
+      "chapter": 7
+    },
+    {
+      "duration": 11,
+      "text": "편안하게 쉬어주세요.",
+      "move": "rest",
+      "character": "bori",
+      "phrase": 10,
+      "start": 1189,
+      "end": 1200,
+      "chapter": 7
+    }
+  ],
+  "phrases": [
+    "안녕하세요! 콩이에요. 오늘도 저와 함께 천천히 몸을 움직여 볼까요? 편안하게 따라 해주세요.",
+    "통증이나 어지러움이 느껴지면 운동을 멈추고 쉬어주세요.",
+    "필요한 경우 보호자 또는 직원과 함께 진행해주세요.",
+    "튼튼한 의자에 편안하게 앉아 주세요. 두 발은 바닥에 둡니다.",
+    "두 손을 무릎 위에 올려볼게요.",
+    "숨을 천천히 들이마시고.",
+    "후, 편안하게 내쉬어요.",
+    "어깨를 살짝 올려요.",
+    "천천히 내려요.",
+    "잘하고 계세요. 조금만 움직여도 좋아요.",
+    "편안하게 쉬어주세요.",
+    "이번에는 토리와 함께 목과 어깨를 움직여요. 목은 작게 움직여요.",
+    "고개를 천천히 오른쪽으로.",
+    "다시 가운데.",
+    "이번에는 왼쪽으로.",
+    "어깨를 앞으로 작게 돌려요.",
+    "어깨를 뒤로 작게 돌려요.",
+    "아주 좋아요. 천천히 하시면 됩니다.",
+    "이번에는 손과 팔을 움직여요. 두 손을 편하게 보여주세요.",
+    "손가락을 활짝 펴요.",
+    "살짝 쥐어요.",
+    "손목을 작게 돌려요.",
+    "반대로 작게 돌려요.",
+    "두 팔을 앞으로 쭉.",
+    "다시 편안하게.",
+    "정말 잘하셨어요. 손을 편안하게 내려요.",
+    "이번에는 나비와 상체를 움직여요. 팔은 편안한 높이까지만 올려요.",
+    "두 손을 앞으로 쭉.",
+    "다시 가슴 앞으로.",
+    "오른손을 편안한 높이로.",
+    "왼손을 편안한 높이로.",
+    "옆으로 활짝.",
+    "다시 모아요.",
+    "아주 좋아요. 조금만 움직여도 좋아요.",
+    "보리와 다리를 움직여요. 앉은 채로 의자를 가볍게 잡아주세요.",
+    "오른발 뒤꿈치를 살짝 들어요.",
+    "내리고, 왼발 뒤꿈치를 들어요.",
+    "뒤꿈치는 두고 발끝을 들어요.",
+    "발끝을 천천히 내려요.",
+    "가능한 분만 무릎을 조금 들어요. 힘드시면 발을 바닥에 두세요.",
+    "오른쪽 무릎을 조금만.",
+    "내리고, 왼쪽을 조금만.",
+    "조금만 움직여도 아주 잘하고 계세요. 다리를 편히 쉬어요.",
+    "나비와 함께 가볍게 박수를 쳐볼까요?",
+    "짝, 짝.",
+    "오른쪽이면 오른손, 왼쪽이면 왼손이에요. 한 손씩 해볼게요.",
+    "오른쪽!",
+    "왼쪽!",
+    "짝.",
+    "잠시 기다려요.",
+    "최고예요! 틀려도 괜찮아요. 함께 움직여서 즐거워요.",
+    "이번에는 모두 함께 해볼까요? 앉아서 천천히 따라 해요.",
+    "손 흔들고.",
+    "두 손을 편안한 높이로.",
+    "최고!",
+    "정말 잘하셨어요. 잠시 쉬어볼까요?",
+    "이제 마지막이에요.",
+    "오늘 정말 잘하셨어요. 조금이라도 몸을 움직이셨다면 성공이에요.",
+    "다음 시간에도 우리 함께 만나요. 안녕히 계세요!"
+  ]
+}

@@ -1,0 +1,2 @@
+const fs=require('fs'),sharp=require('sharp');
+(async()=>{const masters=require('../characters/reference/high-resolution/masters.json');let comps=[];for(const [i,[id,p]] of Object.entries(masters).entries()){fs.copyFileSync(p,`characters/reference/high-resolution/raw/${id}/${id}_a.png`);comps.push({input:await sharp(p).resize(400,400).png().toBuffer(),left:i*400,top:0});}await sharp({create:{width:1600,height:400,channels:4,background:'#d6e0e7'}}).composite(comps).png().toFile('characters/reference/high-resolution/masters-preview.png');})();

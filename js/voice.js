@@ -337,6 +337,8 @@ const VoiceManager = {
    * @param {object} options - emotion, rateOverride 등 추가 옵션
    */
   speak(input, onEndCallback, options = {}) {
+    // The home guide yields before another lesson/teacher voice starts.
+    window.animatedCharacter?.stop();
     // 이전 진행 중인 발화 및 대기 큐 즉시 취소
     this.stopSpeaking();
 
@@ -438,6 +440,11 @@ const VoiceManager = {
       utterance.voice = activeVoice;
     }
 
+    utterance.onboundary = event => {
+      if(token !== this.currentSpeakingToken || !window.CharacterLipSync)return;
+      const id=this.characterId||'kongi',v=CharacterLipSync.vowel(chunk.text[event.charIndex]||' ');
+      document.querySelectorAll('.ai-friend-avatar-img,.completion-robot-img').forEach(img=>CharacterLipSync.set(img,id,v));
+    };
     utterance.onstart = () => {
       if (token === this.currentSpeakingToken) {
         this.setTeacherSpeaking(true);

@@ -1,6 +1,6 @@
 # 배포 준비
 
-현재 프로그램은 정적 HTML/CSS/JS 앱입니다. Vercel의 Other 프레임워크, 빌드 명령 없음, 출력 디렉터리 `.` 설정을 사용합니다.
+현재 프로그램은 정적 HTML/CSS/JS 앱입니다. Vercel의 Other 프레임워크, 빌드 명령 `node scripts/build-welcome-recordings.cjs`, 출력 디렉터리 `.` 설정을 사용합니다.
 
 - `vercel.json`: 정적 배포 설정
 - `.vercelignore`: 테스트 결과, 작업 보고서, 개발 도구 파일 배포 제외

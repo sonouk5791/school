@@ -158,6 +158,7 @@ scheduleNextBlink();
 
 // ── 2. 말하기 애니메이션 함수 (Talking Animation Function) ──
 window.startKongiTalkingAnimation = function(durationMs=3200, onFinish){
+  if(window.characters)return; // Official mouth frames follow audio/boundary events only.
   clearInterval(talkTimer);
   talkStep = 0;
   kongiWraps().forEach(w=>w.classList.add('speaking'));
@@ -186,12 +187,14 @@ window.stopKongiTalkingAnimation = function(){
     w.classList.remove('mouth-shape-alt');
   });
   frame(false, 0);
+  document.querySelectorAll('.ai-friend-avatar-img,.completion-robot-img').forEach(img=>window.CharacterActions?.setSpeaking(img,friend().id,false));
 };
 
 // VoiceManager 발화 상태 동기화
 const speaking=VoiceManager.setTeacherSpeaking.bind(VoiceManager);
 VoiceManager.setTeacherSpeaking=value=>{
   speaking(value);
+  document.querySelectorAll('.ai-friend-avatar-img,.completion-robot-img').forEach(img=>window.CharacterActions?.setSpeaking(img,friend().id,value));
   document.querySelectorAll('.voice-status-badge').forEach(b=>b.textContent=friend().name+(value?'가 이야기하고 있어요':' 목소리 듣기'));
   if(value){
     window.startKongiTalkingAnimation(0);

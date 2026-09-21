@@ -1,0 +1,23 @@
+.animated-character { width:min(100%,300px); text-align:center; }
+.animated-character-trigger { display:block; width:100%; border:0; padding:0; background:transparent; cursor:pointer; border-radius:24px; -webkit-tap-highlight-color:transparent; }
+.animated-character-trigger:focus-visible,.animated-character-controls button:focus-visible { outline:3px solid #97621b; outline-offset:4px; }
+.animated-character svg { display:block; width:100%; height:280px; overflow:visible; }
+.animated-character .ac-body { transform-origin:170px 260px; animation:ac-breathe 4s ease-in-out infinite; }
+.animated-character .ac-arm { transform-origin:132px 211px; }
+.animated-character.ac-greeting .ac-arm { animation:ac-wave 1.25s ease-in-out 2; }
+.animated-character .ac-ear { transform-origin:130px 88px; animation:ac-ear 4.6s ease-in-out infinite; }
+.animated-character .ac-lids { opacity:0; }
+.animated-character.ac-blink .ac-lids { opacity:1; }
+.animated-character-controls { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-top:8px; }
+.animated-character-controls button { font:inherit; font-size:14px; font-weight:700; min-height:44px; padding:7px 10px; border:1px solid #d9bd80; border-radius:14px; background:#fff9ed; color:#624615; cursor:pointer; }
+.animated-character-controls button:disabled { opacity:.5; cursor:default; }
+.animated-character-status { font-size:14px; line-height:1.5; color:#655137; margin:8px 0 0; min-height:21px; }
+.animated-character-caption { font-size:14px; line-height:1.6; margin:6px 0; color:#5b4b34; }
+.animated-character-caption[hidden] { display:none; }
+.hero-robot-wrapper:has(.animated-character)::after { display:none; }
+@keyframes ac-breathe { 0%,100% { transform:translateY(0) rotate(-.2deg); } 50% { transform:translateY(-1.8px) rotate(.2deg); } }
+@keyframes ac-wave { 0%,100% { transform:rotate(0deg); } 30% { transform:rotate(-6deg); } 65% { transform:rotate(3deg); } }
+@keyframes ac-ear { 0%,100% { transform:rotate(0deg); } 50% { transform:rotate(.5deg); } }
+.animated-character.ac-inactive *, .animated-character.ac-paused * { animation-play-state:paused!important; }
+@media(max-width:540px) { .animated-character { width:230px; max-width:100%; } .animated-character svg { height:210px; } }
+@media(prefers-reduced-motion:reduce) { .animated-character * { animation:none!important; } }

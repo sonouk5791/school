@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  const key='school_character_welcome_v1';
  const friends=[['kongi','콩이','안녕하세요! 저는 콩이에요.'],['tori','토리','반가워요! 저는 토리예요.'],['nabi','나비','오늘도 함께해서 기뻐요.'],['bori','보리','천천히 즐겁게 시작해볼까요?']];
  let dialog=null,player=null,generation=0,settle=null,seen=false;
- function stop(){generation++;if(player){player.pause();player.removeAttribute('src');player.load();player=null;}if(settle){settle();settle=null;}}
+ function stop(){generation++;if(player){window.CharacterLipSync?.unbind(player);player.pause();player.removeAttribute('src');player.load();player=null;}if(settle){settle();settle=null;}}
  function syncAudio(){const hasAudio=Object.keys(window.SchoolWelcomeRecordings||{}).length>0;replay.hidden=!hasAudio;if(dialog){dialog.querySelector('#welcomeListen').hidden=!hasAudio;if(!hasAudio){stop();const status=dialog.querySelector('.welcome-status');status.textContent='';status.hidden=true;}}}
  function close(){stop();dialog.close();document.querySelector('#morningStart')?.focus();}
  function show(){
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(!available.length){syncAudio();return;}
   for(const [id,name] of available){
    if(token!==generation)return;
-   const audio=new Audio(window.SchoolWelcomeRecordings[id]);player=audio;audio.volume=.7;status.hidden=false;status.textContent=name+'의 환영 인사를 듣고 있어요.';
+   const audio=new Audio(window.SchoolWelcomeRecordings[id]);player=audio;window.CharacterLipSync?.bind(audio,dialog.querySelector('[data-welcome-friend="'+id+'"] img'),id);audio.volume=.7;status.hidden=false;status.textContent=name+'의 환영 인사를 듣고 있어요.';
    const result=await new Promise(resolve=>{let done=false;const finish=value=>{if(done)return;done=true;settle=null;resolve(value)};settle=()=>finish('cancel');audio.addEventListener('ended',()=>finish('end'),{once:true});audio.addEventListener('error',()=>finish('error'),{once:true});audio.play().catch(()=>finish('error'));});
    if(token!==generation)return;
    if(result!=='end'){stop();await window.refreshWelcomeRecordings();syncAudio();if(!button.hidden){status.hidden=false;status.textContent='인사 다시 듣기를 눌러주세요.';}return;}

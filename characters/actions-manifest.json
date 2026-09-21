@@ -1,0 +1,41 @@
+{
+  "kongi": {
+    "hello": "/characters/kongi/actions/kongi_hello.png",
+    "read": "/characters/kongi/actions/kongi_read.png",
+    "explain": "/characters/kongi/actions/kongi_explain.png",
+    "bow": "/characters/kongi/actions/kongi_bow.png",
+    "sleep": "/characters/kongi/actions/kongi_sleep.png",
+    "wink": "/characters/kongi/actions/kongi_wink.png",
+    "idle": "/characters/kongi/actions/kongi_idle.png"
+  },
+  "tori": {
+    "hello": "/characters/tori/actions/tori_hello.png",
+    "cheer": "/characters/tori/actions/tori_cheer.png",
+    "turn": "/characters/tori/actions/tori_turn.png",
+    "wink": "/characters/tori/actions/tori_wink.png",
+    "jump": "/characters/tori/actions/tori_jump.png",
+    "cheer_2": "/characters/tori/actions/tori_cheer_2.png",
+    "dance": "/characters/tori/actions/tori_dance.png",
+    "wave": "/characters/tori/actions/tori_wave.png",
+    "surprise": "/characters/tori/actions/tori_surprise.png",
+    "idle": "/characters/tori/actions/tori_idle.png"
+  },
+  "nabi": {
+    "hello": "/characters/nabi/actions/nabi_hello.png",
+    "sit": "/characters/nabi/actions/nabi_sit.png",
+    "dance": "/characters/nabi/actions/nabi_dance.png",
+    "cheer": "/characters/nabi/actions/nabi_cheer.png",
+    "shy": "/characters/nabi/actions/nabi_shy.png",
+    "sleep": "/characters/nabi/actions/nabi_sleep.png",
+    "idle": "/characters/nabi/actions/nabi_idle.png"
+  },
+  "bori": {
+    "thumbsup": "/characters/bori/actions/bori_thumbsup.png",
+    "music": "/characters/bori/actions/bori_music.png",
+    "music_2": "/characters/bori/actions/bori_music_2.png",
+    "shy": "/characters/bori/actions/bori_shy.png",
+    "happy": "/characters/bori/actions/bori_happy.png",
+    "sit": "/characters/bori/actions/bori_sit.png",
+    "idle": "/characters/bori/actions/bori_idle.png"
+  }
+}

@@ -28,3 +28,18 @@
 - **사용자 요청 사항**: 요청의 핵심 내용
 - **수행 내역**: 변경된 사항, 추가된 기능, 해결된 이슈
 - **관련 파일**: clickable `file:///` 마크다운 링크 포함
+
+### 자동 기록 실행 (2026-09-21)
+- 작업 완료 시 `node scripts/save-work-report.cjs --title "작업 제목" --details "수행 내용 및 검증 결과"`를 실행해 오늘 일지와 TODAY_WORK_REPORT.md를 저장한다.
+- Git 저장소는 `school-release/`이다. 저장소의 `core.hooksPath=.githooks` 설정으로 커밋 직전에 변경 파일 목록이 두 Markdown 일지에 자동 저장/스테이징된다.
+- 새로 복제한 저장소에서는 `git config core.hooksPath .githooks`로 동일한 자동 기록을 켠다. 백그라운드 상시 감시나 예약 실행이 아니라 작업 완료/커밋 시 저장한다.
+
+## 공식 캐릭터 기준 (2026-09-21 고해상도 요청으로 갱신)
+- 최신 사용자 요청은 저해상도 시트 crop/확대를 중단하고 고해상도 재제작하는 것이다. 디자인 참고는 `characters/reference/high-resolution/design-reference.jpeg`이다.
+- 행은 콩이/토리/나비/보리, 열은 아/에/이/오/우이다. 시트 내부 이름표 오기는 분류에 사용하지 않는다.
+- 공식 고해상도 입모양은 `public/characters/{id}/mouth/{id}_{a,e,i,o,u}.png`이다. 캐릭터별 5장 사이에서는 입 밖의 얼굴/눈/안경/귀/머리/의상/몸 픽셀과 위치를 고정한다.
+- 데이터는 `characters/manifest.json` 및 `js/characters.js`를 사용한다. mouth와 stable은 같은 고해상도 파일을 가리킨다. `_stable.png`는 이전 경로 호환용 복사본이다.
+- 새 렌더는 내장 image_gen으로 제작하고 `scripts/build-hd-characters.cjs`로 입만 합성한다. 이전 `scripts/extract-official-characters.py`로 공식 파일을 덮어쓰지 않는다. 저해상도 시트 crop/업스케일을 최종 에셋으로 사용하지 않는다.
+- 과거 이미지/영상/3D 자산은 기존 자료이며 공식 외형을 정의하지 않는다. 새 안내 캐릭터에는 공식 PNG 데이터만 사용한다.
+
+- 동작 시트는 characters/reference/actions/source.png이며 공식 외형보다 우선하지 않는다. classification.json의 accepted만 사용하고 pose-only는 배포 캐릭터에 연결하지 않는다. 없는 동작은 같은 캐릭터 idle로 복귀한다.

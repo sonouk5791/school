@@ -1,0 +1,47 @@
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+(async()=>{
+ const browser=await chromium.launch({channel:'msedge',headless:true});
+ try{
+  const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  await page.addInitScript(()=>sessionStorage.setItem('school_character_welcome_v1','1'));
+  await page.goto('http://127.0.0.1:8085/');
+  await page.waitForSelector('.animated-character-trigger');
+  assert(await page.evaluate(()=>animatedCharacter.audio.paused),'No autoplay audio');
+  await page.waitForTimeout(2800);
+  assert.equal(await page.locator('.ac-greeting').count(),0);
+  await page.locator('.animated-character').screenshot({path:'tests/animated-character-desktop.png'});
+  await page.locator('.animated-character-trigger').click();
+  await page.waitForFunction(()=>animatedCharacter.audio.currentTime>.4);
+  assert.equal(await page.evaluate(()=>animatedCharacter.audio.paused),false);
+  await page.locator('[data-ac=pause]').click();
+  const t=await page.evaluate(()=>animatedCharacter.audio.currentTime);
+  await page.waitForTimeout(220);
+  assert.equal(await page.evaluate(()=>animatedCharacter.audio.currentTime),t);
+  await page.locator('[data-ac=pause]').click();
+  await page.waitForFunction(()=>!animatedCharacter.audio.paused);
+  await page.locator('[data-ac=mute]').click();
+  assert(await page.evaluate(()=>animatedCharacter.audio.muted));
+  await page.locator('[data-ac=replay]').click();
+  await page.waitForFunction(()=>!animatedCharacter.audio.paused&&animatedCharacter.audio.currentTime<.5);
+  await page.evaluate(()=>window.dispatchEvent(new Event('welcome-audio-start')));
+  assert(await page.evaluate(()=>animatedCharacter.audio.paused));
+  await page.locator('[data-ac=replay]').click();
+  await page.waitForFunction(()=>animatedCharacter.audio.currentTime>.25);
+  await page.evaluate(()=>document.querySelector('.hero-classroom').classList.add('senior-away'));
+  await page.waitForFunction(()=>animatedCharacter.audio.paused&&animatedCharacter.suspended);
+  await page.evaluate(()=>document.querySelector('.hero-classroom').classList.remove('senior-away'));
+  await page.waitForFunction(()=>!animatedCharacter.suspended);
+  await page.setViewportSize({width:390,height:844});
+  await page.locator('.animated-character').screenshot({path:'tests/animated-character-mobile.png'});
+  const bounds=await page.locator('.animated-character').boundingBox();
+  assert(bounds.x>=0&&bounds.x+bounds.width<=390,'Character fits mobile');
+  await page.emulateMedia({reducedMotion:'reduce'});
+  assert.equal(await page.locator('.official-character-sprite').evaluate(el=>getComputedStyle(el).animationName),'none');
+  await page.evaluate(()=>animatedCharacter.destroy());
+  assert(await page.evaluate(()=>animatedCharacter.abort.signal.aborted));
+  assert.deepEqual(errors,[]);
+  console.log('PASS: audio playback, pause/resume, replay, mute, exclusivity, navigation cleanup, responsive layout, reduced motion, disposal; no page errors');
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

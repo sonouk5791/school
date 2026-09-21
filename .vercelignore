@@ -9,3 +9,12 @@ tests/
 *.py
 *.lnk
 server.cjs
+.agents/
+.githooks/
+.video-tools/
+.video-build/
+school-release/
+characters/reference/legacy/
+characters/reference/legacy-lowres-20260921/
+characters/reference/high-resolution/raw/
+assets/exercise-20min/audio/*.wav

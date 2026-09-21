@@ -1,0 +1,47 @@
+{
+  "tool": "built-in image_gen",
+  "source": "design-reference.jpeg",
+  "size": [
+    1254,
+    1254
+  ],
+  "method": "New native high-resolution render; only generated mouth region composited onto immutable master with 8px feather. No source sheet pixels enlarged.",
+  "characters": {
+    "kongi": {
+      "master": "raw/kongi/kongi_a.png",
+      "mouthBox": [
+        548,
+        511,
+        724,
+        665
+      ]
+    },
+    "tori": {
+      "master": "raw/tori/tori_a.png",
+      "mouthBox": [
+        570,
+        593,
+        731,
+        733
+      ]
+    },
+    "nabi": {
+      "master": "raw/nabi/nabi_a.png",
+      "mouthBox": [
+        548,
+        444,
+        712,
+        579
+      ]
+    },
+    "bori": {
+      "master": "raw/bori/bori_a.png",
+      "mouthBox": [
+        530,
+        440,
+        722,
+        594
+      ]
+    }
+  }
+}

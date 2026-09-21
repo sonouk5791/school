@@ -1,0 +1,162 @@
+/* Official high-resolution mouth assets, 2026-09-21. */
+window.characters = Object.freeze({
+  "kongi": {
+    "name": "콩이",
+    "row": 1,
+    "idle": "/public/characters/kongi/kongi_idle.png",
+    "mouth": {
+      "a": "/public/characters/kongi/mouth/kongi_a.png",
+      "e": "/public/characters/kongi/mouth/kongi_e.png",
+      "i": "/public/characters/kongi/mouth/kongi_i.png",
+      "o": "/public/characters/kongi/mouth/kongi_o.png",
+      "u": "/public/characters/kongi/mouth/kongi_u.png"
+    },
+    "stable": {
+      "a": "/public/characters/kongi/mouth/kongi_a.png",
+      "e": "/public/characters/kongi/mouth/kongi_e.png",
+      "i": "/public/characters/kongi/mouth/kongi_i.png",
+      "o": "/public/characters/kongi/mouth/kongi_o.png",
+      "u": "/public/characters/kongi/mouth/kongi_u.png"
+    },
+    "size": [
+      1254,
+      1254
+    ],
+    "mouthBox": [
+      548,
+      511,
+      724,
+      665
+    ],
+    "actions": {
+      "hello": "/characters/kongi/actions/kongi_hello.png",
+      "read": "/characters/kongi/actions/kongi_read.png",
+      "explain": "/characters/kongi/actions/kongi_explain.png",
+      "bow": "/characters/kongi/actions/kongi_bow.png",
+      "sleep": "/characters/kongi/actions/kongi_sleep.png",
+      "wink": "/characters/kongi/actions/kongi_wink.png",
+      "idle": "/public/characters/kongi/kongi_idle.png"
+    },
+    "revision": "hd-2026-09-21"
+  },
+  "tori": {
+    "name": "토리",
+    "row": 2,
+    "idle": "/public/characters/tori/tori_idle.png",
+    "mouth": {
+      "a": "/public/characters/tori/mouth/tori_a.png",
+      "e": "/public/characters/tori/mouth/tori_e.png",
+      "i": "/public/characters/tori/mouth/tori_i.png",
+      "o": "/public/characters/tori/mouth/tori_o.png",
+      "u": "/public/characters/tori/mouth/tori_u.png"
+    },
+    "stable": {
+      "a": "/public/characters/tori/mouth/tori_a.png",
+      "e": "/public/characters/tori/mouth/tori_e.png",
+      "i": "/public/characters/tori/mouth/tori_i.png",
+      "o": "/public/characters/tori/mouth/tori_o.png",
+      "u": "/public/characters/tori/mouth/tori_u.png"
+    },
+    "size": [
+      1254,
+      1254
+    ],
+    "mouthBox": [
+      570,
+      593,
+      731,
+      733
+    ],
+    "actions": {
+      "hello": "/characters/tori/actions/tori_hello.png",
+      "cheer": "/characters/tori/actions/tori_cheer.png",
+      "turn": "/characters/tori/actions/tori_turn.png",
+      "wink": "/characters/tori/actions/tori_wink.png",
+      "jump": "/characters/tori/actions/tori_jump.png",
+      "cheer_2": "/characters/tori/actions/tori_cheer_2.png",
+      "dance": "/characters/tori/actions/tori_dance.png",
+      "wave": "/characters/tori/actions/tori_wave.png",
+      "surprise": "/characters/tori/actions/tori_surprise.png",
+      "idle": "/public/characters/tori/tori_idle.png"
+    },
+    "revision": "hd-2026-09-21"
+  },
+  "nabi": {
+    "name": "나비",
+    "row": 3,
+    "idle": "/public/characters/nabi/nabi_idle.png",
+    "mouth": {
+      "a": "/public/characters/nabi/mouth/nabi_a.png",
+      "e": "/public/characters/nabi/mouth/nabi_e.png",
+      "i": "/public/characters/nabi/mouth/nabi_i.png",
+      "o": "/public/characters/nabi/mouth/nabi_o.png",
+      "u": "/public/characters/nabi/mouth/nabi_u.png"
+    },
+    "stable": {
+      "a": "/public/characters/nabi/mouth/nabi_a.png",
+      "e": "/public/characters/nabi/mouth/nabi_e.png",
+      "i": "/public/characters/nabi/mouth/nabi_i.png",
+      "o": "/public/characters/nabi/mouth/nabi_o.png",
+      "u": "/public/characters/nabi/mouth/nabi_u.png"
+    },
+    "size": [
+      1254,
+      1254
+    ],
+    "mouthBox": [
+      548,
+      444,
+      712,
+      579
+    ],
+    "actions": {
+      "hello": "/characters/nabi/actions/nabi_hello.png",
+      "sit": "/characters/nabi/actions/nabi_sit.png",
+      "dance": "/characters/nabi/actions/nabi_dance.png",
+      "cheer": "/characters/nabi/actions/nabi_cheer.png",
+      "shy": "/characters/nabi/actions/nabi_shy.png",
+      "sleep": "/characters/nabi/actions/nabi_sleep.png",
+      "idle": "/public/characters/nabi/nabi_idle.png"
+    },
+    "revision": "hd-2026-09-21"
+  },
+  "bori": {
+    "name": "보리",
+    "row": 4,
+    "idle": "/public/characters/bori/bori_idle.png",
+    "mouth": {
+      "a": "/public/characters/bori/mouth/bori_a.png",
+      "e": "/public/characters/bori/mouth/bori_e.png",
+      "i": "/public/characters/bori/mouth/bori_i.png",
+      "o": "/public/characters/bori/mouth/bori_o.png",
+      "u": "/public/characters/bori/mouth/bori_u.png"
+    },
+    "stable": {
+      "a": "/public/characters/bori/mouth/bori_a.png",
+      "e": "/public/characters/bori/mouth/bori_e.png",
+      "i": "/public/characters/bori/mouth/bori_i.png",
+      "o": "/public/characters/bori/mouth/bori_o.png",
+      "u": "/public/characters/bori/mouth/bori_u.png"
+    },
+    "size": [
+      1254,
+      1254
+    ],
+    "mouthBox": [
+      530,
+      440,
+      722,
+      594
+    ],
+    "actions": {
+      "thumbsup": "/characters/bori/actions/bori_thumbsup.png",
+      "music": "/characters/bori/actions/bori_music.png",
+      "music_2": "/characters/bori/actions/bori_music_2.png",
+      "shy": "/characters/bori/actions/bori_shy.png",
+      "happy": "/characters/bori/actions/bori_happy.png",
+      "sit": "/characters/bori/actions/bori_sit.png",
+      "idle": "/public/characters/bori/bori_idle.png"
+    },
+    "revision": "hd-2026-09-21"
+  }
+});

@@ -1,0 +1,542 @@
+[
+  {
+    "row": 1,
+    "column": 1,
+    "character": "kongi",
+    "action": "hello",
+    "status": "accepted",
+    "path": "/characters/kongi/actions/kongi_hello.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      30,
+      60,
+      82,
+      112
+    ]
+  },
+  {
+    "row": 1,
+    "column": 2,
+    "character": "kongi",
+    "action": "read",
+    "status": "accepted",
+    "path": "/characters/kongi/actions/kongi_read.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      83,
+      60,
+      135,
+      112
+    ]
+  },
+  {
+    "row": 1,
+    "column": 3,
+    "character": "kongi",
+    "action": "explain",
+    "status": "accepted",
+    "path": "/characters/kongi/actions/kongi_explain.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      136,
+      60,
+      188,
+      112
+    ]
+  },
+  {
+    "row": 1,
+    "column": 4,
+    "character": "tori",
+    "action": "hello",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_hello.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      189,
+      60,
+      241,
+      112
+    ]
+  },
+  {
+    "row": 1,
+    "column": 5,
+    "character": "tori",
+    "action": "cheer",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_cheer.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      242,
+      60,
+      294,
+      112
+    ]
+  },
+  {
+    "row": 1,
+    "column": 6,
+    "character": "tori",
+    "action": "turn",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_turn.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      295,
+      60,
+      347,
+      112
+    ]
+  },
+  {
+    "row": 1,
+    "column": 7,
+    "character": "kongi",
+    "action": "bow",
+    "status": "accepted",
+    "path": "/characters/kongi/actions/kongi_bow.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      349,
+      60,
+      401,
+      112
+    ]
+  },
+  {
+    "row": 1,
+    "column": 8,
+    "character": null,
+    "action": "dance",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r1-c8.png",
+    "reason": "갈색 곰이지만 파란색/흰색 공식 의상 없음",
+    "sourceBox": [
+      402,
+      60,
+      454,
+      112
+    ]
+  },
+  {
+    "row": 1,
+    "column": 9,
+    "character": "kongi",
+    "action": "sleep",
+    "status": "accepted",
+    "path": "/characters/kongi/actions/kongi_sleep.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      454,
+      60,
+      506,
+      112
+    ]
+  },
+  {
+    "row": 2,
+    "column": 1,
+    "character": "tori",
+    "action": "wink",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_wink.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      30,
+      178,
+      82,
+      233
+    ]
+  },
+  {
+    "row": 2,
+    "column": 2,
+    "character": "kongi",
+    "action": "wink",
+    "status": "accepted",
+    "path": "/characters/kongi/actions/kongi_wink.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      83,
+      178,
+      135,
+      233
+    ]
+  },
+  {
+    "row": 2,
+    "column": 3,
+    "character": null,
+    "action": "emotional",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r2-c3.png",
+    "reason": "강아지 + 분홍색 의상",
+    "sourceBox": [
+      136,
+      178,
+      188,
+      233
+    ]
+  },
+  {
+    "row": 2,
+    "column": 4,
+    "character": "tori",
+    "action": "jump",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_jump.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      189,
+      178,
+      241,
+      233
+    ]
+  },
+  {
+    "row": 2,
+    "column": 5,
+    "character": "tori",
+    "action": "cheer",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_cheer_2.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      242,
+      178,
+      294,
+      233
+    ]
+  },
+  {
+    "row": 2,
+    "column": 6,
+    "character": null,
+    "action": "shy",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r2-c6.png",
+    "reason": "강아지 + 분홍색 의상",
+    "sourceBox": [
+      295,
+      178,
+      347,
+      233
+    ]
+  },
+  {
+    "row": 2,
+    "column": 7,
+    "character": "tori",
+    "action": "dance",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_dance.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      349,
+      178,
+      401,
+      233
+    ]
+  },
+  {
+    "row": 2,
+    "column": 8,
+    "character": "tori",
+    "action": "wave",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_wave.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      402,
+      178,
+      454,
+      233
+    ]
+  },
+  {
+    "row": 2,
+    "column": 9,
+    "character": null,
+    "action": "sleep",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r2-c9.png",
+    "reason": "강아지 + 분홍색 의상",
+    "sourceBox": [
+      454,
+      178,
+      506,
+      233
+    ]
+  },
+  {
+    "row": 3,
+    "column": 1,
+    "character": "nabi",
+    "action": "hello",
+    "status": "accepted",
+    "path": "/characters/nabi/actions/nabi_hello.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      30,
+      310,
+      82,
+      366
+    ]
+  },
+  {
+    "row": 3,
+    "column": 2,
+    "character": "nabi",
+    "action": "sit",
+    "status": "accepted",
+    "path": "/characters/nabi/actions/nabi_sit.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      83,
+      310,
+      135,
+      366
+    ]
+  },
+  {
+    "row": 3,
+    "column": 3,
+    "character": "nabi",
+    "action": "dance",
+    "status": "accepted",
+    "path": "/characters/nabi/actions/nabi_dance.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      136,
+      310,
+      188,
+      366
+    ]
+  },
+  {
+    "row": 3,
+    "column": 4,
+    "character": null,
+    "action": "play",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r3-c4.png",
+    "reason": "곰 + 보라색 의상",
+    "sourceBox": [
+      189,
+      310,
+      241,
+      366
+    ]
+  },
+  {
+    "row": 3,
+    "column": 5,
+    "character": "nabi",
+    "action": "cheer",
+    "status": "accepted",
+    "path": "/characters/nabi/actions/nabi_cheer.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      242,
+      310,
+      294,
+      366
+    ]
+  },
+  {
+    "row": 3,
+    "column": 6,
+    "character": "nabi",
+    "action": "shy",
+    "status": "accepted",
+    "path": "/characters/nabi/actions/nabi_shy.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      295,
+      310,
+      347,
+      366
+    ]
+  },
+  {
+    "row": 3,
+    "column": 7,
+    "character": null,
+    "action": "dance",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r3-c7.png",
+    "reason": "곰 + 보라색 의상",
+    "sourceBox": [
+      349,
+      310,
+      401,
+      366
+    ]
+  },
+  {
+    "row": 3,
+    "column": 8,
+    "character": "tori",
+    "action": "surprise",
+    "status": "accepted",
+    "path": "/characters/tori/actions/tori_surprise.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      402,
+      310,
+      454,
+      366
+    ]
+  },
+  {
+    "row": 3,
+    "column": 9,
+    "character": "nabi",
+    "action": "sleep",
+    "status": "accepted",
+    "path": "/characters/nabi/actions/nabi_sleep.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      454,
+      310,
+      506,
+      366
+    ]
+  },
+  {
+    "row": 4,
+    "column": 1,
+    "character": "bori",
+    "action": "thumbsup",
+    "status": "accepted",
+    "path": "/characters/bori/actions/bori_thumbsup.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      30,
+      447,
+      82,
+      505
+    ]
+  },
+  {
+    "row": 4,
+    "column": 2,
+    "character": "bori",
+    "action": "music",
+    "status": "accepted",
+    "path": "/characters/bori/actions/bori_music.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      83,
+      447,
+      135,
+      505
+    ]
+  },
+  {
+    "row": 4,
+    "column": 3,
+    "character": null,
+    "action": "explain",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r4-c3.png",
+    "reason": "흰색 강아지 + 보라색 의상",
+    "sourceBox": [
+      136,
+      447,
+      188,
+      505
+    ]
+  },
+  {
+    "row": 4,
+    "column": 4,
+    "character": "bori",
+    "action": "music",
+    "status": "accepted",
+    "path": "/characters/bori/actions/bori_music_2.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      189,
+      447,
+      241,
+      505
+    ]
+  },
+  {
+    "row": 4,
+    "column": 5,
+    "character": null,
+    "action": "thumbsup",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r4-c5.png",
+    "reason": "토끼 + 파란색 의상",
+    "sourceBox": [
+      242,
+      447,
+      294,
+      505
+    ]
+  },
+  {
+    "row": 4,
+    "column": 6,
+    "character": null,
+    "action": "thumbsup",
+    "status": "pose-only",
+    "path": "/characters/reference/actions/pose-only-r4-c6.png",
+    "reason": "토끼 + 파란색 의상",
+    "sourceBox": [
+      295,
+      447,
+      347,
+      505
+    ]
+  },
+  {
+    "row": 4,
+    "column": 7,
+    "character": "bori",
+    "action": "shy",
+    "status": "accepted",
+    "path": "/characters/bori/actions/bori_shy.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      349,
+      447,
+      401,
+      505
+    ]
+  },
+  {
+    "row": 4,
+    "column": 8,
+    "character": "bori",
+    "action": "happy",
+    "status": "accepted",
+    "path": "/characters/bori/actions/bori_happy.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      402,
+      447,
+      454,
+      505
+    ]
+  },
+  {
+    "row": 4,
+    "column": 9,
+    "character": "bori",
+    "action": "sit",
+    "status": "accepted",
+    "path": "/characters/bori/actions/bori_sit.png",
+    "reason": "외형과 공식 의상 기준으로 분류",
+    "sourceBox": [
+      454,
+      447,
+      506,
+      505
+    ]
+  }
+]
