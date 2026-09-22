@@ -1485,3 +1485,16 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 08:56:21 — GitHub 푸시 및 Vercel 운영 배포 완료
+- **수행 내역**: 소스 커밋 e88ffa8 GitHub origin/main 푸시 완료. Vercel dpl_9EcTP32r1h6z8mYpUhesvDemdF1v production READY 및 school-tau-pearl.vercel.app 연결 확인. 운영 HTML/CSS/JS 5개 HTTP 200과 로컬 SHA-256 일치 검증 통과. 기존 활동·데이터·Google/Gemini TTS 설정 및 음성 연결 구조 보존. 이번 요청의 공통 원칙 영구 기록과 저장·푸시·배포 완료. 관련 파일: [AGENTS.md](file:///J:/sh/AGENTS.md), [오늘 일지](file:///J:/sh/오늘_작업_일지_2026-09-23.md).
+
+## 자동 저장 / 2026-09-23 08:56:22 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 2
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>
