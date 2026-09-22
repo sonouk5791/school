@@ -132,24 +132,7 @@
   }
 
   // --- Korean Female TTS Voice Helper ---
-  function speakText(text) {
-    if (isMuted || !window.speechSynthesis) return;
-    try {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ko-KR';
-      utterance.rate = 0.75 * exerciseSpeed; // 느리고 또박또박
-      utterance.pitch = 1.05;
-
-      const voices = window.speechSynthesis.getVoices();
-      const koVoice = voices.find(v => v.lang.startsWith('ko') && (v.name.includes('Yuna') || v.name.includes('SunHi') || v.name.includes('Heami') || v.name.includes('Korean') || v.name.includes('Google')));
-      if (koVoice) utterance.voice = koVoice;
-
-      window.speechSynthesis.speak(utterance);
-    } catch (e) {
-      console.warn('TTS error:', e);
-    }
-  }
+  function speakText(text) {if(!isMuted)return speakAsCharacter('kongi',text,{rateScale:exerciseSpeed});}
 
   // --- 3-State View Flow Manager (ready / playing / completed) ---
   let currentExerciseState = 'ready';
@@ -476,7 +459,7 @@
   function pause(message = '잠시 쉬고 있어요. 준비되면 이어서 해요.') {
     isPlaying = false;
     clearTimeout(sceneTimer);
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (window.speechSynthesis) window.CharacterVoice?.stop(); window.speechSynthesis.cancel();
     updateBgmGain();
     updateControls();
     if (message && statusMsg) statusMsg.textContent = message;
@@ -631,7 +614,7 @@
       isMuted = !isMuted;
       btnMute.textContent = isMuted ? '🔇 음성 꺼짐' : '🔊 음성 켜짐';
       btnMute.setAttribute('aria-pressed', String(isMuted));
-      if (isMuted && window.speechSynthesis) window.speechSynthesis.cancel();
+      if (isMuted && window.speechSynthesis) window.CharacterVoice?.stop(); window.speechSynthesis.cancel();
       updateBgmGain();
       if (statusMsg) {
         statusMsg.textContent = isMuted ? '음성을 껐어요. 자막과 영상은 계속 진행됩니다.' : '음성을 켰어요.';

@@ -1,23 +1,31 @@
-# 캐릭터 고정 음성 연결 — 설정 대기
+# 캐릭터 고정 음성 설정
 
-2026-09-22 기존 로컬 TYPECAST_API_KEY로 최신 Typecast 음성 목록 API를 조회했으나 401 인증 오류가 반환되었습니다. 실제 성인 음성 네 개를 확인하거나 합성하지 못했습니다.
+## 사용자 지정 매핑 (2026-09-22)
 
-## 준비된 공통 구조
+- 콩이: Achird
+- 토리: Aoede
+- 나비: Gacrux
+- 보리: Charon
 
-`js/character-voice-system.js`는 `speakAsCharacter(characterId, text)`와 `CharacterVoice`를 제공합니다. 속도는 콩이 0.94, 토리 0.98, 나비 0.91, 보리 0.89입니다. 나비 질문 뒤에는 1.8초의 대기 시간을 적용합니다. 기기 기본 음성이나 pitch 변경으로 대체하지 않습니다.
+`js/character-voice-system.js`의 읽기 전용 `characterVoices`를 기준으로 프로필의 voiceId와 외부 provider 기본 voiceIds를 공유합니다. 선생님 테스트 화면은 지정 음성과 현재 실제 사용하는 음성을 구분합니다.
 
-provider는 `voiceIds`에 서로 다른 고정 ID 네 개와 `synthesize({characterId,voiceId,text,speed,style,signal})` 함수를 제공해야 합니다. 함수는 audio MIME type의 Blob을 반환합니다. 키와 인증 요청은 서버에서 관리해야 합니다. 스타일 문자열은 provider가 지원하는 필드로 변환해야 하며 문자열만으로 자연스러운 억양이 보장되지는 않습니다.
+이 이름들은 Gemini TTS 음성 이름입니다. 브라우저 SpeechSynthesis의 voiceURI로 대입하면 작동하지 않습니다. 공식 문서: https://ai.google.dev/gemini-api/docs/speech-generation
 
-동일 문장 재클릭은 진행 중 Promise를 반환합니다. 새 문장은 이전 네트워크 요청과 재생을 취소합니다. 페이지 종료/숨김 시 중단하며 음소거와 느리게 듣기 선택을 localStorage로 유지합니다. `CharacterVoice.mount(element)`로 세 개의 큰 제어 버튼을 생성할 수 있습니다.
+## 현재 연결 상태
 
-## 아직 완료되지 않은 작업
+공통 함수 speakAsCharacter는 주요 페이지에 연결되어 있습니다. 현재 실제 엔진은 browser provider이며, 확인한 Edge의 한국어 음성은 Heami 1개입니다. 위 네 음성의 실제 생성·재생은 아직 연결되지 않았습니다. 기존 Typecast 인증 정보는 Gemini 인증에 사용할 수 없습니다. 로컬 환경에 Gemini용 키는 확인되지 않았습니다.
 
-- 유효한 TTS 자격증명과 성인 한국어 남성/중성 1개, 여성 2개, 남성 1개 선정
-- 실제 합성 샘플 청취 및 프로필 확정
-- 서버 provider 구현과 운영 환경변수 설정
-- 각 페이지의 기존 TTS/녹음/재생 완료 콜백/립싱크와 공통 재생 함수 연결
-- 모든 음원 간 중복 재생 및 실제 기기에서 재생 검증
+## 외부 provider 연결 계약
 
-현재 모듈은 준비 파일이며 실제 페이지에 연결하지 않았습니다. 기존 기능을 서비스 미설정 상태의 무음으로 교체하지 않았습니다. 고정 음성 적용이 완료된 것으로 간주하면 안 됩니다.
+```js
+CharacterVoice.configure({
+  // voiceIds 생략 시 위의 사용자 지정 매핑 사용
+  synthesize: async ({characterId, voiceId, text, speed, style, signal}) => {
+    // 서버의 TTS 엔드포인트에서 합성한 audio Blob 반환
+  }
+});
+```
 
-공식 API: https://typecast.ai/developers/api
+합성 서버 및 운영 환경의 인증 설정이 필요합니다. 비밀키는 브라우저 코드나 Git에 넣지 않습니다. 실제 합성·청취 검사 전에는 음성 적용 완료로 표시하지 않습니다.
+
+현재 매핑 저장 변경은 기능/캐릭터 이미지/활동 기록을 변경하지 않습니다.

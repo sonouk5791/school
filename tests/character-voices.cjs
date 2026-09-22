@@ -1,31 +1,3 @@
-const {chromium}=require('playwright'),assert=require('node:assert/strict');
-(async()=>{const browser=await chromium.launch({channel:'msedge',headless:true});try{
-const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.goto('http://127.0.0.1:8085');await page.evaluate(()=>VoiceManager.stopSpeaking());
-console.log('Available Korean voices:',await page.evaluate(()=>speechSynthesis.getVoices().filter(v=>/^ko/i.test(v.lang)).map(v=>v.name)));
-await page.evaluate(()=>{
- window.spoken=[];
- VoiceManager.synth={getVoices:()=>[],cancel(){},speak(u){window.spoken.push({pitch:u.pitch,rate:u.rate,text:u.text});window.testUtterance=u;u.onstart();},pause(){},resume(){}};
- VoiceManager.isMuted=false;
-});
-const profiles=[];
-for(const id of ['kongi','tori','nabi','bori']){
- await page.locator('[data-friend="'+id+'"]').click();
- await page.waitForFunction(id=>document.querySelector('#kongiHeroImg').src.includes('friend-'+id+'-talk'),id);
- profiles.push(await page.evaluate(()=>window.spoken.at(-1)));
- await page.evaluate(()=>VoiceManager.pauseSpeaking());
- assert(!(await page.locator('#kongiHeroImg').getAttribute('src')).includes('-talk'));
- await page.evaluate(()=>VoiceManager.stopSpeaking());
-}
-assert.equal(new Set(profiles.map(p=>p.pitch)).size,4);
-assert.equal(new Set(profiles.map(p=>p.rate)).size,4);
-assert.equal(await page.locator('#kongiMouth').count(),0);
-await page.locator('.character-greet').click();
-await page.waitForFunction(()=>document.querySelector('#kongiHeroImg').src.includes('-talk'));
-await page.locator('.hero-robot-wrapper').screenshot({path:'tests/character-speaking.png'});
-await page.evaluate(()=>window.testUtterance.onend());
-assert(!(await page.locator('#kongiHeroImg').getAttribute('src')).includes('-talk'));
-await page.evaluate(()=>VoiceManager.stopSpeaking());
-assert.deepEqual(errors,[]);
-console.log('PASS: four distinct pitch/rate profiles, speech frames, pause/end reset, preview button, no mouth overlay or JS errors.');
-}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});
+const assert=require('node:assert/strict'),fs=require('fs'),vm=require('vm');const code=fs.readFileSync('js/character-voice-system.js','utf8');
+function fixture(names,saved){const storage=new Map(saved?[['school_character_voice_uris_v1',saved]]:[]),synth=new EventTarget(),win=new EventTarget(),doc=new EventTarget();synth.getVoices=()=>names.map(name=>({name,voiceURI:name,lang:'ko-KR'}));synth.cancel=()=>{};win.speechSynthesis=synth;doc.querySelector=()=>null;const c={window:win,document:doc,localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},Event,CustomEvent:class extends Event{constructor(n,o){super(n);this.detail=o.detail;}},AbortController,DOMException,Blob,URL,setTimeout,clearTimeout,console};vm.runInNewContext(code,c);return {api:win.CharacterVoice,storage};}
+for(const n of [1,2,4]){const f=fixture(['Heami','SunHi','InJoon','Hyunsu'].slice(0,n));const mapping=Object.fromEntries(['kongi','tori','nabi','bori'].map(id=>[id,f.api.getVoice(id)?.voiceURI||null])),assigned=Object.values(mapping).filter(Boolean);assert.equal(assigned.length,n);assert.equal(new Set(assigned).size,n);const g=fixture(['Heami','SunHi','InJoon','Hyunsu'].slice(0,n).reverse(),f.storage.get('school_character_voice_uris_v1'));for(const id of Object.keys(mapping))assert.equal(g.api.getVoice(id)?.voiceURI||null,mapping[id]);if(n===4)assert.throws(()=>f.api.assign('tori',mapping.kongi));assert.equal(f.api.diagnostics().provider,'vertex-ai');assert.throws(()=>f.api.configure({voiceIds:{kongi:'A',tori:'A',nabi:'B',bori:'C'},synthesize(){}}));}console.log('PASS: browser fallback URI uniqueness/persistence and default Vertex provider');

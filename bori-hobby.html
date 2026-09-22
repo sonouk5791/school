@@ -127,6 +127,8 @@
   </style>
 <link rel="stylesheet" href="css/room-activity-flow.css?v=20260922">
 <script src="js/room-activity-flow.js?v=20260922"></script>
+<script src="js/character-voice-system.js?v=20260922-separated"></script>
+<link rel="stylesheet" href="css/character-animation.css?v=20260922"><script defer src="js/character-rig-data.js?v=20260922"></script><script defer src="js/character-animation.js?v=20260922"></script>
 </head>
 <body data-activity-room="bori" data-activity-status="select">
 <header class="bh-header">
@@ -265,7 +267,7 @@
 (()=>{
 'use strict';
 const RATE=0.82;
-function speak(t,cb){window.replayRoomVoice=()=>speak(t);if(window.RoomActivity?.activityStatus==='select')return;if(!window.speechSynthesis)return cb&&cb();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=RATE;u.pitch=0.92;const vs=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('ko'));const f=vs.find(v=>/\uC5EC\uC131|female|woman/i.test(v.name));if(f)u.voice=f;u.onend=()=>cb&&cb();speechSynthesis.speak(u);}
+function speak(t,cb){window.replayRoomVoice=()=>speak(t);if(window.RoomActivity?.activityStatus==='select')return;return speakAsCharacter('bori',t).then(r=>{if(r.status!=='cancelled')cb?.();});}
 speechSynthesis.getVoices();
 const SK='gomi_hobby_stamps';
 let st=JSON.parse(localStorage.getItem(SK)||localStorage.getItem('bori_hobby_stamps')||'{"c":0,"d":""}');

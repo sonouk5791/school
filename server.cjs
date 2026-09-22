@@ -49,6 +49,8 @@ const server = http.createServer((req, res) => {
 
   let reqPath = req.url.split('?')[0];
 
+  if(reqPath === '/api/tts'){require('./api/tts.js')(req,res);return;}
+
   // ── 1. 타입캐스트 TTS 프록시 API ────────────────────────────
   if (reqPath === '/api/tts/typecast' && req.method === 'POST') {
     handleTypecastTTS(req, res);

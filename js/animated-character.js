@@ -60,6 +60,7 @@
     }
     stopOthers() { window.CharacterAudioPlayer?.stop(); window.VoiceManager?.stopSpeaking(); window.dispatchEvent(new Event('character-audio-start')); }
     async play() {
+      if(window.CharacterVoice)return CharacterVoice.playRecording('kongi');
       this.stopOthers(); this.stop(); const token=++this.sequence;
       this.el.querySelector('.animated-character-caption').hidden=false;
       this.status.textContent='음성을 불러오고 있어요';

@@ -80,36 +80,7 @@ const VoiceManager = {
       greeting: "안녕하세요. 기억 친구 나비예요. 우리 같이 기억해볼까요?"
     }
   },
-  getCharacterVoice() {
-    if (!this.synth) return null;
-    const voices = (this.synth.getVoices() || []).filter(v => /^ko/i.test(v.lang));
-    if (!voices.length) return this.koreanVoice || null;
-
-    const charId = this.characterId || 'kongi';
-    const profile = this.characterProfiles[charId] || this.characterProfiles.kongi;
-
-    // 기계음(Heami, Desktop)을 제외한 고품질 자연어 신경망 음성 우선 분류
-    const naturalVoices = voices.filter(v => 
-      v.name && !v.name.includes('Heami') && !v.name.includes('Desktop')
-    );
-    const candidatePool = naturalVoices.length > 0 ? naturalVoices : voices;
-
-    // 2. 토리(토끼), 나비(고양이), 콩이(강아지): 맑은 여성 자연어 음성 (SunHi Online Natural, Google 한국의)
-    const femaleVoice = candidatePool.find(v => 
-      v.name && (v.name.includes('SunHi') || v.name.includes('Google'))
-    ) || candidatePool.find(v =>
-      v.name && !v.name.includes('InJoon') && !v.name.includes('인준') && !v.name.toLowerCase().includes('male')
-    );
-    if (femaleVoice) return femaleVoice;
-
-    // 3. 최적의 자연어 한국어 음성 연결
-    const best = this.getBestKoreanVoice();
-    if (best) return best;
-
-    // 4. 폴백: 순서대로 배정
-    const ordered = candidatePool.slice().sort((a,b) => a.name.localeCompare(b.name));
-    return ordered[profile.voiceIndex % ordered.length];
-  },
+  getCharacterVoice() {return window.CharacterVoice?.getVoice(this.characterId)||null;},
   getCharacterGreeting(charId) {
     const id = charId || this.characterId || 'kongi';
     const profile = this.characterProfiles[id] || this.characterProfiles.kongi;
@@ -366,6 +337,10 @@ const VoiceManager = {
       this.lastSpokenScript = textToSpeak;
     }
 
+    if(window.CharacterVoice){
+      const voiceToken=this.currentSpeakingToken;this.setTeacherSpeaking(true);
+      return speakAsCharacter(this.characterId||'kongi',textToSpeak).then(result=>{if(voiceToken!==this.currentSpeakingToken)return;this.setTeacherSpeaking(false);if(result.status!=='cancelled')onEndCallback?.();});
+    }
     // 긴 문장 청크 분할
     const chunks = this._splitIntoChunks(textToSpeak);
     if (chunks.length === 0) {
@@ -436,6 +411,7 @@ const VoiceManager = {
 
     // 실제로 사용되는 TTS의 voice 객체를 자연스러운 한국어 음성으로 반드시 연결
     const activeVoice = this.getCharacterVoice();
+    if (!activeVoice) {this.setTeacherSpeaking(false);onEndCallback?.();return;}
     if (activeVoice) {
       utterance.voice = activeVoice;
     }
@@ -491,6 +467,7 @@ const VoiceManager = {
 
   // 재생 중인 모든 음성 및 대기열 즉각 중지
   stopSpeaking(clearPause = true) {
+    window.CharacterVoice?.stop();
     this.currentSpeakingToken++; // 기존 진행 중인 세션 무효화
     this.queuedTimers.forEach(t => clearTimeout(t));
     this.queuedTimers = [];

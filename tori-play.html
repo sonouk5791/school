@@ -245,6 +245,8 @@
   </style>
 <link rel="stylesheet" href="css/room-activity-flow.css?v=20260922">
 <script src="js/room-activity-flow.js?v=20260922"></script>
+<script src="js/character-voice-system.js?v=20260922-separated"></script>
+<link rel="stylesheet" href="css/character-animation.css?v=20260922"><script defer src="js/character-rig-data.js?v=20260922"></script><script defer src="js/character-animation.js?v=20260922"></script>
 </head>
 <body data-activity-room="tori" data-activity-status="select">
 
@@ -406,17 +408,7 @@
 (function() {
   'use strict';
   const STAMPS_KEY = 'senior_stamps_v1';
-  const speak = (t) => {
-    window.replayRoomVoice=()=>speak(t);if(window.RoomActivity?.activityStatus==='select')return;
-    if (!window.speechSynthesis) return;
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(t);
-    u.lang = 'ko-KR'; u.rate = 0.82; u.pitch = 1.05;
-    const voices = speechSynthesis.getVoices();
-    const ko = voices.find(v => v.lang.startsWith('ko'));
-    if (ko) u.voice = ko;
-    speechSynthesis.speak(u);
-  };
+  const speak = (t) => { window.replayRoomVoice=()=>speak(t);if(window.RoomActivity?.activityStatus==='select')return;return speakAsCharacter('tori',t); };
   const giveStamp = (type) => {
     const stamps = JSON.parse(localStorage.getItem(STAMPS_KEY) || '[]');
     stamps.push({ type, date: new Date().toISOString(), source: 'tori-play' });

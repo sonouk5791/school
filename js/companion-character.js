@@ -283,7 +283,8 @@
       this.showBubble(displayText || text);
       this.setMotion(motion);
 
-      // 1. 타입캐스트 AI 보이스 API 호출 시도
+      if(window.CharacterVoice)return speakAsCharacter('kongi',text).finally(()=>this.setMotion('idle'));
+      // Legacy provider retained for pages without the shared system.
       try {
         const typecastRes = await fetch('/api/tts/typecast', {
           method: 'POST',

@@ -1,5 +1,10 @@
 {
   "framework": null,
   "buildCommand": "node scripts/build-welcome-recordings.cjs",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "functions": {
+    "api/tts.js": {
+      "maxDuration": 60
+    }
+  }
 }

@@ -258,22 +258,7 @@
   }
 
   // TTS Helper
-  function speak(text) {
-    if (!window.speechSynthesis) return;
-    try {
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = 'ko-KR';
-      utter.rate = 0.82;
-      utter.pitch = 1.05;
-      const voices = window.speechSynthesis.getVoices();
-      const koVoice = voices.find(v => v.lang.startsWith('ko') && (v.name.includes('Yuna') || v.name.includes('SunHi') || v.name.includes('Heami') || v.name.includes('Korean') || v.name.includes('Google 한국어')));
-      if (koVoice) utter.voice = koVoice;
-      window.speechSynthesis.speak(utter);
-    } catch (e) {
-      console.warn('Speech error:', e);
-    }
-  }
+  function speak(text) {return speakAsCharacter(state.currentCharId,text);}
 
   function showToast(msg) {
     const toast = $('chToast');
