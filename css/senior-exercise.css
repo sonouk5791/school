@@ -18,6 +18,17 @@
   background-color: var(--se-bg);
 }
 
+/* Stage 4: one entry, one active exercise, completion only after all scenes. */
+.se-ready-preview-wrap { display:none; }
+body .se-ready-stats { display:none; }
+.se-ready-desc { font-size:22px; }
+.se-controls-main-row #btnRestart { display:none; }
+.se-extra-controls { margin-top:16px; }
+.se-extra-controls>summary { font-size:20px;min-height:56px;padding:16px;cursor:pointer; }
+.se-gallery-section { max-width:1000px;margin:24px auto; }
+.se-completed-card { flex-direction:column;align-items:center; }
+body:not([data-exercise-status="completed"]) #viewCompleted {display:none!important;}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -1191,3 +1202,8 @@ body {
   .se-progress { min-width: 0; width: 100%; flex-basis: 100%; }
   .se-btn-nav-group { flex-wrap: wrap; justify-content: center; }
 }
+
+.se-controls-main-row .se-btn-nav-group { display:contents; }
+.se-controls-main-row #btnPrev { order:1; }
+.se-controls-main-row #btnPause { order:2; }
+.se-controls-main-row #btnNext { order:3; }

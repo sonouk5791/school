@@ -1,0 +1,14 @@
+[data-activity-room] [hidden]{display:none!important;}
+[data-activity-status="select"] :is(.game-panel,.learn-panel,.hobby-panel){display:none!important;}
+[data-activity-status="select"] :is(.tp-game-menu,.nl-menu,.bh-menu){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:850px;margin:24px auto;padding:0 16px;gap:18px;}
+[data-activity-status="select"] :is(.tp-game-menu,.nl-menu,.bh-menu)>button{font-size:24px;min-height:90px;padding:20px;min-width:0;word-break:keep-all;}
+[data-activity-status="select"] :is(.tp-game-menu,.nl-menu)>a{grid-column:1/-1;}
+.room-flow-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1000px;margin:20px auto;padding:0 16px;}
+.room-flow-toolbar h2{font-size:28px;word-break:keep-all;}
+.room-flow-toolbar button,.room-other-activity{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:12px 18px;border:2px solid #d5c5b0;border-radius:14px;background:#fffaf0;color:#3c392f;font-size:20px;cursor:pointer;text-decoration:none;margin:4px;}
+[data-activity-status="completed"] :is(.game-card,.learn-card,.hobby-card)>:not(.stamp-area):not(.completion-banner){display:none!important;}
+[data-activity-status="playing"] :is(.stamp-area,.completion-banner){display:none!important;}
+[data-activity-room] :is(.game-panel,.learn-panel,.hobby-panel){min-width:0;}
+[data-activity-room] :is(.game-panel,.learn-panel,.hobby-panel) button{min-height:56px;font-size:20px;word-break:keep-all;}
+[data-activity-room] .coloring-canvas{max-width:100%;height:auto;}
+@media(max-width:600px){.room-flow-toolbar h2{order:-1;width:100%;font-size:26px;}[data-activity-status="select"] :is(.tp-game-menu,.nl-menu,.bh-menu)>button{font-size:22px;padding:14px;}.coloring-workspace.active{flex-direction:column;}}

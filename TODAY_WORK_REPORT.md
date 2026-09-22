@@ -1317,3 +1317,66 @@
 - [오늘_작업_일지_2026-09-22.md](./오늘_작업_일지_2026-09-22.md)
 
 </details>
+
+## 자동 저장 / 2026-09-22 11:53:20 — 캐릭터 고정 음성 공통 구조 준비 — 서비스 인증 대기
+- **수행 내역**: 현재 브라우저 SpeechSynthesis 분산 사용과 기존 Typecast 연결을 분석했습니다. 기존 환경변수로 최신 Typecast 음성 목록 조회 결과 401 인증 오류입니다. js/character-voice-system.js에 서로 다른 voice ID 4개 강제, 고정 속도, 문장 pause, 나비 질문 pause, 중복 재생 차단, 이전 요청 취소, 음소거/다시듣기/느리게 듣기 공통 UI를 구현했습니다. 모의 provider로 중복 ID 거부·기본 기기음성 대체 없음·프로필 유지·중복 클릭 억제·취소 검사를 통과했습니다. documents/CHARACTER_VOICE_SETUP.md에 인증과 실제 음성 선정, 서버 provider 및 페이지 연결이 미완료임을 기록했습니다. 실제 음성 합성/목소리 4개 적용은 완료되지 않았고 기존 페이지 연결은 유지했습니다.
+
+## 자동 저장 / 2026-09-22 11:55:03 — 사용자 공통 작업 원칙 영구 기록
+- **수행 내역**: AGENTS.md에 사용자가 지정한 공통 규칙을 추가했습니다. 기존 지침은 보존했으며 임의 변경 금지, 사전 코드/저장 로직 분석, 기존 캐릭터/기능/데이터/라우팅 보존, 어르신 접근성, 단계 범위 준수, 변경 파일/기능/보존 기능/확인 사항의 짧은 보고를 상시 적용합니다. 지침 문서만 변경했으며 제품 코드와 음성 연결 작업은 진행하지 않았습니다. 문서 변경이므로 build/lint/브라우저 검사는 실행하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 12:00:51 — 1차 메인 중복 진입 구조 통합
+- **수행 내역**: index.html, js/home-character-hero.js, css/home-character-hero.css, js/senior-finish.js를 수정해 홈은 기존 네 캐릭터 이미지/링크, 의자 체조 추천 하나, 지난 활동/전체 활동 버튼만 표시합니다. 인사·기분·아침 프로그램과 기존 메뉴는 전체 활동에서 보존했습니다. AI 수업과 인지활동은 각각 디지털 배우기/시니어 인지활동 접힌 영역으로 이동했습니다. 기존 수업 카드 14개와 이벤트를 보존하고 실제 AI 기초 실행, 인지활동 폴더, 기록 및 홈 복귀, 768/390px 가로 넘침 없음을 확인했습니다. 콘솔 점검 중 기존 warmupReplay 요소 부재 오류를 찾아 js/warmup-intro.js에 선택적 바인딩을 적용했습니다. 배포 빌드 스크립트와 JS 구문 검사 통과. 1차 범위만 수행했으며 원격 푸시/배포 및 후속 음성 연결은 진행하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 12:04:37 — 2차 상단 메뉴 및 접근성 도구 단순화
+- **수행 내역**: index.html에 공통 상단 메뉴 js/home-accessibility-menu.js와 css/home-accessibility-menu.css를 연결했습니다. 홈 로고·소리 켜짐/꺼짐·Aa 보기·도움·선생님 공간으로 상단을 구성했습니다. 기존 버튼과 이벤트를 이동해 보기 패널에 기본 글씨/글씨 크기/속도/고대비를 통합하고 기존 localStorage 키를 재사용했습니다. 활동별 일시정지/다시듣기 및 선생님 공간 업무수행 일지는 보존했습니다. 전역 집 꾸미기를 숨기고 tori-play.html/nabi-learn.html/bori-hobby.html/senior-exercise.html에 캐릭터별 내 방 꾸미기 링크를 유지·추가했습니다. 1440/768/390/320px 넘침 없음, 음소거 재방문 복원, 글씨/고대비, Escape 닫기, 콘솔 오류 없음 확인. JS 구문 검사와 기존 배포 빌드 스크립트 통과. 2차 범위만 수행했으며 고정 음성 provider 연결 및 원격 배포는 진행하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 12:09:20 — 3차 토리 나비 보리 활동 화면 분리
+- **수행 내역**: tori-play.html, nabi-learn.html, bori-hobby.html과 공통 js/room-activity-flow.js, css/room-activity-flow.css를 수정했습니다. selectedActivity와 select/playing/completed 상태로 입장 시 네 활동 선택, 선택한 패널 하나만 진행, 기존 정답/완주/저장 완료 신호에 따른 완료 화면으로 분리했습니다. 공통 방으로 돌아가기/다시 듣기/다른 활동 고르기/학교 홈을 연결하고 기존 문제 생성·이미지·도장·저장 로직 및 기존 다음/다시하기 버튼을 보존했습니다. 입장 초기 문제 음성을 억제하고 방 이동 시 노래 타이머/음성을 중단하며 이전 활동의 지연 콜백을 취소합니다. 세 방 12개 활동 선택/단일패널/복귀와 모바일 넘침 검사, 나비 날짜 정답 후 실제 완료/재시작/늦은 완료 취소 검사, 브라우저 콘솔 및 JS 구문/빌드 확인을 통과했습니다. 모든 콘텐츠의 전체 완주는 별도 검증 범위이며 이번에는 UI 상태 전환을 중심으로 확인했습니다. 이번 3차 범위만 진행했고 원격 배포는 실행하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 12:14:42 — 4차 콩이 운동방 상태 및 완료 조건 정리
+- **수행 내역**: senior-exercise.html, css/senior-exercise.css, js/senior-exercise.js 수정. ready는 인사와 단일 시작 버튼 중심, playing은 이전/쉬기/다음 및 다시 듣기/천천히 중심으로 정리하고 기타 설정과 재시작은 접힌 영역에 보존했습니다. 준비화면 10개 진입 카드를 숨기고 운동 중 썸네일 목록은 유지했습니다. 자동 완료 시 건너뛴 씬까지 완료 처리하던 오류와 다음 버튼의 무조건 완료 처리를 수정했습니다. 실제 재생 시간 충족한 동작만 체크하며 마지막에서 미완료 동작이 있으면 이어서 진행합니다. 일시정지 후 안내 중복과 탐색 타이머를 보완했습니다. 테스트 응답만 짧게 만들어 전체 10개 완료/재시작과 건너뛰기 미완료를 검증했고 원본 운동 데이터는 보존했습니다. 원본 콘텐츠로 모바일 실제 클릭/이전/다음/천천히/contain/콘솔 오류 없음 및 빌드 검증 통과. 실제 12분 전체 완주는 실행하지 않았습니다. 4차 범위만 수행했으며 원격 배포하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 12:19:05 — 5차 쉬운 방 꾸미기 7단계 단순화
+- **수행 내역**: js/character-house.js, js/room-decor.js, css/character-house.css, character-house.html을 수정했습니다. 쉬운 모드를 벽지/커튼/러그/가구/소품/옷/완료 7단계와 3~4개 선택지로 구성하고 이전/다음으로 이동하도록 했습니다. 선택 즉시 기존 방 상태와 캐릭터 레이어를 변경하며 가구/소품은 쉬운 단계별 슬롯을 교체해 중복 누적을 방지합니다. 꽃무늬 러그를 추가했고 쉬운 모드 상세 도구/미션/팝업을 숨겼습니다. 자유 편집과 기존 localStorage 구조는 유지했습니다. 초기화에 아니요/네 확인 dialog를 추가했습니다. 네 캐릭터 모든 단계, 저장/새로고침 복원, 자유 모드, 초기화 취소 확인 통과. JS 구문 및 빌드 스크립트 통과. 기존 자동 테스트 중 이전 쉬운 모드 카테고리/페이지 수를 전제로 한 항목은 새 7단계 기준으로 갱신이 필요합니다. 5차 범위만 수행하고 원격 배포하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 12:23:52 — 6차 오늘의 20분 활동 코스 추가
+- **수행 내역**: daily-course.html, css/daily-course.css, js/daily-course.js를 추가하고 index.html의 단일 추천 진입을 오늘의 20분 활동으로 연결했습니다. 기존 운동/놀이/학습/취미 페이지를 한 번에 하나의 같은 출처 iframe으로 재사용합니다. 각 방 5분 참여 후 명시적 다음 활동으로 진행하고 이전 단계/쉬기/저장 종료를 제공합니다. 화면 숨김 및 쉬기 시 시간과 음성을 중단하고 단계 이동 시 이전 프레임을 제거합니다. 날짜와 현재 학습자별 localStorage에 단계와 누적 참여 시간을 저장해 이어하기를 제공합니다. 4단계가 모두 300초일 때만 완료하며 기존 RecordManager의 digital_school_care_records에 날짜/학습자별 중복 없이 완료 기록을 저장합니다. 각 원본 활동의 전체 완주가 아니라 코스 참여 시간 기준입니다. 저장 시간을 299.5초로 준비한 검증에서 네 단계 순서/완료 제한/기록 중복 방지 통과, 실제 시간 흐름으로 쉬기/조기 다음 차단/모바일/중간 재방문 확인 통과. 실제 20분 전체 실행은 하지 않았습니다. 구문 및 빌드 통과. 6차만 진행하고 원격 배포하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 12:25:44 — 전체 작업 종합 MD 저장 및 배포 준비
+- **수행 내역**: documents/WORK_SUMMARY_2026-09-22.md에 선행 작업과 1~6차 작업, 보존 기능, 변경 파일, 검증 결과 및 미완료 음성 연결/전체 시간 완주 등 한계를 종합 기록했습니다. 사용자 요청 범위는 문서 저장·GitHub 푸시·Vercel 배포이며 기능 추가 수정은 하지 않습니다.
+
+## 자동 저장 / 2026-09-22 12:26:11 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 28
+<details><summary>변경 파일 목록</summary>
+
+- [AGENTS.md](./AGENTS.md)
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [bori-hobby.html](./bori-hobby.html)
+- [character-house.html](./character-house.html)
+- [css/character-house.css](./css/character-house.css)
+- [css/daily-course.css](./css/daily-course.css)
+- [css/home-accessibility-menu.css](./css/home-accessibility-menu.css)
+- [css/home-character-hero.css](./css/home-character-hero.css)
+- [css/room-activity-flow.css](./css/room-activity-flow.css)
+- [css/senior-exercise.css](./css/senior-exercise.css)
+- [daily-course.html](./daily-course.html)
+- [documents/CHARACTER_VOICE_SETUP.md](./documents/CHARACTER_VOICE_SETUP.md)
+- [documents/WORK_SUMMARY_2026-09-22.md](./documents/WORK_SUMMARY_2026-09-22.md)
+- [index.html](./index.html)
+- [js/character-house.js](./js/character-house.js)
+- [js/character-voice-system.js](./js/character-voice-system.js)
+- [js/daily-course.js](./js/daily-course.js)
+- [js/home-accessibility-menu.js](./js/home-accessibility-menu.js)
+- [js/home-character-hero.js](./js/home-character-hero.js)
+- [js/room-activity-flow.js](./js/room-activity-flow.js)
+- [js/room-decor.js](./js/room-decor.js)
+- [js/senior-exercise.js](./js/senior-exercise.js)
+- [js/senior-finish.js](./js/senior-finish.js)
+- [js/warmup-intro.js](./js/warmup-intro.js)
+- [nabi-learn.html](./nabi-learn.html)
+- [senior-exercise.html](./senior-exercise.html)
+- [tori-play.html](./tori-play.html)
+- [오늘_작업_일지_2026-09-22.md](./오늘_작업_일지_2026-09-22.md)
+
+</details>

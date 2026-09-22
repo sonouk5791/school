@@ -8,7 +8,7 @@
  const start=async()=>{try{video.scrollIntoView({block:'center',behavior:'instant'});await video.play()}catch{status.textContent='영상의 재생 버튼을 눌러주세요.'}};
  document.getElementById('warmupJump').addEventListener('click',async()=>{const time=Number(document.getElementById('warmupChapter').value);try{if(video.readyState<1){await new Promise((resolve,reject)=>{video.addEventListener('loadedmetadata',resolve,{once:true});video.addEventListener('error',reject,{once:true});video.load()})}video.currentTime=time;await start()}catch{status.textContent='영상을 불러오지 못했어요. 다시 보기로 재시도해주세요.'}});
  play.addEventListener('click',()=>video.paused?start():video.pause());
- document.getElementById('warmupReplay').addEventListener('click',()=>{if(video.error)video.load();video.currentTime=0;start()});
+ document.getElementById('warmupReplay')?.addEventListener('click',()=>{if(video.error)video.load();video.currentTime=0;start()});
  document.getElementById('warmupClass').addEventListener('click',()=>{video.pause();document.getElementById('btnHeroStart')?.click()});
  video.addEventListener('play',()=>{play.textContent='Ⅱ 잠시 멈추기';status.textContent='편하게 앉아서 천천히 따라해요.'});
  video.addEventListener('pause',()=>{play.textContent=video.ended?'▶ 한 번 더 함께하기':'▶ 이어서 보기'});

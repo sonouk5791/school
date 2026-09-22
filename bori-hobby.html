@@ -125,13 +125,16 @@
     .bh-home-btn:hover{background:#dbeafe}
     @media(max-width:600px){.hobby-card{padding:22px 16px}.song-item{flex-direction:column;text-align:center}.song-play-btn{width:100%}.coloring-workspace{flex-direction:column}.color-palette-panel{min-width:unset;width:100%}}
   </style>
+<link rel="stylesheet" href="css/room-activity-flow.css?v=20260922">
+<script src="js/room-activity-flow.js?v=20260922"></script>
 </head>
-<body>
+<body data-activity-room="bori" data-activity-status="select">
 <header class="bh-header">
   <a href="index.html" class="bh-back-link">&#127968; 처음으로</a>
   <div class="bh-location">&#128059; 보리의 취미방</div>
   <button type="button" class="bh-voice-btn" id="btnBhVoice">&#128266; 보리 설명</button>
 </header>
+<p style="margin:16px;text-align:center"><a href="character-house.html?char=bori" style="display:inline-flex;align-items:center;min-height:56px;padding:12px 22px;border:2px solid #d9ceb9;border-radius:16px;font-size:20px;color:#355832;background:#fffaf0;text-decoration:none">🏡 내 방 꾸미기</a></p>
 <section class="bh-hero">
   <img src="public/characters/bori/bori_idle.png" alt="보리 캐릭터" class="bh-char-img" onerror="this.src='assets/images/friend-bori.png'">
   <h1>보리의 취미방 &#128059;</h1>
@@ -262,7 +265,7 @@
 (()=>{
 'use strict';
 const RATE=0.82;
-function speak(t,cb){if(!window.speechSynthesis)return cb&&cb();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=RATE;u.pitch=0.92;const vs=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('ko'));const f=vs.find(v=>/\uC5EC\uC131|female|woman/i.test(v.name));if(f)u.voice=f;u.onend=()=>cb&&cb();speechSynthesis.speak(u);}
+function speak(t,cb){window.replayRoomVoice=()=>speak(t);if(window.RoomActivity?.activityStatus==='select')return;if(!window.speechSynthesis)return cb&&cb();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=RATE;u.pitch=0.92;const vs=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('ko'));const f=vs.find(v=>/\uC5EC\uC131|female|woman/i.test(v.name));if(f)u.voice=f;u.onend=()=>cb&&cb();speechSynthesis.speak(u);}
 speechSynthesis.getVoices();
 const SK='gomi_hobby_stamps';
 let st=JSON.parse(localStorage.getItem(SK)||localStorage.getItem('bori_hobby_stamps')||'{"c":0,"d":""}');
@@ -274,7 +277,7 @@ document.getElementById('bhStampNum').textContent=st.c;
 const PANELS={song:'panelSong',story:'panelStory',color:'panelColor',riddle:'panelRiddle'};
 document.querySelectorAll('.bh-tab').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.bh-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.hobby-panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(PANELS[b.dataset.tab]).classList.add('active');});});
 document.getElementById('btnBhVoice').addEventListener('click',()=>speak('안녕하세요! 저는 보리예요. 노래도 부르고, 옛날 이야기도 나누고, 색칠도 하고, 수수께끼도 함께 풀어보아요!'));
-function showFeedback(el,msg,type){el.textContent=msg;el.className='feedback-banner '+type+' visible';setTimeout(()=>el.classList.remove('visible'),3500);}
+function showFeedback(el,msg,type){el.textContent=msg;el.className='feedback-banner '+type+' visible';roomActivityDelay(()=>el.classList.remove('visible'),3500);}
 // 노래
 const SONGS=[
   {title:'\uACE0\uD5A5\uC758 \uBD04',icon:'\uD83C\uDF38',desc:'\uC774\uC6D0\uC218 \uC791\uC0AC \u00B7 \uD64D\uB09C\uD30C \uC791\uACE1',lyrics:['\uB098\uC758 \uC0B4\uB358 \uACE0\uD5A5\uC740 \uAF43\uD53C\uB294 \uC0B0\uACE8','\uBCF5\uC22D\uC544\uAF43 \uC0B4\uAD6C\uAF43 \uC544\uAE30\uC9C4\uB2EC\uB798','\uC6B8\uADEF\uBD88\uADEF \uAF43\uB300\uAD81 \uCC28\uB9AC\uC778 \uB3D9\uB124','\uADF8 \uC18D\uC5D0\uC11C \uB180\uB358 \uB54C\uAC00 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4','\uAF43\uB3D9\uB124 \uC0C8\uB3D9\uB124 \uB098\uC758 \uC606\uACE0\uD5A5','\uD30C\uB780 \uB4E4 \uB0A8\uCABD\uC5D0\uC11C \uBC14\uB78C\uC774 \uBD88\uBA74','\uB0B3\uAC00\uC5D0 \uC218\uC591\uBC84\uB4E4 \uCD94\uCDB0\uB294 \uB3D9\uB124','\uADF8 \uC18D\uC5D0\uC11C \uB180\uB358 \uB54C\uAC00 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4']},
@@ -304,7 +307,7 @@ const STORIES=[
 ];
 let curSt=null;
 function renderStories(){document.getElementById('storyGrid').innerHTML=STORIES.map((s,i)=>`<div class="story-card" data-i="${i}"><span class="story-emoji">${s.e}</span><div class="story-card-title">${s.t}</div><div class="story-card-desc">눌러서 이야기 보기</div></div>`).join('');document.querySelectorAll('.story-card').forEach(c=>c.addEventListener('click',()=>openStory(+c.dataset.i)));}
-function openStory(i){curSt=STORIES[i];document.getElementById('storyGrid').style.display='none';document.getElementById('storyCompletion').classList.remove('visible');document.getElementById('storyContentBox').classList.add('active');document.getElementById('storyContentTitle').textContent=curSt.e+' '+curSt.t;document.getElementById('storyContentText').textContent=curSt.tx;document.getElementById('storyQuestionText').textContent='❓ '+curSt.q;const ab=document.getElementById('storyAnswerBtns');ab.innerHTML=curSt.o.map((op,j)=>`<button type="button" class="story-answer-btn" data-j="${j}">${op}</button>`).join('');document.querySelectorAll('.story-answer-btn').forEach(b=>b.addEventListener('click',()=>{const ch=+b.dataset.j;document.querySelectorAll('.story-answer-btn').forEach(x=>{x.disabled=true;if(+x.dataset.j===curSt.a)x.classList.add('correct');if(+x.dataset.j===ch&&ch!==curSt.a)x.classList.add('wrong');});const fb=document.getElementById('storyFeedback');if(ch===curSt.a){showFeedback(fb,'✅ 정답이에요! 훌륭하세요!','good');speak('정답이에요! 훌륭하세요!');setTimeout(()=>{document.getElementById('storyCompletion').classList.add('visible');addStamp();},1500);}else{showFeedback(fb,'🤔 아쉬워요. 정답은 '+curSt.o[curSt.a]+'이에요!','retry');speak('아쉬워요. 정답은 '+curSt.o[curSt.a]+'이에요.');}}));document.getElementById('storyFeedback').className='feedback-banner';speak(curSt.tx);}
+function openStory(i){curSt=STORIES[i];document.getElementById('storyGrid').style.display='none';document.getElementById('storyCompletion').classList.remove('visible');document.getElementById('storyContentBox').classList.add('active');document.getElementById('storyContentTitle').textContent=curSt.e+' '+curSt.t;document.getElementById('storyContentText').textContent=curSt.tx;document.getElementById('storyQuestionText').textContent='❓ '+curSt.q;const ab=document.getElementById('storyAnswerBtns');ab.innerHTML=curSt.o.map((op,j)=>`<button type="button" class="story-answer-btn" data-j="${j}">${op}</button>`).join('');document.querySelectorAll('.story-answer-btn').forEach(b=>b.addEventListener('click',()=>{const ch=+b.dataset.j;document.querySelectorAll('.story-answer-btn').forEach(x=>{x.disabled=true;if(+x.dataset.j===curSt.a)x.classList.add('correct');if(+x.dataset.j===ch&&ch!==curSt.a)x.classList.add('wrong');});const fb=document.getElementById('storyFeedback');if(ch===curSt.a){showFeedback(fb,'✅ 정답이에요! 훌륭하세요!','good');speak('정답이에요! 훌륭하세요!');roomActivityDelay(()=>{document.getElementById('storyCompletion').classList.add('visible');addStamp();},1500);}else{showFeedback(fb,'🤔 아쉬워요. 정답은 '+curSt.o[curSt.a]+'이에요!','retry');speak('아쉬워요. 정답은 '+curSt.o[curSt.a]+'이에요.');}}));document.getElementById('storyFeedback').className='feedback-banner';speak(curSt.tx);}
 document.getElementById('btnStoryBack').addEventListener('click',()=>{document.getElementById('storyContentBox').classList.remove('active');document.getElementById('storyGrid').style.display='grid';document.getElementById('storyFeedback').className='feedback-banner';speechSynthesis.cancel();});
 document.getElementById('btnStoryRetry').addEventListener('click',()=>{document.getElementById('storyCompletion').classList.remove('visible');document.getElementById('storyContentBox').classList.remove('active');document.getElementById('storyGrid').style.display='grid';speechSynthesis.cancel();});
 renderStories();
@@ -341,12 +344,12 @@ const RIDDLES=[
 let ri=0,rs=0;
 function renderRiddle(){const r=RIDDLES[ri];document.getElementById('riddleNumber').textContent=(ri+1)+' / '+RIDDLES.length;document.getElementById('riddleQuestion').textContent=r.q;document.getElementById('riddleHintText').style.display='none';document.getElementById('riddleHintText').textContent='💡 힌트: '+r.h;document.getElementById('riddleAnswerBox').style.display='none';document.getElementById('riddleAnswerBox').textContent='✅ 정답: '+r.a;document.getElementById('riddleFeedback').className='feedback-banner';document.getElementById('riddleProgress').textContent='확인한 수수께끼: '+rs+'개';speak('수수께끼예요. '+r.q);}
 document.getElementById('btnRiddleHint').addEventListener('click',()=>{const h=document.getElementById('riddleHintText');h.style.display=h.style.display==='block'?'none':'block';speak('힌트! '+RIDDLES[ri].h);});
-document.getElementById('btnRiddleAnswer').addEventListener('click',()=>{document.getElementById('riddleAnswerBox').style.display='block';rs++;document.getElementById('riddleProgress').textContent='확인한 수수께끼: '+rs+'개';showFeedback(document.getElementById('riddleFeedback'),'🎉 정말 잘 하셨어요!','good');speak('정답은 '+RIDDLES[ri].a+' 이었어요! 잘 하셨어요!');if(rs>=RIDDLES.length)setTimeout(()=>{document.getElementById('riddleCompletion').classList.add('visible');addStamp();},1600);});
+document.getElementById('btnRiddleAnswer').addEventListener('click',()=>{document.getElementById('riddleAnswerBox').style.display='block';rs++;document.getElementById('riddleProgress').textContent='확인한 수수께끼: '+rs+'개';showFeedback(document.getElementById('riddleFeedback'),'🎉 정말 잘 하셨어요!','good');speak('정답은 '+RIDDLES[ri].a+' 이었어요! 잘 하셨어요!');if(rs>=RIDDLES.length)roomActivityDelay(()=>{document.getElementById('riddleCompletion').classList.add('visible');addStamp();},1600);});
 document.getElementById('btnRiddlePrev').addEventListener('click',()=>{if(ri>0){ri--;renderRiddle();}});
 document.getElementById('btnRiddleNext').addEventListener('click',()=>{if(ri<RIDDLES.length-1){ri++;renderRiddle();}else{document.getElementById('riddleCompletion').classList.add('visible');addStamp();}});
 document.getElementById('btnRiddleRetry').addEventListener('click',()=>{ri=0;rs=0;document.getElementById('riddleCompletion').classList.remove('visible');renderRiddle();});
 renderRiddle();
-window.addEventListener('load',()=>setTimeout(()=>speak('보리의 취미방에 오신 것을 환영해요! 노래도 부르고, 옛날 이야기도 하고, 색칠도 하고, 수수께끼도 풀어보아요!'),600));
+window.addEventListener('load',()=>roomActivityDelay(()=>speak('보리의 취미방에 오신 것을 환영해요! 노래도 부르고, 옛날 이야기도 하고, 색칠도 하고, 수수께끼도 풀어보아요!'),600));
 })();
 </script>
 </body>

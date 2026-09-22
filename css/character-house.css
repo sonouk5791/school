@@ -1304,3 +1304,17 @@ body[data-decor-mode=easy] .ch-mode-hint{display:block}
 @media(max-width:1100px){.ch-room-col:has(.cc-avatar) .room-actions{display:none}.ch-room-col:has(.cc-avatar) #roomSummary{display:none}#roomEasyGuide{font-size:20px;flex-wrap:wrap}#roomEasyGuide strong{order:-1;flex-basis:100%;text-align:center}}
 @media(min-width:701px) and (max-width:1199px){.ch-studio-grid{grid-template-columns:minmax(0,1fr) 280px;gap:14px}.ch-menu-col{grid-column:1/-1;grid-row:1}.ch-room-col{grid-column:1;grid-row:2}.ch-items-col{grid-column:2;grid-row:2}.ch-room-col:has(.cc-avatar){position:sticky;top:12px}.ch-room-col:has(.cc-avatar) .ch-room-viewport{height:390px;min-height:0}.ch-room-col:has(.cc-avatar) .ch-avatar-elem{height:55%}.ch-placed-icon svg{width:95px}.ch-placed-item[data-item-id=f_sofa] svg{width:135px}.ch-placed-item[data-item-id=f_table] svg{width:105px}.ch-placed-item[data-item-id=pic_family] svg{width:70px}}
 @media(max-width:700px){.ch-studio-grid{grid-template-columns:minmax(0,1fr)}.ch-room-col:has(.cc-avatar){position:static;grid-column:1;grid-row:1}.ch-menu-col{grid-column:1;grid-row:2}.ch-items-col{grid-column:1;grid-row:3}.ch-bottom-bar{position:static}.ch-bottom-inner{flex-wrap:wrap}.ch-bottom-nav-btn{flex:1 1 44%;white-space:normal}.ch-category-list .ch-cat-btn{flex:1 1 40%}}
+
+/* Guided decorating: one question below the room; free tools are preserved. */
+body[data-decor-mode="easy"] .ch-studio-grid{display:flex;flex-direction:column;}
+body[data-decor-mode="easy"] .ch-room-col{order:0;width:100%;position:static;}
+body[data-decor-mode="easy"] .ch-items-col{order:1;width:100%;}
+body[data-decor-mode="easy"] .ch-menu-col{order:2;width:100%;}
+body[data-decor-mode="easy"] #itemToolbar,body[data-decor-mode="easy"] #easyPositionBar,body[data-decor-mode="easy"] #missionBanner,body[data-decor-mode="easy"] #chToast{display:none!important;}
+body[data-decor-mode="easy"] #optionsGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+body[data-decor-mode="easy"] #optionsGrid button{font-size:22px;min-height:72px;word-break:keep-all;}
+body[data-decor-mode="easy"] #btnBottomComplete{display:none;}
+.room-reset-confirm{margin:auto;padding:28px;border:2px solid #cbb897;border-radius:20px;max-width:calc(100% - 32px);}
+.room-reset-confirm h2{font-size:28px;margin-bottom:20px;}
+.room-reset-confirm button{font-size:22px;min-height:56px;padding:12px 24px;margin:8px;}
+@media(max-width:600px){body[data-decor-mode="easy"] #optionsGrid{grid-template-columns:repeat(2,minmax(0,1fr));}}

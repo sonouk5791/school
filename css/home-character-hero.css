@@ -28,3 +28,19 @@ body.character-home #homeQuickLinks button,body.character-home #homeQuickLinks s
 @media(max-width:1000px){.home-friends-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:660px;gap:12px;}.home-friend-picture{max-width:160px;}}
 @media(max-width:600px){body.character-home .header-container{padding:12px;gap:8px;}body.character-home .brand-icon{display:none;}body.character-home .brand-title{font-size:22px;}body.character-home .btn-teacher-space{padding:10px;font-size:20px;}body.character-home .main-wrapper{padding:12px 10px 40px;}.character-home-hero.hero-classroom{padding:24px 10px 16px;border-radius:20px;}.home-welcome h1{font-size:32px;}.home-friends-grid{gap:4px;margin:12px auto 20px;}.home-friend{padding:4px 2px 12px;}.home-friend-picture{max-width:140px;}.home-friend strong{font-size:24px;}.home-friend>span{font-size:20px;}.home-start-activity{font-size:22px;padding:12px 18px;gap:12px;width:100%;}}
 @media(prefers-reduced-motion:reduce){.home-friend{transition:none;}}
+
+.home-one-recommendation h2 {font-size:24px;line-height:1.4;margin:0 0 8px;}
+body.character-home .home-one-recommendation p {font-size:20px;margin:0 0 16px;}
+#homeQuickLinks .care-btn {min-height:56px;font-size:20px;}
+#homeCatalogTools {padding:24px;background:#fffaf0;border-radius:20px;margin:20px 0;}
+#homeCatalogTools h2 {font-size:32px;}
+#homeCatalogTools p {font-size:20px;}
+#homeCatalogTools .main-nav {display:flex;flex-wrap:wrap;position:static;margin:20px 0;}
+#homeCatalogTools .teacher-voice-controls {display:flex;flex-wrap:wrap;gap:12px;}
+.home-course-folder {margin:20px 0;border:2px solid #dfd5c2;border-radius:20px;padding:16px;}
+.home-course-folder>summary {font-size:24px;min-height:56px;padding:12px;cursor:pointer;font-weight:800;}
+/* Older duplicate portals remain available in All activities, never on Home. */
+body[data-senior-page="home"] #seniorActivitiesSection,
+body[data-senior-page="home"] #moreLessonsDrawer,
+body[data-senior-page="home"] #morningLauncher,
+body[data-senior-page="home"] .senior-start {display:none!important;}

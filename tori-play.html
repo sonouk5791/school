@@ -243,8 +243,10 @@
       .tp-game-tab { font-size: 16px; padding: 10px 14px; min-width: 0; }
     }
   </style>
+<link rel="stylesheet" href="css/room-activity-flow.css?v=20260922">
+<script src="js/room-activity-flow.js?v=20260922"></script>
 </head>
-<body>
+<body data-activity-room="tori" data-activity-status="select">
 
   <!-- ===== Header ===== -->
   <header class="tp-header">
@@ -272,7 +274,7 @@
     <button class="tp-game-tab" data-game="color" role="tab" aria-selected="false">🎨 색깔 맞추기</button>
     <button class="tp-game-tab" data-game="season" role="tab" aria-selected="false">🌸 계절 놀이</button>
     <button class="tp-game-tab" data-game="animal" role="tab" aria-selected="false">🐾 동물 맞히기</button>
-    <a href="character-house.html?char=tori" class="tp-game-tab" style="text-decoration:none; text-align:center; display:flex; align-items:center; justify-content:center;">🏡 토리 집 꾸미기</a>
+    <a href="character-house.html?char=tori" class="tp-game-tab" style="text-decoration:none; text-align:center; display:flex; align-items:center; justify-content:center;">🏡 내 방 꾸미기</a>
   </div>
 
   <!-- ===== Game Area ===== -->
@@ -405,6 +407,7 @@
   'use strict';
   const STAMPS_KEY = 'senior_stamps_v1';
   const speak = (t) => {
+    window.replayRoomVoice=()=>speak(t);if(window.RoomActivity?.activityStatus==='select')return;
     if (!window.speechSynthesis) return;
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(t);
@@ -487,7 +490,7 @@
           c.classList.add('wrong');
           showFeedback('matchFeedback', false);
           speak('괜찮아요. 다시 한번 해볼까요?');
-          setTimeout(() => {
+          roomActivityDelay(() => {
             c.classList.remove('wrong');
             matchSelected = false;
             document.getElementById('matchFeedback').style.display = 'none';
@@ -566,7 +569,7 @@
           btn.classList.add('wrong');
           showFeedback('colorFeedback', false);
           speak('괜찮아요. 다시 한번 해볼까요?');
-          setTimeout(() => { btn.classList.remove('wrong'); colorSelected = false; document.getElementById('colorFeedback').style.display = 'none'; }, 1500);
+          roomActivityDelay(() => { btn.classList.remove('wrong'); colorSelected = false; document.getElementById('colorFeedback').style.display = 'none'; }, 1500);
         }
       });
       grid.appendChild(btn);
@@ -635,7 +638,7 @@
           btn.classList.add('wrong');
           showFeedback('seasonFeedback', false);
           speak('괜찮아요. 다시 한번 생각해볼까요? ' + q.hint);
-          setTimeout(() => { btn.classList.remove('wrong'); seasonSelected = false; document.getElementById('seasonFeedback').style.display = 'none'; }, 2000);
+          roomActivityDelay(() => { btn.classList.remove('wrong'); seasonSelected = false; document.getElementById('seasonFeedback').style.display = 'none'; }, 2000);
         }
       });
       grid.appendChild(btn);
@@ -703,7 +706,7 @@
           btn.classList.add('wrong');
           showFeedback('animalFeedback', false);
           speak('괜찮아요. 다시 한번 해볼까요?');
-          setTimeout(() => { btn.classList.remove('wrong'); animalSelected = false; document.getElementById('animalFeedback').style.display = 'none'; }, 1500);
+          roomActivityDelay(() => { btn.classList.remove('wrong'); animalSelected = false; document.getElementById('animalFeedback').style.display = 'none'; }, 1500);
         }
       });
       grid.appendChild(btn);

@@ -210,7 +210,7 @@
   function snapshot(){return JSON.parse(JSON.stringify(Object.fromEntries(roomFields.map(k=>[k,state[k]]))));}
   function rememberRoom(){if(state.screen==='studio')state.rooms[state.currentCharId]=snapshot();}
   function defaultRoom(id){const theme=window.RoomDecor.themes[id];const catalog=[...Object.values(ITEM_CATALOG).flat(),...window.RoomDecor.special];return {roomType:'room_spacious',wallStyle:theme.wallStyle,floorStyle:'f_wood_light',windowStyle:'win_big',doorStyle:'door_wood',curtain:theme.curtain,rug:theme.rug,rugShape:'square',mode:'easy',placedItems:[['f_sofa',21,65],['f_table',24,82],['f_bookshelf',82,51],['p_tree',84,78],['l_stand',9,54],['pic_family',48,18],[theme.special,76,83]].map(([key,x,y],i)=>({...catalog.find(item=>item.id===key),uid:'starter_'+id+'_'+i,x,y,scale:1,rot:0}))};}
-  function resetRoom(){pushHistory();Object.assign(state,defaultRoom(state.currentCharId));state.customizations[state.currentCharId]=window.CharacterCustomizer.defaults(state.currentCharId);state.selectedItemUid=null;$('itemToolbar').hidden=true;$('easyPositionBar').hidden=true;renderCanvas();renderToolsPanel('curtain');showToast('기본 방으로 돌아왔어요. 되돌리기로 다시 복원할 수 있어요.');}
+  function resetRoom(){easyStep=0;pushHistory();Object.assign(state,defaultRoom(state.currentCharId));state.customizations[state.currentCharId]=window.CharacterCustomizer.defaults(state.currentCharId);state.selectedItemUid=null;$('itemToolbar').hidden=true;$('easyPositionBar').hidden=true;renderCanvas();renderToolsPanel('curtain');showToast('기본 방으로 돌아왔어요. 되돌리기로 다시 복원할 수 있어요.');}
 
   const historyStack = [];
 
@@ -338,7 +338,7 @@
       $('resetModal').style.display = 'none';
     }
 
-    window.RoomDecor.setup(renderToolsPanel,resetRoom,goToSelectScreen);
+    window.RoomDecor.setup(renderToolsPanel,()=>window.RoomDecor.confirmReset(resetRoom),goToSelectScreen);
     renderCharCards();
     setupGlobalEvents();
 
@@ -589,10 +589,34 @@
   // --- TOOLS PANEL & CATEGORY RENDERING ---
   let currentCategory = 'outfit';
 
+  let easyStep = 0;
+  function renderEasySteps() {
+    const steps=['벽지를 골라볼까요?','커튼 색을 골라볼까요?','러그를 골라볼까요?','가구 하나를 골라볼까요?','소품 하나를 골라볼까요?','옷을 골라볼까요?','정말 멋진 방이 되었어요!'];
+    const grid=$('optionsGrid'), guide=$('roomEasyGuide');grid.replaceChildren();guide.replaceChildren();guide.hidden=false;
+    $('optionsTitle').textContent=steps[easyStep];document.querySelector('.ch-items-col .ch-col-sub').textContent=(easyStep+1)+' / 7 · 누르면 바로 바뀌어요';
+    const button=(name,fn)=>{const b=document.createElement('button');b.type='button';b.className='cc-button';b.textContent=name;b.onclick=fn;return b;};
+    const prev=button('◀ 이전',()=>{easyStep--;renderToolsPanel();});prev.disabled=easyStep===0;
+    const next=button('다음 ▶',()=>{easyStep++;renderToolsPanel();});next.disabled=easyStep===6;
+    guide.append(prev,document.createTextNode((easyStep+1)+' / 7'),next);
+    const apply=(name,fn)=>{pushHistory();fn();state.selectedItemUid=null;renderCanvas();$('speechMsg').textContent=name+'도 참 잘 어울려요.';speak($('speechMsg').textContent);renderEasySteps();};
+    const choice=(name,fn)=>{const b=button(name,()=>apply(name,fn));b.classList.add('ch-opt-card');grid.append(b);};
+    if(easyStep===0) WALL_STYLES.slice(0,4).forEach(x=>choice(x.name,()=>state.wallStyle=x.id));
+    if(easyStep===1) [['yellow','노랑'],['green','연두'],['pink','분홍']].forEach(([id,name])=>choice(name,()=>state.curtain=id));
+    if(easyStep===2) [['round','둥근 러그'],['square','네모 러그'],['flower','꽃무늬 러그']].forEach(([id,name])=>choice(name,()=>state.rugShape=id));
+    if(easyStep===3||easyStep===4){const items=(easyStep===3?ITEM_CATALOG.furniture:ITEM_CATALOG.plants).slice(0,3);items.forEach(item=>choice(item.name,()=>{
+      const slot=easyStep===3?'furniture':'decor';let target=state.placedItems.find(i=>i.easySlot===slot);
+      if(!target){target={uid:'easy_'+Date.now(),easySlot:slot,x:slot==='furniture'?22:80,y:72,scale:1,rot:0};state.placedItems.push(target);}
+      Object.assign(target,{id:item.id,name:item.name,icon:item.icon});
+    }));}
+    if(easyStep===5) [['sportswear','운동복'],['knit','니트'],['cardigan','가디건']].forEach(([id,name])=>choice(name,()=>{const cid=state.currentCharId;state.customizations[cid]=window.CharacterCustomizer.normalize(cid,{...state.customizations[cid],outfit:id});}));
+    if(easyStep===6){grid.append(button('저장하고 완료하기',()=>{$('btnBottomComplete').click();}));}
+  }
+
   function renderToolsPanel(cat = currentCategory) {
     currentCategory = cat;
     window.RoomDecor.guide(state.mode,cat,renderToolsPanel);
 
+    if(state.mode==='easy'){renderEasySteps();return;}
     // Update Category Menu buttons
     document.querySelectorAll('.ch-cat-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.cat === cat);
@@ -944,6 +968,7 @@
   }
 
   function selectItemOnCanvas(uid) {
+    if(state.mode==='easy')return;
     state.selectedItemUid = uid;
     renderCanvas();
 
@@ -977,6 +1002,7 @@
     // Mode switch
     $('btnModeEasy').addEventListener('click', () => {
       state.mode = 'easy';
+      easyStep=0;
       $('btnModeEasy').classList.add('active');
       $('btnModeFree').classList.remove('active');
       showToast('✨ 쉬운 꾸미기 모드 (버튼으로 쏙쏙 배치)');

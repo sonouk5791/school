@@ -63,6 +63,8 @@
   let bgmAudioCtx = null;
   let bgmGainNode = null;
   let bgmInterval = null;
+  let exerciseSpeed = 1;
+  const watchedSeconds = new Map();
   const completedScenes = new Set(); // 완료한 씬 인덱스 추적
 
   // Format MM:SS
@@ -136,7 +138,7 @@
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'ko-KR';
-      utterance.rate = 0.75; // 느리고 또박또박
+      utterance.rate = 0.75 * exerciseSpeed; // 느리고 또박또박
       utterance.pitch = 1.05;
 
       const voices = window.speechSynthesis.getVoices();
@@ -154,6 +156,7 @@
 
   function setExerciseState(state) {
     currentExerciseState = state;
+    document.body.dataset.exerciseStatus = state;
 
     if (viewReady) {
       viewReady.style.display = (state === 'ready') ? 'block' : 'none';
@@ -367,12 +370,15 @@
   function runSceneLoop() {
     if (!isPlaying || !scenes[currentSceneIdx]) return;
     const scene = scenes[currentSceneIdx];
-    sceneStartTime = performance.now() - sceneElapsed * 1000;
+    let lastTick = performance.now();
 
     const checkTimeline = () => {
       if (!isPlaying) return;
       const now = performance.now();
-      sceneElapsed = (now - sceneStartTime) / 1000;
+      const delta = Math.min(0.5, Math.max(0, (now - lastTick) / 1000)) * exerciseSpeed;
+      lastTick = now;
+      sceneElapsed += delta;
+      watchedSeconds.set(currentSceneIdx, (watchedSeconds.get(currentSceneIdx) || 0) + delta);
 
       // Find current active speechStep
       for (let i = scene.speechSteps.length - 1; i >= 0; i--) {
@@ -406,7 +412,7 @@
       // Check Scene End -> Auto Next Scene Seamlessly
       if (sceneElapsed >= scene.duration) {
         // Mark current scene as completed
-        completedScenes.add(currentSceneIdx);
+        if ((watchedSeconds.get(currentSceneIdx) || 0) >= scene.duration) completedScenes.add(currentSceneIdx);
         updateActiveThumbnail();
 
         if (currentSceneIdx < scenes.length - 1) {
@@ -460,7 +466,6 @@
       sceneElapsed = 0;
     }
 
-    displayScene(currentSceneIdx);
     runSceneLoop();
     updateControls();
     if (statusMsg) {
@@ -494,9 +499,12 @@
   // 10개 동작을 모두 완료했을 때만 호출되는 완료 함수
   function finishProgram() {
     pause('');
-    // 모든 10개 씬 완료 표시
-    for (let i = 0; i < scenes.length; i++) {
-      completedScenes.add(i);
+    if (completedScenes.size !== scenes.length) {
+      const next = scenes.findIndex((_, i) => !completedScenes.has(i));
+      jumpToScene(next);
+      if (statusMsg) statusMsg.textContent = "아직 하지 않은 동작을 함께해요.";
+      play();
+      return;
     }
     updateActiveThumbnail();
 
@@ -537,7 +545,7 @@
   function updateControls() {
     if (btnStart) {
       btnStart.disabled = isPlaying;
-      btnStart.textContent = isPlaying ? '▶ 재생 중...' : sceneElapsed > 0 ? '▶ 이어서 하기' : '▶ 어르신 체조 시작';
+      btnStart.textContent = '▶ 운동 시작하기';
     }
     if (btnHeroStart) {
       btnHeroStart.textContent = isPlaying ? '⏸ 체조 진행 중' : sceneElapsed > 0 ? '▶ 이어서 하기' : '▶ 바로 체조 시작하기';
@@ -555,6 +563,12 @@
     }
   }
 
+  $('btnExerciseReplay')?.addEventListener('click', () => speakText(captionText?.textContent || scenes[currentSceneIdx]?.subtitle || '천천히 함께해요.'));
+  $('btnExerciseSlow')?.addEventListener('click', () => {
+    exerciseSpeed = exerciseSpeed === 1 ? 0.8 : 1;
+    $('btnExerciseSlow').setAttribute('aria-pressed', String(exerciseSpeed !== 1));
+    $('btnExerciseSlow').textContent = exerciseSpeed === 1 ? '🐢 천천히' : '🐢 천천히 켜짐';
+  });
   // --- Event Listeners ---
   if (btnStart) {
     btnStart.addEventListener('click', () => {
@@ -583,6 +597,7 @@
   if (btnRestart) {
     btnRestart.addEventListener('click', () => {
       completedScenes.clear();
+      watchedSeconds.clear();
       jumpToScene(0);
       setExerciseState('playing');
       play();
@@ -604,8 +619,7 @@
 
   if (btnNext) {
     btnNext.addEventListener('click', () => {
-      // 다음 버튼 누를 때 이전 동작은 완료된 것으로 간주
-      completedScenes.add(currentSceneIdx);
+      // Navigation does not award completion.
       if (currentSceneIdx < scenes.length - 1) {
         jumpToScene(currentSceneIdx + 1);
       }
@@ -669,6 +683,8 @@
 
   if (progressTimeline) {
     progressTimeline.addEventListener('input', (e) => {
+      const resumeAfterSeek = isPlaying;
+      pause('');
       const targetVal = parseFloat(e.target.value);
       let accum = 0;
       for (let i = 0; i < scenes.length; i++) {
@@ -680,6 +696,8 @@
         }
         accum += scenes[i].duration;
       }
+      updateOverallTimeline();
+      if (resumeAfterSeek) play();
     });
   }
 
@@ -692,6 +710,7 @@
         completeModal.style.display = 'none';
       }
       completedScenes.clear();
+      watchedSeconds.clear();
       jumpToScene(0);
       setExerciseState('playing');
       play();

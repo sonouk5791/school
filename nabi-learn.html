@@ -204,8 +204,10 @@
       .nl-tab { font-size: 15px; padding: 8px 12px; min-width: 0; }
     }
   </style>
+<link rel="stylesheet" href="css/room-activity-flow.css?v=20260922">
+<script src="js/room-activity-flow.js?v=20260922"></script>
 </head>
-<body>
+<body data-activity-room="nabi" data-activity-status="select">
 
   <header class="nl-header">
     <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
@@ -230,7 +232,7 @@
     <button class="nl-tab" data-learn="season" role="tab">🌸 계절 배우기</button>
     <button class="nl-tab" data-learn="proverb" role="tab">📖 속담 이야기</button>
     <button class="nl-tab" data-learn="number" role="tab">🔢 숫자 알기</button>
-    <a href="character-house.html?char=nabi" class="nl-tab" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">🏡 나비 집 꾸미기</a>
+    <a href="character-house.html?char=nabi" class="nl-tab" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">🏡 내 방 꾸미기</a>
   </div>
 
   <main class="nl-area">
@@ -366,6 +368,7 @@
   'use strict';
   const STAMPS_KEY = 'senior_stamps_v1';
   const speak = (t) => {
+    window.replayRoomVoice=()=>speak(t);if(window.RoomActivity?.activityStatus==='select')return;
     if (!window.speechSynthesis) return;
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(t);
@@ -442,7 +445,7 @@
           btn.classList.add('wrong');
           showFeedback('dayFeedback', false);
           speak('괜찮아요. 오늘은 ' + correct + '이에요. 다시 한번 눌러볼까요?');
-          setTimeout(() => { btn.classList.remove('wrong'); document.getElementById('dayFeedback').style.display = 'none'; }, 2000);
+          roomActivityDelay(() => { btn.classList.remove('wrong'); document.getElementById('dayFeedback').style.display = 'none'; }, 2000);
         }
       });
       grid.appendChild(btn);
@@ -502,7 +505,7 @@
           btn.classList.add('wrong');
           showFeedback('seasonLFeedback', false);
           speak('괜찮아요. 다시 한번 생각해볼까요? ' + q.hint);
-          setTimeout(() => { btn.classList.remove('wrong'); seasonLSel = false; document.getElementById('seasonLFeedback').style.display = 'none'; }, 2000);
+          roomActivityDelay(() => { btn.classList.remove('wrong'); seasonLSel = false; document.getElementById('seasonLFeedback').style.display = 'none'; }, 2000);
         }
       });
       grid.appendChild(btn);
@@ -573,7 +576,7 @@
           showFeedback('provFeedback', false);
           speak('괜찮아요. ' + p.meaning);
           mEl.classList.add('show');
-          setTimeout(() => { btn.classList.remove('wrong'); provSel = false; document.getElementById('provFeedback').style.display = 'none'; }, 2500);
+          roomActivityDelay(() => { btn.classList.remove('wrong'); provSel = false; document.getElementById('provFeedback').style.display = 'none'; }, 2500);
         }
       });
       grid.appendChild(btn);
@@ -639,7 +642,7 @@
           btn.classList.add('wrong');
           showFeedback('numFeedback', false);
           speak('괜찮아요. 답은 ' + q.a + '이에요. 다시 한번 해볼까요?');
-          setTimeout(() => { btn.classList.remove('wrong'); numSel = false; document.getElementById('numFeedback').style.display = 'none'; }, 2000);
+          roomActivityDelay(() => { btn.classList.remove('wrong'); numSel = false; document.getElementById('numFeedback').style.display = 'none'; }, 2000);
         }
       });
       grid.appendChild(btn);

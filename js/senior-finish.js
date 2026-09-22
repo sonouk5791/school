@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const groups = new Map();
   const classify = () => [...main.children].forEach(el => {
     if (el === bar || el.id === 'careRoot' || groups.has(el)) return;
-    groups.set(el, el === hero || el === start || el.id === 'morningLauncher' ? 'home' : el === warmup ? 'exercise' : el === friends ? 'friends' : el === today ? 'today' : el === history ? 'history' : 'activities');
+    groups.set(el, el === hero ? 'home' : el === warmup ? 'exercise' : el === friends ? 'friends' : el === today ? 'today' : el === history ? 'history' : 'activities');
   });
   const updateDate = () => {
     document.querySelector('#seniorDate').textContent = '오늘은 ' + new Intl.DateTimeFormat('ko-KR', {timeZone:'Asia/Seoul', month:'long', day:'numeric', weekday:'long'}).format(new Date()) + '이에요.';

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff9ed">
   <title>콩이의 운동방 · 디지털 AI 학교</title>
-  <link rel="stylesheet" href="css/senior-exercise.css?v=20260922-fit">
+  <link rel="stylesheet" href="css/senior-exercise.css?v=20260922-state4">
 </head>
 <body>
   <div class="se-container">
@@ -40,11 +40,8 @@
           </div>
           <div class="se-ready-copy">
             <span class="se-ready-badge">🌸 어르신 맞춤 건강 의자 체조</span>
-            <h2 class="se-ready-title">안녕하세요 어르신!<br>오늘도 천천히 함께 운동해볼까요?</h2>
-            <p class="se-ready-desc">
-              의자에 편안하게 앉아서 따라하는 <strong>총 10가지 쉬운 건강 체조</strong>가 준비되어 있어요.<br>
-              아프거나 무리하지 않고, 내 몸이 편안한 만큼만 가볍게 움직여보세요.
-            </p>
+            <h2 class="se-ready-title">안녕하세요.<br>오늘도 천천히 같이 움직여볼까요?</h2>
+            <p class="se-ready-desc">10가지 건강 의자 체조 · 약 12~15분<br>의자에 앉아 편안한 만큼만 움직여요.</p>
             <div class="se-ready-stats">
               <div class="se-stat-pill">⏱ <strong>총 소요 시간:</strong> 약 12분</div>
               <div class="se-stat-pill">📋 <strong>운동 구성:</strong> 10단계 자동 재생</div>
@@ -52,7 +49,7 @@
             </div>
             <div class="se-ready-action-area">
               <button id="btnStart" class="se-btn-huge-start" type="button">
-                ▶ 지금 운동 시작하기
+                ▶ 운동 시작하기
               </button>
               <button id="heroStartBtn" type="button" style="display: none;" aria-hidden="true">
                 ▶ 바로 체조 시작하기
@@ -61,7 +58,8 @@
           </div>
         </div>
 
-        <!-- 10개 체조 순서 안내 미리보기 -->
+        <p style="margin:16px;text-align:center"><a href="character-house.html?char=kongi" style="display:inline-flex;align-items:center;min-height:56px;padding:12px 22px;border:2px solid #d9ceb9;border-radius:16px;font-size:20px;color:#355832;background:#fffaf0;text-decoration:none">🏡 내 방 꾸미기</a></p>
+<!-- 10개 체조 순서 안내 미리보기 -->
         <div class="se-ready-preview-wrap">
           <h3 class="se-preview-heading">📋 오늘 함께할 10가지 건강 체조 순서</h3>
           <p class="se-preview-sub">시작 버튼을 누르면 1번 시작 인사부터 10번 마무리까지 음성 안내와 함께 차례대로 진행됩니다.</p>
@@ -136,11 +134,11 @@
               ⏭ 다음 동작
             </button>
           </div>
-          <button id="btnRestart" class="se-btn se-btn-restart" type="button">
-            🔄 처음부터 다시
-          </button>
+          
         </div>
-        <div class="se-controls-sub-row">
+        <div class="se-controls-sub-row"><button id="btnExerciseReplay" class="se-btn" type="button">🔊 다시 듣기</button><button id="btnExerciseSlow" class="se-btn" type="button" aria-pressed="false">🐢 천천히</button></div><details class="se-extra-controls"><summary>소리·화면 설정</summary><button id="btnRestart" class="se-btn se-btn-restart" type="button">
+            🔄 처음부터 다시
+          </button><div class="se-controls-sub-row">
           <button id="btnTextSize" class="se-btn se-btn-sub" type="button">
             🔠 글자 크게
           </button>
@@ -157,6 +155,7 @@
             📋 준비 화면으로
           </button>
         </div>
+      </details>
       </div>
 
       <!-- 10 Scenes Thumbnail Navigator -->
@@ -219,6 +218,6 @@
     </footer>
   </div>
 
-  <script src="js/senior-exercise.js?v=20260922-v4"></script>
+  <script src="js/senior-exercise.js?v=20260922-state4"></script>
 </body>
 </html>
