@@ -1239,3 +1239,16 @@
 - [오늘_작업_일지_2026-09-22.md](./오늘_작업_일지_2026-09-22.md)
 
 </details>
+
+## 자동 저장 / 2026-09-22 11:01:52 — GitHub 푸시·Vercel 운영 배포 완료
+- **수행 내역**: 코드 커밋 4f36e8b를 GitHub origin/main에 푸시 완료. Vercel 운영 배포 dpl_C3eVCCM22Tmi7AJsE6pktMVXVkrT READY 확인. https://school-tau-pearl.vercel.app/character-house.html HTTP 200 및 최신 스크립트 버전·실제 착용 정보 코드 확인 통과. 작업 완료 시 자동 일지 저장 및 커밋 전 파일 목록 기록 체계 유지.
+
+## 자동 저장 / 2026-09-22 11:02:15 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 2
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [오늘_작업_일지_2026-09-22.md](./오늘_작업_일지_2026-09-22.md)
+
+</details>
