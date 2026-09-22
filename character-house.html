@@ -56,110 +56,129 @@
     <!-- ========================================================
          SCREEN 2: 메인 하우스 스튜디오 (STEP 1 ~ 6)
          ======================================================== -->
+    <!-- ========================================================
+         SCREEN 2: 메인 하우스 스튜디오 (STEP 1 ~ 6)
+         ======================================================== -->
     <section id="studioScreen" hidden>
-      <div class="ch-studio-layout">
+      <div class="ch-studio-container">
         
-        <!-- Left: 16:9 Interactive Room Canvas -->
-        <div class="ch-stage-card">
-          <div class="ch-stage-header">
+        <!-- Top Bar: Room Title & Mission Banner & Mode Toggle -->
+        <div class="ch-studio-top-bar">
+          <div class="ch-top-title-wrap">
             <h2 id="stageTitle" class="ch-stage-title">🏡 콩이의 집 (운동방)</h2>
-            <span id="missionText" class="ch-mission-pill">💡 미션: 노란 꽃 하나를 놓아볼까요?</span>
           </div>
-
-          <!-- 16:9 Viewport -->
-          <div id="roomViewport" class="ch-room-viewport">
-            <div id="roomWall" class="ch-room-wall"></div>
-            <div id="roomFloor" class="ch-room-floor"></div>
-            
-            <div id="windowElem" class="ch-window-elem">☀️</div>
-            <div id="doorElem" class="ch-door-elem"></div>
-
-            <!-- Character Avatar -->
-            <div id="charAvatarWrap" class="ch-avatar-elem">
-              <span id="avatarOutfitBadge" class="ch-avatar-outfit-badge">노란 가디건</span>
-              <img id="charAvatar" class="ch-avatar-img" src="assets/images/friend-kongi.png" alt="캐릭터">
+          <div id="missionBanner" class="ch-mission-banner">
+            <span class="ch-mission-icon">🌻</span>
+            <div class="ch-mission-content">
+              <span class="ch-mission-tag">오늘의 미션</span>
+              <span id="missionText" class="ch-mission-text">콩이의 방에 노란 꽃이나 운동 기구를 놓아볼까요?</span>
             </div>
-
-            <!-- Placed Items Layer -->
-            <div id="itemsLayer"></div>
+            <span id="missionSuccessBadge" class="ch-mission-success-badge" hidden>🎉 미션 성공! 참 잘하셨어요</span>
           </div>
-
-          <!-- Character Speech Bubble -->
-          <div class="ch-speech-box">
-            <div id="speechAvatar" class="ch-speech-avatar">🐶</div>
-            <div class="ch-speech-text">
-              <div id="speechName" class="ch-speech-name">콩이</div>
-              <p id="speechMsg" class="ch-speech-msg">어서 오세요! 오늘은 제 방을 어떻게 꾸며볼까요?</p>
-            </div>
+          <div class="ch-top-mode-toggle">
+            <button id="btnModeEasy" class="ch-toggle-btn active" type="button">⭐ 쉬운 꾸미기</button>
+            <button id="btnModeFree" class="ch-toggle-btn" type="button">🎨 자유 꾸미기</button>
           </div>
         </div>
 
-        <!-- Right: Tool & Option Panels -->
-        <div class="ch-tools-card">
-          <!-- Mode Switch Bar (쉬운 꾸미기 vs 자유롭게 꾸미기) -->
-          <div class="ch-mode-switch-bar">
-            <span class="ch-mode-label">꾸미기 방식:</span>
-            <button id="btnModeEasy" class="ch-mode-btn active" type="button">
-              ✨ 쉬운 꾸미기 (추천)
-            </button>
-            <button id="btnModeFree" class="ch-mode-btn" type="button">
-              🎨 자유롭게 꾸미기
-            </button>
-          </div>
+        <!-- 3-Column Main Area -->
+        <div class="ch-studio-grid">
+          <!-- Col 1: Decor Categories Menu (Left) -->
+          <aside class="ch-menu-col" aria-label="꾸미기 카테고리">
+            <div class="ch-col-header">
+              <span class="ch-col-badge">📂 꾸미기 메뉴</span>
+            </div>
+            <nav class="ch-category-list">
+              <button class="ch-cat-btn active" data-cat="outfit" type="button">
+                <span class="ch-cat-icon">👕</span>
+                <span class="ch-cat-name">옷 입히기</span>
+              </button>
+              <button class="ch-cat-btn" data-cat="room" type="button">
+                <span class="ch-cat-icon">🏠</span>
+                <span class="ch-cat-name">방 분위기</span>
+              </button>
+              <button class="ch-cat-btn" data-cat="furniture" type="button">
+                <span class="ch-cat-icon">🪑</span>
+                <span class="ch-cat-name">가구 놓기</span>
+              </button>
+              <button class="ch-cat-btn" data-cat="decor" type="button">
+                <span class="ch-cat-icon">🌷</span>
+                <span class="ch-cat-name">예쁜 소품</span>
+              </button>
+              <button class="ch-cat-btn" data-cat="play" type="button">
+                <span class="ch-cat-icon">🧸</span>
+                <span class="ch-cat-name">재미 놀이</span>
+              </button>
+            </nav>
+          </aside>
 
-          <!-- Step Category Tabs -->
-          <nav class="ch-category-tabs" aria-label="꾸미기 카테고리">
-            <button class="ch-cat-tab active" data-cat="outfit" type="button">👕 옷 입히기</button>
-            <button class="ch-cat-tab" data-cat="structure" type="button">🏠 방 구조</button>
-            <button class="ch-cat-tab" data-cat="interior" type="button">🎨 벽/바닥</button>
-            <button class="ch-cat-tab" data-cat="furniture" type="button">🪑 가구</button>
-            <button class="ch-cat-tab" data-cat="plants" type="button">🌷 꽃</button>
-            <button class="ch-cat-tab" data-cat="toys" type="button">🧸 장난감</button>
-            <button class="ch-cat-tab" data-cat="books" type="button">📚 책</button>
-            <button class="ch-cat-tab" data-cat="frames" type="button">🖼 그림</button>
-            <button class="ch-cat-tab" data-cat="lights" type="button">💡 조명</button>
-            <button class="ch-cat-tab" data-cat="cushions" type="button">🛋 쿠션</button>
-            <button class="ch-cat-tab" data-cat="music" type="button">🎵 음악</button>
-            <button class="ch-cat-tab" data-cat="exercise" type="button">🏃 운동</button>
-          </nav>
+          <!-- Col 2: Real Room Preview (Center, 60~65%) -->
+          <main class="ch-room-col">
+            <!-- Character Speech Bubble (Horizontal, Wide) -->
+            <div class="ch-speech-banner">
+              <div id="speechAvatar" class="ch-speech-avatar">🐶</div>
+              <div class="ch-speech-body">
+                <div id="speechName" class="ch-speech-name">콩이의 한마디</div>
+                <p id="speechMsg" class="ch-speech-msg">어서 오세요! 오늘은 제 방을 예쁘게 꾸며볼까요?</p>
+              </div>
+            </div>
 
-          <!-- Options Grid -->
-          <div class="ch-options-scroll">
-            <h3 id="optionsTitle" class="ch-options-title">👕 오늘은 어떤 옷을 입혀볼까요?</h3>
+            <!-- Interactive Room Viewport -->
+            <div id="roomViewport" class="ch-room-viewport">
+              <!-- Walls & Floor & Interior Structures -->
+              <div id="roomWall" class="ch-room-wall"></div>
+              <div id="roomMolding" class="ch-room-molding"></div>
+              <div id="roomFloor" class="ch-room-floor"></div>
+              <div id="roomRug" class="ch-room-rug"></div>
+
+              <!-- Window & Door -->
+              <div id="windowElem" class="ch-window-elem">☀️</div>
+              <div id="doorElem" class="ch-door-elem"></div>
+
+              <!-- Original Character Avatar (콩이 공식 이미지) -->
+              <div id="charAvatarWrap" class="ch-avatar-elem">
+                <div class="ch-avatar-outfit-box">
+                  <span id="avatarOutfitBadge" class="ch-avatar-outfit-badge">👕 노란 가디건 착용 중</span>
+                </div>
+                <img id="charAvatar" class="ch-avatar-img" src="assets/images/friend-kongi.png" alt="캐릭터">
+              </div>
+
+              <!-- Placed Items Layer -->
+              <div id="itemsLayer" class="ch-items-layer"></div>
+
+              <!-- Mini Action Toolbar for selected item -->
+              <div id="itemToolbar" class="ch-item-toolbar" hidden>
+                <span id="toolbarItemName" class="ch-toolbar-title">선택된 물건</span>
+                <button id="btnToolScaleUp" class="ch-tool-btn" type="button" title="크게">➕ 크게</button>
+                <button id="btnToolScaleDown" class="ch-tool-btn" type="button" title="작게">➖ 작게</button>
+                <button id="btnToolRotate" class="ch-tool-btn" type="button" title="돌리기">🔄 돌리기</button>
+                <button id="btnToolDelete" class="ch-tool-btn danger" type="button" title="치우기">🗑 치우기</button>
+              </div>
+            </div>
+
+            <!-- Easy Mode Auto-Position Bar -->
+            <div id="easyPositionBar" class="ch-easy-position-bar" hidden>
+              <div class="ch-easy-title">
+                <span id="easyItemName">선택한 물건: 나무 테이블</span>
+                <span>👉 방의 어디에 놓아둘까요?</span>
+              </div>
+              <div class="ch-easy-btns">
+                <button id="btnPlaceLeft" class="ch-easy-btn" type="button">👈 [왼쪽]에 놓기</button>
+                <button id="btnPlaceCenter" class="ch-easy-btn primary" type="button">🌟 [가운데]에 놓기</button>
+                <button id="btnPlaceRight" class="ch-easy-btn" type="button">👉 [오른쪽]에 놓기</button>
+              </div>
+            </div>
+          </main>
+
+          <!-- Col 3: Items Grid Panel (Right) -->
+          <aside class="ch-items-col" aria-label="선택 가능한 아이템 목록">
+            <div class="ch-col-header">
+              <h3 id="optionsTitle" class="ch-options-title">👕 옷을 골라보세요</h3>
+              <p class="ch-col-sub">누르면 방에 쏙 들어갑니다</p>
+            </div>
             <div id="optionsGrid" class="ch-options-grid"></div>
-          </div>
-
-          <!-- Easy Mode Auto-Position Bar (쉬운 꾸미기 모드일 때 물건 선택 시 표시) -->
-          <div id="easyPositionBar" class="ch-easy-position-bar" hidden>
-            <div class="ch-easy-title">
-              <span id="easyItemName">선택한 물건: 나무 테이블</span>
-              <span>방의 어디에 놓아둘까요?</span>
-            </div>
-            <div class="ch-easy-btns">
-              <button id="btnPlaceLeft" class="ch-easy-btn" type="button">👈 [왼쪽]에 놓기</button>
-              <button id="btnPlaceCenter" class="ch-easy-btn primary" type="button">🌟 [가운데]에 놓기</button>
-              <button id="btnPlaceRight" class="ch-easy-btn" type="button">👉 [오른쪽]에 놓기</button>
-            </div>
-          </div>
-
-          <!-- Free Mode D-Pad Controls (자유롭게 꾸미기 모드일 때 선택된 물건 제어) -->
-          <div id="itemController" class="ch-item-controller" hidden>
-            <div class="ch-ctrl-header">
-              <span id="selectedItemName">선택된 물건: 나무 테이블</span>
-            </div>
-            <div class="ch-dpad-grid">
-              <button id="btnMoveLeft" class="ch-dpad-btn" type="button">⬅ 왼쪽</button>
-              <button id="btnMoveRight" class="ch-dpad-btn" type="button">➡ 오른쪽</button>
-              <button id="btnMoveUp" class="ch-dpad-btn" type="button">⬆ 위쪽</button>
-              <button id="btnMoveDown" class="ch-dpad-btn" type="button">⬇ 아래쪽</button>
-              <button id="btnRotate" class="ch-dpad-btn" type="button">🔄 돌리기</button>
-              <button id="btnScaleUp" class="ch-dpad-btn" type="button">➕ 크게</button>
-              <button id="btnScaleDown" class="ch-dpad-btn" type="button">➖ 작게</button>
-              <button id="btnDeleteItem" class="ch-dpad-btn danger" type="button">🗑 치우기</button>
-            </div>
-          </div>
+          </aside>
         </div>
-
       </div>
     </section>
 
@@ -168,12 +187,20 @@
          ======================================================== -->
     <nav class="ch-bottom-bar" aria-label="하단 꾸미기 조작 메뉴">
       <div class="ch-bottom-inner">
-        <button id="btnBottomHome" class="ch-main-nav-btn" type="button">🏠 처음으로</button>
-        <button id="btnBottomUndo" class="ch-main-nav-btn" type="button">↩ 방금 전으로</button>
-        <button id="btnBottomReset" class="ch-main-nav-btn" type="button">🔄 처음 모습으로</button>
-        <button id="btnBottomHelp" class="ch-main-nav-btn" type="button">❓ 도움말</button>
-        <button id="btnBottomSave" class="ch-main-nav-btn ch-btn-save" type="button">💾 내 집 저장하기</button>
-        <button id="btnBottomComplete" class="ch-main-nav-btn ch-btn-complete" type="button">✨ 꾸미기 완료</button>
+        <a id="btnBottomHome" href="index.html" class="ch-bottom-nav-btn home" aria-label="처음 화면으로 돌아가기">
+          🏠 처음으로
+        </a>
+        <button id="btnBottomUndo" class="ch-bottom-nav-btn undo" type="button">
+          ↩ 방금 전으로 (되돌리기)
+        </button>
+        <button id="btnBottomSave" class="ch-bottom-nav-btn save" type="button">
+          💾 내 방 저장하기
+        </button>
+        <button id="btnBottomComplete" class="ch-bottom-nav-btn complete" type="button">
+          ✨ 꾸미기 완료!
+        </button>
+        <button id="btnBottomReset" style="display:none;" hidden type="button">초기화</button>
+        <div id="itemController" style="display:none;" hidden><span id="selectedItemName"></span></div>
       </div>
     </nav>
 

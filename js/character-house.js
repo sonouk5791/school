@@ -424,11 +424,14 @@
     const charInfo = CHARACTERS[charId];
     $('stageTitle').textContent = `🏡 ${charInfo.name} (${charInfo.theme})`;
     $('stageTitle').style.color = charInfo.color;
-    $('speechName').textContent = charInfo.charName;
+    $('speechName').textContent = `${charInfo.charName}의 한마디`;
     $('speechMsg').textContent = charInfo.greeting;
     $('speechAvatar').textContent = charId === 'kongi' ? '🐶' : charId === 'tori' ? '🐰' : charId === 'nabi' ? '🐱' : '🐻';
     $('charAvatar').src = charInfo.avatar;
-    $('missionText').textContent = `💡 미션: ${charInfo.mission}`;
+    $('missionText').textContent = charInfo.mission;
+
+    if ($('missionSuccessBadge')) $('missionSuccessBadge').hidden = true;
+    if ($('itemToolbar')) $('itemToolbar').hidden = true;
 
     $('chLocationBadge').innerHTML = `지금은 <strong>${charInfo.charName}의 방</strong>을 꾸미고 있어요`;
 
@@ -510,29 +513,11 @@
     });
   }
 
-  function selectItemOnCanvas(uid) {
-    state.selectedItemUid = uid;
-    renderCanvas();
-
-    const item = state.placedItems.find(i => i.uid === uid);
-    if (!item) return;
-
-    if (state.mode === 'free') {
-      $('itemController').hidden = false;
-      $('selectedItemName').textContent = `선택된 물건: ${item.name}`;
-      speak(`${item.name}이 선택되었습니다. 조작 버튼으로 움직여보세요.`);
-    } else {
-      $('itemController').hidden = true;
-      speak(`${item.name}이 선택되었습니다.`);
-    }
-  }
-
   function setupItemDrag(elem, item) {
     let isDragging = false;
     let startX = 0, startY = 0;
 
     const onStart = e => {
-      if (state.mode !== 'free') return;
       isDragging = true;
       const evt = e.touches ? e.touches[0] : e;
       startX = evt.clientX;
@@ -586,9 +571,9 @@
   function renderToolsPanel(cat = currentCategory) {
     currentCategory = cat;
 
-    // Update Category Tabs
-    document.querySelectorAll('.ch-cat-tab').forEach(t => {
-      t.classList.toggle('active', t.dataset.cat === cat);
+    // Update Category Menu buttons
+    document.querySelectorAll('.ch-cat-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.cat === cat);
     });
 
     const grid = $('optionsGrid');
@@ -596,28 +581,35 @@
     const title = $('optionsTitle');
 
     if (cat === 'outfit') {
-      title.textContent = '👕 오늘은 어떤 옷을 입혀볼까요?';
+      title.textContent = '👕 콩이의 예쁜 옷을 골라보세요';
       renderOutfitOptions(grid);
-    } else if (cat === 'structure') {
-      title.textContent = '🏠 어떤 집으로 꾸며볼까요? (6가지 방 구조)';
-      renderStructureOptions(grid);
-    } else if (cat === 'interior') {
-      title.textContent = '🎨 따뜻한 벽지와 바닥을 골라보세요';
-      renderInteriorOptions(grid);
-    } else if (ITEM_CATALOG[cat]) {
-      const catNames = {
-        furniture: '🪑 편안한 가구',
-        plants: '🌷 화사한 꽃과 식물',
-        toys: '🧸 재미있는 장난감',
-        books: '📚 지혜의 책',
-        frames: '🖼️ 추억의 액자와 시계',
-        lights: '💡 따뜻한 조명',
-        cushions: '🛋️ 폭신한 쿠션',
-        music: '🎵 정겨운 음악 소품',
-        exercise: '🏃 건강 운동 소품'
-      };
-      title.textContent = `${catNames[cat] || '소품'}을 골라보세요`;
-      renderCatalogOptions(grid, ITEM_CATALOG[cat]);
+    } else if (cat === 'room') {
+      title.textContent = '🏠 방 구조와 벽·바닥을 골라보세요';
+      renderRoomOptions(grid);
+    } else if (cat === 'furniture') {
+      title.textContent = '🪑 편안한 가구를 골라 방에 놓아보세요';
+      renderCatalogOptions(grid, [
+        { id: 'f_bed', name: '포근한 침대', icon: '🛏️' },
+        ...ITEM_CATALOG.furniture
+      ]);
+    } else if (cat === 'decor') {
+      title.textContent = '🌷 꽃과 소품으로 방을 화사하게 꾸며보세요';
+      const decorItems = [
+        ...ITEM_CATALOG.plants,
+        ...ITEM_CATALOG.frames,
+        ...ITEM_CATALOG.lights,
+        ...ITEM_CATALOG.cushions
+      ];
+      renderCatalogOptions(grid, decorItems);
+    } else if (cat === 'play') {
+      title.textContent = '🧸 재미있는 놀이와 음악, 운동 소품';
+      const playItems = [
+        ...ITEM_CATALOG.toys,
+        ...ITEM_CATALOG.music,
+        ...ITEM_CATALOG.exercise,
+        ...ITEM_CATALOG.books
+      ];
+      renderCatalogOptions(grid, playItems);
     }
   }
 
@@ -625,19 +617,19 @@
     const wrap = document.createElement('div');
     wrap.style.display = 'flex';
     wrap.style.flexDirection = 'column';
-    wrap.style.gap = '16px';
+    wrap.style.gap = '14px';
     wrap.style.width = '100%';
 
     const makeSection = (secTitle, items, field) => {
       const sec = document.createElement('div');
-      sec.innerHTML = `<h4 style="font-size:20px; font-weight:800; color:#5d4037; margin-bottom:10px;">${secTitle}</h4>`;
+      sec.innerHTML = `<h4 style="font-size:18px; font-weight:800; color:#5d4037; margin-bottom:8px;">${secTitle}</h4>`;
       const itemGrid = document.createElement('div');
       itemGrid.className = 'ch-options-grid';
 
       items.forEach(item => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `ch-opt-card ${state.outfit[field] === item.id ? 'active' : ''}`;
+        btn.className = `ch-opt-card ${state.outfit[field] === item.id ? 'selected' : ''}`;
         btn.innerHTML = `
           <div class="ch-opt-icon">${item.icon}</div>
           <div class="ch-opt-name">${item.name}</div>
@@ -647,8 +639,9 @@
           state.outfit[field] = item.id;
           renderCanvas();
           renderToolsPanel('outfit');
-          showToast(`✨ ${item.name}으로 입혔어요!`);
-          speak(`${item.name}을 입혔습니다.`);
+          showToast(`✨ [${item.name}]으로 입혔어요!`);
+          speak(`콩이에게 ${item.name}을 입혔습니다.`);
+          $('speechMsg').textContent = `어르신, ${item.name}이 참 따뜻하고 멋져요!`;
         });
         itemGrid.appendChild(btn);
       });
@@ -663,53 +656,57 @@
     grid.appendChild(wrap);
   }
 
-  function renderStructureOptions(grid) {
-    ROOM_TYPES.forEach(r => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `ch-opt-card ${state.roomType === r.id ? 'active' : ''}`;
-      btn.innerHTML = `
-        <div class="ch-opt-icon">${r.icon}</div>
-        <div class="ch-opt-name">${r.name}</div>
-        <div style="font-size:15px; color:#795548; font-weight:600; margin-top:4px;">${r.desc}</div>
-      `;
-      btn.addEventListener('click', () => {
-        pushHistory();
-        state.roomType = r.id;
-        renderCanvas();
-        renderToolsPanel('structure');
-        showToast(`🏠 [${r.name}] 구조로 변경했어요!`);
-        speak(`${r.name} 구조로 변경되었습니다.`);
-      });
-      grid.appendChild(btn);
-    });
-  }
-
-  function renderInteriorOptions(grid) {
+  function renderRoomOptions(grid) {
     const wrap = document.createElement('div');
     wrap.style.display = 'flex';
     wrap.style.flexDirection = 'column';
     wrap.style.gap = '16px';
     wrap.style.width = '100%';
 
-    // Walls
+    // 1. Structure
+    const structSec = document.createElement('div');
+    structSec.innerHTML = `<h4 style="font-size:18px; font-weight:800; color:#5d4037; margin-bottom:8px;">방 구조 선택</h4>`;
+    const structGrid = document.createElement('div');
+    structGrid.className = 'ch-options-grid';
+    ROOM_TYPES.forEach(r => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `ch-opt-card ${state.roomType === r.id ? 'selected' : ''}`;
+      btn.innerHTML = `
+        <div class="ch-opt-icon">${r.icon}</div>
+        <div class="ch-opt-name">${r.name}</div>
+      `;
+      btn.addEventListener('click', () => {
+        pushHistory();
+        state.roomType = r.id;
+        renderCanvas();
+        renderToolsPanel('room');
+        showToast(`🏠 [${r.name}] 구조로 변경했어요!`);
+        speak(`${r.name} 구조로 변경되었습니다.`);
+      });
+      structGrid.appendChild(btn);
+    });
+    structSec.appendChild(structGrid);
+    wrap.appendChild(structSec);
+
+    // 2. Walls
     const wallSec = document.createElement('div');
-    wallSec.innerHTML = `<h4 style="font-size:20px; font-weight:800; color:#5d4037; margin-bottom:10px;">벽지 색상</h4>`;
+    wallSec.innerHTML = `<h4 style="font-size:18px; font-weight:800; color:#5d4037; margin-bottom:8px;">벽지 색상</h4>`;
     const wallGrid = document.createElement('div');
     wallGrid.className = 'ch-options-grid';
     WALL_STYLES.forEach(w => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `ch-opt-card ${state.wallStyle === w.id ? 'active' : ''}`;
+      btn.className = `ch-opt-card ${state.wallStyle === w.id ? 'selected' : ''}`;
       btn.innerHTML = `
-        <div class="ch-opt-icon" style="background:${w.color}; width:44px; height:44px; border-radius:12px; border:2px solid #ccc; margin:0 auto 6px;"></div>
+        <div class="ch-opt-icon" style="background:${w.color}; width:36px; height:36px; border-radius:10px; border:2px solid #ccc; margin:0 auto 4px;"></div>
         <div class="ch-opt-name">${w.name}</div>
       `;
       btn.addEventListener('click', () => {
         pushHistory();
         state.wallStyle = w.id;
         renderCanvas();
-        renderToolsPanel('interior');
+        renderToolsPanel('room');
         showToast(`🎨 [${w.name}]로 벽지를 바꿨어요!`);
       });
       wallGrid.appendChild(btn);
@@ -717,24 +714,24 @@
     wallSec.appendChild(wallGrid);
     wrap.appendChild(wallSec);
 
-    // Floors
+    // 3. Floors
     const floorSec = document.createElement('div');
-    floorSec.innerHTML = `<h4 style="font-size:20px; font-weight:800; color:#5d4037; margin-bottom:10px;">바닥 원목</h4>`;
+    floorSec.innerHTML = `<h4 style="font-size:18px; font-weight:800; color:#5d4037; margin-bottom:8px;">바닥 원목</h4>`;
     const floorGrid = document.createElement('div');
     floorGrid.className = 'ch-options-grid';
     FLOOR_STYLES.forEach(f => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `ch-opt-card ${state.floorStyle === f.id ? 'active' : ''}`;
+      btn.className = `ch-opt-card ${state.floorStyle === f.id ? 'selected' : ''}`;
       btn.innerHTML = `
-        <div class="ch-opt-icon" style="background:${f.color}; width:44px; height:44px; border-radius:12px; border:2px solid #ccc; margin:0 auto 6px;"></div>
+        <div class="ch-opt-icon" style="background:${f.color}; width:36px; height:36px; border-radius:10px; border:2px solid #ccc; margin:0 auto 4px;"></div>
         <div class="ch-opt-name">${f.name}</div>
       `;
       btn.addEventListener('click', () => {
         pushHistory();
         state.floorStyle = f.id;
         renderCanvas();
-        renderToolsPanel('interior');
+        renderToolsPanel('room');
         showToast(`🟫 [${f.name}]로 바닥을 바꿨어요!`);
       });
       floorGrid.appendChild(btn);
@@ -747,9 +744,10 @@
 
   function renderCatalogOptions(grid, items) {
     items.forEach(item => {
+      const isPlaced = state.placedItems.some(i => i.id === item.id);
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'ch-opt-card';
+      btn.className = `ch-opt-card ${isPlaced ? 'selected' : ''}`;
       btn.innerHTML = `
         <div class="ch-opt-icon">${item.icon}</div>
         <div class="ch-opt-name">${item.name}</div>
@@ -767,7 +765,6 @@
       state.pendingEasyItem = item;
       $('easyPositionBar').hidden = false;
       $('easyItemName').textContent = `선택한 물건: ${item.name} ${item.icon}`;
-      $('easyPositionBar').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       speak(`${item.name}을 선택하셨습니다. 왼쪽, 가운데, 오른쪽 중 원하는 위치 버튼을 눌러주세요.`);
     } else {
       // Free mode direct drop
@@ -778,18 +775,18 @@
         id: item.id,
         name: item.name,
         icon: item.icon,
-        x: 45 + (Math.random() * 10 - 5),
-        y: 65 + (Math.random() * 10 - 5),
+        x: 35 + (Math.random() * 30),
+        y: 65 + (Math.random() * 15 - 7),
         scale: 1.0,
         rot: 0
       };
       state.placedItems.push(newItem);
       state.selectedItemUid = uid;
       renderCanvas();
-      $('itemController').hidden = false;
-      $('selectedItemName').textContent = `선택된 물건: ${item.name}`;
+      selectItemOnCanvas(uid);
       showToast(`🪑 [${item.name}]을 방에 놓았어요!`);
-      speak(`${item.name}을 방에 놓았습니다.`);
+      speak(`${item.name}을 방에 놓았습니다. 마우스나 손가락으로 끌어 위치를 옮길 수 있습니다.`);
+      checkMissionProgress(item);
     }
   }
 
@@ -802,11 +799,11 @@
 
     let x = 50, y = 70;
     if (pos === 'left') {
-      x = 22; y = 68;
+      x = 20; y = 68;
     } else if (pos === 'center') {
       x = 50; y = 74;
     } else if (pos === 'right') {
-      x = 78; y = 68;
+      x = 80; y = 68;
     }
 
     const newItem = {
@@ -826,15 +823,47 @@
     $('easyPositionBar').hidden = true;
 
     renderCanvas();
+    selectItemOnCanvas(uid);
 
     const posNames = { left: '왼쪽', center: '가운데', right: '오른쪽' };
     showToast(`✨ [${item.name}]을 방의 ${posNames[pos]}에 예쁘게 놓았어요!`);
     speak(`${item.name}을 방의 ${posNames[pos]}에 배치했습니다.`);
 
-    // Reaction Speech
+    checkMissionProgress(item);
+  }
+
+  function checkMissionProgress(item) {
     const charInfo = CHARACTERS[state.currentCharId];
-    const reaction = charInfo.reactions[Math.floor(Math.random() * charInfo.reactions.length)];
-    $('speechMsg').textContent = reaction;
+    // Check if item matches current character mission
+    const isFlower = item.id.startsWith('p_') || item.name.includes('꽃') || item.name.includes('해바라기');
+    const isExercise = item.id.startsWith('e_') || item.name.includes('운동') || item.name.includes('볼') || item.name.includes('아령');
+
+    if (isFlower || isExercise) {
+      if ($('missionSuccessBadge')) $('missionSuccessBadge').hidden = false;
+      const praise = `🎉 참 잘하셨어요! ${charInfo.charName}가 ${item.name}을 정말 마음에 들어 해요!`;
+      $('speechMsg').textContent = praise;
+      speak(`참 잘하셨어요! ${charInfo.charName}가 ${item.name}을 정말 좋아합니다.`);
+      showToast(`🎉 오늘의 미션 완료! 참 잘하셨어요.`);
+    } else {
+      const reaction = charInfo.reactions[Math.floor(Math.random() * charInfo.reactions.length)];
+      $('speechMsg').textContent = reaction;
+    }
+  }
+
+  function selectItemOnCanvas(uid) {
+    state.selectedItemUid = uid;
+    renderCanvas();
+
+    const item = state.placedItems.find(i => i.uid === uid);
+    if (!item) {
+      if ($('itemToolbar')) $('itemToolbar').hidden = true;
+      return;
+    }
+
+    if ($('itemToolbar')) {
+      $('itemToolbar').hidden = false;
+      $('toolbarItemName').textContent = `[${item.name}]`;
+    }
   }
 
   // --- GLOBAL EVENTS SETUP ---
@@ -845,7 +874,7 @@
         speak('누구의 집을 꾸며볼까요? 콩이의 운동방, 토리의 놀이방, 나비의 학습방, 곰이의 취미방 중 마음에 드는 친구를 선택해주세요.');
       } else {
         const charInfo = CHARACTERS[state.currentCharId];
-        speak(`지금은 ${charInfo.charName}의 방을 꾸미고 있습니다. 상단의 카테고리를 눌러 옷을 입히거나 가구와 꽃을 골라 방을 예쁘게 꾸며보세요.`);
+        speak(`지금은 ${charInfo.charName}의 방을 꾸미고 있습니다. 왼쪽 메뉴에서 옷, 가구, 소품을 골라 방을 예쁘게 꾸며보세요.`);
       }
     });
 
@@ -854,7 +883,6 @@
       state.mode = 'easy';
       $('btnModeEasy').classList.add('active');
       $('btnModeFree').classList.remove('active');
-      $('itemController').hidden = true;
       showToast('✨ 쉬운 꾸미기 모드 (버튼으로 쏙쏙 배치)');
       speak('쉬운 꾸미기 모드로 변경되었습니다.');
     });
@@ -864,7 +892,6 @@
       $('btnModeFree').classList.add('active');
       $('btnModeEasy').classList.remove('active');
       $('easyPositionBar').hidden = true;
-      if (state.selectedItemUid) $('itemController').hidden = false;
       showToast('🎨 자유롭게 꾸미기 모드 (자유 이동 및 조절)');
       speak('자유롭게 꾸미기 모드로 변경되었습니다.');
     });
@@ -874,50 +901,73 @@
     $('btnPlaceCenter').addEventListener('click', () => placeEasyItem('center'));
     $('btnPlaceRight').addEventListener('click', () => placeEasyItem('right'));
 
-    // Category Tabs
-    document.querySelectorAll('.ch-cat-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        renderToolsPanel(tab.dataset.cat);
+    // Category Buttons (5 Menu Buttons)
+    document.querySelectorAll('.ch-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        renderToolsPanel(btn.dataset.cat);
       });
     });
 
-    // Bottom Action Buttons
-    $('btnBottomHome').addEventListener('click', () => {
-      if (confirm('홈 화면(디지털 AI 학교)으로 이동할까요? 현재 상태는 안전하게 저장할 수 있습니다.')) {
-        saveToStorage();
-        window.location.href = 'index.html';
+    // Mini Toolbar Events
+    const getSelectedItem = () => state.placedItems.find(i => i.uid === state.selectedItemUid);
+
+    if ($('btnToolScaleUp')) {
+      $('btnToolScaleUp').addEventListener('click', () => {
+        const item = getSelectedItem();
+        if (!item) return;
+        pushHistory();
+        item.scale = Math.min(2.0, item.scale + 0.15);
+        renderCanvas();
+      });
+    }
+
+    if ($('btnToolScaleDown')) {
+      $('btnToolScaleDown').addEventListener('click', () => {
+        const item = getSelectedItem();
+        if (!item) return;
+        pushHistory();
+        item.scale = Math.max(0.6, item.scale - 0.15);
+        renderCanvas();
+      });
+    }
+
+    if ($('btnToolRotate')) {
+      $('btnToolRotate').addEventListener('click', () => {
+        const item = getSelectedItem();
+        if (!item) return;
+        pushHistory();
+        item.rot = (item.rot + 20) % 360;
+        renderCanvas();
+      });
+    }
+
+    if ($('btnToolDelete')) {
+      $('btnToolDelete').addEventListener('click', () => {
+        const item = getSelectedItem();
+        if (!item) return;
+        pushHistory();
+        state.placedItems = state.placedItems.filter(i => i.uid !== item.uid);
+        state.selectedItemUid = null;
+        if ($('itemToolbar')) $('itemToolbar').hidden = true;
+        renderCanvas();
+        renderToolsPanel();
+        showToast(`🗑 [${item.name}]을 치웠어요.`);
+        speak(`${item.name}을 치웠습니다.`);
+      });
+    }
+
+    // Canvas click to deselect
+    $('roomViewport').addEventListener('click', e => {
+      if (e.target === $('roomViewport') || e.target === $('roomWall') || e.target === $('roomFloor')) {
+        state.selectedItemUid = null;
+        if ($('itemToolbar')) $('itemToolbar').hidden = true;
+        renderCanvas();
       }
     });
 
+    // Bottom Action Buttons
     $('btnBottomUndo').addEventListener('click', undoHistory);
-
     $('btnBottomSave').addEventListener('click', saveToStorage);
-
-    $('btnBottomReset').addEventListener('click', () => {
-      $('resetModal').hidden = false;
-      $('resetModal').style.display = 'flex';
-    });
-
-    $('btnConfirmResetYes').addEventListener('click', () => {
-      $('resetModal').hidden = true;
-      $('resetModal').style.display = 'none';
-      pushHistory();
-      state.placedItems = [];
-      state.selectedItemUid = null;
-      renderCanvas();
-      showToast('🔄 처음 모습으로 비웠어요.');
-      speak('방의 모든 물건을 처음 모습으로 정리했습니다.');
-    });
-
-    $('btnConfirmResetNo').addEventListener('click', () => {
-      $('resetModal').hidden = true;
-      $('resetModal').style.display = 'none';
-    });
-
-    $('btnBottomHelp').addEventListener('click', () => {
-      speak('마음에 드는 물건을 누르면 방에 놓을 수 있습니다. 실수를 하셔도 언제든지 하단의 되돌리기 버튼을 누르시면 됩니다.');
-      showToast('💡 원하는 물건을 꾹 누르고 위치를 골라보세요.');
-    });
 
     // Completion View
     $('btnBottomComplete').addEventListener('click', () => {
@@ -961,77 +1011,6 @@
     $('btnNewWork').addEventListener('click', () => {
       $('resumeBanner').hidden = true;
       showToast('새로운 친구의 집을 골라주세요.');
-    });
-
-    // D-Pad Controller Events
-    const getSelectedItem = () => state.placedItems.find(i => i.uid === state.selectedItemUid);
-
-    $('btnMoveLeft').addEventListener('click', () => {
-      const item = getSelectedItem();
-      if (!item) return;
-      pushHistory();
-      item.x = Math.max(8, item.x - 6);
-      renderCanvas();
-    });
-
-    $('btnMoveRight').addEventListener('click', () => {
-      const item = getSelectedItem();
-      if (!item) return;
-      pushHistory();
-      item.x = Math.min(92, item.x + 6);
-      renderCanvas();
-    });
-
-    $('btnMoveUp').addEventListener('click', () => {
-      const item = getSelectedItem();
-      if (!item) return;
-      pushHistory();
-      item.y = Math.max(12, item.y - 6);
-      renderCanvas();
-    });
-
-    $('btnMoveDown').addEventListener('click', () => {
-      const item = getSelectedItem();
-      if (!item) return;
-      pushHistory();
-      item.y = Math.min(88, item.y + 6);
-      renderCanvas();
-    });
-
-    $('btnRotate').addEventListener('click', () => {
-      const item = getSelectedItem();
-      if (!item) return;
-      pushHistory();
-      item.rot = (item.rot + 15) % 360;
-      renderCanvas();
-    });
-
-    $('btnScaleUp').addEventListener('click', () => {
-      const item = getSelectedItem();
-      if (!item) return;
-      pushHistory();
-      item.scale = Math.min(2.0, item.scale + 0.15);
-      renderCanvas();
-    });
-
-    $('btnScaleDown').addEventListener('click', () => {
-      const item = getSelectedItem();
-      if (!item) return;
-      pushHistory();
-      item.scale = Math.max(0.6, item.scale - 0.15);
-      renderCanvas();
-    });
-
-    $('btnDeleteItem').addEventListener('click', () => {
-      const item = getSelectedItem();
-      if (!item) return;
-      pushHistory();
-      state.placedItems = state.placedItems.filter(i => i.uid !== item.uid);
-      state.selectedItemUid = null;
-      $('itemController').hidden = true;
-      renderCanvas();
-      showToast(`🗑 [${item.name}]을 치웠어요.`);
-      speak(`${item.name}을 치웠습니다.`);
     });
   }
 
