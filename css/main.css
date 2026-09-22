@@ -1394,3 +1394,230 @@ body {
 .door-nabi .door-btn-enter { background: #7B1FA2; }
 .door-bori .door-btn-enter { background: #1976D2; }
 
+/* ==========================================================================
+   어르신 중심 4대 대형 활동 카드 섹션 (Senior 4 Big Activity Cards)
+   ========================================================================== */
+.senior-main-activities-section {
+  margin: 36px 0 48px;
+  background: linear-gradient(180deg, #FFFDF8 0%, #FFF9EE 100%);
+  border: 3px solid #F0E4D2;
+  border-radius: 28px;
+  padding: 36px 32px 42px;
+  box-shadow: 0 10px 30px rgba(78, 52, 46, 0.06);
+}
+
+.senior-act-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.senior-act-badge {
+  display: inline-block;
+  background: #FFE8D6;
+  color: #C04000;
+  font-size: 19px;
+  font-weight: 800;
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 2px solid #FFCCA0;
+  margin-bottom: 12px;
+}
+
+.senior-act-title {
+  font-size: 34px;
+  font-weight: 900;
+  color: #33241C;
+  margin: 0 0 10px;
+  letter-spacing: -0.5px;
+}
+
+.senior-act-sub {
+  font-size: 21px;
+  color: #6D5449;
+  margin: 0;
+  font-weight: 600;
+}
+
+.senior-act-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+@media (max-width: 900px) {
+  .senior-act-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.senior-big-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 30px 26px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 3px solid #EFE4D6;
+}
+
+.senior-big-card:hover,
+.senior-big-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.senior-card-badge {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: 999px;
+}
+
+.senior-card-avatar-wrap {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.senior-card-avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.senior-card-title {
+  font-size: 27px;
+  font-weight: 900;
+  margin: 0 0 8px;
+}
+
+.senior-card-tagline {
+  font-size: 19px;
+  color: #5D4037;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.senior-card-bubble {
+  background: #FFFDF8;
+  border: 2px dashed #E0D3C4;
+  border-radius: 16px;
+  padding: 12px 18px;
+  font-size: 18px;
+  color: #4E342E;
+  margin-bottom: 22px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.senior-card-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 60px;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: 900;
+  color: #FFFFFF;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, filter 0.15s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.senior-card-action-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.05);
+}
+
+/* 1. 콩이 - 주황 & 초록 */
+.card-kongi {
+  border-color: #A5D6A7;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F1F8E9 100%);
+}
+.card-kongi .senior-card-badge {
+  background: #E8F5E9;
+  color: #2E7D32;
+  border: 2px solid #C8E6C9;
+}
+.card-kongi .senior-card-avatar-wrap {
+  background: #E8F5E9;
+  border: 3px solid #81C784;
+}
+.card-kongi .senior-card-title { color: #1B5E20; }
+.btn-act-kongi {
+  background: linear-gradient(135deg, #2E7D32 0%, #43A047 100%);
+}
+
+/* 2. 토리 - 핑크 */
+.card-tori {
+  border-color: #F8BBD0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FCE4EC 100%);
+}
+.card-tori .senior-card-badge {
+  background: #FCE4EC;
+  color: #C2185B;
+  border: 2px solid #F8BBD0;
+}
+.card-tori .senior-card-avatar-wrap {
+  background: #FCE4EC;
+  border: 3px solid #F06292;
+}
+.card-tori .senior-card-title { color: #880E4F; }
+.btn-act-tori {
+  background: linear-gradient(135deg, #D81B60 0%, #EC407A 100%);
+}
+
+/* 3. 나비 - 보라 */
+.card-nabi {
+  border-color: #D1C4E9;
+  background: linear-gradient(180deg, #FFFFFF 0%, #EDE7F6 100%);
+}
+.card-nabi .senior-card-badge {
+  background: #EDE7F6;
+  color: #6A1B9A;
+  border: 2px solid #D1C4E9;
+}
+.card-nabi .senior-card-avatar-wrap {
+  background: #EDE7F6;
+  border: 3px solid #BA68C8;
+}
+.card-nabi .senior-card-title { color: #4A148C; }
+.btn-act-nabi {
+  background: linear-gradient(135deg, #7B1FA2 0%, #AB47BC 100%);
+}
+
+/* 4. 곰이 - 파랑 */
+.card-bori {
+  border-color: #BBDEFB;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E3F2FD 100%);
+}
+.card-bori .senior-card-badge {
+  background: #E3F2FD;
+  color: #1565C0;
+  border: 2px solid #BBDEFB;
+}
+.card-bori .senior-card-avatar-wrap {
+  background: #E3F2FD;
+  border: 3px solid #64B5F6;
+}
+.card-bori .senior-card-title { color: #0D47A1; }
+.btn-act-bori {
+  background: linear-gradient(135deg, #1976D2 0%, #42A5F5 100%);
+}
+
+

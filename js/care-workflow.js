@@ -395,19 +395,28 @@ function go(target){
   const hero = document.querySelector('.hero-classroom');
   const lessons = document.querySelector('.section-lessons');
   const warmup = document.querySelector('.warmup-intro');
+  const warmupBanner = document.querySelector('.warmup-banner');
   const friends = document.querySelector('.friend-selection');
+  const seniorActs = document.querySelector('.senior-main-activities-section');
+  const dailyRec = document.querySelector('.daily-recommend-section');
+  const charDoors = document.querySelector('.character-doors-section');
   const careNav = document.querySelector('.care-nav');
   const careRoot = document.getElementById('careRoot');
 
   if (hero) hero.hidden = !isHome;
   if (lessons) lessons.hidden = !isHome;
   if (warmup) warmup.hidden = !isHome;
+  if (warmupBanner) warmupBanner.hidden = !isHome;
   if (friends) friends.hidden = !isHome;
+  if (seniorActs) seniorActs.hidden = !isHome;
+  if (dailyRec) dailyRec.hidden = !isHome;
+  if (charDoors) charDoors.hidden = !isHome;
 
   if (careNav) {
     careNav.style.display = isHome ? 'none' : 'flex';
     careNav.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.value === target ? 'page' : 'false'));
   }
+
 
   if (isHome) {
     if (careRoot) {

@@ -234,7 +234,7 @@ function initLessonCards() {
 // 히어로 영역 바로가기 버튼들
 function initHeroActions() {
   const btnStartToday = document.getElementById('btnHeroStart');
-  if (btnStartToday) {
+  if (btnStartToday && btnStartToday.tagName === 'BUTTON') {
     btnStartToday.addEventListener('click', () => {
       window.LessonEngine.startLesson('greeting');
     });
@@ -243,7 +243,12 @@ function initHeroActions() {
   const btnMeetAi = document.getElementById('btnHeroMeetAi');
   if (btnMeetAi) {
     btnMeetAi.addEventListener('click', () => {
-      window.LessonEngine.startLesson('ask');
+      const actSec = document.getElementById('seniorActivitiesSection');
+      if (actSec) {
+        actSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.LessonEngine.startLesson('greeting');
+      }
     });
   }
 
@@ -311,6 +316,34 @@ function initTeacherModal() {
       }
     });
   });
+
+  // 선생님 공간 모달 내부 6대 탭 바 연동
+  const modalTabItems = document.querySelectorAll('.teacher-tab-item');
+  const defaultBody = document.getElementById('teacherPanelDefaultBody');
+  const workflowMount = document.getElementById('teacherWorkflowMount');
+
+  modalTabItems.forEach(tab => {
+    tab.addEventListener('click', () => {
+      modalTabItems.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const targetTab = tab.dataset.tab;
+      if (targetTab === 'records') {
+        if (defaultBody) defaultBody.style.display = 'flex';
+        if (workflowMount) {
+          workflowMount.style.display = 'none';
+          workflowMount.innerHTML = '';
+        }
+      } else {
+        const careTarget = subnavMap[targetTab];
+        if (careTarget) {
+          closeTeacherModal();
+          const targetBtn = document.querySelector(`.care-nav button[data-value="${careTarget}"]`);
+          if (targetBtn) targetBtn.click();
+        }
+      }
+    });
+  });
+
 
   if (btnClose) {
     btnClose.addEventListener('click', () => {

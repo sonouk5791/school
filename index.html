@@ -51,76 +51,60 @@
 <body>
 
   <!-- =======================================================================
-       상단 글로벌 헤더 (Global Header)
+       상단 글로벌 헤더 (Global Header - 어르신 중심 단순화 & 선생님 공간 분리)
        ======================================================================= -->
   <header class="site-header">
     <div class="header-container">
       <div class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})" role="button" tabindex="0">
         <div class="brand-icon">🍊</div>
-        <div class="brand-title">디지털 학교</div>
+        <div class="brand-title">디지털 AI 학교</div>
       </div>
 
+      <!-- 어르신 친화적 심플 메인 메뉴 -->
       <nav class="main-nav" aria-label="메인 메뉴">
-        <a href="#home" class="nav-link active" data-target="home">홈</a>
-        <a href="#lessons" class="nav-link" data-target="lessons">오늘의 수업</a>
-        <a class="senior-exercise-nav" href="senior-exercise.html">어르신 체조</a>
-        <a href="#ai-friend" class="nav-link" data-target="ai-friend">AI 친구</a>
-        <a href="#history" class="nav-link" data-target="history">내 활동</a>
+        <a href="#home" class="nav-link active" data-target="home">🏠 학교 홈</a>
+        <a class="nav-link senior-exercise-nav" href="senior-exercise.html">🏃 콩이와 운동</a>
+        <a href="character-house.html" class="nav-link" data-target="char-house">🏡 집 꾸미기</a>
+        <a href="#ai-friend" class="nav-link" data-target="ai-friend">🐶 AI 친구</a>
+        <a href="#history" class="nav-link" data-target="history">📁 내 활동</a>
       </nav>
+
       <div class="header-actions">
-        <div class="teacher-voice-controls" id="teacherVoiceControls" role="region" aria-label="AI 선생님 음성 컨트롤">
+        <!-- 어르신 필수 음성/접근성 도구 -->
+        <div class="teacher-voice-controls" id="teacherVoiceControls" role="region" aria-label="어르신 소리 및 글자 도구">
           <button class="btn-voice-ctrl btn-voice-toggle" id="btnTtsToggle" title="선생님 음성 켜기 또는 끄기" aria-label="선생님 음성 안내 켜짐/꺼짐">
             <span class="ctrl-icon" id="iconVoiceToggle">🔊</span>
-            <span class="ctrl-text" id="textVoiceToggle">선생님 음성</span>
-          </button>
-          <button class="btn-voice-ctrl btn-voice-pause" id="btnVoicePause" title="선생님 말씀 잠시 일시정지" aria-label="선생님 말씀 일시정지">
-            <span class="ctrl-icon" id="iconVoicePause">⏸️</span>
-            <span class="ctrl-text" id="textVoicePause">일시정지</span>
-          </button>
-          <button class="btn-voice-ctrl btn-voice-replay" id="btnVoiceReplay" title="선생님 말씀 다시 듣기" aria-label="선생님 말씀 다시 듣기">
-            <span class="ctrl-icon">↻</span>
-            <span class="ctrl-text">다시 듣기</span>
-          </button>
-          <button class="btn-voice-ctrl btn-voice-speed" id="btnVoiceSpeed" title="말하는 속도 천천히 또는 보통으로 변경" aria-label="음성 속도 조절">
-            <span class="ctrl-icon" id="iconVoiceSpeed">🐢</span>
-            <span class="ctrl-text" id="textVoiceSpeed">천천히</span>
+            <span class="ctrl-text" id="textVoiceToggle">소리 듣기</span>
           </button>
           <button class="btn-voice-ctrl btn-voice-fontsize" id="btnFontSize" title="글자 크기 조절 (보통/크게/아주크게)" aria-label="글자 크기 조절">
             <span class="ctrl-icon" id="iconFontSize">🔤</span>
-            <span class="ctrl-text" id="textFontSize">글자 보통</span>
+            <span class="ctrl-text" id="textFontSize">글자 크게</span>
           </button>
-          <button class="btn-voice-ctrl btn-voice-contrast" id="btnHighContrast" title="고대비 화면 켜기 또는 끄기" aria-label="고대비 화면 모드">
-            <span class="ctrl-icon" id="iconHighContrast">🌓</span>
-            <span class="ctrl-text" id="textHighContrast">고대비</span>
-          </button>
-          <button class="btn-voice-ctrl btn-voice-help" id="btnVoiceHelp" title="현재 화면 도움말 듣기" aria-label="도움말 듣기">
-            <span class="ctrl-icon">❓</span>
-            <span class="ctrl-text">도움말</span>
-          </button>
+          <!-- 하위 호환성 유지용 숨김 보조 컨트롤 -->
+          <div style="display:none;">
+            <button class="btn-voice-ctrl btn-voice-pause" id="btnVoicePause"><span id="iconVoicePause">⏸️</span><span id="textVoicePause">일시정지</span></button>
+            <button class="btn-voice-ctrl btn-voice-replay" id="btnVoiceReplay"><span>↻</span><span>다시 듣기</span></button>
+            <button class="btn-voice-ctrl btn-voice-speed" id="btnVoiceSpeed"><span id="iconVoiceSpeed">🐢</span><span id="textVoiceSpeed">천천히</span></button>
+            <button class="btn-voice-ctrl btn-voice-contrast" id="btnHighContrast"><span id="iconHighContrast">🌓</span><span id="textHighContrast">고대비</span></button>
+            <button class="btn-voice-ctrl btn-voice-help" id="btnVoiceHelp"><span>❓</span><span>도움말</span></button>
+            <button id="btnHeaderJournal"><span>📝</span><span>업무수행 일지</span></button>
+            <a href="senior-exercise.html" id="btnHeaderSeniorExercise"><span>🧘‍♂️</span><span>AI 어르신 체조</span></a>
+          </div>
         </div>
 
         <a href="character-house.html" class="btn-voice-ctrl" id="btnHeaderCharHouse" title="어르신과 함께하는 콩이·토리·나비·곰이 집 꾸미기" style="background:#FFF8E1; color:#F57F17; border:2px solid #FFE082; font-weight:800; text-decoration:none; display:inline-flex; align-items:center;">
           <span class="ctrl-icon">🏡</span>
-          <span class="ctrl-text">캐릭터 집 꾸미기</span>
+          <span class="ctrl-text">집 꾸미기</span>
         </a>
 
-        <a href="senior-exercise.html" class="btn-voice-ctrl" id="btnHeaderSeniorExercise" title="치매 어르신과 함께하는 10단계 AI 의자 체조 영상 바로가기" style="background:#E8F5E9; color:#1B5E20; border:2px solid #A5D6A7; font-weight:800; text-decoration:none; display:inline-flex; align-items:center;">
-          <span class="ctrl-icon">🧘‍♂️</span>
-          <span class="ctrl-text">AI 어르신 체조</span>
-        </a>
-
-        <button class="btn-voice-ctrl" id="btnHeaderJournal" title="육하원칙(5W1H) 업무수행 일지 바로가기" style="background:#FFF1E6; color:#E65100; border:2px solid #FFCCAA; font-weight:800;">
-          <span class="ctrl-icon">📝</span>
-          <span class="ctrl-text">업무수행 일지</span>
-        </button>
-
-        <button class="btn-teacher-space" id="btnTeacherSpace" title="사회복지사 및 선생님 관리 공간">
+        <!-- 선생님/사회복지사 전용 분리 버튼 -->
+        <button class="btn-teacher-space" id="btnTeacherSpace" title="사회복지사 및 선생님 관리 공간" aria-label="선생님 공간으로 이동">
           👨‍🏫 선생님 공간
         </button>
       </div>
     </div>
 
-    <!-- 선생님 공간 서브 네비게이션 바 -->
+    <!-- 선생님 공간 서브 네비게이션 바 (선생님 공간 활성화 시에만 노출) -->
     <nav class="teacher-subnav" id="teacherSubnav" aria-label="선생님 공간 메뉴" style="display:none;">
       <div class="teacher-subnav-inner">
         <button class="subnav-link active" data-subnav="home">홈</button>
@@ -136,7 +120,7 @@
   </header>
 
   <!-- =======================================================================
-       메인 컨텐츠 본문 (Main Content)
+       메인 컨텐츠 본문 (Main Content - 어르신 중심 친화적 구성)
        ======================================================================= -->
   <main class="main-wrapper" id="home">
     
@@ -166,28 +150,23 @@
           <div class="speech-bubble-hero">
             <span class="hero-greeting-tag">🐶 AI 친구 콩이의 인사</span>
             <h1 class="hero-main-title">
-              "안녕하세요! 오늘도 <span>천천히 같이 해봐요.</span>"
+              "안녕하세요 어르신! 오늘도 <span>천천히 함께해봐요.</span>"
             </h1>
             <p class="hero-sub-text">
-              배움이 언제나 즐거운 하루가 됩니다. 새로운 도전이 언제나 멋져요!
+              콩이, 토리, 나비, 곰이가 기다리고 있어요. 원하는 활동 카드를 편안하게 눌러보세요!
             </p>
           </div>
 
+          <!-- 어르신 3대 핵심 액션 버튼 (크고 직관적) -->
           <div class="hero-action-buttons">
-            <button class="btn-hero-action btn-hero-primary" id="btnHeroStart">
-              📖 오늘 수업 시작하기 &gt;
-            </button>
-            <a href="senior-exercise.html" class="btn-hero-action btn-hero-sage" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; background:#E8F5E9; color:#1B5E20; border:2px solid #A5D6A7; font-weight:800;">
-              🧘‍♂️ AI 어르신 체조 &gt;
-            </a>
-            <a href="character-house.html" class="btn-hero-action btn-hero-cream" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; background:#FFF8E1; color:#F57F17; border-color:#FFE082;">
-              🏡 캐릭터 집 꾸미기 &gt;
+            <a href="senior-exercise.html" class="btn-hero-action btn-hero-primary" id="btnHeroStart" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+              ▶ 오늘 활동 시작하기 &gt;
             </a>
             <button class="btn-hero-action btn-hero-cream" id="btnHeroMeetAi">
               🐶 AI 친구 만나기 &gt;
             </button>
             <button class="btn-hero-action btn-hero-sage" id="btnHeroHistory">
-              📁 지난 활동 보기 &gt;
+              📁 내 활동 보기 &gt;
             </button>
           </div>
         </div>
@@ -195,7 +174,76 @@
     </section>
 
     <!-- =======================================================================
-         신규 3차 고도화: 1. 일일 추천 활동 (오늘은 무엇을 해볼까요?)
+         어르신 중심 핵심 화면: 4개의 큰 활동 카드 (운동, 놀이, 학습, 취미)
+         ======================================================================= -->
+    <section class="senior-main-activities-section" id="seniorActivitiesSection" aria-label="어르신 4대 주요 활동">
+      <div class="senior-act-header">
+        <span class="senior-act-badge">🌸 즐겁고 편안한 일상 배움</span>
+        <h2 class="senior-act-title">오늘은 어떤 활동을 해볼까요?</h2>
+        <p class="senior-act-sub">마음에 드는 친구의 큰 카드를 편안하게 꾹 눌러보세요.</p>
+      </div>
+
+      <div class="senior-act-grid">
+        <!-- 1. 🐶 콩이와 운동하기 -->
+        <article class="senior-big-card card-kongi" tabindex="0">
+          <div class="senior-card-badge">🏃 운동 활동</div>
+          <div class="senior-card-avatar-wrap">
+            <img src="assets/images/friend-kongi.png" alt="운동 친구 콩이" class="senior-card-avatar">
+          </div>
+          <h3 class="senior-card-title">🐶 콩이와 운동하기</h3>
+          <p class="senior-card-tagline">10단계 건강 의자 체조 · 가볍게 몸 풀기</p>
+          <div class="senior-card-bubble">"편안하게 앉아서 천천히 따라해보세요."</div>
+          <a href="senior-exercise.html" class="senior-card-action-btn btn-act-kongi">
+            운동 시작하기 ▶
+          </a>
+        </article>
+
+        <!-- 2. 🐰 토리와 놀이하기 -->
+        <article class="senior-big-card card-tori" tabindex="0">
+          <div class="senior-card-badge">🧩 두뇌 놀이</div>
+          <div class="senior-card-avatar-wrap">
+            <img src="assets/images/friend-tori.png" alt="놀이 친구 토리" class="senior-card-avatar">
+          </div>
+          <h3 class="senior-card-title">🐰 토리와 놀이하기</h3>
+          <p class="senior-card-tagline">재미있는 퍼즐 & 짝 맞추기 · 집 꾸미기</p>
+          <div class="senior-card-bubble">"같은 그림도 찾고 알록달록 방도 꾸며요."</div>
+          <a href="tori-play.html" class="senior-card-action-btn btn-act-tori">
+            놀이 시작하기 ▶
+          </a>
+        </article>
+
+        <!-- 3. 🐱 나비와 학습하기 -->
+        <article class="senior-big-card card-nabi" tabindex="0">
+          <div class="senior-card-badge">💡 인지 배움</div>
+          <div class="senior-card-avatar-wrap">
+            <img src="assets/images/friend-nabi.png" alt="학습 친구 나비" class="senior-card-avatar">
+          </div>
+          <h3 class="senior-card-title">🐱 나비와 학습하기</h3>
+          <p class="senior-card-tagline">오늘의 계절과 날짜 · 재미있는 낱말 퀴즈</p>
+          <div class="senior-card-bubble">"차근차근 생각하며 뇌 활력을 키워요."</div>
+          <a href="nabi-learn.html" class="senior-card-action-btn btn-act-nabi">
+            학습 시작하기 ▶
+          </a>
+        </article>
+
+        <!-- 4. 🐻 곰이와 취미하기 -->
+        <article class="senior-big-card card-bori" tabindex="0">
+          <div class="senior-card-badge">🎵 감성 취미</div>
+          <div class="senior-card-avatar-wrap">
+            <img src="assets/images/friend-bori.png" alt="취미 친구 곰이" class="senior-card-avatar">
+          </div>
+          <h3 class="senior-card-title">🐻 곰이와 취미하기</h3>
+          <p class="senior-card-tagline">정겨운 옛 노래 감상 · 예쁜 꽃과 색칠하기</p>
+          <div class="senior-card-bubble">"좋아하는 음악과 함께 편안하게 쉬어요."</div>
+          <a href="bori-hobby.html" class="senior-card-action-btn btn-act-bori">
+            취미 시작하기 ▶
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         신규 3차 고도화: 1. 일일 추천 활동 (상세 둘러보기)
          ======================================================================= -->
     <section class="daily-recommend-section" id="dailyRecommendSection" aria-label="오늘의 맞춤 추천 활동">
       <div class="daily-rec-header">
@@ -640,10 +688,20 @@
             <p class="teacher-subhead">어르신의 참여도와 정서 상태를 확인하는 따뜻한 돌봄 기록입니다.</p>
           </div>
         </div>
-        <button class="btn-close-panel" id="btnCloseTeacherModal" title="닫기">✕</button>
+        <button class="btn-close-panel" id="btnCloseTeacherModal" title="선생님 공간 닫기">✕</button>
       </header>
 
-      <div class="teacher-panel-body">
+      <!-- 선생님 공간 6대 관리 메뉴 탭 바 -->
+      <nav class="teacher-modal-tabs" id="teacherModalTabs" aria-label="선생님 공간 세부 메뉴">
+        <button type="button" class="teacher-tab-item active" data-tab="records">⏱️ 수업 기록</button>
+        <button type="button" class="teacher-tab-item" data-tab="users">📋 어르신 관리</button>
+        <button type="button" class="teacher-tab-item" data-tab="ai-journal">📝 AI 수업일지</button>
+        <button type="button" class="teacher-tab-item" data-tab="analysis">📈 변화 분석</button>
+        <button type="button" class="teacher-tab-item" data-tab="report">💌 보호자 보고서</button>
+        <button type="button" class="teacher-tab-item" data-tab="settings">⚙️ 관리자 설정</button>
+      </nav>
+
+      <div class="teacher-panel-body" id="teacherPanelDefaultBody">
         <!-- 4종 돌봄 요약 지표 (비경쟁적 지표) -->
         <section class="care-summary-grid">
           <div class="care-summary-card">
@@ -701,14 +759,17 @@
           </table>
         </div>
       </div>
+
+      <!-- care-workflow 연동 뷰 마운트 영역 (어르신 관리, AI수업일지, 분석, 보고서, 설정) -->
+      <div class="teacher-workflow-mount" id="teacherWorkflowMount" style="display:none;"></div>
     </div>
   </div>
 
   <!-- =======================================================================
-       우측 하단 고정 바로가기 버튼 (관리자 & TOP)
+       우측 하단 고정 바로가기 버튼 (어르신 화면에서는 관리자 숨김, TOP만 유지)
        ======================================================================= -->
   <aside class="floating-action-group" id="floatingActionGroup" aria-label="빠른 바로가기">
-    <button type="button" class="btn-floating btn-floating-admin" id="btnFloatingAdmin" title="관리자 설정 및 돌봄 관리 바로가기" aria-label="관리자 설정">
+    <button type="button" class="btn-floating btn-floating-admin" id="btnFloatingAdmin" title="관리자 설정 및 돌봄 관리 바로가기" aria-label="관리자 설정" style="display:none;">
       <span class="floating-icon">⚙️</span>
       <span class="floating-text">관리자</span>
     </button>
