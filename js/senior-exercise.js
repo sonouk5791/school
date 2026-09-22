@@ -132,7 +132,34 @@
   }
 
   // --- Korean Female TTS Voice Helper ---
-  function speakText(text) {if(!isMuted)return speakAsCharacter('kongi',text,{rateScale:exerciseSpeed});}
+  let speechBusy = false;
+  let speechRevision = 0;
+  function stopNarration() {
+    speechRevision++;
+    speechBusy = false;
+    window.CharacterVoice?.stop();
+    window.speechSynthesis?.cancel();
+  }
+  async function speakText(text) {
+    text = String(text || '').trim();
+    if (!text) return;
+    const revision = ++speechRevision;
+    // The caption and Kongi's bubble always use the exact spoken sentence.
+    if (captionText) captionText.textContent = text;
+    if (kongiSpeechLead) kongiSpeechLead.textContent = text;
+    if (isMuted) return;
+    speechBusy = true;
+    try {
+      const result = await speakAsCharacter('kongi', text, {rateScale:exerciseSpeed,restart:true});
+      if (revision === speechRevision && result?.status === 'error' && statusMsg)
+        statusMsg.textContent = '소리를 재생하지 못했어요. 자막을 보며 천천히 따라해 주세요.';
+    } catch (error) {
+      if (revision === speechRevision && statusMsg)
+        statusMsg.textContent = '소리를 재생하지 못했어요. 자막을 보며 천천히 따라해 주세요.';
+    } finally {
+      if (revision === speechRevision) speechBusy = false;
+    }
+  }
 
   // --- 3-State View Flow Manager (ready / playing / completed) ---
   let currentExerciseState = 'ready';
@@ -337,12 +364,12 @@
     }
 
     // Kongi Speech
-    updateKongiEncouragement(sceneIdx);
+    if (kongiSpeechLead) kongiSpeechLead.textContent = scene.speechSteps[0]?.text || scene.subtitle;
 
     // Reset Cues
     currentStepIdx = -1;
     if (cueLead) cueLead.textContent = scene.subtitle;
-    if (captionText) captionText.textContent = scene.speechSteps[0]?.caption || scene.subtitle;
+    if (captionText) captionText.textContent = scene.speechSteps[0]?.text || scene.subtitle;
     if (countBadge) countBadge.hidden = true;
 
     updateActiveThumbnail();
@@ -360,6 +387,11 @@
       const now = performance.now();
       const delta = Math.min(0.5, Math.max(0, (now - lastTick) / 1000)) * exerciseSpeed;
       lastTick = now;
+      // Network latency and slower speech must not advance the next instruction.
+      if (speechBusy) {
+        sceneTimer = setTimeout(checkTimeline, 120);
+        return;
+      }
       sceneElapsed += delta;
       watchedSeconds.set(currentSceneIdx, (watchedSeconds.get(currentSceneIdx) || 0) + delta);
 
@@ -370,7 +402,7 @@
           if (currentStepIdx !== i) {
             currentStepIdx = i;
             if (cueLead) cueLead.textContent = step.lead || scene.subtitle;
-            if (captionText) captionText.textContent = step.caption;
+            if (captionText) captionText.textContent = step.text || step.caption;
 
             if (countBadge) {
               if (step.count) {
@@ -393,7 +425,7 @@
       updateOverallTimeline();
 
       // Check Scene End -> Auto Next Scene Seamlessly
-      if (sceneElapsed >= scene.duration) {
+      if (sceneElapsed >= scene.duration && !speechBusy) {
         // Mark current scene as completed
         if ((watchedSeconds.get(currentSceneIdx) || 0) >= scene.duration) completedScenes.add(currentSceneIdx);
         updateActiveThumbnail();
@@ -459,7 +491,9 @@
   function pause(message = '잠시 쉬고 있어요. 준비되면 이어서 해요.') {
     isPlaying = false;
     clearTimeout(sceneTimer);
-    if (window.speechSynthesis) window.CharacterVoice?.stop(); window.speechSynthesis.cancel();
+    const interrupted = speechBusy;
+    stopNarration();
+    if (interrupted) currentStepIdx = -1;
     updateBgmGain();
     updateControls();
     if (message && statusMsg) statusMsg.textContent = message;
@@ -521,7 +555,10 @@
     if (completeModal) {
       completeModal.hidden = false;
       completeModal.style.display = 'flex';
-      speakText('오늘도 정말 잘하셨습니다! 열 가지 건강 의자 체조를 모두 마치셨습니다.');
+      const completionText = '오늘도 정말 잘하셨습니다! 열 가지 건강 의자 체조를 모두 마치셨습니다.';
+      const completionCaption = document.querySelector('.se-completed-desc');
+      if (completionCaption) completionCaption.textContent = completionText;
+      speakText(completionText);
     }
   }
 
@@ -614,7 +651,7 @@
       isMuted = !isMuted;
       btnMute.textContent = isMuted ? '🔇 음성 꺼짐' : '🔊 음성 켜짐';
       btnMute.setAttribute('aria-pressed', String(isMuted));
-      if (isMuted && window.speechSynthesis) window.CharacterVoice?.stop(); window.speechSynthesis.cancel();
+      if (isMuted) stopNarration();
       updateBgmGain();
       if (statusMsg) {
         statusMsg.textContent = isMuted ? '음성을 껐어요. 자막과 영상은 계속 진행됩니다.' : '음성을 켰어요.';
@@ -785,6 +822,6 @@
     }
   }
 
+  window.addEventListener('pagehide', () => { isPlaying = false; clearTimeout(sceneTimer); stopNarration(); });
   init();
 })();
-

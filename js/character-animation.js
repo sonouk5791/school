@@ -16,7 +16,9 @@
    svg.querySelector(':scope > g > rect')?.remove();
    const shadow=document.createElementNS(ns,'ellipse');shadow.setAttribute('cx',contour.center);shadow.setAttribute('cy','632');shadow.setAttribute('rx','92');shadow.setAttribute('ry','10');shadow.classList.add('hero-ground-shadow');svg.querySelector(':scope > g').prepend(shadow);
    svg.setAttribute('viewBox',String(contour.center-172)+' 96 344 576');
-   const breath=svg.querySelector('.rig-breath'),alignment=document.createElementNS(ns,'g');alignment.setAttribute('transform','translate(0 '+(626-contour.foot)+')');breath.before(alignment);alignment.append(breath);
+   // Uniform scaling about the foot anchor preserves proportions and one baseline.
+   const scale={kongi:1,tori:.93,nabi:1.07,bori:1}[id];
+   const breath=svg.querySelector('.rig-breath'),alignment=document.createElementNS(ns,'g');alignment.setAttribute('transform',`translate(${contour.center} 626) scale(${scale}) translate(${-contour.center} ${-contour.foot})`);breath.before(alignment);alignment.append(breath);
  }
  home.replaceWith(svg);const link=svg.closest('a');link.addEventListener('pointerenter',()=>gesture(id));link.addEventListener('focus',()=>gesture(id));link.addEventListener('pointerdown',()=>set(id,'selected',600));}}
  for(const [selector,id]of [['.tp-char-img','tori'],['.nl-char-img','nabi'],['.bh-char-img','bori'],['.se-ready-avatar','kongi']]){const old=document.querySelector(selector);if(!old)continue;const svg=create(id);svg.classList.add('room-character-rig');old.hidden=true;old.after(svg);}
