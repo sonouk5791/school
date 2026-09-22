@@ -121,7 +121,7 @@ window.characters = Object.freeze({
     "revision": "hd-2026-09-21"
   },
   "bori": {
-    "name": "보리",
+    "name": "곰이",
     "row": 4,
     "idle": "/public/characters/bori/bori_idle.png",
     "mouth": {

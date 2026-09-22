@@ -10,8 +10,8 @@
   item('hello','토리와 반가운 인사','greeting',0,'대화',[],'tori',{max:2,also:['캐릭터 활동']}),
   item('weather','토리와 오늘 날씨','greeting',1,'대화',['계절'],'tori',{max:2,also:['캐릭터 활동']}),
   item('clap','콩이와 천천히 손뼉 운동','monthly-14',1,'체조',['옛노래'],'kongi',{max:3,requirements:['손운동'],also:['캐릭터 활동']}),
-  item('song-home','보리와 고향의 봄','music',1,'음악',['옛노래','고향','꽃'],'bori',{risks:['audio']}),
-  item('song-stream','보리와 퐁당퐁당','music',2,'음악',['옛노래','고향'],'bori',{risks:['audio']}),
+  item('song-home','곰이와 고향의 봄','music',1,'음악',['옛노래','고향','꽃'],'bori',{risks:['audio']}),
+  item('song-stream','곰이와 퐁당퐁당','music',2,'음악',['옛노래','고향'],'bori',{risks:['audio']}),
   item('home-photo','나비와 고향 사진 이야기','photo',0,'회상활동',['고향','농촌생활'],'nabi'),
   item('family-photo','나비와 가족 이야기','monthly-11',1,'회상활동',['가족'],'nabi'),
   item('market-photo','나비와 옛날 시장 이야기','monthly-10',1,'회상활동',['옛날 시장','음식'],'nabi'),
@@ -21,7 +21,7 @@
   item('flower-color','나비와 꽃 색깔 고르기','art',1,'그림/색깔 활동',['꽃','계절'],'nabi'),
   item('animal-color','나비와 강아지 표정 고르기','art',3,'그림/색깔 활동',['동물'],'nabi'),
   item('season-talk','토리와 좋아하는 계절','monthly-15',1,'대화',['계절','음식'],'tori'),
-  item('song-talk','보리와 노래 추억 나누기','monthly-4',1,'음악',['옛노래'],'bori',{also:['캐릭터 활동']})
+  item('song-talk','곰이와 노래 추억 나누기','monthly-4',1,'음악',['옛노래'],'bori',{also:['캐릭터 활동']})
  ];
  function normalize(p={}){if(!p||typeof p!=='object')p={};const list=(key,allowed)=>Array.isArray(p[key])?[...new Set(p[key].filter(x=>allowed.includes(x)))]:[];return {activities:list('activities',activities),forms:list('forms',forms),themes:list('themes',themes),cautions:list('cautions',cautions),duration:[5,10,15,20,30].includes(Number(p.duration))?Number(p.duration):10,difficulty:p.difficulty==='보통'?'보통':'쉬움'};}
  function eligible(p,x){return !(p.forms.includes('서서 하는 활동')&&!p.forms.includes('앉아서 활동')&&x.position==='seated') && x.requirements.every(f=>p.forms.includes(f)) && (p.difficulty==='보통'||x.difficulty==='쉬움') && !(p.forms.length&& !p.forms.includes('서서 하는 활동')&&x.position==='standing') && !(p.cautions.includes('큰 음량 피하기')&&x.risks.includes('audio')) && !(p.cautions.includes('빠른 동작 피하기')&&x.risks.includes('fast')) && !(p.cautions.includes('반복 설명 필요')&&x.risks.includes('complex')) && !(p.cautions.includes('터치 도움 필요')&&x.risks.includes('independentTouch'));}

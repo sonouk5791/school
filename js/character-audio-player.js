@@ -1,7 +1,7 @@
 /* Human recordings only. One shared audio element; playback requires a user gesture. */
 window.CharacterAudioPlayer=(()=>{
  'use strict';
- const names={kongi:'콩이',tori:'토리',nabi:'나비',bori:'보리'},audio=new Audio();audio.preload='none';audio.volume=.7;
+ const names={kongi:'콩이',tori:'토리',nabi:'나비',bori:'곰이'},audio=new Audio();audio.preload='none';audio.volume=.7;
  let files={},active=null,sequence=0,pending=null,speaking=false;
  const groups=new Set(),originalAttributes=new WeakMap();
  const visible=el=>el?.isConnected&&el.getClientRects().length&&!el.closest('dialog:not([open]),[hidden]');

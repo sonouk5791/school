@@ -70,13 +70,13 @@
     },
     bori: {
       id: 'bori',
-      name: '보리',
+      name: '곰이',
       animal: '곰',
       emoji: '🐻',
       badge: '포근듬직',
       image: 'assets/images/friend-bori.png',
-      intro: '우엉~ 듬직한 곰돌이 보리가 오늘 날씨 든든하게 챙겨줄게.',
-      outro: '물 자주 챙겨 드시고 천천히 몸도 풀어줘. 보리가 응원할게!'
+      intro: '우엉~ 듬직한 곰돌이 곰이가 오늘 날씨 든든하게 챙겨줄게.',
+      outro: '물 자주 챙겨 드시고 천천히 몸도 풀어줘. 곰이가 응원할게!'
     }
   };
 
@@ -240,7 +240,7 @@
             <span class="weather-header-icon" aria-hidden="true">🌤️</span>
             <div>
               <h2 class="weather-header-title">기상청 날씨누리 AI 동물 친구들 실시간 날씨</h2>
-              <p class="weather-header-subtitle">콩이·토리·나비·보리가 전국의 날씨와 어르신 맞춤 건강 팁을 친절하게 알려드려요.</p>
+              <p class="weather-header-subtitle">콩이·토리·나비·곰이가 전국의 날씨와 어르신 맞춤 건강 팁을 친절하게 알려드려요.</p>
             </div>
           </div>
           <div class="weather-meta-badge-wrap">

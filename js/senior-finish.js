@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   oldActions.hidden = true;
   const start = document.createElement('section');
   start.className = 'senior-start';
-  start.innerHTML = `<p id="seniorDate"></p><div class="senior-mood"><div><h2>오늘 기분은 어떠세요?</h2><div class="senior-mood-buttons">${['😊 좋아요', '😐 괜찮아요', '😔 조금 힘들어요'].map(t => `<button type="button" class="care-btn" data-start-mood="${t}" aria-pressed="false">${t}</button>`).join('')}</div><p id="seniorMoodReply" role="status">마음에 드는 표정을 눌러주세요.</p></div></div><p id="seniorInvitation">콩이와 몸을 천천히 움직여볼까요?</p><div class="senior-primary">${button('<span>🏃 콩이와 오늘 체조하기</span><small>천천히 따라해요</small>', 'exercise', 'primary')}${button('<span>📖 오늘의 수업</span><small>재미있게 하나씩 배워봐요</small>', 'today')}${button('<span>🐶 AI 친구 만나기</span><small>콩이, 토리, 나비, 보리를 만나보세요</small>', 'friends')}</div>${button('다른 활동 보기', 'activities')}</section>`;
+  start.innerHTML = `<p id="seniorDate"></p><div class="senior-mood"><div><h2>오늘 기분은 어떠세요?</h2><div class="senior-mood-buttons">${['😊 좋아요', '😐 괜찮아요', '😔 조금 힘들어요'].map(t => `<button type="button" class="care-btn" data-start-mood="${t}" aria-pressed="false">${t}</button>`).join('')}</div><p id="seniorMoodReply" role="status">마음에 드는 표정을 눌러주세요.</p></div></div><p id="seniorInvitation">콩이와 몸을 천천히 움직여볼까요?</p><div class="senior-primary">${button('<span>🏃 콩이와 오늘 체조하기</span><small>천천히 따라해요</small>', 'exercise', 'primary')}${button('<span>📖 오늘의 수업</span><small>재미있게 하나씩 배워봐요</small>', 'today')}${button('<span>🐶 AI 친구 만나기</span><small>콩이, 토리, 나비, 곰이를 만나보세요</small>', 'friends')}</div>${button('다른 활동 보기', 'activities')}</section>`;
   hero.after(start);
   const today = document.createElement('section');
   today.className = 'senior-today care-card';
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function addRoomNavigation() {
     document.querySelectorAll('dialog[open]').forEach(d => {
       if (!d.querySelector('.senior-return')) d.insertAdjacentHTML('afterbegin', navigation());
-      const role = ({jointExerciseRoom:['kongi-talk','콩이','편하게 앉아서 천천히 따라해요.'],karaokeModalRoom:['bori','보리','좋아하는 노래를 같이 들어봐요!'],basicStudyRoom:['nabi','나비','우리 같이 기억해볼까요?'],coloringRoom:['nabi','나비','좋아하는 색으로 함께 그려봐요.'],storyLibrary:['tori','토리','편하게 이야기해요.']})[d.id];
+      const role = ({jointExerciseRoom:['kongi-talk','콩이','편하게 앉아서 천천히 따라해요.'],karaokeModalRoom:['bori','곰이','좋아하는 노래를 같이 들어봐요!'],basicStudyRoom:['nabi','나비','우리 같이 기억해볼까요?'],coloringRoom:['nabi','나비','좋아하는 색으로 함께 그려봐요.'],storyLibrary:['tori','토리','편하게 이야기해요.']})[d.id];
       if(role&&!d.querySelector('.senior-room-guide'))d.querySelector('.senior-return').insertAdjacentHTML('afterend',`<p class="senior-room-guide"><img src="assets/images/friend-${role[0]}.png" alt="${role[1]}"><span>${role[1]} · ${role[2]}</span></p>`);
     });
   }

@@ -65,7 +65,7 @@
       cheekColor: 0xFF80AB
     },
     bori: {
-      name: '보리',
+      name: '곰이',
       animal: '곰',
       bodyColor: 0xBCAAA4,
       hoodieColor: 0xBBDEFB,

@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
  'use strict';
  const key='school_character_welcome_v1';
- const friends=[['kongi','콩이','안녕하세요! 저는 콩이에요.'],['tori','토리','반가워요! 저는 토리예요.'],['nabi','나비','오늘도 함께해서 기뻐요.'],['bori','보리','천천히 즐겁게 시작해볼까요?']];
+ const friends=[['kongi','콩이','안녕하세요! 저는 콩이에요.'],['tori','토리','반가워요! 저는 토리예요.'],['nabi','나비','오늘도 함께해서 기뻐요.'],['bori','곰이','천천히 즐겁게 시작해볼까요?']];
  let dialog=null,player=null,generation=0,settle=null,seen=false;
  function stop(){generation++;if(player){window.CharacterLipSync?.unbind(player);player.pause();player.removeAttribute('src');player.load();player=null;}if(settle){settle();settle=null;}}
  function syncAudio(){const hasAudio=Object.keys(window.SchoolWelcomeRecordings||{}).length>0;replay.hidden=!hasAudio;if(dialog){dialog.querySelector('#welcomeListen').hidden=!hasAudio;if(!hasAudio){stop();const status=dialog.querySelector('.welcome-status');status.textContent='';status.hidden=true;}}}
