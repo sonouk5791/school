@@ -4,124 +4,156 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff9ed">
-  <title>디지털 AI 학교 어르신 체조 (SCENE 1 ~ 10 연속 영상)</title>
-  <link rel="stylesheet" href="css/senior-exercise.css?v=20260921-v3">
+  <title>AI와 같이 운동하기 · 디지털 AI 학교</title>
+  <link rel="stylesheet" href="css/senior-exercise.css?v=20260922-v4">
 </head>
 <body>
   <div class="se-container">
     <!-- Top Header -->
     <header class="se-header">
-      <div class="se-header-left" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-        <a class="se-back-link" href="index.html" style="font-size: 20px; font-weight: 800; min-height: 48px; display: inline-flex; align-items: center;">
+      <div class="se-header-left">
+        <a class="se-back-link" href="index.html" aria-label="처음 화면으로 가기">
           🏠 처음으로
         </a>
-        <span class="se-location-badge" style="background:#FFF9C4; color:#E65100; padding:8px 16px; border-radius:12px; font-weight:800; font-size:18px; border:1px solid #FFE082;">
-          지금은 <strong>콩이의 운동방 (10단계 AI 의자 체조)</strong> 이에요
-        </span>
+        <h1 class="se-page-title">🏃 AI와 같이 운동하기 (10단계 건강 의자 체조)</h1>
       </div>
-      <div class="se-header-right" style="display:flex; align-items:center; gap:12px;">
-        <button id="btnTtsExerciseHelp" type="button" style="min-height:48px; padding:8px 16px; font-size:18px; font-weight:800; background:#E0F2FE; color:#0369A1; border:2px solid #BAE6FD; border-radius:14px; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+      <div class="se-header-right">
+        <div class="se-top-time-box">
+          <span class="se-clock-icon">⏱</span>
+          <span id="timeIndicatorTop" class="se-top-time">00:00 / 12:20</span>
+        </div>
+        <button id="btnTtsExerciseHelp" class="se-btn-tts" type="button" aria-label="화면 설명 듣기">
           <span>🔊</span>
           <span>설명 듣기</span>
         </button>
-        <span class="se-school-badge">🏫 치매·인지건강 어르신 운동교실</span>
       </div>
     </header>
 
-    <!-- Hero / Intro -->
-    <section class="se-hero">
-      <div class="se-characters-tag">🐾 콩이(노랑) · 토리(분홍) · 나비(보라) · 곰이(파랑)와 함께</div>
-      <h1>디지털 AI 학교 어르신 체조</h1>
-      <p class="se-hero-lead">천천히, 안전하게, 즐겁게 함께 움직여요</p>
-      
-      <!-- Safe Exercise Box -->
-      <div class="se-safety-box">
-        <strong>💡 안전한 체조를 위한 안내</strong>
-        <p>• <strong>편안한 의자에 앉아서 따라해 주세요.</strong></p>
-        <p>• <strong>통증이나 어지러움이 있으면 운동을 멈추고 쉬어 주세요.</strong></p>
-        <p>• 모든 동작은 천천히 진행되며, 가능한 범위까지만 가볍게 움직이셔도 충분합니다.</p>
+    <!-- Character Speech Hero Banner -->
+    <section class="se-speech-hero">
+      <div class="se-speech-avatar-box">🐶</div>
+      <div class="se-speech-content">
+        <div class="se-speech-author">콩이의 운동 안내</div>
+        <p class="se-speech-lead">"안녕하세요 어르신! 오늘도 편안한 의자에 앉아서 천천히 함께 운동해볼까요?"</p>
+        <p class="se-speech-sub">총 10개의 쉬운 의자 체조가 준비되어 있어요. 아프지 않고 편안한 만큼만 가볍게 움직여보세요.</p>
       </div>
-
-      <button id="heroStartBtn" class="se-main-start-btn" type="button">
-        ▶ 어르신 체조 시작
+      <button id="heroStartBtn" class="se-hero-quick-btn" type="button">
+        ▶ 바로 체조 시작하기
       </button>
     </section>
 
-    <!-- Main Exercise Continuous Video Player -->
-    <main id="playerCard" class="se-player-card" aria-label="치매 어르신 체조 통합 영상 플레이어">
-      <!-- 16:9 Video Stage -->
-      <div id="stageWrapper" class="se-stage-wrapper">
-        <img id="sceneBack" class="se-scene-layer" alt="" aria-hidden="true" style="opacity: 0;">
-        <img id="sceneFront" class="se-scene-layer" src="assets/senior-exercise/images/scene01_intro.jpg" alt="체조 안내 영상">
-        
-        <!-- Top Overlay Info (Big High Contrast) -->
-        <div class="se-stage-overlay">
-          <div id="sceneBadge" class="se-scene-badge">1 / 10 시작 인사</div>
-          <span id="characterTag" class="se-character-tag" style="background-color: #e6a100;">콩이</span>
+    <!-- Main Exercise Section (2-Column: Left Controls + Right Stage) -->
+    <div class="se-exercise-main-grid">
+      <!-- Left: Simple Control Sidebar -->
+      <aside class="se-controls-sidebar" aria-label="운동 조작 메뉴">
+        <div class="se-sidebar-title">
+          <span>🎛️ 기본 조작</span>
+        </div>
+        <div class="se-controls-stack">
+          <button id="btnStart" class="se-btn se-btn-main" type="button">
+            ▶ 어르신 체조 시작
+          </button>
+          <button id="btnPause" class="se-btn se-btn-pause" type="button" disabled>
+            ⏸ 잠시 멈춤
+          </button>
+          <div class="se-btn-pair">
+            <button id="btnPrev" class="se-btn se-btn-step" type="button" disabled>
+              ⏮ 이전 동작
+            </button>
+            <button id="btnNext" class="se-btn se-btn-step" type="button">
+              ⏭ 다음 동작
+            </button>
+          </div>
+          <button id="btnRestart" class="se-btn se-btn-restart" type="button">
+            🔄 처음부터 다시
+          </button>
+          <button id="btnMute" class="se-btn se-btn-sound" type="button" aria-pressed="false">
+            🔊 음성 켜짐
+          </button>
+          <button id="btnBgm" class="se-btn se-btn-bgm" type="button" aria-pressed="true">
+            🎵 배경음악 켜짐
+          </button>
+          <button id="btnTextSize" class="se-btn se-btn-text" type="button">
+            🔠 글자 크게
+          </button>
+          <button id="btnFullscreen" class="se-btn se-btn-fs" type="button">
+            ⛶ 큰 화면으로 보기
+          </button>
+          <a href="index.html" class="se-btn se-btn-home">
+            🏠 학교 홈으로
+          </a>
+        </div>
+      </aside>
+
+      <!-- Right: Main Video/Stage Card -->
+      <main id="playerCard" class="se-player-card" aria-label="체조 진행 화면">
+        <!-- 16:9 Video Stage -->
+        <div id="stageWrapper" class="se-stage-wrapper">
+          <img id="sceneBack" class="se-scene-layer" alt="" aria-hidden="true" style="opacity: 0;">
+          <img id="sceneFront" class="se-scene-layer" src="assets/senior-exercise/images/scene01_intro.jpg" alt="체조 안내 영상">
+          
+          <!-- Top Overlay Info (Big High Contrast) -->
+          <div class="se-stage-overlay">
+            <div id="sceneBadge" class="se-scene-badge">1 / 10 시작 인사</div>
+            <span id="characterTag" class="se-character-tag" style="background-color: #e6a100;">🐶 콩이</span>
+          </div>
+
+          <!-- Big Count Badge (1, 2, 3, 4) -->
+          <div id="countBadge" class="se-count-badge" hidden>1</div>
         </div>
 
-        <!-- Big Count Badge (1, 2, 3, 4) -->
-        <div id="countBadge" class="se-count-badge" hidden>1</div>
-      </div>
-
-      <!-- Large Caption & Subtitle Area -->
-      <div id="captionContainer" class="se-caption-container">
-        <div class="se-caption-text-group">
-          <p id="cueLead" class="se-cue-lead">시작 인사</p>
-          <h2 id="captionText" class="se-caption-h2">오늘도 천천히 함께해요</h2>
+        <!-- Large Caption & Subtitle Area -->
+        <div id="captionContainer" class="se-caption-container">
+          <div class="se-caption-text-group">
+            <div class="se-caption-header">
+              <span id="cueLead" class="se-cue-lead">시작 인사</span>
+              <span id="stepProgressIndicator" class="se-step-progress-tag">1 / 10 동작 진행 중</span>
+            </div>
+            <h2 id="captionText" class="se-caption-h2">오늘도 천천히 함께해요</h2>
+          </div>
         </div>
-      </div>
 
-      <!-- Timeline & Progress Bar -->
-      <div class="se-timeline-bar">
-        <input type="range" id="progressTimeline" class="se-progress" min="0" max="740" value="0" step="0.5" aria-label="전체 체조 진행 바">
-        <span id="timeIndicator" class="se-time-indicator">00:00 / 12:20</span>
-      </div>
+        <!-- Timeline & Progress Bar -->
+        <div class="se-timeline-bar">
+          <input type="range" id="progressTimeline" class="se-progress" min="0" max="740" value="0" step="0.5" aria-label="전체 체조 진행 바">
+          <span id="timeIndicator" class="se-time-indicator">00:00 / 12:20</span>
+        </div>
 
-      <!-- Control Buttons (Large & Accessible) -->
-      <div class="se-controls-grid">
-        <button id="btnStart" class="se-btn se-btn-primary" type="button">▶ 어르신 체조 시작</button>
-        <button id="btnPause" class="se-btn" type="button" disabled>⏸ 잠시 멈춤</button>
-        <button id="btnRestart" class="se-btn" type="button">🔄 처음부터</button>
-        <button id="btnPrev" class="se-btn" type="button" disabled>◀ 이전 동작</button>
-        <button id="btnNext" class="se-btn" type="button">▶ 다음 동작</button>
-        <button id="btnMute" class="se-btn" type="button" aria-pressed="false">🔊 소리 끄기</button>
-        <button id="btnBgm" class="se-btn" type="button" aria-pressed="true">🎵 배경음악 끄기</button>
-        <button id="btnTextSize" class="se-btn" type="button">🔠 글자 크게</button>
-        <button id="btnFullscreen" class="se-btn" type="button">⛶ 전체화면</button>
-      </div>
-
-      <!-- Status Helper Msg -->
-      <div id="statusMsg" class="se-status-msg" role="status">
-        준비됐어요. 어르신 체조 시작 버튼을 누르면 1번부터 10번까지 자동으로 이어집니다.
-      </div>
-    </main>
+        <!-- Status Helper Msg -->
+        <div id="statusMsg" class="se-status-msg" role="status">
+          준비됐어요. [어르신 체조 시작] 버튼을 누르면 1번부터 10번까지 천천히 자동으로 이어집니다.
+        </div>
+      </main>
+    </div>
 
     <!-- 10 Scenes Thumbnail Navigator -->
     <section class="se-gallery-section" aria-label="10개 체조 동작 순서">
-      <h3 class="se-gallery-title">📋 10개 체조 동작 순서 (원하는 동작을 누르면 바로 이동해요)</h3>
+      <div class="se-gallery-header">
+        <h3 class="se-gallery-title">📋 10개 체조 동작 순서</h3>
+        <p class="se-gallery-sub">원하는 동작을 누르면 바로 이동해요. 완료한 동작에는 초록색 체크가 붙습니다.</p>
+      </div>
       <div id="sceneGrid" class="se-scene-grid">
         <!-- Dynamically rendered scene cards -->
       </div>
     </section>
 
-    <!-- Completion Celebration Modal (도장 & 칭찬) -->
-    <div id="exerciseCompleteModal" style="position:fixed; inset:0; background:rgba(0,0,0,0.65); display:flex; align-items:center; justify-content:center; padding:20px; z-index:999;" hidden>
-      <div style="background:#fff; border-radius:28px; padding:36px 28px; max-width:560px; width:100%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.3);">
-        <div id="exerciseStampBadge" style="display:inline-block; background:#E8F5E9; color:#2E7D32; border:2px solid #81C784; padding:8px 20px; border-radius:20px; font-size:22px; font-weight:900; margin-bottom:14px;">
+    <!-- Completion Celebration Modal (도장 & 칭찬 - 오직 10개 동작 완료 후에만 표시) -->
+    <div id="exerciseCompleteModal" class="se-modal-overlay" style="display: none;" hidden>
+      <div class="se-modal-card">
+        <div id="exerciseStampBadge" class="se-stamp-badge">
           🌸 건강 꽃 도장 획득!
         </div>
-        <h2 style="font-size:32px; font-weight:900; color:#1B5E20; margin-bottom:10px;">
+        <h2 class="se-modal-title">
           🎉 오늘도 정말 잘하셨어요!
         </h2>
-        <p style="font-size:20px; color:#4E342E; line-height:1.6; margin-bottom:24px;">
+        <p class="se-modal-desc">
           콩이, 토리, 나비, 곰이와 함께 10가지 건강 의자 체조를 모두 끝마치셨습니다. 몸도 마음도 튼튼해졌어요!
         </p>
-        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-          <button id="btnReplayExercise" type="button" style="min-height:54px; font-size:20px; font-weight:800; background:#FFF8E1; color:#F57F17; border:2px solid #FFE082; padding:12px 24px; border-radius:16px; cursor:pointer;">
+        <div class="se-modal-actions">
+          <button id="btnReplayExercise" class="se-modal-btn replay" type="button">
             🔄 다시 운동하기
           </button>
-          <a href="index.html" style="min-height:54px; font-size:20px; font-weight:800; background:#2D6B24; color:#FFFFFF; border:0; padding:12px 28px; border-radius:16px; text-decoration:none; display:inline-flex; align-items:center;">
+          <a href="index.html" class="se-modal-btn home">
             🏠 학교 홈으로 가기
           </a>
         </div>
@@ -129,12 +161,12 @@
     </div>
 
     <!-- Footer -->
-    <footer style="text-align: center; color: #6b6255; font-size: 18px; line-height: 1.6; margin-top: 40px; padding-bottom: 30px;">
+    <footer class="se-footer">
       <p>💡 콩이(노랑), 토리(분홍), 나비(보라), 곰이(파랑) 캐릭터와 어르신이 함께하는 연속 자동재생 AI 체조 영상입니다.</p>
-      <p style="margin-top: 8px;"><a href="index.html" class="se-back-link" style="display:inline-block;">학교 메인 홈으로 돌아가기</a></p>
+      <p style="margin-top: 8px;"><a href="index.html" class="se-footer-link">디지털 AI 학교 처음으로 돌아가기</a></p>
     </footer>
   </div>
 
-  <script src="js/senior-exercise.js?v=20260921-v3"></script>
+  <script src="js/senior-exercise.js?v=20260922-v4"></script>
 </body>
 </html>
