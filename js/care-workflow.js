@@ -400,6 +400,7 @@ function go(target){
   const seniorActs = document.querySelector('.senior-main-activities-section');
   const dailyRec = document.querySelector('.daily-recommend-section');
   const charDoors = document.querySelector('.character-doors-section');
+  const moreLessons = document.getElementById('moreLessonsDrawer');
   const careNav = document.querySelector('.care-nav');
   const careRoot = document.getElementById('careRoot');
 
@@ -411,6 +412,8 @@ function go(target){
   if (seniorActs) seniorActs.hidden = !isHome;
   if (dailyRec) dailyRec.hidden = !isHome;
   if (charDoors) charDoors.hidden = !isHome;
+  if (moreLessons && !isHome) moreLessons.hidden = true;
+
 
   if (careNav) {
     careNav.style.display = isHome ? 'none' : 'flex';

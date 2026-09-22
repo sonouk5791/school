@@ -148,18 +148,18 @@
 
         <div class="hero-speech-container">
           <div class="speech-bubble-hero">
-            <span class="hero-greeting-tag">🐶 AI 친구 콩이의 인사</span>
+            <span class="hero-greeting-tag">🐶 콩이의 반가운 인사</span>
             <h1 class="hero-main-title">
-              "안녕하세요 어르신! 오늘도 <span>천천히 함께해봐요.</span>"
+              "안녕하세요. 오늘도 <span>만나서 반갑습니다!</span>"
             </h1>
             <p class="hero-sub-text">
-              콩이, 토리, 나비, 곰이가 기다리고 있어요. 원하는 활동 카드를 편안하게 눌러보세요!
+              오늘은 누구와 무엇을 해볼까요? 아래 4가지 활동 중 마음에 드는 것을 꾹 눌러보세요.
             </p>
           </div>
 
-          <!-- 어르신 3대 핵심 액션 버튼 (크고 직관적) -->
-          <div class="hero-action-buttons">
-            <a href="senior-exercise.html" class="btn-hero-action btn-hero-primary" id="btnHeroStart" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+          <!-- 어르신 3대 핵심 액션 버튼 (호환성 유지) -->
+          <div class="hero-action-buttons" style="display: none;">
+            <a href="senior-exercise.html" class="btn-hero-action btn-hero-primary" id="btnHeroStart">
               ▶ 오늘 활동 시작하기 &gt;
             </a>
             <button class="btn-hero-action btn-hero-cream" id="btnHeroMeetAi">
@@ -178,15 +178,15 @@
          ======================================================================= -->
     <section class="senior-main-activities-section" id="seniorActivitiesSection" aria-label="어르신 4대 주요 활동">
       <div class="senior-act-header">
-        <span class="senior-act-badge">🌸 즐겁고 편안한 일상 배움</span>
-        <h2 class="senior-act-title">오늘은 어떤 활동을 해볼까요?</h2>
+        <span class="senior-act-badge">🌸 즐거운 하루 활동</span>
+        <h2 class="senior-act-title">오늘은 무엇을 해볼까요?</h2>
         <p class="senior-act-sub">마음에 드는 친구의 큰 카드를 편안하게 꾹 눌러보세요.</p>
       </div>
 
       <div class="senior-act-grid">
         <!-- 1. 🐶 콩이와 운동하기 -->
         <article class="senior-big-card card-kongi" tabindex="0">
-          <div class="senior-card-badge">🏃 운동 활동</div>
+          <div class="senior-card-badge">🏃 운동하기</div>
           <div class="senior-card-avatar-wrap">
             <img src="assets/images/friend-kongi.png" alt="운동 친구 콩이" class="senior-card-avatar">
           </div>
@@ -200,12 +200,12 @@
 
         <!-- 2. 🐰 토리와 놀이하기 -->
         <article class="senior-big-card card-tori" tabindex="0">
-          <div class="senior-card-badge">🧩 두뇌 놀이</div>
+          <div class="senior-card-badge">🧩 놀이하기</div>
           <div class="senior-card-avatar-wrap">
             <img src="assets/images/friend-tori.png" alt="놀이 친구 토리" class="senior-card-avatar">
           </div>
           <h3 class="senior-card-title">🐰 토리와 놀이하기</h3>
-          <p class="senior-card-tagline">재미있는 퍼즐 & 짝 맞추기 · 집 꾸미기</p>
+          <p class="senior-card-tagline">재미있는 퍼즐 & 짝 맞추기 · 방 꾸미기</p>
           <div class="senior-card-bubble">"같은 그림도 찾고 알록달록 방도 꾸며요."</div>
           <a href="tori-play.html" class="senior-card-action-btn btn-act-tori">
             놀이 시작하기 ▶
@@ -214,7 +214,7 @@
 
         <!-- 3. 🐱 나비와 학습하기 -->
         <article class="senior-big-card card-nabi" tabindex="0">
-          <div class="senior-card-badge">💡 인지 배움</div>
+          <div class="senior-card-badge">💡 학습하기</div>
           <div class="senior-card-avatar-wrap">
             <img src="assets/images/friend-nabi.png" alt="학습 친구 나비" class="senior-card-avatar">
           </div>
@@ -228,7 +228,7 @@
 
         <!-- 4. 🐻 곰이와 취미하기 -->
         <article class="senior-big-card card-bori" tabindex="0">
-          <div class="senior-card-badge">🎵 감성 취미</div>
+          <div class="senior-card-badge">🎵 취미하기</div>
           <div class="senior-card-avatar-wrap">
             <img src="assets/images/friend-bori.png" alt="취미 친구 곰이" class="senior-card-avatar">
           </div>
@@ -240,7 +240,23 @@
           </a>
         </article>
       </div>
+
+      <!-- 하단 어르신 보조 액션 (지난 활동 보기 & 전체 수업 더보기) -->
+      <div class="senior-bottom-bar">
+        <button class="btn-senior-history-large" id="btnHeroHistoryBottom" type="button">
+          📁 지난 활동 보기
+        </button>
+        <button class="btn-toggle-all-lessons" id="btnToggleAllLessons" type="button" aria-expanded="false">
+          📚 전체 수업 및 활동 더보기 ▾
+        </button>
+      </div>
     </section>
+
+    <!-- =======================================================================
+         기타 전체 수업 및 콘텐츠 보존 영역 (기본은 접어두어 화면 단순화)
+         ======================================================================= -->
+    <div id="moreLessonsDrawer" class="more-lessons-drawer" hidden>
+
 
     <!-- =======================================================================
          신규 3차 고도화: 1. 일일 추천 활동 (상세 둘러보기)
@@ -610,7 +626,10 @@
       </div>
     </section>
 
+    </div> <!-- end of #moreLessonsDrawer -->
+
   </main>
+
 
   <!-- =======================================================================
        푸터 (Site Footer)

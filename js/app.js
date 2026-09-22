@@ -258,7 +258,29 @@ function initHeroActions() {
       openTeacherModal();
     });
   }
+
+  const btnViewHistoryBottom = document.getElementById('btnHeroHistoryBottom');
+  if (btnViewHistoryBottom) {
+    btnViewHistoryBottom.addEventListener('click', () => {
+      openTeacherModal();
+    });
+  }
+
+  const btnToggleAll = document.getElementById('btnToggleAllLessons');
+  const drawer = document.getElementById('moreLessonsDrawer');
+  if (btnToggleAll && drawer) {
+    btnToggleAll.addEventListener('click', () => {
+      const isHidden = drawer.hidden;
+      drawer.hidden = !isHidden;
+      btnToggleAll.setAttribute('aria-expanded', String(isHidden));
+      btnToggleAll.textContent = isHidden ? '📚 전체 수업 및 활동 접기 ▴' : '📚 전체 수업 및 활동 더보기 ▾';
+      if (isHidden) {
+        drawer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
 }
+
 
 // 사회복지사 / 선생님 공간 모달 제어
 function initTeacherModal() {
