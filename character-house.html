@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fffbf0">
   <title>내가 꾸미는 AI 캐릭터 집 · 디지털 AI 학교</title>
-  <link rel="stylesheet" href="css/character-house.css?v=20260921-v3">
+  <link rel="stylesheet" href="css/character-house.css?v=20260922-room">
 </head>
 <body>
   <div class="ch-container">
@@ -137,9 +137,6 @@
 
               <!-- Original Character Avatar (콩이 공식 이미지) -->
               <div id="charAvatarWrap" class="ch-avatar-elem">
-                <div class="ch-avatar-outfit-box">
-                  <span id="avatarOutfitBadge" class="ch-avatar-outfit-badge">👕 노란 가디건 착용 중</span>
-                </div>
                 <img id="charAvatar" class="ch-avatar-img" src="assets/images/friend-kongi.png" alt="캐릭터">
               </div>
 
@@ -156,6 +153,7 @@
               </div>
             </div>
 
+            <section class="ch-outfit-card" aria-label="오늘의 코디" aria-live="polite"><strong>오늘의 코디 · 지금 입은 옷</strong><div id="avatarOutfitBadge"></div></section>
             <!-- Easy Mode Auto-Position Bar -->
             <div id="easyPositionBar" class="ch-easy-position-bar" hidden>
               <div class="ch-easy-title">
@@ -251,6 +249,9 @@
     </div>
   </div>
 
-  <script src="js/character-house.js?v=20260921-v3"></script>
+  <script src="js/house-furnishings.js?v=20260922"></script>
+  <script src="js/character-house.js?v=20260922-outfit-label"></script>
 </body>
 </html>
+
+

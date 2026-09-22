@@ -237,6 +237,7 @@
     state.pendingEasyItem = null;
     $('easyPositionBar').hidden = true;
     $('itemController').hidden = true;
+    $('itemToolbar').hidden = true;
     renderCanvas();
     renderToolsPanel();
     showToast('↩ 방금 전으로 되돌렸어요.');
@@ -407,7 +408,10 @@
       state.placedItems = resumeData.placedItems || [];
     } else {
       // Default initialization
-      state.placedItems = [];
+      state.placedItems = [
+        ['f_sofa', 21, 65], ['f_table', 24, 82], ['f_bookshelf', 82, 51],
+        ['p_tree', 84, 78], ['l_stand', 9, 54], ['pic_family', 48, 18]
+      ].map(([id,x,y],i)=>({...Object.values(ITEM_CATALOG).flat().find(item=>item.id===id),uid:'starter_'+i,x,y,scale:1,rot:0}));
       state.selectedItemUid = null;
       state.pendingEasyItem = null;
     }
@@ -469,17 +473,14 @@
       windowEl.textContent = '☀️';
     }
 
-    // Outfit Badge
-    const topObj = OUTFITS.tops.find(t => t.id === state.outfit.top);
-    const botObj = OUTFITS.bottoms.find(b => b.id === state.outfit.bottom);
-    const accObj = OUTFITS.accs.find(a => a.id === state.outfit.acc);
-
-    const outfitParts = [];
-    if (topObj) outfitParts.push(topObj.name);
-    if (botObj) outfitParts.push(botObj.name);
-    if (accObj) outfitParts.push(accObj.name);
-
-    badge.textContent = outfitParts.join(' · ') || '기본 평상복';
+    // Describe the actual unchanged avatar asset, not the saved clothing preferences.
+    const wornOutfits = {
+      kongi: ['🧥 노란색·흰색 운동복', '👖 노란 운동복 바지', '👓 둥근 안경'],
+      tori: ['👕 분홍색 운동복'],
+      nabi: ['👕 보라색 운동복'],
+      bori: ['👕 파란색·흰색 운동복']
+    };
+    badge.replaceChildren(...wornOutfits[state.currentCharId].map(text=>{const line=document.createElement('span');line.textContent=text;return line;}));
 
     // Placed Items
     const itemsLayer = $('itemsLayer');
@@ -489,6 +490,7 @@
       const el = document.createElement('div');
       el.className = `ch-placed-item ${state.selectedItemUid === item.uid ? 'selected' : ''}`;
       el.dataset.uid = item.uid;
+      el.dataset.itemId = item.id;
       el.style.left = `${item.x}%`;
       el.style.top = `${item.y}%`;
       el.style.transform = `translate(-50%, -50%) scale(${item.scale}) rotate(${item.rot}deg)`;
@@ -497,7 +499,7 @@
       el.setAttribute('aria-label', `${item.name}, 선택하여 위치 이동`);
 
       el.innerHTML = `
-        <span class="ch-placed-icon">${item.icon}</span>
+        <span class="ch-placed-icon">${window.HouseFurnishings?.draw(item.id) || item.icon}</span>
         <span class="ch-placed-label">${item.name}</span>
       `;
 
@@ -505,6 +507,7 @@
         e.stopPropagation();
         selectItemOnCanvas(item.uid);
       });
+      el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectItemOnCanvas(item.uid);}});
 
       // Drag in free mode
       setupItemDrag(el, item);
@@ -614,6 +617,10 @@
   }
 
   function renderOutfitOptions(grid) {
+    const note=document.createElement('p');
+    note.textContent='입고 싶은 옷 고르기 · 선택한 옷은 기록으로 남아요. 지금 입은 옷은 그대로예요.';
+    note.style.cssText='font-size:20px;line-height:1.5;margin-bottom:12px';
+    grid.appendChild(note);
     const wrap = document.createElement('div');
     wrap.style.display = 'flex';
     wrap.style.flexDirection = 'column';
@@ -631,12 +638,12 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = `ch-opt-card ${isSelected ? 'selected' : ''}`;
-        btn.setAttribute('aria-label', `${item.name} 입히기`);
+        btn.setAttribute('aria-label', `${item.name} 코디 선택`);
         btn.innerHTML = `
           <div class="ch-opt-icon" style="font-size: 50px;">${item.icon}</div>
           <div class="ch-opt-name" style="font-size: 19px; font-weight: 800;">${item.name}</div>
           <span style="font-size: 13px; color: ${isSelected ? '#2e7d32' : '#8d6e63'}; font-weight: 800; background: ${isSelected ? '#c8e6c9' : '#f5f5f5'}; padding: 2px 8px; border-radius: 8px;">
-            ${isSelected ? '✔ 입고 있음' : '👆 입혀보기'}
+            ${isSelected ? '✔ 선택했어요' : '코디 고르기'}
           </span>
         `;
         btn.addEventListener('click', () => {
@@ -653,7 +660,7 @@
           }
 
           renderToolsPanel('outfit');
-          showToast(`👕 [${item.name}]으로 예쁘게 입혔어요!`);
+          showToast(`👕 입고 싶은 옷으로 [${item.name}]을 골랐어요.`);
 
           const charInfo = CHARACTERS[state.currentCharId];
           const compliments = [
@@ -661,9 +668,9 @@
             `와! [${item.name}]이 제게 꼭 맞아요. 정말 감사합니다!`,
             `어르신의 좋은 안목 덕분에 오늘 제가 가장 멋쟁이가 되었어요!`
           ];
-          const chosenComp = compliments[Math.floor(Math.random() * compliments.length)];
+          const chosenComp = `${item.name}을 입고 싶은 옷으로 기록했어요. 지금 입은 옷은 그대로예요.`;
           $('speechMsg').textContent = chosenComp;
-          speak(`${charInfo.charName}에게 ${item.name}을 입혔습니다. ${chosenComp}`);
+          speak(chosenComp);
         });
         itemGrid.appendChild(btn);
       });
@@ -803,7 +810,7 @@
       { x: 78, y: 70 }, // Right side
       { x: 30, y: 55 }, // Left-mid
       { x: 70, y: 55 }, // Right-mid
-      { x: 50, y: 76 }  // Center
+      { x: 18, y: 82 }  // Keep automatic placement clear of the character
     ];
     const targetSlot = slots[placedCount % slots.length];
 
@@ -922,6 +929,8 @@
 
   // --- GLOBAL EVENTS SETUP ---
   function setupGlobalEvents() {
+    // Keep furniture controls outside the living space and away from the character.
+    $('roomViewport').after($('itemToolbar'));
     // Top TTS
     $('btnTtsHelp').addEventListener('click', () => {
       if (state.screen === 'select') {
