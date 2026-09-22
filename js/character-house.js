@@ -617,31 +617,53 @@
     const wrap = document.createElement('div');
     wrap.style.display = 'flex';
     wrap.style.flexDirection = 'column';
-    wrap.style.gap = '14px';
+    wrap.style.gap = '16px';
     wrap.style.width = '100%';
 
     const makeSection = (secTitle, items, field) => {
       const sec = document.createElement('div');
-      sec.innerHTML = `<h4 style="font-size:18px; font-weight:800; color:#5d4037; margin-bottom:8px;">${secTitle}</h4>`;
+      sec.innerHTML = `<h4 style="font-size:19px; font-weight:900; color:#3e2723; margin-bottom:8px; padding-left:4px;">${secTitle}</h4>`;
       const itemGrid = document.createElement('div');
       itemGrid.className = 'ch-options-grid';
 
       items.forEach(item => {
+        const isSelected = state.outfit[field] === item.id;
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `ch-opt-card ${state.outfit[field] === item.id ? 'selected' : ''}`;
+        btn.className = `ch-opt-card ${isSelected ? 'selected' : ''}`;
+        btn.setAttribute('aria-label', `${item.name} 입히기`);
         btn.innerHTML = `
-          <div class="ch-opt-icon">${item.icon}</div>
-          <div class="ch-opt-name">${item.name}</div>
+          <div class="ch-opt-icon" style="font-size: 50px;">${item.icon}</div>
+          <div class="ch-opt-name" style="font-size: 19px; font-weight: 800;">${item.name}</div>
+          <span style="font-size: 13px; color: ${isSelected ? '#2e7d32' : '#8d6e63'}; font-weight: 800; background: ${isSelected ? '#c8e6c9' : '#f5f5f5'}; padding: 2px 8px; border-radius: 8px;">
+            ${isSelected ? '✔ 입고 있음' : '👆 입혀보기'}
+          </span>
         `;
         btn.addEventListener('click', () => {
           pushHistory();
           state.outfit[field] = item.id;
           renderCanvas();
+
+          // Trigger Avatar Glow/Pulse
+          const charWrap = $('charAvatarWrap');
+          if (charWrap) {
+            charWrap.classList.remove('outfit-changed');
+            void charWrap.offsetWidth; // Trigger reflow
+            charWrap.classList.add('outfit-changed');
+          }
+
           renderToolsPanel('outfit');
-          showToast(`✨ [${item.name}]으로 입혔어요!`);
-          speak(`콩이에게 ${item.name}을 입혔습니다.`);
-          $('speechMsg').textContent = `어르신, ${item.name}이 참 따뜻하고 멋져요!`;
+          showToast(`👕 [${item.name}]으로 예쁘게 입혔어요!`);
+
+          const charInfo = CHARACTERS[state.currentCharId];
+          const compliments = [
+            `어르신, [${item.name}]을 입으니 마음까지 아주 따뜻해져요!`,
+            `와! [${item.name}]이 제게 꼭 맞아요. 정말 감사합니다!`,
+            `어르신의 좋은 안목 덕분에 오늘 제가 가장 멋쟁이가 되었어요!`
+          ];
+          const chosenComp = compliments[Math.floor(Math.random() * compliments.length)];
+          $('speechMsg').textContent = chosenComp;
+          speak(`${charInfo.charName}에게 ${item.name}을 입혔습니다. ${chosenComp}`);
         });
         itemGrid.appendChild(btn);
       });
@@ -650,9 +672,9 @@
       return sec;
     };
 
-    wrap.appendChild(makeSection('상의 (옷)', OUTFITS.tops, 'top'));
-    wrap.appendChild(makeSection('하의 (바지/치마)', OUTFITS.bottoms, 'bottom'));
-    wrap.appendChild(makeSection('소품 및 장신구', OUTFITS.accs, 'acc'));
+    wrap.appendChild(makeSection('👕 상의 (예쁜 옷)', OUTFITS.tops, 'top'));
+    wrap.appendChild(makeSection('👖 하의 (편안한 바지/치마)', OUTFITS.bottoms, 'bottom'));
+    wrap.appendChild(makeSection('👒 소품 및 장신구', OUTFITS.accs, 'acc'));
     grid.appendChild(wrap);
   }
 
@@ -665,16 +687,20 @@
 
     // 1. Structure
     const structSec = document.createElement('div');
-    structSec.innerHTML = `<h4 style="font-size:18px; font-weight:800; color:#5d4037; margin-bottom:8px;">방 구조 선택</h4>`;
+    structSec.innerHTML = `<h4 style="font-size:19px; font-weight:900; color:#3e2723; margin-bottom:8px; padding-left:4px;">방 구조 선택</h4>`;
     const structGrid = document.createElement('div');
     structGrid.className = 'ch-options-grid';
     ROOM_TYPES.forEach(r => {
+      const isSelected = state.roomType === r.id;
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `ch-opt-card ${state.roomType === r.id ? 'selected' : ''}`;
+      btn.className = `ch-opt-card ${isSelected ? 'selected' : ''}`;
       btn.innerHTML = `
-        <div class="ch-opt-icon">${r.icon}</div>
-        <div class="ch-opt-name">${r.name}</div>
+        <div class="ch-opt-icon" style="font-size: 46px;">${r.icon}</div>
+        <div class="ch-opt-name" style="font-size: 18px; font-weight: 800;">${r.name}</div>
+        <span style="font-size: 13px; color: ${isSelected ? '#2e7d32' : '#8d6e63'}; font-weight: 800; background: ${isSelected ? '#c8e6c9' : '#f5f5f5'}; padding: 2px 8px; border-radius: 8px;">
+          ${isSelected ? '✔ 적용 중' : '👆 선택하기'}
+        </span>
       `;
       btn.addEventListener('click', () => {
         pushHistory();
@@ -691,16 +717,17 @@
 
     // 2. Walls
     const wallSec = document.createElement('div');
-    wallSec.innerHTML = `<h4 style="font-size:18px; font-weight:800; color:#5d4037; margin-bottom:8px;">벽지 색상</h4>`;
+    wallSec.innerHTML = `<h4 style="font-size:19px; font-weight:900; color:#3e2723; margin-bottom:8px; padding-left:4px;">벽지 색상</h4>`;
     const wallGrid = document.createElement('div');
     wallGrid.className = 'ch-options-grid';
     WALL_STYLES.forEach(w => {
+      const isSelected = state.wallStyle === w.id;
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `ch-opt-card ${state.wallStyle === w.id ? 'selected' : ''}`;
+      btn.className = `ch-opt-card ${isSelected ? 'selected' : ''}`;
       btn.innerHTML = `
-        <div class="ch-opt-icon" style="background:${w.color}; width:36px; height:36px; border-radius:10px; border:2px solid #ccc; margin:0 auto 4px;"></div>
-        <div class="ch-opt-name">${w.name}</div>
+        <div class="ch-opt-icon" style="background:${w.color}; width:42px; height:42px; border-radius:12px; border:2.5px solid #8d6e63; margin:0 auto 4px; box-shadow:0 3px 6px rgba(0,0,0,0.15);"></div>
+        <div class="ch-opt-name" style="font-size: 18px; font-weight: 800;">${w.name}</div>
       `;
       btn.addEventListener('click', () => {
         pushHistory();
@@ -716,16 +743,17 @@
 
     // 3. Floors
     const floorSec = document.createElement('div');
-    floorSec.innerHTML = `<h4 style="font-size:18px; font-weight:800; color:#5d4037; margin-bottom:8px;">바닥 원목</h4>`;
+    floorSec.innerHTML = `<h4 style="font-size:19px; font-weight:900; color:#3e2723; margin-bottom:8px; padding-left:4px;">바닥 원목 마루</h4>`;
     const floorGrid = document.createElement('div');
     floorGrid.className = 'ch-options-grid';
     FLOOR_STYLES.forEach(f => {
+      const isSelected = state.floorStyle === f.id;
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `ch-opt-card ${state.floorStyle === f.id ? 'selected' : ''}`;
+      btn.className = `ch-opt-card ${isSelected ? 'selected' : ''}`;
       btn.innerHTML = `
-        <div class="ch-opt-icon" style="background:${f.color}; width:36px; height:36px; border-radius:10px; border:2px solid #ccc; margin:0 auto 4px;"></div>
-        <div class="ch-opt-name">${f.name}</div>
+        <div class="ch-opt-icon" style="background:${f.color}; width:42px; height:42px; border-radius:12px; border:2.5px solid #8d6e63; margin:0 auto 4px; box-shadow:0 3px 6px rgba(0,0,0,0.15);"></div>
+        <div class="ch-opt-name" style="font-size: 18px; font-weight: 800;">${f.name}</div>
       `;
       btn.addEventListener('click', () => {
         pushHistory();
@@ -748,9 +776,13 @@
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = `ch-opt-card ${isPlaced ? 'selected' : ''}`;
+      btn.setAttribute('aria-label', `${item.name} 방에 놓기`);
       btn.innerHTML = `
-        <div class="ch-opt-icon">${item.icon}</div>
-        <div class="ch-opt-name">${item.name}</div>
+        <div class="ch-opt-icon" style="font-size: 46px;">${item.icon}</div>
+        <div class="ch-opt-name" style="font-size: 18px; font-weight: 800;">${item.name}</div>
+        <span style="font-size: 13px; color: ${isPlaced ? '#2e7d32' : '#e65100'}; font-weight: 800; background: ${isPlaced ? '#c8e6c9' : '#fff3e0'}; padding: 2px 8px; border-radius: 8px;">
+          ${isPlaced ? '✔ 배치됨 (추가 가능)' : '➕ 방에 놓기'}
+        </span>
       `;
       btn.addEventListener('click', () => {
         handleCatalogItemClick(item);
@@ -759,91 +791,113 @@
     });
   }
 
+  // 가구/소품 클릭 시 즉시 중앙 방에 예쁘게 배치! (어르신 즉시 반응 보장)
   function handleCatalogItemClick(item) {
-    if (state.mode === 'easy') {
-      // Show Easy Mode placement bar
-      state.pendingEasyItem = item;
-      $('easyPositionBar').hidden = false;
-      $('easyItemName').textContent = `선택한 물건: ${item.name} ${item.icon}`;
-      speak(`${item.name}을 선택하셨습니다. 왼쪽, 가운데, 오른쪽 중 원하는 위치 버튼을 눌러주세요.`);
-    } else {
-      // Free mode direct drop
-      pushHistory();
-      const uid = 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
-      const newItem = {
-        uid,
-        id: item.id,
-        name: item.name,
-        icon: item.icon,
-        x: 35 + (Math.random() * 30),
-        y: 65 + (Math.random() * 15 - 7),
-        scale: 1.0,
-        rot: 0
-      };
-      state.placedItems.push(newItem);
-      state.selectedItemUid = uid;
-      renderCanvas();
-      selectItemOnCanvas(uid);
-      showToast(`🪑 [${item.name}]을 방에 놓았어요!`);
-      speak(`${item.name}을 방에 놓았습니다. 마우스나 손가락으로 끌어 위치를 옮길 수 있습니다.`);
-      checkMissionProgress(item);
-    }
-  }
-
-  function placeEasyItem(pos) {
-    if (!state.pendingEasyItem) return;
     pushHistory();
-
-    const item = state.pendingEasyItem;
     const uid = 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
 
-    let x = 50, y = 70;
-    if (pos === 'left') {
-      x = 20; y = 68;
-    } else if (pos === 'center') {
-      x = 50; y = 74;
-    } else if (pos === 'right') {
-      x = 80; y = 68;
-    }
+    // Calculate smart initial slot so items don't hide each other
+    const placedCount = state.placedItems.length;
+    const slots = [
+      { x: 22, y: 70 }, // Left side
+      { x: 78, y: 70 }, // Right side
+      { x: 30, y: 55 }, // Left-mid
+      { x: 70, y: 55 }, // Right-mid
+      { x: 50, y: 76 }  // Center
+    ];
+    const targetSlot = slots[placedCount % slots.length];
 
     const newItem = {
       uid,
       id: item.id,
       name: item.name,
       icon: item.icon,
-      x,
-      y,
+      x: targetSlot.x,
+      y: targetSlot.y,
       scale: 1.0,
       rot: 0
     };
 
     state.placedItems.push(newItem);
     state.selectedItemUid = uid;
-    state.pendingEasyItem = null;
-    $('easyPositionBar').hidden = true;
+    state.pendingEasyItem = item;
+
+    // Show easy position bar so user can also easily click Left/Center/Right to move
+    if ($('easyPositionBar')) {
+      $('easyPositionBar').hidden = false;
+      $('easyItemName').textContent = `선택한 물건: ${item.name} ${item.icon}`;
+    }
 
     renderCanvas();
     selectItemOnCanvas(uid);
 
-    const posNames = { left: '왼쪽', center: '가운데', right: '오른쪽' };
-    showToast(`✨ [${item.name}]을 방의 ${posNames[pos]}에 예쁘게 놓았어요!`);
-    speak(`${item.name}을 방의 ${posNames[pos]}에 배치했습니다.`);
-
+    showToast(`✨ [${item.name}]을 방에 놓았어요!`);
+    speak(`${item.name}을 방에 놓았습니다. 원하시면 아래의 왼쪽, 가운데, 오른쪽 버튼으로 자리를 옮기실 수 있습니다.`);
     checkMissionProgress(item);
   }
 
+  function placeEasyItem(pos) {
+    // Move currently selected item or pending easy item
+    const targetItem = state.placedItems.find(i => i.uid === state.selectedItemUid) ||
+                       (state.placedItems.length > 0 ? state.placedItems[state.placedItems.length - 1] : null);
+
+    if (!targetItem) return;
+    pushHistory();
+
+    const posCoords = {
+      left: { x: 22, y: 70 },
+      center: { x: 50, y: 76 },
+      right: { x: 78, y: 70 }
+    };
+
+    const targetPos = posCoords[pos] || posCoords.center;
+    targetItem.x = targetPos.x;
+    targetItem.y = targetPos.y;
+
+    renderCanvas();
+    selectItemOnCanvas(targetItem.uid);
+
+    const posNames = { left: '왼쪽', center: '가운데', right: '오른쪽' };
+    showToast(`✨ [${targetItem.name}]을 방의 ${posNames[pos]}으로 옮겼어요!`);
+    speak(`${targetItem.name}을 방의 ${posNames[pos]}으로 옮겼습니다.`);
+  }
+
+  // 오늘의 미션 달성 검사 및 따뜻한 칭찬
   function checkMissionProgress(item) {
     const charInfo = CHARACTERS[state.currentCharId];
-    // Check if item matches current character mission
-    const isFlower = item.id.startsWith('p_') || item.name.includes('꽃') || item.name.includes('해바라기');
-    const isExercise = item.id.startsWith('e_') || item.name.includes('운동') || item.name.includes('볼') || item.name.includes('아령');
+    let isMissionMatch = false;
 
-    if (isFlower || isExercise) {
+    if (state.currentCharId === 'kongi') {
+      // 콩이 미션: 꽃이나 운동 기구
+      isMissionMatch = item.id.startsWith('p_') || item.id.startsWith('e_') || item.name.includes('꽃') || item.name.includes('아령') || item.name.includes('볼');
+    } else if (state.currentCharId === 'tori') {
+      // 토리 미션: 쿠션이나 장난감
+      isMissionMatch = item.id.startsWith('t_') || item.id.startsWith('c_') || item.name.includes('인형') || item.name.includes('쿠션') || item.name.includes('장난감');
+    } else if (state.currentCharId === 'nabi') {
+      // 나비 미션: 책이나 액자
+      isMissionMatch = item.id.startsWith('b_') || item.id.startsWith('pic_') || item.name.includes('책') || item.name.includes('액자') || item.name.includes('시계');
+    } else if (state.currentCharId === 'bori') {
+      // 곰이 미션: 의자나 라디오/음악
+      isMissionMatch = item.id.startsWith('m_') || item.id.startsWith('f_') || item.name.includes('라디오') || item.name.includes('의자') || item.name.includes('소파') || item.name.includes('음악');
+    }
+
+    if (isMissionMatch) {
       if ($('missionSuccessBadge')) $('missionSuccessBadge').hidden = false;
-      const praise = `🎉 참 잘하셨어요! ${charInfo.charName}가 ${item.name}을 정말 마음에 들어 해요!`;
+      const praise = `🎉 참 잘하셨어요! 어르신께서 ${item.name}을 놓아주셔서 오늘의 미션을 훌륭하게 완수하셨습니다!`;
       $('speechMsg').textContent = praise;
-      speak(`참 잘하셨어요! ${charInfo.charName}가 ${item.name}을 정말 좋아합니다.`);
-      showToast(`🎉 오늘의 미션 완료! 참 잘하셨어요.`);
+      speak(`참 잘하셨어요! 오늘의 미션을 달성하셨습니다. ${charInfo.charName}의 방이 최고로 멋져졌습니다.`);
+      showToast(`🎉 오늘의 미션 달성! 참 잘하셨어요.`);
+
+      // Award instant mini stamp
+      try {
+        const stamps = JSON.parse(localStorage.getItem(STAMPS_KEY) || '[]');
+        stamps.push({
+          type: 'mission_flower',
+          title: `${charInfo.charName} 오늘의 집 꾸미기 미션 달성`,
+          date: new Date().toISOString()
+        });
+        localStorage.setItem(STAMPS_KEY, JSON.stringify(stamps));
+      } catch (e) {}
     } else {
       const reaction = charInfo.reactions[Math.floor(Math.random() * charInfo.reactions.length)];
       $('speechMsg').textContent = reaction;

@@ -427,62 +427,65 @@ body {
   box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
 }
 
-/* 3-Column Studio Grid */
+/* 3-Column Studio Grid (Center Room Dominant, 60~65%) */
 .ch-studio-grid {
   display: grid;
-  grid-template-columns: 200px minmax(520px, 1.8fr) 320px;
+  grid-template-columns: 210px minmax(560px, 1fr) 340px;
   gap: 20px;
   align-items: start;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .ch-studio-grid {
-    grid-template-columns: 180px minmax(400px, 1.6fr) 280px;
-    gap: 14px;
+    grid-template-columns: 200px minmax(480px, 1fr) 310px;
+    gap: 16px;
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   .ch-studio-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* Col 1: Left Categories Menu */
+/* Col 1: Left Categories Menu (세로 깨짐 없는 넉넉한 탭) */
 .ch-menu-col {
   background: #ffffff;
   border: 2px solid var(--ch-border);
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   box-shadow: var(--ch-shadow);
+  min-width: 200px;
 }
 
 .ch-col-header {
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   border-bottom: 2px dashed #eedec0;
   text-align: center;
 }
 
 .ch-col-badge {
   display: inline-block;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 900;
   color: #795548;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 
 .ch-category-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .ch-cat-btn {
-  min-height: 64px;
-  border-radius: 16px;
-  border: 2px solid var(--ch-border);
+  min-height: 66px;
+  border-radius: 18px;
+  border: 2.5px solid var(--ch-border);
   background: #fdfaf6;
   color: #4e342e;
   font-size: 21px;
@@ -490,36 +493,41 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 16px;
+  padding: 0 18px;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s;
+  word-break: keep-all;
+  transition: all 0.18s ease;
+  font-family: inherit;
 }
 
 .ch-cat-btn:hover {
   background: #fff3e0;
   border-color: #ffb74d;
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .ch-cat-btn.active {
   background: linear-gradient(135deg, #e65100, #ff8f00);
   color: #ffffff;
   border-color: #bf360c;
-  box-shadow: 0 4px 14px rgba(230, 81, 0, 0.35);
-  transform: translateX(4px);
+  box-shadow: 0 6px 16px rgba(230, 81, 0, 0.35);
+  transform: translateX(6px);
 }
 
 .ch-cat-icon {
-  font-size: 26px;
+  font-size: 28px;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .ch-cat-name {
   line-height: 1;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 
-/* Col 2: Center Room Preview */
+/* Col 2: Center Room Preview (가장 크고 생생한 실제 방) */
 .ch-room-col {
   display: flex;
   flex-direction: column;
@@ -531,16 +539,17 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
-  background: #fffbf0;
-  border: 2px solid #ffe082;
-  border-radius: 18px;
-  padding: 12px 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  background: #fffdf5;
+  border: 2.5px solid #ffe082;
+  border-radius: 20px;
+  padding: 14px 22px;
+  box-shadow: 0 4px 14px rgba(230, 81, 0, 0.08);
 }
 
 .ch-speech-avatar {
-  font-size: 38px;
+  font-size: 42px;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .ch-speech-body {
@@ -555,7 +564,7 @@ body {
 }
 
 .ch-speech-msg {
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 700;
   color: #3e2723;
   margin: 0;
@@ -564,129 +573,170 @@ body {
   white-space: normal;
 }
 
-/* Interactive Room Viewport */
+/* Interactive Room Viewport - 실제 방의 깊이감과 아늑함 구현 */
 .ch-room-viewport {
   position: relative;
   width: 100%;
-  min-height: 500px;
-  height: 520px;
+  min-height: 560px;
+  height: 580px;
   background: #faf6eb;
-  border: 3px solid #8d6e63;
-  border-radius: 22px;
+  border: 3.5px solid #6d4c41;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: inset 0 6px 20px rgba(0,0,0,0.07);
+  box-shadow: inset 0 8px 24px rgba(0,0,0,0.1), 0 10px 30px rgba(78, 52, 46, 0.12);
 }
 
+/* 방 벽면 (빛과 음영의 입체감) */
 .ch-room-wall {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 62%;
-  background: #faf6eb;
-  transition: background-color 0.3s;
+  height: 58%;
+  background: linear-gradient(180deg, #f5edd8 0%, #faf6eb 80%, #ebdcc0 100%);
+  transition: background 0.3s ease;
 }
 
+/* 벽 천장 몰딩 */
 .ch-room-molding {
   position: absolute;
-  top: 62%;
+  top: 58%;
   left: 0;
   right: 0;
-  height: 10px;
-  background: #8d6e63;
+  height: 12px;
+  background: linear-gradient(180deg, #795548, #5d4037);
   z-index: 2;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
 }
 
+/* 방 바닥 (원목 헤링본 마루 느낌) */
 .ch-room-floor {
   position: absolute;
-  top: calc(62% + 10px);
+  top: calc(58% + 12px);
   bottom: 0;
   left: 0;
   right: 0;
-  background: repeating-linear-gradient(90deg, #e8d8be, #e8d8be 60px, #e2cfb3 60px, #e2cfb3 62px);
-  transition: background-color 0.3s;
+  background: repeating-linear-gradient(
+    90deg,
+    #e4d0b5,
+    #e4d0b5 70px,
+    #d8bf9f 70px,
+    #d8bf9f 72px
+  );
+  box-shadow: inset 0 8px 18px rgba(0,0,0,0.12);
+  transition: background 0.3s ease;
 }
 
+/* 따뜻한 중앙 원형 러그 (캐릭터가 서 있는 자리) */
 .ch-room-rug {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 135px;
+  background: radial-gradient(ellipse at center, #fff8e1 0%, #ffe082 85%, #ffd54f 100%);
+  border: 3px dashed #ffb300;
+  border-radius: 50%;
+  z-index: 3;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(160, 100, 20, 0.18);
+}
+
+/* 햇살 가득한 입체 창문 */
+.ch-window-elem {
+  position: absolute;
+  top: 8%;
+  right: 8%;
+  width: 130px;
+  height: 125px;
+  background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 60%, #fff9c4 100%);
+  border: 6px solid #6d4c41;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 58px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15), inset 0 0 15px rgba(255,255,255,0.7);
+  z-index: 4;
+}
+
+/* 아늑한 원목 방문 */
+.ch-door-elem {
+  position: absolute;
+  top: 14%;
+  left: 5%;
+  width: 80px;
+  height: 190px;
+  background: linear-gradient(180deg, #8d6e63, #5d4037);
+  border: 5px solid #4e342e;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 4px 6px 16px rgba(0,0,0,0.2);
+  z-index: 4;
+}
+
+.ch-door-elem::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffd54f;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Original Character Avatar (방 중심에 확실히 서 있는 캐릭터) */
+.ch-avatar-elem {
   position: absolute;
   bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
-  width: 440px;
-  height: 120px;
-  background: rgba(255, 236, 179, 0.6);
-  border: 2px dashed #ffd54f;
-  border-radius: 50%;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.ch-window-elem {
-  position: absolute;
-  top: 10%;
-  right: 10%;
-  width: 120px;
-  height: 110px;
-  background: linear-gradient(180deg, #e0f2fe, #bae6fd);
-  border: 5px solid #8d6e63;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 54px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-  z-index: 4;
-}
-
-.ch-door-elem {
-  position: absolute;
-  top: 16%;
-  left: 6%;
-  width: 75px;
-  height: 170px;
-  background: #a1887f;
-  border: 4px solid #5d4037;
-  border-radius: 10px 10px 0 0;
-  z-index: 4;
-}
-
-/* Original Character Avatar */
-.ch-avatar-elem {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 250px;
+  width: 240px;
+  height: 290px;
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 10;
   pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+@keyframes outfitGlow {
+  0% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 0 rgba(255,160,0,0)); }
+  40% { transform: translateX(-50%) scale(1.08); filter: drop-shadow(0 0 28px rgba(255,152,0,0.9)); }
+  100% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 10px 20px rgba(0,0,0,0.22)); }
+}
+
+.ch-avatar-elem.outfit-changed {
+  animation: outfitGlow 0.65s ease-out;
 }
 
 .ch-avatar-outfit-box {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .ch-avatar-outfit-badge {
   background: #ffffff;
-  border: 2px solid #e65100;
-  color: #e65100;
-  font-size: 15px;
-  font-weight: 800;
-  padding: 3px 12px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border: 2.5px solid #e65100;
+  color: #bf360c;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 4px 14px;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(230, 81, 0, 0.2);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .ch-avatar-img {
-  width: 190px;
-  height: 210px;
+  width: 210px;
+  height: 235px;
   object-fit: contain;
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.25));
 }
 
 /* Placed Items Layer & Item */
@@ -694,6 +744,12 @@ body {
   position: absolute;
   inset: 0;
   z-index: 8;
+}
+
+@keyframes popItemIn {
+  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+  70% { transform: translate(-50%, -50%) scale(1.18); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 
 .ch-placed-item {
@@ -706,6 +762,7 @@ body {
   touch-action: none;
   z-index: 15;
   transition: transform 0.05s ease-out;
+  animation: popItemIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .ch-placed-item:active {
@@ -713,28 +770,30 @@ body {
 }
 
 .ch-placed-item.selected {
-  outline: 3px dashed #e65100;
+  outline: 3.5px dashed #e65100;
   outline-offset: 6px;
-  border-radius: 16px;
-  background: rgba(255, 243, 224, 0.7);
+  border-radius: 18px;
+  background: rgba(255, 243, 224, 0.8);
+  box-shadow: 0 6px 18px rgba(230, 81, 0, 0.3);
 }
 
 .ch-placed-icon {
-  font-size: 56px;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.2));
+  font-size: 60px;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.22));
   line-height: 1;
 }
 
 .ch-placed-label {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
-  background: rgba(255,255,255,0.92);
-  padding: 2px 8px;
-  border-radius: 8px;
-  border: 1px solid #d7ccc8;
+  background: rgba(255,255,255,0.95);
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1.5px solid #d7ccc8;
   color: #3e2723;
-  margin-top: 2px;
+  margin-top: 3px;
   white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 /* Item Action Toolbar (Mini floating bar on top of canvas) */
@@ -744,40 +803,41 @@ body {
   left: 50%;
   transform: translateX(-50%);
   background: #ffffff;
-  border: 2px solid #e65100;
-  border-radius: 16px;
-  padding: 6px 14px;
+  border: 2.5px solid #e65100;
+  border-radius: 18px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(230, 81, 0, 0.25);
   z-index: 30;
 }
 
 .ch-toolbar-title {
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 17px;
+  font-weight: 900;
   color: #e65100;
-  margin-right: 4px;
+  margin-right: 6px;
   white-space: nowrap;
 }
 
 .ch-tool-btn {
-  min-height: 40px;
-  padding: 4px 10px;
-  font-size: 15px;
+  min-height: 44px;
+  padding: 6px 14px;
+  font-size: 16px;
   font-weight: 800;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+  border-radius: 12px;
+  border: 1.5px solid #d7ccc8;
   background: #ffffff;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s;
+  font-family: inherit;
 }
 
 .ch-tool-btn:hover {
-  background: #f5f5f5;
-  border-color: #999;
+  background: #fff8e1;
+  border-color: #ffb74d;
 }
 
 .ch-tool-btn.danger {
@@ -789,63 +849,75 @@ body {
 /* Easy Mode Auto-Position Bar */
 .ch-easy-position-bar {
   background: #e8f5e9;
-  border: 2px solid #a5d6a7;
-  border-radius: 18px;
-  padding: 12px 18px;
+  border: 2.5px solid #81c784;
+  border-radius: 20px;
+  padding: 14px 20px;
+  box-shadow: 0 4px 14px rgba(46, 125, 50, 0.12);
 }
 
 .ch-easy-title {
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  align-items: center;
+  font-size: 19px;
   font-weight: 800;
   color: #1b5e20;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
 .ch-easy-btns {
   display: grid;
   grid-template-columns: 1fr 1.2fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
 .ch-easy-btn {
-  min-height: 52px;
-  font-size: 18px;
-  font-weight: 800;
-  border-radius: 14px;
+  min-height: 56px;
+  font-size: 19px;
+  font-weight: 900;
+  border-radius: 16px;
   border: 2px solid #81c784;
   background: #ffffff;
   color: #2e7d32;
   cursor: pointer;
   transition: all 0.15s;
+  font-family: inherit;
+}
+
+.ch-easy-btn:hover {
+  background: #c8e6c9;
+  transform: translateY(-2px);
 }
 
 .ch-easy-btn.primary {
   background: #2e7d32;
   color: #ffffff;
-  border-color: #2e7d32;
-  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.25);
+  border-color: #1b5e20;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
 }
 
-/* Col 3: Right Items Grid Panel */
+/* Col 3: Right Items Grid Panel (큰 카드 형태) */
 .ch-items-col {
   background: #ffffff;
   border: 2px solid var(--ch-border);
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 16px 14px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   box-shadow: var(--ch-shadow);
+  min-width: 300px;
 }
 
 .ch-options-title {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 900;
   color: #3e2723;
   margin-bottom: 2px;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 
 .ch-col-sub {
@@ -853,44 +925,62 @@ body {
   color: #795548;
   font-weight: 700;
   margin: 0;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 
 .ch-options-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  max-height: 520px;
+  gap: 12px;
+  max-height: 560px;
   overflow-y: auto;
   padding-right: 4px;
 }
 
 .ch-opt-card {
   background: #fdfaf6;
-  border: 2px solid #e2d7be;
-  border-radius: 16px;
-  padding: 12px 6px;
+  border: 2.5px solid #e2d7be;
+  border-radius: 18px;
+  padding: 14px 8px;
   text-align: center;
   cursor: pointer;
-  min-height: 96px;
+  min-height: 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  transition: all 0.15s;
+  gap: 8px;
+  transition: all 0.18s ease;
   position: relative;
+  font-family: inherit;
 }
 
 .ch-opt-card:hover {
   border-color: #e65100;
   background: #fff8eb;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(230, 81, 0, 0.15);
 }
 
 .ch-opt-card.selected {
   border: 3px solid #2e7d32;
   background: #e8f5e9;
-  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.25);
+}
+
+.ch-opt-icon {
+  font-size: 46px;
+  line-height: 1;
+}
+
+.ch-opt-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #3e2723;
+  line-height: 1.2;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 
 .ch-opt-card.selected::after {

@@ -10,3 +10,4 @@ tests/*.pdf
 
 .video-tools/
 .video-build/
+.vercel
