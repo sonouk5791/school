@@ -27,6 +27,12 @@
   const playerCard = $('playerCard');
   const kongiSpeechLead = document.querySelector('.se-speech-lead');
 
+  // 3-State View Containers
+  const viewReady = $('viewReady');
+  const viewPlaying = $('viewPlaying');
+  const viewCompleted = $('viewCompleted');
+  const readySceneList = $('readySceneList');
+
   // Controls
   const btnStart = $('btnStart');
   const btnHeroStart = $('heroStartBtn');
@@ -38,6 +44,7 @@
   const btnBgm = $('btnBgm');
   const btnTextSize = $('btnTextSize');
   const btnFullscreen = $('btnFullscreen');
+  const btnBackToReady = $('btnBackToReady');
   const completeModal = $('exerciseCompleteModal');
 
   // State Variables
@@ -140,6 +147,94 @@
     } catch (e) {
       console.warn('TTS error:', e);
     }
+  }
+
+  // --- 3-State View Flow Manager (ready / playing / completed) ---
+  let currentExerciseState = 'ready';
+
+  function setExerciseState(state) {
+    currentExerciseState = state;
+
+    if (viewReady) {
+      viewReady.style.display = (state === 'ready') ? 'block' : 'none';
+      viewReady.classList.toggle('active', state === 'ready');
+    }
+    if (viewPlaying) {
+      viewPlaying.style.display = (state === 'playing') ? 'block' : 'none';
+      viewPlaying.classList.toggle('active', state === 'playing');
+    }
+    if (viewCompleted) {
+      viewCompleted.style.display = (state === 'completed') ? 'block' : 'none';
+      viewCompleted.classList.toggle('active', state === 'completed');
+    }
+
+    if (state === 'ready') {
+      pause('');
+      if (completeModal) {
+        completeModal.hidden = true;
+        completeModal.style.display = 'none';
+      }
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (e) {}
+    } else if (state === 'playing') {
+      if (completeModal) {
+        completeModal.hidden = true;
+        completeModal.style.display = 'none';
+      }
+      if (playerCard) {
+        try {
+          playerCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch (e) {}
+      }
+    } else if (state === 'completed') {
+      if (completeModal) {
+        completeModal.hidden = false;
+        completeModal.style.display = 'flex';
+      }
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (e) {}
+    }
+    updateControls();
+  }
+
+  // --- Render Ready Scene Preview List (State 1: Ready) ---
+  function renderReadySceneList() {
+    if (!readySceneList) return;
+    readySceneList.innerHTML = '';
+    scenes.forEach((sc, idx) => {
+      const card = document.createElement('div');
+      const isCompleted = completedScenes.has(idx);
+      card.className = `se-ready-scene-card ${isCompleted ? 'completed' : ''}`;
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `${sc.index}단계 ${sc.title} 바로 시작하기`);
+      card.innerHTML = `
+        <img class="se-ready-card-img" src="assets/senior-exercise/images/${sc.image}" alt="${sc.title}" loading="lazy">
+        <div class="se-ready-card-body">
+          <div class="se-ready-card-top">
+            <span class="se-ready-step-num">${sc.index}단계</span>
+            <span class="se-ready-char-tag" style="background-color: ${sc.characterColor || '#2d5a27'};">${sc.character}</span>
+          </div>
+          <div class="se-ready-card-title">${sc.title}</div>
+          <div class="se-ready-card-desc">${sc.subtitle || '편안하게 호흡하며 따라해요'}</div>
+        </div>
+      `;
+      const startFromScene = () => {
+        jumpToScene(idx);
+        setExerciseState('playing');
+        play();
+      };
+      card.addEventListener('click', startFromScene);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          startFromScene();
+        }
+      });
+      readySceneList.appendChild(card);
+    });
   }
 
   // --- Render Scene Grid ---
@@ -405,7 +500,7 @@
     }
     updateActiveThumbnail();
 
-    sceneElapsed = scenes[currentSceneIdx].duration;
+    sceneElapsed = scenes[currentSceneIdx]?.duration || 10;
     updateOverallTimeline();
     if (statusMsg) {
       statusMsg.textContent = '🎉 오늘도 어르신 체조를 끝까지 정말 잘하셨습니다! 건강하고 행복한 하루 보내세요.';
@@ -430,7 +525,8 @@
       console.warn('Stamp save error:', e);
     }
 
-    // Only show modal when all 10 are actually finished
+    // Switch to Completed View & Show modal only when all 10 are actually finished
+    setExerciseState('completed');
     if (completeModal) {
       completeModal.hidden = false;
       completeModal.style.display = 'flex';
@@ -447,7 +543,9 @@
       btnHeroStart.textContent = isPlaying ? '⏸ 체조 진행 중' : sceneElapsed > 0 ? '▶ 이어서 하기' : '▶ 바로 체조 시작하기';
     }
     if (btnPause) {
-      btnPause.disabled = !isPlaying;
+      btnPause.disabled = false;
+      btnPause.textContent = isPlaying ? '⏸ 잠시 멈춤' : '▶ 이어서 체조하기';
+      btnPause.setAttribute('aria-label', isPlaying ? '체조 잠시 멈춤' : '체조 이어서 하기');
     }
     if (btnPrev) {
       btnPrev.disabled = currentSceneIdx <= 0;
@@ -458,23 +556,43 @@
   }
 
   // --- Event Listeners ---
-  if (btnStart) btnStart.addEventListener('click', play);
-  if (btnHeroStart) {
-    btnHeroStart.addEventListener('click', () => {
-      if (playerCard) {
-        playerCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      if (!isPlaying) play();
+  if (btnStart) {
+    btnStart.addEventListener('click', () => {
+      setExerciseState('playing');
+      play();
     });
   }
 
-  if (btnPause) btnPause.addEventListener('click', () => pause());
+  if (btnHeroStart) {
+    btnHeroStart.addEventListener('click', () => {
+      setExerciseState('playing');
+      play();
+    });
+  }
+
+  if (btnPause) {
+    btnPause.addEventListener('click', () => {
+      if (isPlaying) {
+        pause('잠시 쉬고 있어요. 준비되면 이어서 해요.');
+      } else {
+        play();
+      }
+    });
+  }
 
   if (btnRestart) {
     btnRestart.addEventListener('click', () => {
       completedScenes.clear();
       jumpToScene(0);
+      setExerciseState('playing');
       play();
+    });
+  }
+
+  if (btnBackToReady) {
+    btnBackToReady.addEventListener('click', () => {
+      pause('체조를 잠시 멈추고 준비 화면으로 돌아왔어요.');
+      setExerciseState('ready');
     });
   }
 
@@ -575,6 +693,7 @@
       }
       completedScenes.clear();
       jumpToScene(0);
+      setExerciseState('playing');
       play();
     });
   }
@@ -583,7 +702,7 @@
   const btnTtsHelp = $('btnTtsExerciseHelp');
   if (btnTtsHelp) {
     btnTtsHelp.addEventListener('click', () => {
-      speakText('디지털 에이아이 학교 어르신 체조 교실입니다. 의자에 편안하게 앉으신 뒤 어르신 체조 시작 버튼을 누르시면 1번 시작 인사부터 10번 마무리까지 천천히 자동으로 진행됩니다.');
+      speakText('디지털 에이아이 학교 어르신 체조 교실입니다. 의자에 편안하게 앉으신 뒤 지금 운동 시작하기 버튼을 누르시면 1번 시작 인사부터 10번 마무리까지 천천히 자동으로 진행됩니다.');
     });
   }
 
@@ -592,8 +711,14 @@
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     if (e.code === 'Space') {
       e.preventDefault();
-      if (isPlaying) pause();
-      else play();
+      if (currentExerciseState === 'ready') {
+        setExerciseState('playing');
+        play();
+      } else if (isPlaying) {
+        pause();
+      } else {
+        play();
+      }
     } else if (e.code === 'ArrowLeft') {
       if (currentSceneIdx > 0) jumpToScene(currentSceneIdx - 1);
     } else if (e.code === 'ArrowRight') {
@@ -632,10 +757,14 @@
       });
       await Promise.all(imgPromises);
 
+      renderReadySceneList();
       renderSceneGrid();
       displayScene(0);
       updateOverallTimeline();
       updateControls();
+
+      // Explicitly set Ready State (State 1: Starts before play)
+      setExerciseState('ready');
 
       // Double guarantee modal is hidden
       if (completeModal) {
@@ -644,7 +773,7 @@
       }
 
       if (statusMsg) {
-        statusMsg.textContent = '준비됐어요. [어르신 체조 시작] 버튼을 누르면 1번부터 10번까지 천천히 자동으로 이어집니다.';
+        statusMsg.textContent = '준비됐어요. [지금 운동 시작하기] 버튼을 누르면 1번부터 10번까지 천천히 자동으로 이어집니다.';
       }
     } catch (err) {
       console.error('Init error:', err);
