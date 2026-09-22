@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>보리의 취미방 · 디지털 AI 학교</title>
+  <meta name="description" content="치매·인지저하 어르신을 위한 보리의 취미방 — 노래 따라 부르기, 옛날 이야기, 색칠 그림, 수수께끼">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;background:linear-gradient(160deg,#eff6ff 0%,#dbeafe 40%,#bfdbfe 100%);min-height:100vh;color:#1e3a5f}
+    .bh-header{background:rgba(255,255,255,0.93);backdrop-filter:blur(12px);border-bottom:3px solid #93c5fd;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100}
+    .bh-back-link{font-size:20px;font-weight:800;color:#1d4ed8;text-decoration:none;min-height:48px;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:12px;background:#eff6ff;border:2px solid #93c5fd;transition:background .2s}
+    .bh-back-link:hover{background:#dbeafe}
+    .bh-location{font-size:18px;font-weight:800;color:#1d4ed8;background:#dbeafe;padding:8px 16px;border-radius:12px;border:1px solid #93c5fd}
+    .bh-voice-btn{min-height:48px;padding:8px 16px;font-size:16px;font-weight:800;background:#eff6ff;color:#1d4ed8;border:2px solid #93c5fd;border-radius:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+    .bh-hero{text-align:center;padding:40px 20px 20px}
+    .bh-char-img{width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(29,78,216,.25));animation:bori-float 3.2s ease-in-out infinite}
+    @keyframes bori-float{0%,100%{transform:translateY(0) rotate(1deg)}50%{transform:translateY(-12px) rotate(-1deg)}}
+    .bh-hero h1{font-size:clamp(26px,5vw,42px);font-weight:900;color:#1e40af;margin:14px 0 8px}
+    .bh-hero p{font-size:19px;color:#2563eb;line-height:1.5}
+    .bh-speech{display:inline-block;background:#fff;border:2px solid #93c5fd;border-radius:20px;padding:14px 24px;margin-top:16px;font-size:19px;color:#1e40af;font-weight:700;max-width:500px;box-shadow:0 4px 16px rgba(29,78,216,.12)}
+    .stamp-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 16px}
+    .stamp-chip{background:#fff;border:2px solid #93c5fd;border-radius:20px;padding:6px 16px;font-size:16px;font-weight:700;color:#1e40af}
+    .bh-menu{max-width:900px;margin:0 auto;padding:10px 20px 16px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .bh-tab{min-height:54px;padding:12px 22px;font-size:17px;font-weight:800;border-radius:16px;border:3px solid #93c5fd;cursor:pointer;background:#fff;color:#2563eb;font-family:inherit;transition:all .2s;flex:1;min-width:140px;text-align:center}
+    .bh-tab.active{background:linear-gradient(135deg,#2563eb,#60a5fa);color:#fff;border-color:#1d4ed8;box-shadow:0 4px 14px rgba(37,99,235,.35)}
+    .bh-tab:hover:not(.active){background:#dbeafe}
+    .bh-area{max-width:900px;margin:0 auto 60px;padding:0 20px}
+    .hobby-panel{display:none}.hobby-panel.active{display:block}
+    .hobby-card{background:#fff;border-radius:28px;padding:36px 28px;border:2px solid #93c5fd;box-shadow:0 8px 32px rgba(37,99,235,.1)}
+    .hobby-card-title{font-size:26px;font-weight:900;color:#1e40af;text-align:center;margin-bottom:8px}
+    .hobby-card-sub{font-size:17px;color:#3b82f6;text-align:center;margin-bottom:28px}
+    /* 노래 */
+    .song-list{display:flex;flex-direction:column;gap:14px}
+    .song-item{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:3px solid #93c5fd;border-radius:20px;padding:20px 24px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all .25s}
+    .song-item:hover,.song-item.active-song{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,99,235,.18)}
+    .song-icon{font-size:40px;flex-shrink:0}.song-info{flex:1}
+    .song-title{font-size:22px;font-weight:900;color:#1e40af}
+    .song-desc{font-size:15px;color:#3b82f6;margin-top:4px}
+    .song-play-btn{min-height:48px;padding:10px 20px;font-size:17px;font-weight:800;background:#2563eb;color:#fff;border:none;border-radius:14px;cursor:pointer;font-family:inherit;flex-shrink:0;transition:all .2s}
+    .song-play-btn:hover{background:#1d4ed8;transform:scale(1.05)}
+    .lyrics-area{margin-top:24px;background:#f0f9ff;border:2px solid #bae6fd;border-radius:20px;padding:24px 28px;display:none}
+    .lyrics-area.active{display:block}
+    .lyrics-title{font-size:20px;font-weight:900;color:#0369a1;margin-bottom:16px;text-align:center}
+    .lyrics-line{font-size:24px;font-weight:700;color:#1e40af;line-height:2.2;text-align:center}
+    .hl{color:#dc2626;font-weight:900;background:#fef9c3;border-radius:6px;padding:0 4px}
+    .lyrics-controls{display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+    .btn-lyric{min-height:52px;padding:12px 24px;font-size:18px;font-weight:800;border-radius:14px;border:none;cursor:pointer;font-family:inherit;transition:all .2s}
+    .btn-lyric.play{background:#2563eb;color:#fff}.btn-lyric.stop{background:#6b7280;color:#fff}
+    .btn-lyric.repeat{background:#eff6ff;color:#2563eb;border:2px solid #93c5fd}
+    /* 이야기 */
+    .story-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+    .story-card{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:3px solid #93c5fd;border-radius:22px;padding:24px 20px;cursor:pointer;text-align:center;transition:all .25s}
+    .story-card:hover{transform:translateY(-4px);border-color:#2563eb;box-shadow:0 10px 24px rgba(37,99,235,.18)}
+    .story-emoji{font-size:52px;display:block;margin-bottom:12px}
+    .story-card-title{font-size:20px;font-weight:900;color:#1e40af}
+    .story-card-desc{font-size:15px;color:#3b82f6;margin-top:6px}
+    .story-content-box{display:none;margin-top:24px;background:#fff;border:2px solid #93c5fd;border-radius:20px;padding:30px 28px}
+    .story-content-box.active{display:block}
+    .story-content-title{font-size:24px;font-weight:900;color:#1e40af;margin-bottom:18px}
+    .story-content-text{font-size:20px;color:#334155;line-height:1.9;margin-bottom:16px}
+    .story-question{background:#fefce8;border:2px solid #fde047;border-radius:16px;padding:18px 20px;margin-top:16px}
+    .story-question p{font-size:20px;font-weight:800;color:#854d0e;margin-bottom:14px}
+    .story-answer-btns{display:flex;gap:10px;flex-wrap:wrap}
+    .story-answer-btn{min-height:52px;padding:12px 20px;font-size:18px;font-weight:800;background:#fff;color:#1e40af;border:2px solid #93c5fd;border-radius:14px;cursor:pointer;font-family:inherit;flex:1;min-width:120px;transition:all .2s}
+    .story-answer-btn:hover{background:#dbeafe}
+    .story-answer-btn.correct{background:#dcfce7;border-color:#16a34a;color:#15803d}
+    .story-answer-btn.wrong{background:#fee2e2;border-color:#dc2626;color:#dc2626}
+    .story-back-btn{margin-top:20px;min-height:48px;padding:10px 22px;font-size:17px;font-weight:800;background:#eff6ff;color:#2563eb;border:2px solid #93c5fd;border-radius:14px;cursor:pointer;font-family:inherit}
+    /* 색칠 */
+    .coloring-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+    .coloring-thumb{border:4px solid #93c5fd;border-radius:18px;padding:16px;text-align:center;cursor:pointer;transition:all .25s;background:#fff}
+    .coloring-thumb:hover{border-color:#2563eb;background:#eff6ff;transform:translateY(-3px);box-shadow:0 8px 20px rgba(37,99,235,.18)}
+    .coloring-thumb-emoji{font-size:56px;display:block;margin-bottom:8px}
+    .coloring-thumb-label{font-size:18px;font-weight:800;color:#1e40af}
+    .coloring-workspace{display:none;gap:20px;flex-wrap:wrap}
+    .coloring-workspace.active{display:flex}
+    .color-palette-panel{background:#f0f9ff;border:2px solid #bae6fd;border-radius:18px;padding:18px;min-width:200px;flex-shrink:0}
+    .palette-title{font-size:16px;font-weight:800;color:#0369a1;margin-bottom:12px}
+    .palette-colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+    .palette-color{width:100%;aspect-ratio:1;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.18);cursor:pointer;transition:transform .15s}
+    .palette-color:hover,.palette-color.sel{transform:scale(1.18)}
+    .palette-color.sel{border-color:#1e3a5f;box-shadow:0 0 0 3px #60a5fa}
+    .brush-size-row{display:flex;gap:8px;margin-bottom:16px}
+    .brush-btn{flex:1;padding:8px;font-size:14px;font-weight:700;background:#fff;border:2px solid #93c5fd;border-radius:10px;cursor:pointer;font-family:inherit;text-align:center;transition:all .15s}
+    .brush-btn.active{background:#2563eb;color:#fff;border-color:#1d4ed8}
+    .canvas-actions{display:flex;flex-direction:column;gap:8px}
+    .cav-btn{min-height:44px;padding:8px 14px;font-size:15px;font-weight:800;border-radius:12px;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
+    .cav-btn:hover{filter:brightness(1.06);transform:scale(1.03)}
+    .btn-undo{background:#e5e7eb;color:#374151}.btn-clear{background:#fee2e2;color:#dc2626}
+    .btn-save-col{background:#22c55e;color:#fff}.btn-back-col{background:#eff6ff;color:#2563eb;border:2px solid #93c5fd !important}
+    .coloring-canvas-wrap{flex:1;min-width:280px}
+    .coloring-canvas{width:100%;border:3px solid #bae6fd;border-radius:16px;background:#fff;cursor:crosshair;touch-action:none;display:block}
+    /* 수수께끼 */
+    .riddle-area{display:flex;flex-direction:column;gap:20px;align-items:center}
+    .riddle-card-inner{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:3px solid #93c5fd;border-radius:24px;padding:36px 28px;text-align:center;max-width:620px;width:100%;box-shadow:0 8px 24px rgba(37,99,235,.1)}
+    .riddle-number{font-size:16px;font-weight:700;color:#3b82f6;margin-bottom:12px}
+    .riddle-question{font-size:clamp(22px,4vw,30px);font-weight:900;color:#1e40af;line-height:1.5;margin-bottom:24px}
+    .riddle-hint-btn{min-height:48px;padding:10px 24px;font-size:17px;font-weight:800;background:#fef9c3;color:#854d0e;border:2px solid #fde047;border-radius:14px;cursor:pointer;font-family:inherit;margin-bottom:16px}
+    .riddle-hint-text{display:none;background:#fefce8;border:2px solid #fde047;border-radius:14px;padding:14px 18px;font-size:18px;color:#713f12;font-weight:700;margin-bottom:16px}
+    .riddle-answer-reveal{min-height:52px;padding:12px 30px;font-size:20px;font-weight:900;background:#2563eb;color:#fff;border:none;border-radius:16px;cursor:pointer;font-family:inherit;transition:all .2s}
+    .riddle-answer-reveal:hover{background:#1d4ed8;transform:scale(1.04)}
+    .riddle-answer-box{display:none;background:#dcfce7;border:3px solid #16a34a;border-radius:18px;padding:20px 24px;font-size:22px;font-weight:900;color:#15803d;margin-top:12px}
+    .riddle-nav{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+    .riddle-nav-btn{min-height:56px;padding:14px 28px;font-size:19px;font-weight:800;border-radius:16px;border:none;cursor:pointer;font-family:inherit;transition:all .2s}
+    .btn-prev-riddle{background:#e5e7eb;color:#374151}.btn-next-riddle{background:#2563eb;color:#fff}
+    .btn-prev-riddle:hover,.btn-next-riddle:hover{filter:brightness(1.1);transform:scale(1.04)}
+    .riddle-progress{font-size:17px;font-weight:700;color:#3b82f6;text-align:center}
+    /* 공통 */
+    @keyframes pop-in{0%{transform:scale(.85);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+    .feedback-banner{text-align:center;padding:18px 24px;border-radius:18px;font-size:22px;font-weight:800;margin-top:12px;display:none}
+    .feedback-banner.good{background:#dcfce7;color:#15803d;border:2px solid #86efac}
+    .feedback-banner.retry{background:#fff7ed;color:#c2410c;border:2px solid #fed7aa}
+    .feedback-banner.visible{display:block;animation:pop-in .3s}
+    .completion-banner{display:none;text-align:center;background:linear-gradient(135deg,#eff6ff,#dbeafe);border:3px solid #2563eb;border-radius:24px;padding:32px 24px;margin-top:24px}
+    .completion-banner.visible{display:block;animation:pop-in .5s}
+    .completion-banner .big-emoji{font-size:64px;display:block;margin-bottom:10px}
+    .completion-banner h2{font-size:28px;font-weight:900;color:#1e40af;margin-bottom:8px}
+    .completion-banner p{font-size:20px;color:#2563eb}
+    .btn-retry{margin-top:20px;min-height:52px;padding:12px 28px;font-size:19px;font-weight:800;background:#2563eb;color:#fff;border:none;border-radius:16px;cursor:pointer;font-family:inherit}
+    .btn-retry:hover{background:#1d4ed8}
+    .bh-home-btn{display:block;text-align:center;margin:30px auto 20px;max-width:300px;min-height:56px;padding:14px 28px;font-size:20px;font-weight:900;color:#1d4ed8;background:#fff;border:3px solid #93c5fd;border-radius:18px;text-decoration:none;transition:all .2s}
+    .bh-home-btn:hover{background:#dbeafe}
+    @media(max-width:600px){.hobby-card{padding:22px 16px}.song-item{flex-direction:column;text-align:center}.song-play-btn{width:100%}.coloring-workspace{flex-direction:column}.color-palette-panel{min-width:unset;width:100%}}
+  </style>
+</head>
+<body>
+<header class="bh-header">
+  <a href="index.html" class="bh-back-link">&#127968; 처음으로</a>
+  <div class="bh-location">&#128059; 보리의 취미방</div>
+  <button type="button" class="bh-voice-btn" id="btnBhVoice">&#128266; 보리 설명</button>
+</header>
+<section class="bh-hero">
+  <img src="public/characters/bori/bori_idle.png" alt="보리 캐릭터" class="bh-char-img" onerror="this.src='assets/images/friend-bori.png'">
+  <h1>보리의 취미방 &#128059;</h1>
+  <p>노래도 부르고, 옛 추억도 나누고, 색칠도 하고, 수수께끼도 풀어요!</p>
+  <div class="bh-speech">어서오세요! 보리와 함께 즐거운 시간 보내요 &#127925;</div>
+</section>
+<div class="stamp-row">
+  <div class="stamp-chip">오늘 도장: <span id="bhStampNum">0</span>개 &#127467;</div>
+</div>
+<nav class="bh-menu" aria-label="취미 선택">
+  <button type="button" class="bh-tab active" data-tab="song">&#127908; 노래 부르기</button>
+  <button type="button" class="bh-tab" data-tab="story">&#128214; 옛날 이야기</button>
+  <button type="button" class="bh-tab" data-tab="color">&#127912; 색칠 그림</button>
+  <button type="button" class="bh-tab" data-tab="riddle">&#129513; 수수께끼</button>
+</nav>
+<main class="bh-area">
+  <section class="hobby-panel active" id="panelSong">
+    <div class="hobby-card">
+      <h2 class="hobby-card-title">&#127908; 노래 따라 부르기</h2>
+      <p class="hobby-card-sub">좋아하는 노래를 골라 보리와 함께 흥겹게 불러보아요!</p>
+      <div class="song-list" id="songList"></div>
+      <div class="lyrics-area" id="lyricsArea">
+        <div class="lyrics-title" id="lyricsTitle">&#127925; 노래 가사</div>
+        <div class="lyrics-line" id="lyricsLine"></div>
+        <div class="lyrics-controls">
+          <button type="button" class="btn-lyric play" id="btnLyricsPlay">&#9654; 부르기 시작</button>
+          <button type="button" class="btn-lyric stop" id="btnLyricsStop">&#9632; 그만하기</button>
+          <button type="button" class="btn-lyric repeat" id="btnLyricsRepeat">&#128257; 처음부터</button>
+        </div>
+      </div>
+      <div class="completion-banner" id="songCompletion">
+        <span class="big-emoji">&#127881;</span>
+        <h2>노래 완창! 정말 잘 하셨어요!</h2>
+        <p>보리도 같이 노래해서 너무 즐거웠어요 &#128059;</p>
+        <button type="button" class="btn-retry" id="btnSongRetry">다른 노래 부르기</button>
+      </div>
+    </div>
+  </section>
+  <section class="hobby-panel" id="panelStory">
+    <div class="hobby-card">
+      <h2 class="hobby-card-title">&#128214; 옛날 이야기 &amp; 추억 나누기</h2>
+      <p class="hobby-card-sub">고향의 정겨운 이야기를 떠올리며 보리와 이야기해요</p>
+      <div class="story-grid" id="storyGrid"></div>
+      <div class="story-content-box" id="storyContentBox">
+        <h3 class="story-content-title" id="storyContentTitle"></h3>
+        <div class="story-content-text" id="storyContentText"></div>
+        <div class="story-question">
+          <p id="storyQuestionText"></p>
+          <div class="story-answer-btns" id="storyAnswerBtns"></div>
+        </div>
+        <div class="feedback-banner" id="storyFeedback"></div>
+        <button type="button" class="story-back-btn" id="btnStoryBack">&#9664; 이야기 목록으로</button>
+      </div>
+      <div class="completion-banner" id="storyCompletion">
+        <span class="big-emoji">&#127800;</span>
+        <h2>이야기를 잘 기억하셨어요!</h2>
+        <p>소중한 추억을 나눠주셔서 감사해요 &#128153;</p>
+        <button type="button" class="btn-retry" id="btnStoryRetry">다른 이야기 보기</button>
+      </div>
+    </div>
+  </section>
+  <section class="hobby-panel" id="panelColor">
+    <div class="hobby-card">
+      <h2 class="hobby-card-title">&#127912; 색칠 그림</h2>
+      <p class="hobby-card-sub">마음에 드는 그림을 골라 예쁘게 색칠해 보아요!</p>
+      <div class="coloring-gallery" id="coloringGallery"></div>
+      <div class="coloring-workspace" id="coloringWorkspace">
+        <div class="color-palette-panel">
+          <div class="palette-title">&#127912; 색깔 고르기</div>
+          <div class="palette-colors" id="paletteColors"></div>
+          <div class="palette-title" style="margin-top:4px">붓 굵기</div>
+          <div class="brush-size-row">
+            <button type="button" class="brush-btn active" data-size="8">가는</button>
+            <button type="button" class="brush-btn" data-size="16">보통</button>
+            <button type="button" class="brush-btn" data-size="28">굵은</button>
+          </div>
+          <div class="canvas-actions">
+            <button type="button" class="cav-btn btn-undo" id="btnColorUndo">&#8617; 되돌리기</button>
+            <button type="button" class="cav-btn btn-clear" id="btnColorClear">&#128465; 지우기</button>
+            <button type="button" class="cav-btn btn-save-col" id="btnColorSave">&#128190; 저장하기</button>
+            <button type="button" class="cav-btn btn-back-col" id="btnColorBack">&#9664; 그림 목록</button>
+          </div>
+        </div>
+        <div class="coloring-canvas-wrap">
+          <canvas class="coloring-canvas" id="coloringCanvas" width="600" height="420"></canvas>
+        </div>
+      </div>
+      <div class="completion-banner" id="colorCompletion">
+        <span class="big-emoji">&#128444;</span>
+        <h2>멋진 작품이 완성됐어요!</h2>
+        <p>보리도 갤러리에 걸고 싶어요 &#128059;&#128153;</p>
+        <button type="button" class="btn-retry" id="btnColorRetry">다른 그림 색칠하기</button>
+      </div>
+    </div>
+  </section>
+  <section class="hobby-panel" id="panelRiddle">
+    <div class="hobby-card">
+      <h2 class="hobby-card-title">&#129513; 보리의 수수께끼</h2>
+      <p class="hobby-card-sub">재미있는 수수께끼를 풀어보아요! 힌트도 있어요 &#128516;</p>
+      <div class="riddle-area">
+        <div class="riddle-card-inner">
+          <div class="riddle-number" id="riddleNumber">1 / 10</div>
+          <div class="riddle-question" id="riddleQuestion"></div>
+          <button type="button" class="riddle-hint-btn" id="btnRiddleHint">&#128161; 힌트 보기</button>
+          <div class="riddle-hint-text" id="riddleHintText"></div>
+          <button type="button" class="riddle-answer-reveal" id="btnRiddleAnswer">&#127919; 정답 보기</button>
+          <div class="riddle-answer-box" id="riddleAnswerBox"></div>
+        </div>
+        <div class="feedback-banner" id="riddleFeedback"></div>
+        <div class="riddle-nav">
+          <button type="button" class="riddle-nav-btn btn-prev-riddle" id="btnRiddlePrev">&#9664; 이전</button>
+          <button type="button" class="riddle-nav-btn btn-next-riddle" id="btnRiddleNext">다음 &#9654;</button>
+        </div>
+        <div class="riddle-progress" id="riddleProgress"></div>
+      </div>
+      <div class="completion-banner" id="riddleCompletion">
+        <span class="big-emoji">&#127942;</span>
+        <h2>수수께끼 모두 풀었어요!</h2>
+        <p>정말 똑똑하세요! 보리가 깜짝 놀랐어요 &#128059;</p>
+        <button type="button" class="btn-retry" id="btnRiddleRetry">수수께끼 다시 풀기</button>
+      </div>
+    </div>
+  </section>
+</main>
+<a href="index.html" class="bh-home-btn">&#127968; 처음 화면으로 돌아가기</a>
+<script>
+(()=>{
+'use strict';
+const RATE=0.82;
+function speak(t,cb){if(!window.speechSynthesis)return cb&&cb();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=RATE;u.pitch=0.92;const vs=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('ko'));const f=vs.find(v=>/\uC5EC\uC131|female|woman/i.test(v.name));if(f)u.voice=f;u.onend=()=>cb&&cb();speechSynthesis.speak(u);}
+speechSynthesis.getVoices();
+const SK='bori_hobby_stamps';
+let st=JSON.parse(localStorage.getItem(SK)||'{"c":0,"d":""}');
+const td=new Date().toLocaleDateString('ko-KR');
+if(st.d!==td)st={c:0,d:td};
+function saveSt(){localStorage.setItem(SK,JSON.stringify(st));}
+function addStamp(){st.c++;saveSt();document.getElementById('bhStampNum').textContent=st.c;speak('\uB3C4\uC7A5\uC744 \uBC1B\uC73C\uC154\uC694! \uC624\uB298 '+st.c+'\uAC1C \uBAA8\uC73C\uC168\uC5B4\uC694!');}
+document.getElementById('bhStampNum').textContent=st.c;
+const PANELS={song:'panelSong',story:'panelStory',color:'panelColor',riddle:'panelRiddle'};
+document.querySelectorAll('.bh-tab').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.bh-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.hobby-panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(PANELS[b.dataset.tab]).classList.add('active');});});
+document.getElementById('btnBhVoice').addEventListener('click',()=>speak('\uC548\uB155\uD558\uC138\uC694! \uC800\uB294 \uBCF4\uB9AC\uC608\uC694. \uB178\uB798\uB3C4 \uBD80\uB974\uACE0, \uC606\uB0A0 \uC774\uC57C\uAE30\uB3C4 \uB098\uB204\uACE0, \uC0C9\uCE60\uB3C4 \uD558\uACE0, \uC218\uC218\uAEF4\uB3C4 \uD568\uAED8 \uD480\uC5B4\uBCF4\uC544\uC694!'));
+function showFeedback(el,msg,type){el.textContent=msg;el.className='feedback-banner '+type+' visible';setTimeout(()=>el.classList.remove('visible'),3500);}
+// 노래
+const SONGS=[
+  {title:'\uACE0\uD5A5\uC758 \uBD04',icon:'\uD83C\uDF38',desc:'\uC774\uC6D0\uC218 \uC791\uC0AC \u00B7 \uD64D\uB09C\uD30C \uC791\uACE1',lyrics:['\uB098\uC758 \uC0B4\uB358 \uACE0\uD5A5\uC740 \uAF43\uD53C\uB294 \uC0B0\uACE8','\uBCF5\uC22D\uC544\uAF43 \uC0B4\uAD6C\uAF43 \uC544\uAE30\uC9C4\uB2EC\uB798','\uC6B8\uADEF\uBD88\uADEF \uAF43\uB300\uAD81 \uCC28\uB9AC\uC778 \uB3D9\uB124','\uADF8 \uC18D\uC5D0\uC11C \uB180\uB358 \uB54C\uAC00 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4','\uAF43\uB3D9\uB124 \uC0C8\uB3D9\uB124 \uB098\uC758 \uC606\uACE0\uD5A5','\uD30C\uB780 \uB4E4 \uB0A8\uCABD\uC5D0\uC11C \uBC14\uB78C\uC774 \uBD88\uBA74','\uB0B3\uAC00\uC5D0 \uC218\uC591\uBC84\uB4E4 \uCD94\uCDB0\uB294 \uB3D9\uB124','\uADF8 \uC18D\uC5D0\uC11C \uB180\uB358 \uB54C\uAC00 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4']},
+  {title:'\uC544\uB9AC\uB791',icon:'\uD83C\uDFD4\uFE0F',desc:'\uC6B0\uB9AC\uB098\uB77C \uB300\uD45C \uBBFC\uC694',lyrics:['\uC544\uB9AC\uB791 \uC544\uB9AC\uB791 \uC544\uB77C\uB9AC\uC694','\uC544\uB9AC\uB791 \uACE0\uAC1C\uB85C \uB118\uC5B4\uAC04\uB2E4','\uB098\uB97C \uBC84\uB9AC\uACE0 \uAC00\uC2DC\uB294 \uB2D8\uC740','\uC2ED \uB9AC\uB3C4 \uBABB \uAC00\uC11C \uBC1C\uBCD1\uB09C\uB2E4','\uCCAD\uCC9C \uD558\uB298\uC5D0 \uC794\uBCC4\uB3C4 \uB9CE\uACE0','\uC6B0\uB9AC\uB124 \uAC00\uC2B4\uC5D0\uC11C \uC218\uC2EC\uB3C4 \uB9CE\uB2E4','\uC544\uB9AC\uB791 \uC544\uB9AC\uB791 \uC544\uB77C\uB9AC\uC694','\uC544\uB9AC\uB791 \uACE0\uAC1C\uB85C \uB118\uC5B4\uAC04\uB2E4']},
+  {title:'\uC624\uBE60 \uC0DD\uAC01',icon:'\uD83C\uDF19',desc:'\uCD5C\uC21C\uC560 \uC791\uC0AC \u00B7 \uBC15\uD0DC\uC900 \uC791\uACE1',lyrics:['\uB728\uBD81 \uB728\uBD81 \uB728\uBD81\uC0C8 \uB17C\uC5D0\uC11C \uC6B8\uACE0','\uBC44\uAF39 \uBC44\uAF39 \uBC44\uAF39\uC0C8 \uC219\uC5D0\uC11C \uC6B8 \uB54C','\uC6B0\uB9AC \uC624\uBE60 \uB9D0 \uD0C0\uACE0 \uC11C\uC6B8 \uAC00\uC2DC\uBA74','\uBE44\uB2E8 \uAD6C\uB450 \uC0AC\uAC00\uC9C0\uACE0 \uC624\uC2E0\uB2E4\uB354\uB2C8','\uAE30\uB7AD \uAE30\uB7AD \uAE30\uB7EC\uAE30 \uBD81\uC5D0\uC11C \uC624\uACE0','\uADC0\uB124\uB974\uB974 \uADC0\uB104\uB77C\uBBF8 \uC2AC\uD53C \uC6B8\uAC74\uB9CC','\uC11C\uC6B8 \uAC00\uC2E0 \uC624\uBE60\uB294 \uC18C\uC2DD\uB3C4 \uC5C6\uACE0','\uB098\uBB47\uC78E\uB9CC \uC6B0\uC218\uC218 \uB5A8\uC5B4\uC9D1\uB2C8\uB2E4']},
+  {title:'\uC5B4\uBA38\uB2C8\uC758 \uB9C8\uC74C',icon:'\uD83D\uDC99',desc:'\uC591\uC8FC\uB3D9 \uC791\uC0AC \u00B7 \uC774\uD761\uB82C \uC791\uACE1',lyrics:['\uB099\uC2E4 \uC81C \uAD34\uB85C\uC6C0 \uB2E4 \uC78A\uC73C\uC2DC\uACE0','\uAE30\uB97C \uC81C \uBC24\uB099\uC73C\uB85C \uC560\uC4F0\uB294 \uB9C8\uC74C','\uC9C4\uC790\uB9AC \uB9C8\uB978\uC790\uB9AC \uAC08\uC544 \uB220\uC2DC\uBA70','\uC190\uBC1C\uC774 \uB2E4 \uB2EB\uB3C4\uB85D \uACE0\uC0DD\uD558\uC2DC\uB124','\uD558\uB298 \uC544\uB798 \uADF8 \uBB34\uC5C7\uC774 \uB113\uB2E4 \uD558\uB9AC\uC694','\uC5B4\uBA38\uB2D8\uC758 \uD76C\uC0DD\uC740 \uAC00\uC774\uC5C6\uC5B4\uB77C']},
+  {title:'\uBD04\uB0A0\uC740 \uAC04\uB2E4',icon:'\uD83C\uDF3F',desc:'\uC190\uB85C\uC6D0 \uC791\uC0AC \u00B7 \uBC15\uC2DC\uCDA4 \uC791\uACE1',lyrics:['\uC5F0\uBD84\uD64D \uCE58\uB9C8\uAC00 \uBD04\uBC14\uB78C\uC5D0 \uD718\uB0A0\uB9AC\uB354\uB77C','\uC624\uB298\uB3C4 \uC637\uACE0\uB984 \uC528\uC5B4\uAC00\uBA70 \uACE0\uAC1C\uAE38 \uB118\uC5B4','\uC544 \uC544 \uBD04\uB0A0\uC740 \uAC04\uB2E4','\uBCF5\uC22D\uC544\uAF43 \uB5A8\uC5B4\uC9C0\uB294 \uACF3\uC5D0','\uC5F0\uBD84\uD64D \uCE58\uB9C8\uAC00 \uBD04\uBC14\uB78C\uC5D0 \uD718\uB0A0\uB9AC\uB354\uB77C']},
+  {title:'\uC12C\uC9D1 \uC544\uAE30',icon:'\uD83C\uDF0A',desc:'\uD55C\uC778\uD604 \uC791\uC0AC \u00B7 \uC774\uD761\uB82C \uC791\uACE1',lyrics:['\uC5C4\uB9C8\uAC00 \uC12C \uADF8\uB298\uC5D0 \uAD74 \uB530\uB7EC \uAC00\uBA74','\uC544\uAE30\uAC00 \uD63C\uC790 \uB0A8\uC544 \uC9D1\uC744 \uBCF4\uB2E4\uAC00','\uBC14\uB2E4\uAC00 \uBD88\uB7EC\uC8FC\uB294 \uC790\uC7A5 \uB178\uB798\uC5D0','\uD314 \uBCA0\uACE0 \uC2A4\uB974\uB974\uB974 \uC798\uC774 \uB4ED\uB2C8\uB2E4','\uC544\uAE30\uB294 \uC78A\uC744 \uC790\uACE0 \uC544\uAE30\uB294 \uC790\uACE0','\uBB3C\uC0C8\uB294 \uB0A0\uC544\uC640\uC11C \uC544\uAE30\uB97C \uBCF4\uACE0','\uD574\uB2D8\uB3C4 \uC544\uAE30 \uC5BC\uAD74 \uC5B4\uB8E8\uB9CC\uC9C0\uBA70','\uB108\uBB34\uB098 \uADC0\uC5EC\uC6CC\uC11C \uC0B4\uBA70\uC2DC \uC6C3\uC870']}
+];
+let curSong=null,lyIdx=0,lyTimer=null,singing=false;
+function renderSongs(){document.getElementById('songList').innerHTML=SONGS.map((s,i)=>`<div class="song-item" id="si${i}" data-i="${i}"><span class="song-icon">${s.icon}</span><div class="song-info"><div class="song-title">${s.title}</div><div class="song-desc">${s.desc}</div></div><button type="button" class="song-play-btn" data-i="${i}">\uD83C\uDFA4 \uBD80\uB974\uAE30</button></div>`).join('');document.querySelectorAll('.song-play-btn').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openSong(+b.dataset.i);}));}
+function openSong(i){curSong=SONGS[i];lyIdx=0;singing=false;clearInterval(lyTimer);document.querySelectorAll('.song-item').forEach(x=>x.classList.remove('active-song'));document.getElementById('si'+i).classList.add('active-song');document.getElementById('lyricsTitle').textContent='\uD83C\uDFA5 '+curSong.title;document.getElementById('lyricsLine').textContent=curSong.lyrics[0];document.getElementById('lyricsArea').classList.add('active');document.getElementById('songCompletion').classList.remove('visible');speak(curSong.title+'\uB97C \uBD80\uB974\uACA0\uC2B5\uB2C8\uB2E4. \uC2DC\uC791 \uBC84\uD2BC\uC744 \uB207\uB7EC\uC8FC\uC138\uC694!');}
+function showLine(i){const l=curSong.lyrics[i];document.getElementById('lyricsLine').innerHTML='<span class="hl">'+l+'</span>';speak(l);}
+document.getElementById('btnLyricsPlay').addEventListener('click',()=>{if(!curSong||singing)return;singing=true;showLine(lyIdx);lyTimer=setInterval(()=>{lyIdx++;if(lyIdx>=curSong.lyrics.length){clearInterval(lyTimer);singing=false;document.getElementById('songCompletion').classList.add('visible');addStamp();return;}showLine(lyIdx);},3800);});
+document.getElementById('btnLyricsStop').addEventListener('click',()=>{clearInterval(lyTimer);singing=false;speechSynthesis.cancel();});
+document.getElementById('btnLyricsRepeat').addEventListener('click',()=>{clearInterval(lyTimer);singing=false;lyIdx=0;if(curSong)showLine(0);});
+document.getElementById('btnSongRetry').addEventListener('click',()=>{document.getElementById('songCompletion').classList.remove('visible');document.getElementById('lyricsArea').classList.remove('active');curSong=null;});
+renderSongs();
+// 이야기
+const STORIES=[
+  {e:'\uD83C\uDF3E',t:'\uCD94\uC11D\uACFC \uC1A1\uD3B8',tx:'\uCD94\uC11D\uC774\uBA74 \uC628 \uAC00\uC871\uC774 \uBAA8\uC5EC \uC1A1\uD3B8\uC744 \uBE4A\uC558\uC5B4\uC694. \uC219 \uC1A1\uD3B8, \uAE68 \uC1A1\uD3B8, \uCF69 \uC1A1\uD3B8... \uAC00\uB9C8\uC194\uC5D0 \uC194\uC78E \uAE94\uACE0 \uCC8C\uB0B4\uB294 \uC1A1\uD3B8 \uB0C4\uC0C8\uAC00 \uC9D1 \uC548 \uAC00\uB4DD \uD37C\uC84C\uB2F5\uB2C8\uB2E4. \uB458\uADFC \uBCF4\uB984\uB2EC \uC544\uB798 \uAC00\uC871\uC774 \uB458\uB7EC\uC54A\uC544 \uB098\uB220 \uBA39\uB358 \uADF8 \uC2DC\uC808\uC774 \uB208\uC5D0 \uC120\uD574\uC694.',q:'\uCD94\uC11D\uC5D0 \uD568\uAED8 \uBE4A\uB358 \uB5A1\uC740?',o:['\uC1A1\uD3B8','\uB5A1\uBCF6\uC774','\uC2DD\uD61C','\uBD80\uCE68\uAC1C'],a:0},
+  {e:'\uD83C\uDFDE\uFE0F',t:'\uC5EC\uB984 \uB0B3\uAC00 \uBB3C\uB180\uC774',tx:'\uBB34\uB354\uC6B4 \uC5EC\uB984\uC774\uBA74 \uB3D9\uB124 \uC544\uC774\uB4E4\uC774 \uB0B3\uAC00\uB85C \uB2EC\uB824\uAC14\uC5B4\uC694. \uCC28\uAC00\uC6B4 \uBB3C\uC5D0 \uBC1C\uC744 \uB2F4\uADF8\uACE0, \uBB3C\uACE0\uAE30\uB3C4 \uC78A\uC73C\uB824 \uD558\uACE0, \uBB3C\uC7A5\uAD6C\uB3C4 \uCE58\uBA70 \uC628\uC885\uC77C \uB180\uC558\uB2F5\uB2C8\uB2E4. \uD574\uAC00 \uC9C0\uB3C4\uB85D \uC9D1\uC5D0 \uB4E4\uC5B4\uAC00\uAE30 \uC2EB\uC5C8\uB358 \uADF8 \uC5EC\uB984\uC774 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4.',q:'\uC5EC\uB984\uC5D0 \uC544\uC774\uB4E4\uC774 \uC2DC\uC6D0\uD558\uAC8C \uB180\uB358 \uACF3\uC740?',o:['\uB0B3\uAC00','\uB3C4\uC11C\uAD00','\uBC31\uD654\uC810','\uC9C0\uD558\uCCA0\uC5ED'],a:0},
+  {e:'\uD83C\uDF86',t:'\uC124\uB0A0 \uC138\uBC30\uC640 \uC138\uBC43\uB3C8',tx:'\uC124\uB0A0 \uC544\uCE68 \uC0C8 \uD55C\uBCF5\uC744 \uC785\uACE0 \uC138\uBC30\uB97C \uB4DC\uB9AC\uBA74 \uC138\uBC43\uB3C8\uC744 \uC8FC\uC168\uC5B4\uC694. \uB530\uB73B\uD55C \uB5A1\uAD6D \uD55C \uADF8\uB987\uC744 \uBE44\uC6B0\uBA74 \uD55C \uC0B4\uC744 \uB354 \uBA39\uACE0, \uC628 \uAC00\uC871\uC774 \uC724\uB180\uC774\uC640 \uC5F0\uB0A0\uB9AC\uAE30\uB97C \uC990\uACBC\uB2F5\uB2C8\uB2E4.',q:'\uC124\uB0A0 \uC544\uCE68\uC5D0 \uBA39\uB294 \uC74C\uC2DD\uC740?',o:['\uB5A1\uAD6D','\uBE44\uBE54\uBC25','\uB0C9\uBA74','\uB41C\uC7A5\uCC0C\uAC1C'],a:0},
+  {e:'\uD83C\uDF38',t:'\uBD04 \uC18C\uD48D\uACFC \uB3C4\uC2DC\uB77D',tx:'\uBD04\uC774\uBA74 \uC120\uC0DD\uB2D8\uACFC \uC18C\uD48D\uC744 \uAC14\uC5B4\uC694. \uC5B4\uBA38\uB2C8\uAC00 \uC8FC\uC2E0 \uAE40\uBC25\uACFC \uC0B6\uC740 \uB2EC\uAC78, \uADC0\uB2E4\uBA74... \uCE5C\uAD6C\uB4E4\uACFC \uB3C4\uC2DC\uB77D\uC744 \uB098\uB220 \uBA39\uB294 \uADF8 \uB9DB\uC740 \uC138\uC0C1\uC5D0\uC11C \uC81C\uC77C \uB9DB\uC788\uC5C8\uC9C0\uC694. \uBC1A\uAF43 \uC78E\uC774 \uD758\uB0A0\uB9AC\uB294 \uC5B8\uB355\uC5D0\uC11C \uBFDB\uC5B4\uB193\uB358 \uBD04\uB0A0\uC774 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4.',q:'\uBD04 \uC18C\uD48D\uC5D0\uC11C \uCE5C\uAD6C\uB4E4\uACFC \uB098\uB220 \uBA39\uB358 \uAC83\uC740?',o:['\uAE40\uBC25 \uB3C4\uC2DC\uB77D','\uD53C\uC790','\uD584\uBC84\uAC70','\uC2A4\uD30C\uAC8C\uD2F0'],a:0},
+  {e:'\u2744\uFE0F',t:'\uACA8\uC6B8 \uACE0\uAD6C\uB9C8\uC640 \uB208\uC0AC\uB78C',tx:'\uACA8\uC6B8\uC774\uBA74 \uC5F0\uD0C4\uBD88\uC774 \uC9D1\uC744 \uB530\uB73B\uD558\uAC8C \uD574\uC8FC\uC5C8\uC5B4\uC694. \uD654\uB86F\uAC00\uC5D0\uC11C \uACE0\uAD6C\uB9C8\uB97C \uAD6C\uC6CC \uBA39\uACE0, \uB208\uC774 \uB0B4\uB9AC\uBA74 \uB9C8\uB2F9\uC5D0\uC11C \uB208\uC0AC\uB78C\uC744 \uB9CC\uB4E4\uBA70 \uB208\uC2F8\uC6C0\uB3C4 \uD588\uB2F5\uB2C8\uB2E4. \uCF67\uBB3C\uC774 \uD767\uB7EC\uB3C4 \uB108\uBB34 \uD589\uBCF5\uD588\uB358 \uACA8\uC6B8 \uCD94\uC5B5\uC774 \uC0C8\uB85D\uC0C8\uB85D\uD574\uC694.',q:'\uACA8\uC6B8\uC5D0 \uD654\uB85C \uC606\uC5D0\uC11C \uAD6C\uC6CC \uBA39\uB358 \uAC83\uC740?',o:['\uACE0\uAD6C\uB9C8','\uC218\uBC15','\uB538\uAE30','\uD3EC\uB3C4'],a:0},
+  {e:'\uD83D\uDC04',t:'\uC7A5\uD130\uC640 \uC97F\uC7A5\uC218',tx:'\uC624\uC77C\uC7A5\uC774 \uC11C\uB294 \uB0A0\uC774\uBA74 \uC628 \uB3D9\uB124\uAC00 \uBD81\uC801\uC600\uC5B4\uC694. \uC97F\uC7A5\uC218 \uC544\uC800\uC528\uAC00 \uAC00\uC704\uB97C \uCC3C\uAC01\uCC3C\uAC01 \uCE58\uBA70 \uB2EC\uCF64\uD55C \uC97F\uC744 \uD314\uACE0, \uD48D\uBB3C\uD328 \uC18C\uB9AC\uC5D0 \uBC1C\uC774 \uC808\uB85C \uC6C0\uC9C1\uC600\uC9C0\uC694. \uACE0\uC18C\uD558\uACE0 \uC2DC\uB054\uBC24\uC9C0\uAE0C\uD55C \uC7A5\uD130 \uD48D\uACA9\uC774 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4.',q:'\uC624\uC77C\uC7A5\uC5D0\uC11C \uAC00\uC704\uB97C \uCE58\uBA70 \uB2EC\uCF64\uD55C \uAC83\uC744 \uD314\uB358 \uC0AC\uB78C\uC740?',o:['\uC97F\uC7A5\uC218','\uC774\uBC1C\uC0AC','\uC120\uC0DD\uB2D8','\uC758\uC0AC'],a:0}
+];
+let curSt=null;
+function renderStories(){document.getElementById('storyGrid').innerHTML=STORIES.map((s,i)=>`<div class="story-card" data-i="${i}"><span class="story-emoji">${s.e}</span><div class="story-card-title">${s.t}</div><div class="story-card-desc">\uB20C\uB7EC\uC11C \uC774\uC57C\uAE30 \uBCF4\uAE30</div></div>`).join('');document.querySelectorAll('.story-card').forEach(c=>c.addEventListener('click',()=>openStory(+c.dataset.i)));}
+function openStory(i){curSt=STORIES[i];document.getElementById('storyGrid').style.display='none';document.getElementById('storyCompletion').classList.remove('visible');document.getElementById('storyContentBox').classList.add('active');document.getElementById('storyContentTitle').textContent=curSt.e+' '+curSt.t;document.getElementById('storyContentText').textContent=curSt.tx;document.getElementById('storyQuestionText').textContent='\u2753 '+curSt.q;const ab=document.getElementById('storyAnswerBtns');ab.innerHTML=curSt.o.map((op,j)=>`<button type="button" class="story-answer-btn" data-j="${j}">${op}</button>`).join('');document.querySelectorAll('.story-answer-btn').forEach(b=>b.addEventListener('click',()=>{const ch=+b.dataset.j;document.querySelectorAll('.story-answer-btn').forEach(x=>{x.disabled=true;if(+x.dataset.j===curSt.a)x.classList.add('correct');if(+x.dataset.j===ch&&ch!==curSt.a)x.classList.add('wrong');});const fb=document.getElementById('storyFeedback');if(ch===curSt.a){showFeedback(fb,'\u2705 \uC815\uB2F5\uC774\uC5D0\uC694! \uD6CC\uB986\uD558\uC138\uC694!','good');speak('\uC815\uB2F5\uC774\uC5D0\uC694! \uD6CC\uB986\uD558\uC138\uC694!');setTimeout(()=>{document.getElementById('storyCompletion').classList.add('visible');addStamp();},1500);}else{showFeedback(fb,'\uD83E\uDD14 \uC544\uC26C\uC6CC\uC694. \uC815\uB2F5\uC740 '+curSt.o[curSt.a]+'\uC774\uC5D0\uC694!','retry');speak('\uC544\uC26C\uC6CC\uC694. \uC815\uB2F5\uC740 '+curSt.o[curSt.a]+'\uC774\uC5D0\uC694.');}}));document.getElementById('storyFeedback').className='feedback-banner';speak(curSt.tx);}
+document.getElementById('btnStoryBack').addEventListener('click',()=>{document.getElementById('storyContentBox').classList.remove('active');document.getElementById('storyGrid').style.display='grid';document.getElementById('storyFeedback').className='feedback-banner';speechSynthesis.cancel();});
+document.getElementById('btnStoryRetry').addEventListener('click',()=>{document.getElementById('storyCompletion').classList.remove('visible');document.getElementById('storyContentBox').classList.remove('active');document.getElementById('storyGrid').style.display='grid';speechSynthesis.cancel();});
+renderStories();
+// 색칠
+const TEMPLATES=[{l:'\uD574\uBC14\uB77C\uAE30',e:'\uD83C\uDF3B'},{l:'\uB098\uBE44',e:'\uD83E\uDD8B'},{l:'\uACE0\uD5A5 \uC9D1',e:'\uD83C\uDFE1'},{l:'\uBD04\uAF43',e:'\uD83C\uDF38'},{l:'\uBB3C\uACE0\uAE30',e:'\uD83D\uDC1F'},{l:'\uBCC4 \uD558\uB298',e:'\uD83C\uDF1F'}];
+const COLORS=['#ef4444','#f97316','#eab308','#22c55e','#3b82f6','#8b5cf6','#ec4899','#6b7280','#a78bfa','#34d399','#fbbf24','#ffffff'];
+let cv=null,cx=null,drawing=false,cc='#ef4444',bs=8,undo=[],ctpl=null;
+function renderGallery(){document.getElementById('coloringGallery').innerHTML=TEMPLATES.map((t,i)=>`<div class="coloring-thumb" data-i="${i}"><span class="coloring-thumb-emoji">${t.e}</span><div class="coloring-thumb-label">${t.l}</div></div>`).join('');document.querySelectorAll('.coloring-thumb').forEach(el=>el.addEventListener('click',()=>openColor(+el.dataset.i)));}
+function openColor(i){ctpl=TEMPLATES[i];document.getElementById('coloringGallery').style.display='none';document.getElementById('coloringWorkspace').classList.add('active');document.getElementById('colorCompletion').classList.remove('visible');cv=document.getElementById('coloringCanvas');cx=cv.getContext('2d');undo=[];const wp=cv.parentElement;const w=Math.min(wp.clientWidth||600,600);cv.width=w;cv.height=Math.round(w*0.7);drawTpl();document.getElementById('paletteColors').innerHTML=COLORS.map((c,j)=>`<div class="palette-color${j===0?' sel':''}" data-c="${c}" style="background:${c}"></div>`).join('');document.querySelectorAll('.palette-color').forEach(el=>el.addEventListener('click',()=>{cc=el.dataset.c;document.querySelectorAll('.palette-color').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}));document.querySelectorAll('.brush-btn').forEach(b=>b.addEventListener('click',()=>{bs=+b.dataset.size;document.querySelectorAll('.brush-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));['mousedown','touchstart'].forEach(ev=>cv.addEventListener(ev,sd,{passive:false}));['mousemove','touchmove'].forEach(ev=>cv.addEventListener(ev,dd,{passive:false}));['mouseup','touchend','mouseleave'].forEach(ev=>cv.addEventListener(ev,ed));speak(ctpl.l+' \uADF8\uB9BC\uC774\uC5B4\uC694. \uC608\uBD01\uAC8C \uC0C9\uCE60\uD574 \uBCF4\uC138\uC694!');}
+function drawTpl(){if(!cx||!ctpl)return;cx.clearRect(0,0,cv.width,cv.height);cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.font=Math.round(cv.height*0.55)+'px serif';cx.textAlign='center';cx.textBaseline='middle';cx.globalAlpha=0.18;cx.fillText(ctpl.e,cv.width/2,cv.height/2);cx.globalAlpha=1;cx.font='bold 20px sans-serif';cx.fillStyle='#3b82f6';cx.fillText(ctpl.l+' \u2014 \uC790\uC720\uB86D\uAC8C \uC0C9\uCE60\uD558\uC138\uC694!',cv.width/2,24);}
+function gp(e){const r=cv.getBoundingClientRect();if(e.touches)return{x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top};return{x:e.clientX-r.left,y:e.clientY-r.top};}
+function sd(e){e.preventDefault();drawing=true;undo.push(cx.getImageData(0,0,cv.width,cv.height));const{x,y}=gp(e);cx.beginPath();cx.moveTo(x,y);cx.strokeStyle=cc;cx.lineWidth=bs;cx.lineCap='round';cx.lineJoin='round';}
+function dd(e){if(!drawing)return;e.preventDefault();const{x,y}=gp(e);cx.lineTo(x,y);cx.stroke();}
+function ed(){drawing=false;if(cx)cx.beginPath();}
+document.getElementById('btnColorUndo').addEventListener('click',()=>{if(!cx||!undo.length)return;cx.putImageData(undo.pop(),0,0);});
+document.getElementById('btnColorClear').addEventListener('click',()=>{if(!cx)return;undo.push(cx.getImageData(0,0,cv.width,cv.height));drawTpl();});
+document.getElementById('btnColorSave').addEventListener('click',()=>{if(!cv)return;const a=document.createElement('a');a.download='\uBCF4\uB9AC\uCDE8\uBBF8\uBC29_'+ctpl.l+'_'+Date.now()+'.png';a.href=cv.toDataURL();a.click();document.getElementById('colorCompletion').classList.add('visible');addStamp();speak('\uADF8\uB9BC\uC744 \uC800\uC7A5\uD588\uC5B4\uC694! \uC815\uB9D0 \uC608\uBD01\uD55C \uC791\uD488\uC774\uC5B4\uC694!');});
+document.getElementById('btnColorBack').addEventListener('click',()=>{document.getElementById('coloringWorkspace').classList.remove('active');document.getElementById('coloringGallery').style.display='grid';document.getElementById('colorCompletion').classList.remove('visible');speechSynthesis.cancel();});
+document.getElementById('btnColorRetry').addEventListener('click',()=>{document.getElementById('colorCompletion').classList.remove('visible');document.getElementById('coloringWorkspace').classList.remove('active');document.getElementById('coloringGallery').style.display='grid';});
+renderGallery();
+// 수수께끼
+const RIDDLES=[
+  {q:'\uBA39\uC744\uC218\uB85D \uC790\uAFB8 \uBC30\uAC00 \uACE0\uD508 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uB208\uC73C\uB85C \uC990\uAE30\uB294 \uAC83\uC774\uC5B4\uC694',a:'\uAD6C\uACBD (\uBCFC\uC218\uB85D \uB354 \uBCF4\uACE0 \uC2F6\uC5B4\uC9D1\uB2C8\uB2E4)'},
+  {q:'\uB124 \uBC1C\uB85C \uC654\uB2E4\uAC00 \uB450 \uBC1C\uB85C \uAC00\uB294 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uC5B4\uB9B4 \uB54C\uB294 \uAE30\uC5B4\uB2E4\uB155\uC5D0\uC694',a:'\uC0AC\uB78C \u2014 \uC544\uAE30 \uB54C \uAE30\uACE0, \uC5B4\uB978\uC774 \uB418\uC5B4 \uB450 \uBC1C\uB85C \uAC78\uC5B4\uC694'},
+  {q:'\uBC68\uAC04 \uC9D1 \uC548\uC5D0 \uD558\uC5C8 \uC9D1, \uD558\uC5EC\uC9D1 \uC548\uC5D0 \uAE4C\uB9CC \uAC83\uC774 \uC788\uC5B4\uC694. \uC774\uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uC5EC\uB984\uC5D0 \uBA39\uB294 \uC2DC\uC6D0\uD55C \uACFC\uC77C\uC774\uC5B4\uC694',a:'\uC218\uBC15 \u2014 \uCD08\uB85D\uBE1C\u2192\uD558\uC5F0 \uBB3C\uBD80\uBD84\u2192\uBE68\uAC04 \uACFC\uC721\u2192\uAC80\uC740 \uC528'},
+  {q:'\uC544\uCE68\uC5D0\uB294 \uB124 \uBC1C, \uB099\uC5D0\uB294 \uB450 \uBC1C, \uC800\uB141\uC5D0\uB294 \uC138 \uBC1C\uC778 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uADF8\uB9AC\uC2A4 \uC2E0\uD654\uC5D0\uB3C4 \uB098\uC624\uB294 \uC218\uC218\uAEF4\uB3C0\uC608\uC694',a:'\uC0AC\uB78C \u2014 \uC544\uAE30 \uB54C \uAE30\uACE0, \uC5B4\uB978\uC740 \uB450 \uBC1C, \uB178\uC778\uC740 \uC9C0\uD314\uC774\uB97C \uC9DA\uC5B4\uC694'},
+  {q:'\uC138\uC0C1\uC5D0\uC11C \uAC00\uC7A5 \uBE60\uB978 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uB208 \uAE5C\uC791\uD560 \uC0AC\uC774\uC5D0 \uC9C0\uB098\uAC00\uC694',a:'\uBE9B \uB610\uB294 \uC0DD\uAC01'},
+  {q:'\uC544\uBB34\uB9AC \uBA39\uC5B4\uB3C4 \uBC30\uBD80\uB974\uC9C0 \uC54A\uC740 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uB208\uC73C\uB85C \uC990\uAE30\uB294 \uAC83\uC774\uC5B4\uC694',a:'\uAD6C\uACBD \uB610\uB294 \uD48D\uACBD'},
+  {q:'\uC785\uC774 \uC788\uC5B4\uB3C4 \uB9D0\uC744 \uBABB \uD558\uACE0 \uC190\uC774 \uC788\uC5B4\uB3C4 \uC77C\uC744 \uBABB \uD558\uB294 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uBCBD\uC5D0 \uAC78\uAC70\uB098 \uCC05\uC0C1 \uC704\uC5D0 \uB193\uB294 \uAC83\uC774\uC5B4\uC694',a:'\uADF8\uB9BC \uC18D \uC0AC\uB78C (\uB610\uB294 \uC778\uD615)'},
+  {q:'\uC628 \uC138\uC0C1\uC744 \uB3CC\uC544\uB2E4\uB140\uB3C4 \uC790\uAE30 \uC9D1\uC744 \uB5A0\uB098\uC9C0 \uC54A\uB294 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uD63C\uC790\uC11C\uB3C4 \uC9D1\uC744 \uAC00\uC9C0\uACE0 \uB2E4\uB140\uC694',a:'\uB2EC\uD301\uC774 \uB610\uB294 \uAC70\uBD81\uC774 \u2014 \uC9D1\uC744 \uB4F1\uC5D0 \uC774\uACE0 \uB2E4\uB140\uC694'},
+  {q:'\uBD04\uC5D0\uB294 \uAF43\uC774 \uD53C\uACE0, \uAC00\uC744\uC5D0\uB294 \uB2E8\uD48D\uC774 \uB4E4\uC9C0\uC694. \uBCC0\uD558\uC9C0 \uC54A\uB294 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uACC4\uC808\uC774 \uBC14\uB014\uC5B4\uB3C4 \uD56D\uC0C1 \uADF8 \uC790\uB9AC\uC5D0 \uC788\uC5B4\uC694',a:'\uB098\uBB34 (\uB4E4\uAE30 \uB610\uB294 \uBFCC\uB9AC)'},
+  {q:'\uB450\uB4E4\uAE38\uC218\uB85D \uB354 \uC18C\uB9AC\uAC00 \uB098\uB294 \uAC83\uC740 \uBB34\uC5C7\uC77C\uAE4C\uC694?',h:'\uC7A5\uB2E8\uC744 \uB9DE\uCD9C \uB54C \uC0AC\uC6A9\uD574\uC694',a:'\uBD81 \uB610\uB294 \uC7A5\uAD6C'}
+];
+let ri=0,rs=0;
+function renderRiddle(){const r=RIDDLES[ri];document.getElementById('riddleNumber').textContent=(ri+1)+' / '+RIDDLES.length;document.getElementById('riddleQuestion').textContent=r.q;document.getElementById('riddleHintText').style.display='none';document.getElementById('riddleHintText').textContent='\uD83D\uDCA1 \uD78C\uD2B8: '+r.h;document.getElementById('riddleAnswerBox').style.display='none';document.getElementById('riddleAnswerBox').textContent='\u2705 \uC815\uB2F5: '+r.a;document.getElementById('riddleFeedback').className='feedback-banner';document.getElementById('riddleProgress').textContent='\uD655\uC778\uD55C \uC218\uC218\uAEF4\uB3C0: '+rs+'\uAC1C';speak('\uC218\uC218\uAEF4\uB3C0\uC608\uC694. '+r.q);}
+document.getElementById('btnRiddleHint').addEventListener('click',()=>{const h=document.getElementById('riddleHintText');h.style.display=h.style.display==='block'?'none':'block';speak('\uD78C\uD2B8! '+RIDDLES[ri].h);});
+document.getElementById('btnRiddleAnswer').addEventListener('click',()=>{document.getElementById('riddleAnswerBox').style.display='block';rs++;document.getElementById('riddleProgress').textContent='\uD655\uC778\uD55C \uC218\uC218\uAEF4\uB3C0: '+rs+'\uAC1C';showFeedback(document.getElementById('riddleFeedback'),'\uD83C\uDF89 \uC815\uB9D0 \uC798 \uD558\uC168\uC5B4\uC694!','good');speak('\uC815\uB2F5\uC740 '+RIDDLES[ri].a+' \uC774\uC5B4\uC694! \uC798 \uD558\uC168\uC5B4\uC694!');if(rs>=RIDDLES.length)setTimeout(()=>{document.getElementById('riddleCompletion').classList.add('visible');addStamp();},1600);});
+document.getElementById('btnRiddlePrev').addEventListener('click',()=>{if(ri>0){ri--;renderRiddle();}});
+document.getElementById('btnRiddleNext').addEventListener('click',()=>{if(ri<RIDDLES.length-1){ri++;renderRiddle();}else{document.getElementById('riddleCompletion').classList.add('visible');addStamp();}});
+document.getElementById('btnRiddleRetry').addEventListener('click',()=>{ri=0;rs=0;document.getElementById('riddleCompletion').classList.remove('visible');renderRiddle();});
+renderRiddle();
+window.addEventListener('load',()=>setTimeout(()=>speak('\uBCF4\uB9AC\uC758 \uCDE8\uBBF8\uBC29\uC5D0 \uC624\uC2E0 \uAC83\uC744 \uD658\uC601\uD574\uC694! \uB178\uB798\uB3C4 \uBD80\uB974\uACE0, \uC635\uB0A0 \uC774\uC57C\uAE30\uB3C4 \uD558\uACE0, \uC0C9\uCE60\uB3C4 \uD558\uACE0, \uC218\uC218\uAEF4\uB3C0\uB3C4 \uD480\uC5B4\uBCF4\uC544\uC694!'),600));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff0f6">
+  <title>토리의 놀이방 · 디지털 AI 학교</title>
+  <meta name="description" content="치매·인지저하 어르신을 위한 토리의 즐거운 놀이방 — 같은 그림 찾기, 색깔 맞추기, 동물 맞히기 등 재미있는 인터랙티브 놀이">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      background: linear-gradient(160deg, #fff0f6 0%, #fce7f3 40%, #ffe4f0 100%);
+      min-height: 100vh;
+      color: #3d1020;
+    }
+
+    /* ── Header ── */
+    .tp-header {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 3px solid #f9a8d4;
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .tp-back-link {
+      font-size: 20px; font-weight: 800; color: #be185d;
+      text-decoration: none; min-height: 48px;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 12px;
+      background: #fff0f6; border: 2px solid #f9a8d4;
+      transition: background 0.2s;
+    }
+    .tp-back-link:hover { background: #fce7f3; }
+    .tp-location { font-size: 18px; font-weight: 800; color: #be185d;
+      background: #fce7f3; padding: 8px 16px; border-radius: 12px;
+      border: 1px solid #f9a8d4; }
+    .tp-header-badge { font-size: 16px; font-weight: 700; color: #db2777; }
+    .tp-voice-btn {
+      min-height: 48px; padding: 8px 16px; font-size: 16px; font-weight: 800;
+      background: #fff0f6; color: #be185d; border: 2px solid #f9a8d4;
+      border-radius: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      font-family: inherit;
+    }
+    .tp-voice-btn:hover { background: #fce7f3; }
+
+    /* ── Hero ── */
+    .tp-hero {
+      text-align: center; padding: 40px 20px 24px;
+    }
+    .tp-char-img {
+      width: 140px; height: 140px; object-fit: contain;
+      filter: drop-shadow(0 6px 16px rgba(236,72,153,0.25));
+      animation: tori-float 3s ease-in-out infinite;
+    }
+    @keyframes tori-float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .tp-hero h1 {
+      font-size: clamp(26px, 5vw, 40px); font-weight: 900;
+      color: #9d174d; margin: 14px 0 8px;
+    }
+    .tp-hero p { font-size: 19px; color: #be185d; line-height: 1.5; }
+    .tp-speech {
+      display: inline-block; background: #fff; border: 2px solid #f9a8d4;
+      border-radius: 20px; padding: 14px 24px; margin-top: 16px;
+      font-size: 19px; color: #9d174d; font-weight: 700; max-width: 500px;
+      box-shadow: 0 4px 16px rgba(236,72,153,0.12);
+    }
+
+    /* ── Game Menu ── */
+    .tp-game-menu {
+      max-width: 900px; margin: 0 auto; padding: 10px 20px 20px;
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    }
+    .tp-game-tab {
+      min-height: 54px; padding: 12px 24px; font-size: 18px; font-weight: 800;
+      border-radius: 16px; border: 3px solid transparent; cursor: pointer;
+      background: #fff; color: #be185d; border-color: #f9a8d4;
+      font-family: inherit; transition: all 0.2s; flex: 1; min-width: 140px;
+    }
+    .tp-game-tab.active {
+      background: linear-gradient(135deg, #ec4899, #f472b6);
+      color: #fff; border-color: #db2777;
+      box-shadow: 0 4px 14px rgba(236,72,153,0.35);
+    }
+    .tp-game-tab:hover:not(.active) { background: #fce7f3; }
+
+    /* ── Game Area ── */
+    .tp-game-area {
+      max-width: 900px; margin: 0 auto 40px; padding: 0 20px;
+    }
+    .game-panel { display: none; }
+    .game-panel.active { display: block; }
+
+    .game-card {
+      background: #fff; border-radius: 24px; padding: 32px 28px;
+      border: 2px solid #f9a8d4; box-shadow: 0 8px 30px rgba(236,72,153,0.12);
+    }
+    .game-title {
+      font-size: 24px; font-weight: 900; color: #9d174d; margin-bottom: 8px;
+      text-align: center;
+    }
+    .game-sub {
+      font-size: 17px; color: #be185d; text-align: center; margin-bottom: 24px;
+    }
+
+    /* ── Same Image Game ── */
+    .match-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      max-width: 500px; margin: 0 auto 24px;
+    }
+    .match-card {
+      aspect-ratio: 1; border-radius: 18px; border: 4px solid #f9a8d4;
+      background: #fff0f6; font-size: clamp(40px, 8vw, 72px);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; user-select: none;
+      box-shadow: 0 4px 12px rgba(236,72,153,0.1);
+    }
+    .match-card:hover { transform: scale(1.07); border-color: #ec4899; }
+    .match-card.selected { border-color: #db2777; background: #fce7f3;
+      box-shadow: 0 0 0 4px rgba(236,72,153,0.3); }
+    .match-card.correct { border-color: #16a34a; background: #dcfce7;
+      animation: pop-in 0.4s; }
+    .match-card.wrong { border-color: #dc2626; background: #fee2e2;
+      animation: shake 0.4s; }
+    @keyframes pop-in {
+      0% { transform: scale(0.9); } 50% { transform: scale(1.15); } 100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    .game-question {
+      text-align: center; margin-bottom: 20px;
+    }
+    .game-question-label {
+      font-size: 22px; font-weight: 700; color: #9d174d; margin-bottom: 12px;
+      display: block;
+    }
+    .game-question-target {
+      font-size: clamp(70px, 14vw, 120px); display: block; line-height: 1;
+      filter: drop-shadow(0 4px 12px rgba(236,72,153,0.2));
+    }
+
+    /* ── Color Match Game ── */
+    .color-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+      max-width: 480px; margin: 0 auto 24px;
+    }
+    .color-btn {
+      min-height: 80px; border-radius: 18px; border: 4px solid transparent;
+      font-size: 22px; font-weight: 800; cursor: pointer; transition: all 0.2s;
+      font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .color-btn:hover { transform: scale(1.04); }
+    .color-btn.correct { border-color: #16a34a !important; animation: pop-in 0.4s; }
+    .color-btn.wrong { border-color: #dc2626 !important; animation: shake 0.4s; }
+
+    /* ── Season Game ── */
+    .season-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+      max-width: 480px; margin: 0 auto 24px;
+    }
+    .season-btn {
+      min-height: 100px; border-radius: 20px; border: 4px solid #f9a8d4;
+      background: #fff0f6; font-size: clamp(20px, 4vw, 26px); font-weight: 800;
+      cursor: pointer; transition: all 0.2s; font-family: inherit;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      color: #9d174d;
+    }
+    .season-btn .season-icon { font-size: clamp(36px, 7vw, 56px); }
+    .season-btn:hover { background: #fce7f3; transform: scale(1.04); }
+    .season-btn.correct { border-color: #16a34a; background: #dcfce7; color: #15803d; animation: pop-in 0.4s; }
+    .season-btn.wrong { border-color: #dc2626; background: #fee2e2; color: #dc2626; animation: shake 0.4s; }
+
+    /* ── Feedback Banner ── */
+    .feedback-banner {
+      text-align: center; padding: 18px 24px; border-radius: 18px;
+      font-size: 22px; font-weight: 800; margin-top: 10px;
+      display: none;
+    }
+    .feedback-banner.good { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
+    .feedback-banner.retry { background: #fff7ed; color: #c2410c; border: 2px solid #fed7aa; }
+
+    /* ── Next / Restart Buttons ── */
+    .game-actions {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;
+    }
+    .btn-game {
+      min-height: 56px; padding: 14px 28px; font-size: 19px; font-weight: 800;
+      border-radius: 16px; border: none; cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .btn-game-primary {
+      background: linear-gradient(135deg, #ec4899, #f472b6);
+      color: #fff; box-shadow: 0 4px 14px rgba(236,72,153,0.35);
+    }
+    .btn-game-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(236,72,153,0.45); }
+    .btn-game-secondary {
+      background: #fff; color: #be185d; border: 2px solid #f9a8d4;
+    }
+    .btn-game-secondary:hover { background: #fce7f3; }
+
+    /* ── Stamp ── */
+    .stamp-area {
+      text-align: center; padding: 28px; background: #fff;
+      border-radius: 24px; border: 2px dashed #f9a8d4; margin-top: 16px;
+      display: none;
+    }
+    .stamp-area.show { display: block; animation: pop-in 0.5s; }
+    .stamp-icon { font-size: 72px; display: block; margin-bottom: 10px; }
+    .stamp-msg { font-size: 26px; font-weight: 900; color: #9d174d; }
+    .stamp-sub { font-size: 18px; color: #be185d; margin-top: 8px; }
+
+    /* ── Score Bar ── */
+    .score-bar {
+      display: flex; gap: 10px; justify-content: center; align-items: center;
+      flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .score-pill {
+      background: #fff0f6; border: 2px solid #f9a8d4; border-radius: 30px;
+      padding: 8px 20px; font-size: 17px; font-weight: 800; color: #9d174d;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center; color: #9d174d; font-size: 16px;
+      padding: 24px 20px 36px; opacity: 0.7;
+    }
+
+    @media (max-width: 480px) {
+      .match-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .color-grid, .season-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .tp-game-menu { gap: 8px; }
+      .tp-game-tab { font-size: 16px; padding: 10px 14px; min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="tp-header">
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <a class="tp-back-link" href="index.html" aria-label="처음 화면으로 가기">🏠 처음으로</a>
+      <span class="tp-location">지금은 <strong>🐰 토리의 놀이방</strong> 이에요</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <button id="btnToriVoice" class="tp-voice-btn" type="button">🔊 설명 듣기</button>
+      <span class="tp-header-badge">🎮 신나는 놀이방</span>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="tp-hero">
+    <img src="assets/images/friend-tori.png" alt="토리" class="tp-char-img">
+    <h1>🐰 토리의 놀이방</h1>
+    <p>오늘도 재미있게 같이 놀아요!</p>
+    <div class="tp-speech" id="toriSpeech">"어서 오세요! 오늘은 무슨 놀이를 해볼까요?"</div>
+  </section>
+
+  <!-- ===== Game Tab Menu ===== -->
+  <div class="tp-game-menu" role="tablist" aria-label="놀이 선택">
+    <button class="tp-game-tab active" data-game="match" role="tab" aria-selected="true">🔍 같은 그림 찾기</button>
+    <button class="tp-game-tab" data-game="color" role="tab" aria-selected="false">🎨 색깔 맞추기</button>
+    <button class="tp-game-tab" data-game="season" role="tab" aria-selected="false">🌸 계절 놀이</button>
+    <button class="tp-game-tab" data-game="animal" role="tab" aria-selected="false">🐾 동물 맞히기</button>
+    <a href="character-house.html?char=tori" class="tp-game-tab" style="text-decoration:none; text-align:center; display:flex; align-items:center; justify-content:center;">🏡 토리 집 꾸미기</a>
+  </div>
+
+  <!-- ===== Game Area ===== -->
+  <main class="tp-game-area">
+
+    <!-- ① 같은 그림 찾기 -->
+    <div class="game-panel active" id="panel-match">
+      <div class="game-card">
+        <div class="score-bar">
+          <span class="score-pill">✅ 맞힌 것: <span id="matchCorrect">0</span>개</span>
+          <span class="score-pill">📋 문제: <span id="matchQ">1</span> / 5</span>
+        </div>
+        <div class="game-question">
+          <span class="game-question-label">아래에서 같은 그림을 찾아보세요!</span>
+          <span class="game-question-target" id="matchTarget">🌸</span>
+        </div>
+        <div class="match-grid" id="matchGrid"></div>
+        <div class="feedback-banner" id="matchFeedback"></div>
+        <div class="stamp-area" id="matchStamp">
+          <span class="stamp-icon">🌸</span>
+          <span class="stamp-msg">정말 잘하셨어요!</span>
+          <p class="stamp-sub">토리가 꽃 도장을 드려요 💕</p>
+          <div class="game-actions" style="margin-top:16px;">
+            <button class="btn-game btn-game-primary" onclick="startMatchGame()">🔄 다시 놀기</button>
+            <a href="index.html" class="btn-game btn-game-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">🏠 처음으로</a>
+          </div>
+        </div>
+        <div class="game-actions" id="matchActions">
+          <button class="btn-game btn-game-primary" id="btnMatchNext" onclick="nextMatchQuestion()" style="display:none;">▶ 다음 문제</button>
+          <button class="btn-game btn-game-secondary" onclick="startMatchGame()">🔄 새로 시작</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 색깔 맞추기 -->
+    <div class="game-panel" id="panel-color">
+      <div class="game-card">
+        <div class="score-bar">
+          <span class="score-pill">✅ 맞힌 것: <span id="colorCorrect">0</span>개</span>
+          <span class="score-pill">📋 문제: <span id="colorQ">1</span> / 5</span>
+        </div>
+        <div class="game-question">
+          <span class="game-question-label" id="colorQuestion">이 꽃은 무슨 색일까요?</span>
+          <span class="game-question-target" id="colorTarget">🌹</span>
+        </div>
+        <div class="color-grid" id="colorGrid"></div>
+        <div class="feedback-banner" id="colorFeedback"></div>
+        <div class="stamp-area" id="colorStamp">
+          <span class="stamp-icon">⭐</span>
+          <span class="stamp-msg">색깔 박사가 되셨어요!</span>
+          <p class="stamp-sub">별 도장을 드려요 ✨</p>
+          <div class="game-actions" style="margin-top:16px;">
+            <button class="btn-game btn-game-primary" onclick="startColorGame()">🔄 다시 놀기</button>
+            <a href="index.html" class="btn-game btn-game-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">🏠 처음으로</a>
+          </div>
+        </div>
+        <div class="game-actions" id="colorActions">
+          <button class="btn-game btn-game-primary" id="btnColorNext" onclick="nextColorQuestion()" style="display:none;">▶ 다음 문제</button>
+          <button class="btn-game btn-game-secondary" onclick="startColorGame()">🔄 새로 시작</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 계절 놀이 -->
+    <div class="game-panel" id="panel-season">
+      <div class="game-card">
+        <div class="score-bar">
+          <span class="score-pill">✅ 맞힌 것: <span id="seasonCorrect">0</span>개</span>
+          <span class="score-pill">📋 문제: <span id="seasonQ">1</span> / 4</span>
+        </div>
+        <div class="game-question">
+          <span class="game-question-label" id="seasonQuestion">지금 어떤 계절일까요?</span>
+        </div>
+        <div class="season-grid" id="seasonGrid"></div>
+        <div class="feedback-banner" id="seasonFeedback"></div>
+        <div class="stamp-area" id="seasonStamp">
+          <span class="stamp-icon">🌺</span>
+          <span class="stamp-msg">계절을 모두 알아보셨어요!</span>
+          <p class="stamp-sub">토리가 꽃 도장을 드려요 🌸</p>
+          <div class="game-actions" style="margin-top:16px;">
+            <button class="btn-game btn-game-primary" onclick="startSeasonGame()">🔄 다시 놀기</button>
+            <a href="index.html" class="btn-game btn-game-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">🏠 처음으로</a>
+          </div>
+        </div>
+        <div class="game-actions" id="seasonActions">
+          <button class="btn-game btn-game-primary" id="btnSeasonNext" onclick="nextSeasonQuestion()" style="display:none;">▶ 다음 문제</button>
+          <button class="btn-game btn-game-secondary" onclick="startSeasonGame()">🔄 새로 시작</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ 동물 맞히기 -->
+    <div class="game-panel" id="panel-animal">
+      <div class="game-card">
+        <div class="score-bar">
+          <span class="score-pill">✅ 맞힌 것: <span id="animalCorrect">0</span>개</span>
+          <span class="score-pill">📋 문제: <span id="animalQ">1</span> / 5</span>
+        </div>
+        <div class="game-question">
+          <span class="game-question-label" id="animalQuestion">이 동물은 무엇일까요?</span>
+          <span class="game-question-target" id="animalTarget">🐕</span>
+        </div>
+        <div class="color-grid" id="animalGrid"></div>
+        <div class="feedback-banner" id="animalFeedback"></div>
+        <div class="stamp-area" id="animalStamp">
+          <span class="stamp-icon">🐾</span>
+          <span class="stamp-msg">동물 박사가 되셨어요!</span>
+          <p class="stamp-sub">토리가 별 도장을 드려요 ⭐</p>
+          <div class="game-actions" style="margin-top:16px;">
+            <button class="btn-game btn-game-primary" onclick="startAnimalGame()">🔄 다시 놀기</button>
+            <a href="index.html" class="btn-game btn-game-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">🏠 처음으로</a>
+          </div>
+        </div>
+        <div class="game-actions" id="animalActions">
+          <button class="btn-game btn-game-primary" id="btnAnimalNext" onclick="nextAnimalQuestion()" style="display:none;">▶ 다음 문제</button>
+          <button class="btn-game btn-game-secondary" onclick="startAnimalGame()">🔄 새로 시작</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>🐰 토리와 함께하는 즐거운 놀이방 · 디지털 AI 학교</p>
+    <p style="margin-top:6px;"><a href="index.html" style="color:#be185d;">학교 홈으로 돌아가기</a></p>
+  </footer>
+
+<script>
+(function() {
+  'use strict';
+  const STAMPS_KEY = 'senior_stamps_v1';
+  const speak = (t) => {
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(t);
+    u.lang = 'ko-KR'; u.rate = 0.82; u.pitch = 1.05;
+    const voices = speechSynthesis.getVoices();
+    const ko = voices.find(v => v.lang.startsWith('ko'));
+    if (ko) u.voice = ko;
+    speechSynthesis.speak(u);
+  };
+  const giveStamp = (type) => {
+    const stamps = JSON.parse(localStorage.getItem(STAMPS_KEY) || '[]');
+    stamps.push({ type, date: new Date().toISOString(), source: 'tori-play' });
+    localStorage.setItem(STAMPS_KEY, JSON.stringify(stamps));
+  };
+  // Last activity record
+  localStorage.setItem('senior_last_activity', JSON.stringify({ page: '토리의 놀이방', url: 'tori-play.html', date: new Date().toISOString() }));
+
+  // ── TAB SWITCHING ──
+  document.querySelectorAll('.tp-game-tab[data-game]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tp-game-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active'); tab.setAttribute('aria-selected','true');
+      const panel = document.getElementById('panel-' + tab.dataset.game);
+      if (panel) panel.classList.add('active');
+      const msgs = { match:'같은 그림을 찾아보세요!', color:'색깔을 맞춰보세요!', season:'계절을 맞춰보세요!', animal:'동물 이름을 맞춰보세요!' };
+      document.getElementById('toriSpeech').textContent = '"' + (msgs[tab.dataset.game] || '재미있게 놀아요!') + '"';
+    });
+  });
+
+  // ── Voice button ──
+  document.getElementById('btnToriVoice').addEventListener('click', () => {
+    speak('토리의 놀이방이에요. 위에 있는 놀이 버튼을 눌러 원하는 놀이를 선택하세요. 같은 그림 찾기, 색깔 맞추기, 계절 놀이, 동물 맞히기가 있어요.');
+  });
+
+  // ══════════════════════════════════════════════
+  // ① 같은 그림 찾기
+  // ══════════════════════════════════════════════
+  const MATCH_SETS = [
+    { target:'🌸', options:['🌸','🌼','🌺','🌻','🌹','🌷'], answer:'🌸' },
+    { target:'🍎', options:['🍊','🍋','🍎','🍇','🍓','🍑'], answer:'🍎' },
+    { target:'🐶', options:['🐱','🐶','🐸','🐭','🐰','🐻'], answer:'🐶' },
+    { target:'🌈', options:['⭐','🌙','🌈','☁️','❄️','🌞'], answer:'🌈' },
+    { target:'🎵', options:['🎵','🎺','🎸','🎷','🎻','🥁'], answer:'🎵' }
+  ];
+  let matchIdx = 0, matchCorrect = 0, matchSelected = false;
+  window.startMatchGame = function() {
+    matchIdx = 0; matchCorrect = 0; matchSelected = false;
+    document.getElementById('matchCorrect').textContent = 0;
+    document.getElementById('matchStamp').classList.remove('show');
+    document.getElementById('matchFeedback').style.display = 'none';
+    document.getElementById('btnMatchNext').style.display = 'none';
+    renderMatchQuestion();
+  };
+  function renderMatchQuestion() {
+    if (matchIdx >= MATCH_SETS.length) { finishMatch(); return; }
+    const q = MATCH_SETS[matchIdx];
+    document.getElementById('matchQ').textContent = matchIdx + 1;
+    document.getElementById('matchTarget').textContent = q.target;
+    matchSelected = false;
+    document.getElementById('matchFeedback').style.display = 'none';
+    document.getElementById('btnMatchNext').style.display = 'none';
+    const grid = document.getElementById('matchGrid');
+    const opts = [...q.options].sort(() => Math.random() - 0.5);
+    grid.innerHTML = '';
+    opts.forEach(em => {
+      const c = document.createElement('button');
+      c.className = 'match-card'; c.textContent = em;
+      c.setAttribute('aria-label', em + ' 선택');
+      c.addEventListener('click', () => {
+        if (matchSelected) return;
+        matchSelected = true;
+        if (em === q.answer) {
+          c.classList.add('correct');
+          matchCorrect++;
+          document.getElementById('matchCorrect').textContent = matchCorrect;
+          showFeedback('matchFeedback', true);
+          speak('맞았어요! 정말 잘하셨어요!');
+        } else {
+          c.classList.add('wrong');
+          showFeedback('matchFeedback', false);
+          speak('괜찮아요. 다시 한번 해볼까요?');
+          setTimeout(() => {
+            c.classList.remove('wrong');
+            matchSelected = false;
+            document.getElementById('matchFeedback').style.display = 'none';
+          }, 1500);
+          return;
+        }
+        document.getElementById('btnMatchNext').style.display = 'inline-flex';
+      });
+      grid.appendChild(c);
+    });
+    speak('아래에서 ' + q.target + '을(를) 찾아보세요!');
+  }
+  function finishMatch() {
+    document.getElementById('matchGrid').innerHTML = '';
+    document.getElementById('matchFeedback').style.display = 'none';
+    document.getElementById('matchStamp').classList.add('show');
+    giveStamp('flower');
+    speak('정말 잘하셨어요! 토리가 꽃 도장을 드려요!');
+  }
+  window.nextMatchQuestion = function() { matchIdx++; renderMatchQuestion(); };
+  function showFeedback(id, good) {
+    const el = document.getElementById(id);
+    el.className = 'feedback-banner ' + (good ? 'good' : 'retry');
+    el.textContent = good ? '👏 정말 잘하셨어요!' : '😊 괜찮아요. 다시 한번 해볼까요?';
+    el.style.display = 'block';
+  }
+
+  // ══════════════════════════════════════════════
+  // ② 색깔 맞추기
+  // ══════════════════════════════════════════════
+  const COLOR_SETS = [
+    { emoji:'🌹', question:'이 꽃은 무슨 색일까요?', answer:'빨간색', options:[{text:'빨간색',bg:'#ef4444',color:'#fff'},{text:'파란색',bg:'#3b82f6',color:'#fff'},{text:'노란색',bg:'#eab308',color:'#fff'},{text:'초록색',bg:'#22c55e',color:'#fff'}] },
+    { emoji:'🍋', question:'이 과일은 무슨 색일까요?', answer:'노란색', options:[{text:'빨간색',bg:'#ef4444',color:'#fff'},{text:'보라색',bg:'#a855f7',color:'#fff'},{text:'노란색',bg:'#eab308',color:'#fff'},{text:'갈색',bg:'#92400e',color:'#fff'}] },
+    { emoji:'🍇', question:'이 과일은 무슨 색일까요?', answer:'보라색', options:[{text:'초록색',bg:'#22c55e',color:'#fff'},{text:'보라색',bg:'#a855f7',color:'#fff'},{text:'주황색',bg:'#f97316',color:'#fff'},{text:'흰색',bg:'#f3f4f6',color:'#374151'}] },
+    { emoji:'🌊', question:'바다는 무슨 색일까요?', answer:'파란색', options:[{text:'파란색',bg:'#3b82f6',color:'#fff'},{text:'빨간색',bg:'#ef4444',color:'#fff'},{text:'노란색',bg:'#eab308',color:'#fff'},{text:'분홍색',bg:'#ec4899',color:'#fff'}] },
+    { emoji:'🌿', question:'풀잎은 무슨 색일까요?', answer:'초록색', options:[{text:'보라색',bg:'#a855f7',color:'#fff'},{text:'주황색',bg:'#f97316',color:'#fff'},{text:'초록색',bg:'#22c55e',color:'#fff'},{text:'하늘색',bg:'#38bdf8',color:'#fff'}] }
+  ];
+  let colorIdx = 0, colorCorrect = 0, colorSelected = false;
+  window.startColorGame = function() {
+    colorIdx = 0; colorCorrect = 0; colorSelected = false;
+    document.getElementById('colorCorrect').textContent = 0;
+    document.getElementById('colorStamp').classList.remove('show');
+    document.getElementById('colorFeedback').style.display = 'none';
+    document.getElementById('btnColorNext').style.display = 'none';
+    renderColorQuestion();
+  };
+  function renderColorQuestion() {
+    if (colorIdx >= COLOR_SETS.length) { finishColor(); return; }
+    const q = COLOR_SETS[colorIdx];
+    document.getElementById('colorQ').textContent = colorIdx + 1;
+    document.getElementById('colorTarget').textContent = q.emoji;
+    document.getElementById('colorQuestion').textContent = q.question;
+    colorSelected = false;
+    document.getElementById('colorFeedback').style.display = 'none';
+    document.getElementById('btnColorNext').style.display = 'none';
+    const grid = document.getElementById('colorGrid');
+    const opts = [...q.options].sort(() => Math.random() - 0.5);
+    grid.innerHTML = '';
+    opts.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'color-btn';
+      btn.style.cssText = `background:${opt.bg}; color:${opt.color}; border-color:${opt.bg};`;
+      btn.textContent = opt.text;
+      btn.setAttribute('aria-label', opt.text + ' 선택');
+      btn.addEventListener('click', () => {
+        if (colorSelected) return;
+        colorSelected = true;
+        if (opt.text === q.answer) {
+          btn.classList.add('correct');
+          colorCorrect++;
+          document.getElementById('colorCorrect').textContent = colorCorrect;
+          showFeedback('colorFeedback', true);
+          speak('맞았어요! 정말 잘하셨어요!');
+          document.getElementById('btnColorNext').style.display = 'inline-flex';
+        } else {
+          btn.classList.add('wrong');
+          showFeedback('colorFeedback', false);
+          speak('괜찮아요. 다시 한번 해볼까요?');
+          setTimeout(() => { btn.classList.remove('wrong'); colorSelected = false; document.getElementById('colorFeedback').style.display = 'none'; }, 1500);
+        }
+      });
+      grid.appendChild(btn);
+    });
+    speak(q.question);
+  }
+  function finishColor() {
+    document.getElementById('colorGrid').innerHTML = '';
+    document.getElementById('colorFeedback').style.display = 'none';
+    document.getElementById('colorStamp').classList.add('show');
+    giveStamp('star');
+    speak('색깔 박사가 되셨어요! 별 도장을 드려요!');
+  }
+  window.nextColorQuestion = function() { colorIdx++; renderColorQuestion(); };
+
+  // ══════════════════════════════════════════════
+  // ③ 계절 놀이
+  // ══════════════════════════════════════════════
+  const SEASON_SETS = [
+    { question:'벚꽃이 피고 날씨가 따뜻해지는 계절은?', answer:'봄', hint:'봄에는 예쁜 꽃이 피어요' },
+    { question:'날씨가 덥고 바다에 가는 계절은?', answer:'여름', hint:'여름에는 수박을 먹어요' },
+    { question:'단풍이 들고 나뭇잎이 떨어지는 계절은?', answer:'가을', hint:'가을에는 고구마를 구워요' },
+    { question:'눈이 내리고 날씨가 추운 계절은?', answer:'겨울', hint:'겨울에는 따뜻한 군고구마를 먹어요' }
+  ];
+  const SEASONS = [
+    { name:'봄', icon:'🌸' }, { name:'여름', icon:'☀️' },
+    { name:'가을', icon:'🍂' }, { name:'겨울', icon:'❄️' }
+  ];
+  let seasonIdx = 0, seasonCorrect = 0, seasonSelected = false;
+  window.startSeasonGame = function() {
+    seasonIdx = 0; seasonCorrect = 0; seasonSelected = false;
+    const shuffled = [...SEASON_SETS].sort(() => Math.random() - 0.5);
+    window._seasonQs = shuffled;
+    document.getElementById('seasonCorrect').textContent = 0;
+    document.getElementById('seasonStamp').classList.remove('show');
+    document.getElementById('seasonFeedback').style.display = 'none';
+    document.getElementById('btnSeasonNext').style.display = 'none';
+    renderSeasonQuestion();
+  };
+  function renderSeasonQuestion() {
+    if (seasonIdx >= window._seasonQs.length) { finishSeason(); return; }
+    const q = window._seasonQs[seasonIdx];
+    document.getElementById('seasonQ').textContent = seasonIdx + 1;
+    document.getElementById('seasonQuestion').textContent = q.question;
+    seasonSelected = false;
+    document.getElementById('seasonFeedback').style.display = 'none';
+    document.getElementById('btnSeasonNext').style.display = 'none';
+    const grid = document.getElementById('seasonGrid');
+    grid.innerHTML = '';
+    SEASONS.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'season-btn';
+      btn.innerHTML = `<span class="season-icon">${s.icon}</span><span>${s.name}</span>`;
+      btn.setAttribute('aria-label', s.name + ' 선택');
+      btn.addEventListener('click', () => {
+        if (seasonSelected) return;
+        seasonSelected = true;
+        if (s.name === q.answer) {
+          btn.classList.add('correct');
+          seasonCorrect++;
+          document.getElementById('seasonCorrect').textContent = seasonCorrect;
+          showFeedback('seasonFeedback', true);
+          speak('맞았어요! ' + q.hint);
+          document.getElementById('btnSeasonNext').style.display = 'inline-flex';
+        } else {
+          btn.classList.add('wrong');
+          showFeedback('seasonFeedback', false);
+          speak('괜찮아요. 다시 한번 생각해볼까요? ' + q.hint);
+          setTimeout(() => { btn.classList.remove('wrong'); seasonSelected = false; document.getElementById('seasonFeedback').style.display = 'none'; }, 2000);
+        }
+      });
+      grid.appendChild(btn);
+    });
+    speak(q.question);
+  }
+  function finishSeason() {
+    document.getElementById('seasonGrid').innerHTML = '';
+    document.getElementById('seasonFeedback').style.display = 'none';
+    document.getElementById('seasonStamp').classList.add('show');
+    giveStamp('flower');
+    speak('계절을 모두 알아보셨어요! 꽃 도장을 드려요!');
+  }
+  window.nextSeasonQuestion = function() { seasonIdx++; renderSeasonQuestion(); };
+
+  // ══════════════════════════════════════════════
+  // ④ 동물 맞히기
+  // ══════════════════════════════════════════════
+  const ANIMAL_SETS = [
+    { emoji:'🐕', question:'이 동물은 무엇일까요?', answer:'강아지', options:['강아지','고양이','토끼','곰'] },
+    { emoji:'🐈', question:'야옹 하고 우는 동물은?', answer:'고양이', options:['강아지','고양이','소','돼지'] },
+    { emoji:'🐄', question:'음매 하고 우는 동물은?', answer:'소', options:['말','소','닭','양'] },
+    { emoji:'🐓', question:'꼬끼오 하고 우는 동물은?', answer:'닭', options:['오리','닭','참새','비둘기'] },
+    { emoji:'🐟', question:'물속에서 헤엄치는 이 동물은?', answer:'물고기', options:['물고기','새','개구리','뱀'] }
+  ];
+  let animalIdx = 0, animalCorrect = 0, animalSelected = false;
+  window.startAnimalGame = function() {
+    animalIdx = 0; animalCorrect = 0; animalSelected = false;
+    document.getElementById('animalCorrect').textContent = 0;
+    document.getElementById('animalStamp').classList.remove('show');
+    document.getElementById('animalFeedback').style.display = 'none';
+    document.getElementById('btnAnimalNext').style.display = 'none';
+    renderAnimalQuestion();
+  };
+  function renderAnimalQuestion() {
+    if (animalIdx >= ANIMAL_SETS.length) { finishAnimal(); return; }
+    const q = ANIMAL_SETS[animalIdx];
+    document.getElementById('animalQ').textContent = animalIdx + 1;
+    document.getElementById('animalTarget').textContent = q.emoji;
+    document.getElementById('animalQuestion').textContent = q.question;
+    animalSelected = false;
+    document.getElementById('animalFeedback').style.display = 'none';
+    document.getElementById('btnAnimalNext').style.display = 'none';
+    const grid = document.getElementById('animalGrid');
+    const opts = [...q.options].sort(() => Math.random() - 0.5);
+    grid.innerHTML = '';
+    const colors = ['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'];
+    opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'color-btn';
+      btn.style.cssText = `background:${colors[i]}; color:#1f2937; border-color:${colors[i]};`;
+      btn.style.fontSize = '22px';
+      btn.textContent = opt;
+      btn.addEventListener('click', () => {
+        if (animalSelected) return;
+        animalSelected = true;
+        if (opt === q.answer) {
+          btn.classList.add('correct');
+          animalCorrect++;
+          document.getElementById('animalCorrect').textContent = animalCorrect;
+          showFeedback('animalFeedback', true);
+          speak('맞았어요! 정말 잘하셨어요!');
+          document.getElementById('btnAnimalNext').style.display = 'inline-flex';
+        } else {
+          btn.classList.add('wrong');
+          showFeedback('animalFeedback', false);
+          speak('괜찮아요. 다시 한번 해볼까요?');
+          setTimeout(() => { btn.classList.remove('wrong'); animalSelected = false; document.getElementById('animalFeedback').style.display = 'none'; }, 1500);
+        }
+      });
+      grid.appendChild(btn);
+    });
+    speak(q.question);
+  }
+  function finishAnimal() {
+    document.getElementById('animalGrid').innerHTML = '';
+    document.getElementById('animalFeedback').style.display = 'none';
+    document.getElementById('animalStamp').classList.add('show');
+    giveStamp('star');
+    speak('동물 박사가 되셨어요! 별 도장을 드려요!');
+  }
+  window.nextAnimalQuestion = function() { animalIdx++; renderAnimalQuestion(); };
+
+  // ── Init ──
+  speechSynthesis.onvoiceschanged = () => {};
+  startMatchGame();
+  startColorGame();
+  startSeasonGame();
+  startAnimalGame();
+
+  speak('토리의 놀이방에 어서 오세요! 위에 있는 놀이 버튼을 눌러 원하는 놀이를 골라보세요.');
+})();
+</script>
+</body>
+</html>

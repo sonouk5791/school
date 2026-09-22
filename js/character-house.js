@@ -305,15 +305,33 @@
 
   // --- RENDER VIEWS ---
   function init() {
+    // Ensure all modals are closed initially
+    if ($('completeView')) {
+      $('completeView').hidden = true;
+      $('completeView').style.display = 'none';
+    }
+    if ($('resetModal')) {
+      $('resetModal').hidden = true;
+      $('resetModal').style.display = 'none';
+    }
+
+    renderCharCards();
+    setupGlobalEvents();
+
+    // Check URL parameter (?char=kongi|tori|nabi|bori)
+    const urlParams = new URLSearchParams(window.location.search);
+    const charParam = urlParams.get('char');
+    if (charParam && CHARACTERS[charParam]) {
+      selectCharacter(charParam);
+      return;
+    }
+
     const saved = loadFromStorage();
     if (saved) {
       $('resumeBanner').hidden = false;
       const charInfo = CHARACTERS[saved.currentCharId] || CHARACTERS.kongi;
       $('resumeCharText').textContent = `지난번에 꾸미던 [${charInfo.charName}의 ${charInfo.theme}]이 저장되어 있어요.`;
     }
-
-    renderCharCards();
-    setupGlobalEvents();
   }
 
   function renderCharCards() {
@@ -354,6 +372,27 @@
     $('chLocationBadge').innerHTML = '지금은 <strong>캐릭터 친구 선택</strong> 화면이에요';
   }
 
+  function goToSelectScreen() {
+    state.screen = 'select';
+    $('studioScreen').hidden = true;
+    $('studioScreen').style.display = 'none';
+    $('selectScreen').hidden = false;
+    $('selectScreen').style.display = 'block';
+
+    const saved = loadFromStorage();
+    if (saved) {
+      $('resumeBanner').hidden = false;
+      $('resumeBanner').style.display = 'flex';
+      const charInfo = CHARACTERS[saved.currentCharId] || CHARACTERS.kongi;
+      $('resumeCharText').textContent = `지난번에 꾸미던 [${charInfo.charName}의 ${charInfo.theme}]이 저장되어 있어요.`;
+    }
+
+    $('chLocationBadge').innerHTML = '지금은 <strong>캐릭터 친구 선택</strong> 화면이에요';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast('🏡 다른 친구의 방도 골라보세요.');
+    speak('누구의 집을 꾸며볼까요? 마음에 드는 친구를 선택해주세요.');
+  }
+
   function selectCharacter(charId, resumeData = null) {
     state.currentCharId = charId;
     state.screen = 'studio';
@@ -376,8 +415,11 @@
     pushHistory();
 
     $('selectScreen').hidden = true;
+    $('selectScreen').style.display = 'none';
     $('resumeBanner').hidden = true;
+    $('resumeBanner').style.display = 'none';
     $('studioScreen').hidden = false;
+    $('studioScreen').style.display = 'block';
 
     const charInfo = CHARACTERS[charId];
     $('stageTitle').textContent = `🏡 ${charInfo.name} (${charInfo.theme})`;
@@ -853,10 +895,12 @@
 
     $('btnBottomReset').addEventListener('click', () => {
       $('resetModal').hidden = false;
+      $('resetModal').style.display = 'flex';
     });
 
     $('btnConfirmResetYes').addEventListener('click', () => {
       $('resetModal').hidden = true;
+      $('resetModal').style.display = 'none';
       pushHistory();
       state.placedItems = [];
       state.selectedItemUid = null;
@@ -867,6 +911,7 @@
 
     $('btnConfirmResetNo').addEventListener('click', () => {
       $('resetModal').hidden = true;
+      $('resetModal').style.display = 'none';
     });
 
     $('btnBottomHelp').addEventListener('click', () => {
@@ -879,15 +924,30 @@
       saveToStorage();
       awardStamp();
       const charInfo = CHARACTERS[state.currentCharId];
-      $('completeCharImg').src = charInfo.completeImg;
-      $('completeDesc').textContent = `어르신의 따뜻한 손길로 ${charInfo.charName}의 ${charInfo.theme}이 반짝반짝 완성되었습니다.`;
+      if (charInfo) {
+        $('completeCharImg').src = charInfo.completeImg;
+        $('completeDesc').textContent = `어르신의 따뜻한 손길로 ${charInfo.charName}의 ${charInfo.theme}이 반짝반짝 완성되었습니다.`;
+      }
       $('completeView').hidden = false;
-      speak(`오늘도 정말 잘하셨어요! 어르신 덕분에 ${charInfo.charName}의 방이 최고로 멋지게 완성되었습니다.`);
+      $('completeView').style.display = 'flex';
+      const charName = charInfo ? charInfo.charName : '친구';
+      speak(`오늘도 정말 잘하셨어요! 어르신 덕분에 ${charName}의 방이 최고로 멋지게 완성되었습니다.`);
     });
 
     $('btnCloseComplete').addEventListener('click', () => {
       $('completeView').hidden = true;
+      $('completeView').style.display = 'none';
+      goToSelectScreen();
     });
+
+    const btnKeep = $('btnKeepDecorating');
+    if (btnKeep) {
+      btnKeep.addEventListener('click', () => {
+        $('completeView').hidden = true;
+        $('completeView').style.display = 'none';
+        showToast('✏️ 방을 계속 더 꾸며보세요.');
+      });
+    }
 
     // Resume Banner Buttons
     $('btnResumeWork').addEventListener('click', () => {

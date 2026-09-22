@@ -27,6 +27,10 @@
   padding: 0;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   background-color: var(--ch-bg);
   color: var(--ch-text-main);
@@ -791,6 +795,13 @@ body {
   justify-content: center;
   padding: 20px;
   z-index: 200;
+}
+
+.ch-modal-overlay[hidden],
+.ch-complete-view[hidden],
+#resetModal[hidden],
+#completeView[hidden] {
+  display: none !important;
 }
 
 .ch-modal-card, .ch-complete-card {

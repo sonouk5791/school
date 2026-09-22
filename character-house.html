@@ -178,7 +178,7 @@
     </nav>
 
     <!-- Reset Confirm Modal -->
-    <div id="resetModal" class="ch-modal-overlay" hidden>
+    <div id="resetModal" class="ch-modal-overlay" style="display: none;" hidden>
       <div class="ch-modal-card">
         <h2>처음 모습으로 돌아갈까요?</h2>
         <p>지금까지 배치한 물건들이 처음으로 돌아갑니다.</p>
@@ -190,7 +190,7 @@
     </div>
 
     <!-- Complete View Modal (칭찬 & 도장 발급) -->
-    <div id="completeView" class="ch-complete-view" hidden>
+    <div id="completeView" class="ch-complete-view" style="display: none;" hidden>
       <div class="ch-complete-card">
         <div class="ch-complete-header">
           <div class="ch-stamp-badge" id="chStampBadge">🌸 참 잘하셨어요! 도장 획득</div>
@@ -202,10 +202,18 @@
           <img id="completeCharImg" src="assets/images/kongi-home-decorating.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;" alt="완성된 집">
         </div>
 
-        <div class="ch-complete-footer">
-          <button id="btnCloseComplete" class="ch-modal-btn primary" type="button" style="font-size: 24px; padding: 16px 36px;">
-            👏 자랑스럽게 집 구경 마치기
+        <div class="ch-complete-footer" style="display: flex; flex-direction: column; gap: 12px; align-items: stretch;">
+          <button id="btnCloseComplete" class="ch-modal-btn primary" type="button" style="font-size: 22px; padding: 16px 24px;">
+            👏 자랑스럽게 집 구경 마치기 (친구 선택으로)
           </button>
+          <div style="display: flex; gap: 10px; justify-content: center;">
+            <button id="btnKeepDecorating" class="ch-modal-btn cancel" type="button" style="font-size: 19px; padding: 14px 20px; flex: 1;">
+              ✏️ 계속 더 꾸미기
+            </button>
+            <a href="index.html" class="ch-modal-btn" style="font-size: 19px; padding: 14px 20px; flex: 1; background: #e65100; color: #fff; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; border-radius: 16px; font-weight: 800;">
+              🏠 처음 홈으로
+            </a>
+          </div>
         </div>
       </div>
     </div>

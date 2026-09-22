@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f0ff">
+  <title>나비의 학습방 · 디지털 AI 학교</title>
+  <meta name="description" content="치매·인지저하 어르신을 위한 나비의 학습방 — 오늘 날짜, 계절, 속담, 숫자 등 부담 없는 인지 학습">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      background: linear-gradient(160deg, #f5f0ff 0%, #ede9fe 40%, #e9d5ff 100%);
+      min-height: 100vh;
+      color: #2e1065;
+    }
+
+    /* ── Header ── */
+    .nl-header {
+      background: rgba(255,255,255,0.93);
+      backdrop-filter: blur(12px);
+      border-bottom: 3px solid #c4b5fd;
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nl-back-link {
+      font-size: 20px; font-weight: 800; color: #7c3aed;
+      text-decoration: none; min-height: 48px;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 12px;
+      background: #f5f0ff; border: 2px solid #c4b5fd;
+      transition: background 0.2s;
+    }
+    .nl-back-link:hover { background: #ede9fe; }
+    .nl-location { font-size: 18px; font-weight: 800; color: #7c3aed;
+      background: #ede9fe; padding: 8px 16px; border-radius: 12px;
+      border: 1px solid #c4b5fd; }
+    .nl-voice-btn {
+      min-height: 48px; padding: 8px 16px; font-size: 16px; font-weight: 800;
+      background: #f5f0ff; color: #7c3aed; border: 2px solid #c4b5fd;
+      border-radius: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      font-family: inherit;
+    }
+    .nl-voice-btn:hover { background: #ede9fe; }
+
+    /* ── Hero ── */
+    .nl-hero {
+      text-align: center; padding: 36px 20px 20px;
+    }
+    .nl-char-img {
+      width: 130px; height: 130px; object-fit: contain;
+      filter: drop-shadow(0 6px 16px rgba(124,58,237,0.22));
+      animation: nabi-float 3.5s ease-in-out infinite;
+    }
+    @keyframes nabi-float {
+      0%,100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+    .nl-hero h1 { font-size: clamp(24px,5vw,38px); font-weight:900; color:#5b21b6; margin:12px 0 6px; }
+    .nl-hero p { font-size:18px; color:#7c3aed; line-height:1.5; }
+    .nl-speech {
+      display: inline-block; background: #fff; border: 2px solid #c4b5fd;
+      border-radius: 20px; padding: 12px 22px; margin-top: 14px;
+      font-size: 18px; color: #5b21b6; font-weight: 700; max-width: 480px;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.1);
+    }
+
+    /* ── Subject Menu ── */
+    .nl-menu {
+      max-width: 860px; margin: 0 auto; padding: 10px 20px 18px;
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+    }
+    .nl-tab {
+      min-height: 52px; padding: 10px 22px; font-size: 17px; font-weight: 800;
+      border-radius: 16px; border: 3px solid #c4b5fd; cursor: pointer;
+      background: #fff; color: #7c3aed; font-family: inherit;
+      transition: all 0.2s; flex: 1; min-width: 130px; text-align: center;
+    }
+    .nl-tab.active {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+      color: #fff; border-color: #6d28d9;
+      box-shadow: 0 4px 14px rgba(124,58,237,0.3);
+    }
+    .nl-tab:hover:not(.active) { background: #ede9fe; }
+
+    /* ── Learn Area ── */
+    .nl-area {
+      max-width: 780px; margin: 0 auto 40px; padding: 0 20px;
+    }
+    .learn-panel { display: none; }
+    .learn-panel.active { display: block; }
+
+    .learn-card {
+      background: #fff; border-radius: 28px; padding: 36px 28px;
+      border: 2px solid #c4b5fd; box-shadow: 0 8px 30px rgba(124,58,237,0.1);
+    }
+
+    /* Single Question Display */
+    .q-display {
+      text-align: center; margin-bottom: 28px;
+    }
+    .q-label {
+      font-size: 20px; font-weight: 700; color: #7c3aed;
+      display: block; margin-bottom: 14px;
+    }
+    .q-main {
+      font-size: clamp(26px, 6vw, 46px); font-weight: 900; color: #5b21b6;
+      line-height: 1.3; display: block;
+    }
+    .q-hint {
+      font-size: 17px; color: #9333ea; margin-top: 10px; display: block;
+      font-style: italic;
+    }
+
+    /* Answer Choices — Big Buttons */
+    .choice-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+      max-width: 540px; margin: 0 auto;
+    }
+    .choice-btn {
+      min-height: 80px; border-radius: 20px; border: 4px solid #c4b5fd;
+      background: #f5f0ff; font-size: clamp(18px, 3.5vw, 24px); font-weight: 800;
+      cursor: pointer; transition: all 0.2s; font-family: inherit;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+      color: #5b21b6; padding: 12px;
+    }
+    .choice-icon { font-size: clamp(28px, 6vw, 44px); }
+    .choice-btn:hover { background: #ede9fe; transform: scale(1.03); border-color: #7c3aed; }
+    .choice-btn.correct { border-color: #16a34a; background: #dcfce7; color: #15803d; animation: pop-in 0.4s; }
+    .choice-btn.wrong { border-color: #dc2626; background: #fee2e2; color: #dc2626; animation: shake 0.4s; }
+    @keyframes pop-in { 0%{transform:scale(0.9)} 50%{transform:scale(1.12)} 100%{transform:scale(1)} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+    .feedback-banner {
+      text-align: center; padding: 16px 20px; border-radius: 16px;
+      font-size: 21px; font-weight: 800; margin-top: 14px; display: none;
+    }
+    .feedback-banner.good { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
+    .feedback-banner.retry { background: #fff7ed; color: #c2410c; border: 2px solid #fed7aa; }
+
+    /* Progress */
+    .progress-bar-wrap { margin-bottom: 22px; }
+    .progress-label { font-size: 17px; color: #7c3aed; font-weight: 700; text-align: center; margin-bottom: 8px; }
+    .progress-track { height: 12px; background: #ede9fe; border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #a78bfa); border-radius: 10px; transition: width 0.4s; }
+
+    /* Actions */
+    .learn-actions {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 22px;
+    }
+    .btn-learn {
+      min-height: 54px; padding: 12px 28px; font-size: 18px; font-weight: 800;
+      border-radius: 16px; border: none; cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .btn-learn-primary {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+      color: #fff; box-shadow: 0 4px 14px rgba(124,58,237,0.3);
+    }
+    .btn-learn-primary:hover { transform: translateY(-2px); }
+    .btn-learn-secondary {
+      background: #fff; color: #7c3aed; border: 2px solid #c4b5fd;
+    }
+    .btn-learn-secondary:hover { background: #ede9fe; }
+
+    /* Stamp */
+    .stamp-area {
+      text-align: center; padding: 28px; background: #fff;
+      border-radius: 24px; border: 2px dashed #c4b5fd; margin-top: 20px;
+      display: none; animation: pop-in 0.5s;
+    }
+    .stamp-area.show { display: block; }
+    .stamp-icon { font-size: 72px; display: block; margin-bottom: 10px; }
+    .stamp-msg { font-size: 26px; font-weight: 900; color: #5b21b6; }
+    .stamp-sub { font-size: 17px; color: #7c3aed; margin-top: 8px; }
+
+    /* Today Date Panel */
+    .today-display {
+      background: linear-gradient(135deg, #ede9fe, #f5f0ff);
+      border-radius: 24px; padding: 32px 24px; text-align: center;
+      border: 2px solid #c4b5fd; margin-bottom: 20px;
+    }
+    .today-date-big { font-size: clamp(32px, 8vw, 60px); font-weight: 900; color: #5b21b6; margin: 8px 0; }
+    .today-day { font-size: clamp(22px, 5vw, 36px); font-weight: 700; color: #7c3aed; }
+    .today-label { font-size: 18px; color: #9333ea; margin-bottom: 8px; }
+
+    /* Proverbs */
+    .proverb-card {
+      background: linear-gradient(135deg, #ede9fe, #f5f0ff);
+      border-radius: 22px; padding: 28px; border: 2px solid #c4b5fd;
+      text-align: center; margin-bottom: 20px;
+    }
+    .proverb-text { font-size: clamp(22px, 4.5vw, 34px); font-weight: 900; color: #5b21b6; line-height: 1.4; margin-bottom: 16px; }
+    .proverb-meaning { font-size: 18px; color: #6d28d9; line-height: 1.6; display: none; }
+    .proverb-meaning.show { display: block; }
+
+    footer { text-align: center; color: #7c3aed; font-size: 16px; padding: 24px 20px 36px; opacity: 0.7; }
+
+    @media (max-width: 480px) {
+      .choice-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .nl-tab { font-size: 15px; padding: 8px 12px; min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nl-header">
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <a class="nl-back-link" href="index.html">🏠 처음으로</a>
+      <span class="nl-location">지금은 <strong>🐱 나비의 학습방</strong> 이에요</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <button id="btnNabiVoice" class="nl-voice-btn" type="button">🔊 설명 듣기</button>
+      <span style="font-size:16px; font-weight:700; color:#7c3aed;">📚 지혜로운 학습방</span>
+    </div>
+  </header>
+
+  <section class="nl-hero">
+    <img src="assets/images/friend-nabi.png" alt="나비" class="nl-char-img">
+    <h1>🐱 나비의 학습방</h1>
+    <p>천천히, 하나씩 알아봐요</p>
+    <div class="nl-speech" id="nabiSpeech">"잘 오셨어요! 오늘은 무엇을 알아볼까요?"</div>
+  </section>
+
+  <div class="nl-menu" role="tablist">
+    <button class="nl-tab active" data-learn="today" role="tab">📅 오늘 날짜</button>
+    <button class="nl-tab" data-learn="season" role="tab">🌸 계절 배우기</button>
+    <button class="nl-tab" data-learn="proverb" role="tab">📖 속담 이야기</button>
+    <button class="nl-tab" data-learn="number" role="tab">🔢 숫자 알기</button>
+    <a href="character-house.html?char=nabi" class="nl-tab" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">🏡 나비 집 꾸미기</a>
+  </div>
+
+  <main class="nl-area">
+
+    <!-- ① 오늘 날짜 -->
+    <div class="learn-panel active" id="panel-today">
+      <div class="learn-card">
+        <div class="today-display">
+          <span class="today-label">📅 오늘은</span>
+          <div class="today-date-big" id="todayDateBig"></div>
+          <div class="today-day" id="todayDayText"></div>
+        </div>
+
+        <div class="q-display">
+          <span class="q-label">오늘이 무슨 요일인지 골라보세요!</span>
+        </div>
+        <div class="choice-grid" id="dayChoiceGrid"></div>
+        <div class="feedback-banner" id="dayFeedback"></div>
+        <div class="stamp-area" id="dayStamp">
+          <span class="stamp-icon">⭐</span>
+          <span class="stamp-msg">날짜를 잘 알고 계세요!</span>
+          <p class="stamp-sub">나비가 별 도장을 드려요 ✨</p>
+          <div class="learn-actions" style="margin-top:16px;">
+            <button class="btn-learn btn-learn-primary" onclick="startDayLearn()">🔄 다시 해보기</button>
+            <a href="index.html" class="btn-learn btn-learn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">🏠 처음으로</a>
+          </div>
+        </div>
+        <div class="learn-actions" id="dayActions">
+          <button class="btn-learn btn-learn-secondary" onclick="startDayLearn()">🔄 새로 해보기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 계절 배우기 -->
+    <div class="learn-panel" id="panel-season">
+      <div class="learn-card">
+        <div class="progress-bar-wrap">
+          <div class="progress-label">문제 <span id="seasonLIdx">1</span> / 4</div>
+          <div class="progress-track"><div class="progress-fill" id="seasonLProgress" style="width:25%"></div></div>
+        </div>
+        <div class="q-display">
+          <span class="q-label" id="seasonLQuestion">지금 어떤 계절일까요?</span>
+          <span class="q-hint" id="seasonLHint"></span>
+        </div>
+        <div class="choice-grid" id="seasonLGrid"></div>
+        <div class="feedback-banner" id="seasonLFeedback"></div>
+        <div class="stamp-area" id="seasonLStamp">
+          <span class="stamp-icon">🌺</span>
+          <span class="stamp-msg">계절을 모두 알아보셨어요!</span>
+          <p class="stamp-sub">나비가 꽃 도장을 드려요 🌸</p>
+          <div class="learn-actions" style="margin-top:16px;">
+            <button class="btn-learn btn-learn-primary" onclick="startSeasonLearn()">🔄 다시 해보기</button>
+            <a href="index.html" class="btn-learn btn-learn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">🏠 처음으로</a>
+          </div>
+        </div>
+        <div class="learn-actions" id="seasonLActions">
+          <button class="btn-learn btn-learn-primary" id="btnSeasonLNext" style="display:none;" onclick="nextSeasonLearn()">▶ 다음 문제</button>
+          <button class="btn-learn btn-learn-secondary" onclick="startSeasonLearn()">🔄 새로 시작</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 속담 이야기 -->
+    <div class="learn-panel" id="panel-proverb">
+      <div class="learn-card">
+        <div class="progress-bar-wrap">
+          <div class="progress-label">속담 <span id="provIdx">1</span> / <span id="provTotal">6</span></div>
+          <div class="progress-track"><div class="progress-fill" id="provProgress" style="width:17%"></div></div>
+        </div>
+        <div class="proverb-card">
+          <div class="proverb-text" id="provText">가는 말이 고와야 오는 말이 곱다</div>
+          <div class="proverb-meaning" id="provMeaning">내가 남에게 좋게 대해야 남도 나에게 잘 대해줘요.</div>
+        </div>
+        <div class="q-display">
+          <span class="q-label" id="provQuestion">이 속담의 뜻을 골라보세요</span>
+        </div>
+        <div class="choice-grid" id="provGrid"></div>
+        <div class="feedback-banner" id="provFeedback"></div>
+        <div class="stamp-area" id="provStamp">
+          <span class="stamp-icon">📖</span>
+          <span class="stamp-msg">속담 선생님이 되셨어요!</span>
+          <p class="stamp-sub">나비가 별 도장을 드려요 ⭐</p>
+          <div class="learn-actions" style="margin-top:16px;">
+            <button class="btn-learn btn-learn-primary" onclick="startProvLearn()">🔄 다시 해보기</button>
+            <a href="index.html" class="btn-learn btn-learn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">🏠 처음으로</a>
+          </div>
+        </div>
+        <div class="learn-actions" id="provActions">
+          <button class="btn-learn btn-learn-primary" id="btnProvNext" style="display:none;" onclick="nextProvLearn()">▶ 다음 속담</button>
+          <button class="btn-learn btn-learn-secondary" onclick="startProvLearn()">🔄 처음부터</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ 숫자 알기 -->
+    <div class="learn-panel" id="panel-number">
+      <div class="learn-card">
+        <div class="progress-bar-wrap">
+          <div class="progress-label">문제 <span id="numIdx">1</span> / 5</div>
+          <div class="progress-track"><div class="progress-fill" id="numProgress" style="width:20%"></div></div>
+        </div>
+        <div class="q-display">
+          <span class="q-label" id="numQuestion">이 숫자는 몇일까요?</span>
+          <span class="q-main" id="numTarget">3</span>
+        </div>
+        <div class="choice-grid" id="numGrid"></div>
+        <div class="feedback-banner" id="numFeedback"></div>
+        <div class="stamp-area" id="numStamp">
+          <span class="stamp-icon">🔢</span>
+          <span class="stamp-msg">숫자를 모두 맞히셨어요!</span>
+          <p class="stamp-sub">나비가 꽃 도장을 드려요 🌸</p>
+          <div class="learn-actions" style="margin-top:16px;">
+            <button class="btn-learn btn-learn-primary" onclick="startNumLearn()">🔄 다시 해보기</button>
+            <a href="index.html" class="btn-learn btn-learn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">🏠 처음으로</a>
+          </div>
+        </div>
+        <div class="learn-actions" id="numActions">
+          <button class="btn-learn btn-learn-primary" id="btnNumNext" style="display:none;" onclick="nextNumLearn()">▶ 다음 문제</button>
+          <button class="btn-learn btn-learn-secondary" onclick="startNumLearn()">🔄 새로 시작</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>🐱 나비와 함께하는 따뜻한 학습방 · 디지털 AI 학교</p>
+    <p style="margin-top:6px;"><a href="index.html" style="color:#7c3aed;">학교 홈으로 돌아가기</a></p>
+  </footer>
+
+<script>
+(function() {
+  'use strict';
+  const STAMPS_KEY = 'senior_stamps_v1';
+  const speak = (t) => {
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(t);
+    u.lang = 'ko-KR'; u.rate = 0.80; u.pitch = 1.02;
+    const voices = speechSynthesis.getVoices();
+    const ko = voices.find(v => v.lang.startsWith('ko'));
+    if (ko) u.voice = ko;
+    speechSynthesis.speak(u);
+  };
+  const giveStamp = (type) => {
+    const stamps = JSON.parse(localStorage.getItem(STAMPS_KEY) || '[]');
+    stamps.push({ type, date: new Date().toISOString(), source: 'nabi-learn' });
+    localStorage.setItem(STAMPS_KEY, JSON.stringify(stamps));
+  };
+  const showFeedback = (id, good) => {
+    const el = document.getElementById(id);
+    el.className = 'feedback-banner ' + (good ? 'good' : 'retry');
+    el.textContent = good ? '👏 정말 잘하셨어요!' : '😊 괜찮아요. 다시 한번 생각해볼까요?';
+    el.style.display = 'block';
+  };
+
+  localStorage.setItem('senior_last_activity', JSON.stringify({ page: '나비의 학습방', url: 'nabi-learn.html', date: new Date().toISOString() }));
+
+  // ── TAB SWITCH ──
+  document.querySelectorAll('.nl-tab[data-learn]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.nl-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.learn-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.learn).classList.add('active');
+      const msgs = { today:'오늘 날짜를 알아볼까요?', season:'계절을 같이 배워봐요.', proverb:'재미있는 속담을 알아봐요.', number:'숫자를 맞춰볼까요?' };
+      document.getElementById('nabiSpeech').textContent = '"' + (msgs[tab.dataset.learn] || '천천히 해봐요.') + '"';
+    });
+  });
+
+  // ── Voice ──
+  document.getElementById('btnNabiVoice').addEventListener('click', () => {
+    speak('나비의 학습방이에요. 위에 있는 공부 버튼을 눌러 오늘 날짜, 계절 배우기, 속담 이야기, 숫자 알기 중 하나를 골라보세요.');
+  });
+
+  // ══════════════════════════════════════════
+  // ① 오늘 날짜
+  // ══════════════════════════════════════════
+  const DAYS = ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];
+  window.startDayLearn = function() {
+    const now = new Date();
+    const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate();
+    const day = DAYS[now.getDay()];
+    document.getElementById('todayDateBig').textContent = `${y}년 ${m}월 ${d}일`;
+    document.getElementById('todayDayText').textContent = day;
+    document.getElementById('dayFeedback').style.display = 'none';
+    document.getElementById('dayStamp').classList.remove('show');
+
+    // Build shuffled day choices
+    const correct = day;
+    const pool = [...DAYS].sort(() => Math.random() - 0.5).slice(0,3);
+    if (!pool.includes(correct)) { pool[Math.floor(Math.random()*3)] = correct; }
+    const opts = pool.sort(() => Math.random() - 0.5);
+    const grid = document.getElementById('dayChoiceGrid');
+    grid.innerHTML = '';
+    opts.forEach(o => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.innerHTML = `<span class="choice-icon">📅</span>${o}`;
+      btn.addEventListener('click', () => {
+        if (grid.querySelector('.correct,.wrong')) return;
+        if (o === correct) {
+          btn.classList.add('correct');
+          showFeedback('dayFeedback', true);
+          speak('맞았어요! 오늘은 ' + correct + '입니다!');
+          document.getElementById('dayStamp').classList.add('show');
+          giveStamp('star');
+        } else {
+          btn.classList.add('wrong');
+          showFeedback('dayFeedback', false);
+          speak('괜찮아요. 오늘은 ' + correct + '이에요. 다시 한번 눌러볼까요?');
+          setTimeout(() => { btn.classList.remove('wrong'); document.getElementById('dayFeedback').style.display = 'none'; }, 2000);
+        }
+      });
+      grid.appendChild(btn);
+    });
+    speak('오늘은 ' + y + '년 ' + m + '월 ' + d + '일 ' + day + '입니다. 오늘이 무슨 요일인지 골라보세요!');
+  };
+
+  // ══════════════════════════════════════════
+  // ② 계절 배우기
+  // ══════════════════════════════════════════
+  const SEASON_DATA = [
+    { q:'벚꽃이 피고 날씨가 따뜻해지는 계절은?', a:'봄', hint:'꽃이 활짝 피어요.', opts:[{icon:'🌸',name:'봄'},{icon:'☀️',name:'여름'},{icon:'🍂',name:'가을'},{icon:'❄️',name:'겨울'}] },
+    { q:'날씨가 덥고 수박을 먹는 계절은?', a:'여름', hint:'바다에 가고 싶어요.', opts:[{icon:'🌸',name:'봄'},{icon:'☀️',name:'여름'},{icon:'🍂',name:'가을'},{icon:'❄️',name:'겨울'}] },
+    { q:'나뭇잎이 빨갛고 노랗게 물드는 계절은?', a:'가을', hint:'고구마가 맛있어요.', opts:[{icon:'🌸',name:'봄'},{icon:'☀️',name:'여름'},{icon:'🍂',name:'가을'},{icon:'❄️',name:'겨울'}] },
+    { q:'눈이 내리고 날씨가 추운 계절은?', a:'겨울', hint:'두꺼운 옷을 입어요.', opts:[{icon:'🌸',name:'봄'},{icon:'☀️',name:'여름'},{icon:'🍂',name:'가을'},{icon:'❄️',name:'겨울'}] }
+  ];
+  let seasonLIdx = 0, seasonLSel = false;
+  window.startSeasonLearn = function() {
+    seasonLIdx = 0; seasonLSel = false;
+    document.getElementById('seasonLStamp').classList.remove('show');
+    document.getElementById('seasonLFeedback').style.display = 'none';
+    document.getElementById('btnSeasonLNext').style.display = 'none';
+    renderSeasonLearn();
+  };
+  function renderSeasonLearn() {
+    if (seasonLIdx >= SEASON_DATA.length) {
+      document.getElementById('seasonLGrid').innerHTML = '';
+      document.getElementById('seasonLFeedback').style.display = 'none';
+      document.getElementById('seasonLStamp').classList.add('show');
+      giveStamp('flower');
+      speak('계절을 모두 알아보셨어요! 나비가 꽃 도장을 드려요!');
+      return;
+    }
+    const q = SEASON_DATA[seasonLIdx];
+    document.getElementById('seasonLIdx').textContent = seasonLIdx + 1;
+    document.getElementById('seasonLProgress').style.width = ((seasonLIdx+1)/4*100) + '%';
+    document.getElementById('seasonLQuestion').textContent = q.q;
+    document.getElementById('seasonLHint').textContent = q.hint;
+    document.getElementById('seasonLFeedback').style.display = 'none';
+    document.getElementById('btnSeasonLNext').style.display = 'none';
+    seasonLSel = false;
+    const grid = document.getElementById('seasonLGrid');
+    grid.innerHTML = '';
+    q.opts.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.innerHTML = `<span class="choice-icon">${opt.icon}</span>${opt.name}`;
+      btn.addEventListener('click', () => {
+        if (seasonLSel) return;
+        seasonLSel = true;
+        if (opt.name === q.a) {
+          btn.classList.add('correct');
+          showFeedback('seasonLFeedback', true);
+          speak('맞았어요! ' + q.hint);
+          document.getElementById('btnSeasonLNext').style.display = 'inline-flex';
+        } else {
+          btn.classList.add('wrong');
+          showFeedback('seasonLFeedback', false);
+          speak('괜찮아요. 다시 한번 생각해볼까요? ' + q.hint);
+          setTimeout(() => { btn.classList.remove('wrong'); seasonLSel = false; document.getElementById('seasonLFeedback').style.display = 'none'; }, 2000);
+        }
+      });
+      grid.appendChild(btn);
+    });
+    speak(q.q);
+  }
+  window.nextSeasonLearn = function() { seasonLIdx++; renderSeasonLearn(); };
+
+  // ══════════════════════════════════════════
+  // ③ 속담 이야기
+  // ══════════════════════════════════════════
+  const PROVERBS = [
+    { text:'가는 말이 고와야 오는 말이 곱다', meaning:'내가 남에게 좋게 대해야 남도 나에게 잘 대해줘요.', q:'이 속담의 뜻은?', opts:['내가 좋게 대해야 남도 좋게 대해요','일찍 일어나야 좋아요','열심히 걸어야 해요','밥을 잘 먹어야 해요'], a:'내가 좋게 대해야 남도 좋게 대해요' },
+    { text:'백지장도 맞들면 낫다', meaning:'혼자 하기 어려운 일도 함께하면 쉬워져요.', q:'이 속담의 뜻은?', opts:['종이는 하얀 것이 좋아요','함께하면 더 쉬워져요','빨리 달려가야 해요','책을 많이 읽어야 해요'], a:'함께하면 더 쉬워져요' },
+    { text:'콩 심은 데 콩 나고 팥 심은 데 팥 난다', meaning:'좋은 씨앗을 심어야 좋은 것이 나와요.', q:'이 속담의 뜻은?', opts:['콩이 맛있어요','좋은 씨앗을 심어야 좋은 결과가 나와요','팥빙수가 맛있어요','밭에 가야 해요'], a:'좋은 씨앗을 심어야 좋은 결과가 나와요' },
+    { text:'세 살 버릇 여든까지 간다', meaning:'어릴 때 몸에 밴 습관은 어른이 되어서도 계속돼요.', q:'이 속담의 뜻은?', opts:['어릴 때 습관이 평생 가요','세 살이 귀여워요','여든까지 살아야 해요','아이가 빨리 자라야 해요'], a:'어릴 때 습관이 평생 가요' },
+    { text:'금강산도 식후경', meaning:'아무리 좋은 것도 배가 부른 다음이라야 즐길 수 있어요.', q:'이 속담의 뜻은?', opts:['산에 가면 좋아요','밥을 먹어야 즐길 수 있어요','금강산이 예뻐요','경치를 보면 좋아요'], a:'밥을 먹어야 즐길 수 있어요' },
+    { text:'원숭이도 나무에서 떨어진다', meaning:'잘하는 사람도 실수를 할 수 있어요.', q:'이 속담의 뜻은?', opts:['원숭이는 나무를 잘 타요','잘하는 사람도 실수를 해요','나무가 높아요','동물원에 가야 해요'], a:'잘하는 사람도 실수를 해요' }
+  ];
+  let provIdx = 0, provSel = false;
+  window.startProvLearn = function() {
+    provIdx = 0; provSel = false;
+    document.getElementById('provTotal').textContent = PROVERBS.length;
+    document.getElementById('provStamp').classList.remove('show');
+    document.getElementById('provFeedback').style.display = 'none';
+    document.getElementById('btnProvNext').style.display = 'none';
+    renderProvLearn();
+  };
+  function renderProvLearn() {
+    if (provIdx >= PROVERBS.length) {
+      document.getElementById('provGrid').innerHTML = '';
+      document.getElementById('provFeedback').style.display = 'none';
+      document.getElementById('provStamp').classList.add('show');
+      giveStamp('star');
+      speak('속담 선생님이 되셨어요! 별 도장을 드려요!');
+      return;
+    }
+    const p = PROVERBS[provIdx];
+    document.getElementById('provIdx').textContent = provIdx + 1;
+    document.getElementById('provProgress').style.width = ((provIdx+1)/PROVERBS.length*100) + '%';
+    document.getElementById('provText').textContent = p.text;
+    const mEl = document.getElementById('provMeaning');
+    mEl.textContent = p.meaning;
+    mEl.classList.remove('show');
+    document.getElementById('provQuestion').textContent = p.q;
+    document.getElementById('provFeedback').style.display = 'none';
+    document.getElementById('btnProvNext').style.display = 'none';
+    provSel = false;
+    const grid = document.getElementById('provGrid');
+    const opts = [...p.opts].sort(() => Math.random() - 0.5);
+    grid.innerHTML = '';
+    opts.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.style.fontSize = '17px';
+      btn.textContent = opt;
+      btn.addEventListener('click', () => {
+        if (provSel) return;
+        provSel = true;
+        if (opt === p.a) {
+          btn.classList.add('correct');
+          mEl.classList.add('show');
+          showFeedback('provFeedback', true);
+          speak('맞았어요! ' + p.meaning);
+          document.getElementById('btnProvNext').style.display = 'inline-flex';
+        } else {
+          btn.classList.add('wrong');
+          showFeedback('provFeedback', false);
+          speak('괜찮아요. ' + p.meaning);
+          mEl.classList.add('show');
+          setTimeout(() => { btn.classList.remove('wrong'); provSel = false; document.getElementById('provFeedback').style.display = 'none'; }, 2500);
+        }
+      });
+      grid.appendChild(btn);
+    });
+    speak(p.text + '. ' + p.q);
+  }
+  window.nextProvLearn = function() { provIdx++; renderProvLearn(); };
+
+  // ══════════════════════════════════════════
+  // ④ 숫자 알기
+  // ══════════════════════════════════════════
+  const NUM_SETS = [
+    { q:'이 숫자는 몇일까요?', target:'3', a:3, opts:[1,3,5,7] },
+    { q:'이 숫자는 몇일까요?', target:'7', a:7, opts:[4,6,7,9] },
+    { q:'사과가 몇 개일까요?', target:'🍎🍎🍎🍎', a:4, opts:[2,3,4,5] },
+    { q:'별이 몇 개일까요?', target:'⭐⭐⭐⭐⭐⭐', a:6, opts:[4,5,6,7] },
+    { q:'꽃이 몇 송이일까요?', target:'🌸🌸🌸', a:3, opts:[1,2,3,4] }
+  ];
+  let numIdx = 0, numSel = false;
+  window.startNumLearn = function() {
+    numIdx = 0; numSel = false;
+    document.getElementById('numStamp').classList.remove('show');
+    document.getElementById('numFeedback').style.display = 'none';
+    document.getElementById('btnNumNext').style.display = 'none';
+    renderNumLearn();
+  };
+  function renderNumLearn() {
+    if (numIdx >= NUM_SETS.length) {
+      document.getElementById('numGrid').innerHTML = '';
+      document.getElementById('numFeedback').style.display = 'none';
+      document.getElementById('numStamp').classList.add('show');
+      giveStamp('flower');
+      speak('숫자를 모두 맞히셨어요! 꽃 도장을 드려요!');
+      return;
+    }
+    const q = NUM_SETS[numIdx];
+    document.getElementById('numIdx').textContent = numIdx + 1;
+    document.getElementById('numProgress').style.width = ((numIdx+1)/5*100) + '%';
+    document.getElementById('numQuestion').textContent = q.q;
+    document.getElementById('numTarget').textContent = q.target;
+    document.getElementById('numFeedback').style.display = 'none';
+    document.getElementById('btnNumNext').style.display = 'none';
+    numSel = false;
+    const grid = document.getElementById('numGrid');
+    const opts = [...q.opts].sort(() => Math.random() - 0.5);
+    grid.innerHTML = '';
+    const colors = ['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'];
+    opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.style.background = colors[i]; btn.style.borderColor = colors[i];
+      btn.style.color = '#1f2937';
+      btn.innerHTML = `<span class="choice-icon" style="font-size:36px; font-weight:900;">${opt}</span>`;
+      btn.addEventListener('click', () => {
+        if (numSel) return;
+        numSel = true;
+        if (opt === q.a) {
+          btn.classList.add('correct');
+          showFeedback('numFeedback', true);
+          speak('맞았어요! ' + opt + '이에요!');
+          document.getElementById('btnNumNext').style.display = 'inline-flex';
+        } else {
+          btn.classList.add('wrong');
+          showFeedback('numFeedback', false);
+          speak('괜찮아요. 답은 ' + q.a + '이에요. 다시 한번 해볼까요?');
+          setTimeout(() => { btn.classList.remove('wrong'); numSel = false; document.getElementById('numFeedback').style.display = 'none'; }, 2000);
+        }
+      });
+      grid.appendChild(btn);
+    });
+    speak(q.q);
+  }
+  window.nextNumLearn = function() { numIdx++; renderNumLearn(); };
+
+  // ── Init ──
+  speechSynthesis.onvoiceschanged = () => {};
+  startDayLearn();
+  startSeasonLearn();
+  startProvLearn();
+  startNumLearn();
+  speak('나비의 학습방에 어서 오세요! 오늘 날짜, 계절, 속담, 숫자 중 하나를 골라 천천히 알아봐요.');
+})();
+</script>
+</body>
+</html>
