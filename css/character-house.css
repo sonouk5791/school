@@ -1256,3 +1256,51 @@ body {
 .ch-item-toolbar{position:static;transform:none;width:100%;border:1px solid #d5ddc9;background:#fafcf7;box-shadow:none;border-radius:12px;padding:12px;justify-content:flex-start}
 .ch-toolbar-title{font-size:20px;color:#42543b;white-space:normal}
 @media(max-width:560px){.ch-studio-top-bar{display:grid;grid-template-columns:minmax(0,1fr);padding:12px}.ch-mission-banner{width:100%;max-width:100%;flex-wrap:wrap}.ch-mission-content{min-width:0;flex:1}.ch-top-mode-toggle{flex-wrap:wrap}.ch-toggle-btn{font-size:20px}.ch-mission-text{font-size:20px}}
+/* Immediate per-part character customization. */
+#customCharacterPreview,.cc-avatar{width:100%;height:100%;display:block}
+#customCharacterPreview{position:absolute;inset:0}
+.cc-avatar{overflow:visible}
+.cc-hint{font-size:20px;line-height:1.5}
+.cc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.cc-button{font:inherit;font-size:20px;line-height:1.4;color:#423d32;border:2px solid #ddd6c5;border-radius:12px;min-height:56px;padding:12px;background:#fffdf6;cursor:pointer;white-space:normal}
+.cc-button[aria-pressed=true]{background:#e7efdc;border-color:#69885d;box-shadow:inset 0 0 0 1px #69885d}
+.cc-button[aria-pressed=true]::after{content:' ✓';color:#37502b;font-weight:bold}
+.cc-button:focus-visible{outline:4px solid #507a91;outline-offset:3px}
+.cc-tabs .cc-button{flex:1 1 28%;padding:8px}
+.cc-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cc-choices .cc-button{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;min-height:110px}
+.cc-swatch{width:54px;height:54px;border-radius:50%;border:2px solid #6f6659;display:block}
+.cc-option-icon{font-size:36px}
+.cc-part{font-size:20px;display:flex;flex-direction:column;gap:6px;margin:0 0 14px}
+.cc-part select{font:inherit;min-height:54px;border:2px solid #bcb29e;border-radius:10px;padding:8px;background:white;color:#443e33}
+.cc-actions{display:flex;flex-direction:column;gap:8px;border-top:1px solid #d7ceb9;margin-top:16px;padding-top:16px}
+.cc-complete-preview{height:100%;width:100%;background:#f8f2e5}
+@media(min-width:1101px){.ch-room-col{position:sticky;top:12px}.ch-studio-grid{grid-template-columns:minmax(0,1fr) 330px}.ch-room-viewport{height:560px}.ch-avatar-elem{height:54%;max-width:60%}}
+@media(max-width:1100px){.ch-items-col:has(.cc-tabs){position:relative}.cc-choices{grid-template-columns:repeat(3,minmax(0,1fr))}.cc-tabs .cc-button{flex:1 1 15%}.cc-actions{flex-direction:row;flex-wrap:wrap}.cc-actions .cc-button{flex:1}.ch-room-col:has(.cc-avatar){position:sticky;top:0;z-index:20;background:var(--ch-bg)}.ch-room-col:has(.cc-avatar) .ch-room-viewport{height:38vh;min-height:260px;max-height:420px}.ch-room-col:has(.cc-avatar) .ch-speech-banner{display:none}.ch-room-col:has(.cc-avatar) .ch-outfit-card{padding:6px 12px}.ch-room-col:has(.cc-avatar) .ch-avatar-elem{height:60%;max-width:50%}}
+@media(max-width:560px){.cc-tabs .cc-button{flex:1 1 27%}.cc-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.ch-room-col:has(.cc-avatar) .ch-outfit-card{font-size:20px}.ch-room-col:has(.cc-avatar) .ch-room-viewport{height:30vh;min-height:235px}.ch-room-col:has(.cc-avatar){position:static}.ch-room-col:has(.cc-avatar) .ch-avatar-elem{height:64%}}
+@media(max-width:560px){.ch-room-col:has(.cc-avatar){position:sticky;top:0}.cc-actions .cc-button{flex:1 1 100%}}
+/* Room themes, guided choices and freely selectable categories. */
+.room-curtain{position:absolute;top:-9px;bottom:-7px;width:30%;background:repeating-linear-gradient(90deg,var(--room-accent),var(--room-accent) 13%,#ffffff50 17%,var(--room-accent) 24%);box-shadow:2px 3px 5px #6c563519;z-index:2;border-radius:0 0 18px 10px}
+.room-curtain.left{left:-10px}.room-curtain.right{right:-10px;transform:scaleX(-1)}
+.room-window-sky{position:absolute;inset:0;background:linear-gradient(#d5e9ed,#f8f1cd)}
+.room-window-sky:after{content:'';position:absolute;right:24%;top:14%;width:24%;aspect-ratio:1;background:#f4df99;border-radius:50%}
+#roomSaveStatus,#roomSummary{font-size:20px;line-height:1.4;margin:3px 0;color:#526048}
+.room-actions,.room-pagination{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.room-actions .cc-button,.room-pagination .cc-button{flex:1;font-size:20px;min-height:56px}
+#roomEasyGuide{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:24px}
+body[data-decor-mode=easy] .ch-category-list{display:none}
+.cc-tabs{display:none}
+body[data-decor-mode=easy] .ch-mode-hint{display:block}
+.ch-opt-card,.ch-tool-btn,.ch-easy-btn,.ch-toggle-btn{min-height:56px;font-size:20px!important}
+.ch-placed-item{min-width:48px;min-height:48px}
+#optionsGrid{gap:12px}
+#roomViewport[data-room-type=room_window] .ch-window-elem{width:30%;right:5%}
+#roomViewport[data-room-type=room_living] .ch-room-wall{background-image:linear-gradient(90deg,transparent 72%,#bba98940 72%,#bba98940 74%,transparent 74%)}
+#roomViewport[data-room-type=room_garden] .room-window-sky{background:linear-gradient(#d4e9e6 55%,#91b781 55%,#bfd29b)}
+#roomViewport[data-room-type=room_hanok] .ch-room-wall{background-image:repeating-linear-gradient(90deg,transparent 0,transparent 24%,#bca780 24%,#bca780 25%)}
+#roomViewport[data-room-type=room_books] .ch-window-elem{background:#ceb391}
+#roomViewport[data-room-type=room_books] .room-window-sky{background:repeating-linear-gradient(90deg,#adc5ae 0,#adc5ae 12%,#eee3c8 12%,#eee3c8 17%,#c5b2ce 17%,#c5b2ce 30%)}
+@media(min-width:1200px){body[data-decor-mode=free] .ch-studio-grid{grid-template-columns:165px minmax(0,1fr) 310px;gap:16px}body[data-decor-mode=free] .ch-menu-col{grid-column:1;grid-row:1}body[data-decor-mode=free] .ch-category-list{flex-direction:column}body[data-decor-mode=free] .ch-room-col{grid-column:2;grid-row:1}body[data-decor-mode=free] .ch-items-col{grid-column:3;grid-row:1}body[data-decor-mode=free] .ch-cat-btn{white-space:normal;justify-content:center}}
+@media(max-width:1100px){.ch-room-col:has(.cc-avatar) .room-actions{display:none}.ch-room-col:has(.cc-avatar) #roomSummary{display:none}#roomEasyGuide{font-size:20px;flex-wrap:wrap}#roomEasyGuide strong{order:-1;flex-basis:100%;text-align:center}}
+@media(min-width:701px) and (max-width:1199px){.ch-studio-grid{grid-template-columns:minmax(0,1fr) 280px;gap:14px}.ch-menu-col{grid-column:1/-1;grid-row:1}.ch-room-col{grid-column:1;grid-row:2}.ch-items-col{grid-column:2;grid-row:2}.ch-room-col:has(.cc-avatar){position:sticky;top:12px}.ch-room-col:has(.cc-avatar) .ch-room-viewport{height:390px;min-height:0}.ch-room-col:has(.cc-avatar) .ch-avatar-elem{height:55%}.ch-placed-icon svg{width:95px}.ch-placed-item[data-item-id=f_sofa] svg{width:135px}.ch-placed-item[data-item-id=f_table] svg{width:105px}.ch-placed-item[data-item-id=pic_family] svg{width:70px}}
+@media(max-width:700px){.ch-studio-grid{grid-template-columns:minmax(0,1fr)}.ch-room-col:has(.cc-avatar){position:static;grid-column:1;grid-row:1}.ch-menu-col{grid-column:1;grid-row:2}.ch-items-col{grid-column:1;grid-row:3}.ch-bottom-bar{position:static}.ch-bottom-inner{flex-wrap:wrap}.ch-bottom-nav-btn{flex:1 1 44%;white-space:normal}.ch-category-list .ch-cat-btn{flex:1 1 40%}}

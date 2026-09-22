@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>곰이의 취미방 · 디지털 AI 학교</title>
-  <meta name="description" content="치매·인지저하 어르신을 위한 곰이의 취미방 — 노래 따라 부르기, 옛날 이야기, 색칠 그림, 수수께끼">
+  <title>보리의 취미방 · 디지털 AI 학교</title>
+  <meta name="description" content="치매·인지저하 어르신을 위한 보리의 취미방 — 노래 따라 부르기, 옛날 이야기, 색칠 그림, 수수께끼">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
@@ -129,14 +129,14 @@
 <body>
 <header class="bh-header">
   <a href="index.html" class="bh-back-link">&#127968; 처음으로</a>
-  <div class="bh-location">&#128059; 곰이의 취미방</div>
-  <button type="button" class="bh-voice-btn" id="btnBhVoice">&#128266; 곰이 설명</button>
+  <div class="bh-location">&#128059; 보리의 취미방</div>
+  <button type="button" class="bh-voice-btn" id="btnBhVoice">&#128266; 보리 설명</button>
 </header>
 <section class="bh-hero">
-  <img src="public/characters/bori/bori_idle.png" alt="곰이 캐릭터" class="bh-char-img" onerror="this.src='assets/images/friend-bori.png'">
-  <h1>곰이의 취미방 &#128059;</h1>
+  <img src="public/characters/bori/bori_idle.png" alt="보리 캐릭터" class="bh-char-img" onerror="this.src='assets/images/friend-bori.png'">
+  <h1>보리의 취미방 &#128059;</h1>
   <p>노래도 부르고, 옛 추억도 나누고, 색칠도 하고, 수수께끼도 풀어요!</p>
-  <div class="bh-speech">어서오세요! 곰이와 함께 편안하고 즐거운 시간 보내요 &#127925;</div>
+  <div class="bh-speech">어서오세요! 보리와 함께 편안하고 즐거운 시간 보내요 &#127925;</div>
 </section>
 <div class="stamp-row">
   <div class="stamp-chip">오늘 도장: <span id="bhStampNum">0</span>개 &#127467;</div>
@@ -151,7 +151,7 @@
   <section class="hobby-panel active" id="panelSong">
     <div class="hobby-card">
       <h2 class="hobby-card-title">&#127908; 노래 따라 부르기</h2>
-      <p class="hobby-card-sub">좋아하는 노래를 골라 곰이와 함께 흥겹게 불러보아요!</p>
+      <p class="hobby-card-sub">좋아하는 노래를 골라 보리와 함께 흥겹게 불러보아요!</p>
       <div class="song-list" id="songList"></div>
       <div class="lyrics-area" id="lyricsArea">
         <div class="lyrics-title" id="lyricsTitle">&#127925; 노래 가사</div>
@@ -165,7 +165,7 @@
       <div class="completion-banner" id="songCompletion">
         <span class="big-emoji">&#127881;</span>
         <h2>노래 완창! 정말 잘 하셨어요!</h2>
-        <p>곰이도 같이 노래해서 너무 즐거웠어요 &#128059;</p>
+        <p>보리도 같이 노래해서 너무 즐거웠어요 &#128059;</p>
         <button type="button" class="btn-retry" id="btnSongRetry">다른 노래 부르기</button>
       </div>
     </div>
@@ -173,7 +173,7 @@
   <section class="hobby-panel" id="panelStory">
     <div class="hobby-card">
       <h2 class="hobby-card-title">&#128214; 옛날 이야기 &amp; 추억 나누기</h2>
-      <p class="hobby-card-sub">고향의 정겨운 이야기를 떠올리며 곰이와 이야기해요</p>
+      <p class="hobby-card-sub">고향의 정겨운 이야기를 떠올리며 보리와 이야기해요</p>
       <div class="story-grid" id="storyGrid"></div>
       <div class="story-content-box" id="storyContentBox">
         <h3 class="story-content-title" id="storyContentTitle"></h3>
@@ -222,14 +222,14 @@
       <div class="completion-banner" id="colorCompletion">
         <span class="big-emoji">&#128444;</span>
         <h2>멋진 작품이 완성됐어요!</h2>
-        <p>곰이도 갤러리에 걸고 싶어요 &#128059;&#128153;</p>
+        <p>보리도 갤러리에 걸고 싶어요 &#128059;&#128153;</p>
         <button type="button" class="btn-retry" id="btnColorRetry">다른 그림 색칠하기</button>
       </div>
     </div>
   </section>
   <section class="hobby-panel" id="panelRiddle">
     <div class="hobby-card">
-      <h2 class="hobby-card-title">&#129513; 곰이의 수수께끼</h2>
+      <h2 class="hobby-card-title">&#129513; 보리의 수수께끼</h2>
       <p class="hobby-card-sub">재미있는 수수께끼를 풀어보아요! 힌트도 있어요 &#128516;</p>
       <div class="riddle-area">
         <div class="riddle-card-inner">
@@ -250,7 +250,7 @@
       <div class="completion-banner" id="riddleCompletion">
         <span class="big-emoji">&#127942;</span>
         <h2>수수께끼 모두 풀었어요!</h2>
-        <p>정말 똑똑하세요! 곰이가 깜짝 놀랐어요 &#128059;</p>
+        <p>정말 똑똑하세요! 보리가 깜짝 놀랐어요 &#128059;</p>
         <button type="button" class="btn-retry" id="btnRiddleRetry">수수께끼 다시 풀기</button>
       </div>
     </div>
@@ -273,7 +273,7 @@ function addStamp(){st.c++;saveSt();document.getElementById('bhStampNum').textCo
 document.getElementById('bhStampNum').textContent=st.c;
 const PANELS={song:'panelSong',story:'panelStory',color:'panelColor',riddle:'panelRiddle'};
 document.querySelectorAll('.bh-tab').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.bh-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.hobby-panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(PANELS[b.dataset.tab]).classList.add('active');});});
-document.getElementById('btnBhVoice').addEventListener('click',()=>speak('안녕하세요! 저는 곰이예요. 노래도 부르고, 옛날 이야기도 나누고, 색칠도 하고, 수수께끼도 함께 풀어보아요!'));
+document.getElementById('btnBhVoice').addEventListener('click',()=>speak('안녕하세요! 저는 보리예요. 노래도 부르고, 옛날 이야기도 나누고, 색칠도 하고, 수수께끼도 함께 풀어보아요!'));
 function showFeedback(el,msg,type){el.textContent=msg;el.className='feedback-banner '+type+' visible';setTimeout(()=>el.classList.remove('visible'),3500);}
 // 노래
 const SONGS=[
@@ -321,7 +321,7 @@ function dd(e){if(!drawing)return;e.preventDefault();const{x,y}=gp(e);cx.lineTo(
 function ed(){drawing=false;if(cx)cx.beginPath();}
 document.getElementById('btnColorUndo').addEventListener('click',()=>{if(!cx||!undo.length)return;cx.putImageData(undo.pop(),0,0);});
 document.getElementById('btnColorClear').addEventListener('click',()=>{if(!cx)return;undo.push(cx.getImageData(0,0,cv.width,cv.height));drawTpl();});
-document.getElementById('btnColorSave').addEventListener('click',()=>{if(!cv)return;const a=document.createElement('a');a.download='곰이취미방_'+ctpl.l+'_'+Date.now()+'.png';a.href=cv.toDataURL();a.click();document.getElementById('colorCompletion').classList.add('visible');addStamp();speak('그림을 저장했어요! 정말 예쁜 작품이에요!');});
+document.getElementById('btnColorSave').addEventListener('click',()=>{if(!cv)return;const a=document.createElement('a');a.download='보리취미방_'+ctpl.l+'_'+Date.now()+'.png';a.href=cv.toDataURL();a.click();document.getElementById('colorCompletion').classList.add('visible');addStamp();speak('그림을 저장했어요! 정말 예쁜 작품이에요!');});
 document.getElementById('btnColorBack').addEventListener('click',()=>{document.getElementById('coloringWorkspace').classList.remove('active');document.getElementById('coloringGallery').style.display='grid';document.getElementById('colorCompletion').classList.remove('visible');speechSynthesis.cancel();});
 document.getElementById('btnColorRetry').addEventListener('click',()=>{document.getElementById('colorCompletion').classList.remove('visible');document.getElementById('coloringWorkspace').classList.remove('active');document.getElementById('coloringGallery').style.display='grid';});
 renderGallery();
@@ -346,7 +346,7 @@ document.getElementById('btnRiddlePrev').addEventListener('click',()=>{if(ri>0){
 document.getElementById('btnRiddleNext').addEventListener('click',()=>{if(ri<RIDDLES.length-1){ri++;renderRiddle();}else{document.getElementById('riddleCompletion').classList.add('visible');addStamp();}});
 document.getElementById('btnRiddleRetry').addEventListener('click',()=>{ri=0;rs=0;document.getElementById('riddleCompletion').classList.remove('visible');renderRiddle();});
 renderRiddle();
-window.addEventListener('load',()=>setTimeout(()=>speak('곰이의 취미방에 오신 것을 환영해요! 노래도 부르고, 옛날 이야기도 하고, 색칠도 하고, 수수께끼도 풀어보아요!'),600));
+window.addEventListener('load',()=>setTimeout(()=>speak('보리의 취미방에 오신 것을 환영해요! 노래도 부르고, 옛날 이야기도 하고, 색칠도 하고, 수수께끼도 풀어보아요!'),600));
 })();
 </script>
 </body>

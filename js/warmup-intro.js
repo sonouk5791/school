@@ -1,7 +1,7 @@
 (()=>{'use strict';
  const video=document.getElementById('warmupVideo'),play=document.getElementById('warmupPlay'),status=document.getElementById('warmupStatus');
  if(!video)return;
- const chapters=['편하게 앉아 준비해요','콩이와 손 인사','토리와 가벼운 박수','나비와 팔 앞으로','곰이와 손목 움직이기','함께 쉬어가요','콩이와 팔 굽혔다 펴기','나비와 양손 인사','토리와 느린 박수','곰이와 마무리'];
+ const chapters=['편하게 앉아 준비해요','콩이와 손 인사','토리와 가벼운 박수','나비와 팔 앞으로','보리와 손목 움직이기','함께 쉬어가요','콩이와 팔 굽혔다 펴기','나비와 양손 인사','토리와 느린 박수','보리와 마무리'];
  const details=document.createElement('details');details.className='warmup-chapters';
  details.innerHTML='<summary>체조 순서 골라 보기</summary><label for="warmupChapter">시작할 순서</label><select id="warmupChapter">'+chapters.map((title,i)=>`<option value="${i*120}">${String(i*2).padStart(2,'0')}:00 · ${title}</option>`).join('')+'</select><button type="button" class="care-btn" id="warmupJump">선택한 순서부터 보기</button><p>무음 영상입니다. 화면 안내를 보며 편하게 따라해요.<br>20분을 모두 채우지 않아도 괜찮아요.</p>';
  status.before(details);

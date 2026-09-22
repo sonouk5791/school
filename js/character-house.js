@@ -1,7 +1,7 @@
 /**
  * 「내가 꾸미는 AI 캐릭터 집」 고도화 인터랙티브 시스템 (v3)
  * - 치매·인지저하 어르신 맞춤형 직관적 인터랙션
- * - 4인 캐릭터(콩이, 토리, 나비, 곰이), 원클릭 의상 변경
+ * - 4인 캐릭터(콩이, 토리, 나비, 보리), 원클릭 의상 변경
  * - 6대 방 구조, 9대 가구/소품 카테고리
  * - 쉬운 꾸미기 모드(좌/중/우 자동배치, 기본값) & 자유 꾸미기 모드
  * - 되돌리기(Undo), 저장/이어하기, 칭찬 및 꽃/별 도장 시스템
@@ -69,8 +69,8 @@
     },
     bori: {
       id: 'bori',
-      name: '곰이의 집',
-      charName: '곰이',
+      name: '보리의 집',
+      charName: '보리',
       theme: '취미방',
       avatar: 'assets/images/friend-bori.png',
       completeImg: 'assets/images/bori-home-decorating.png',
@@ -81,7 +81,7 @@
       reactions: [
         '아늑해서 마음에 쏙 들어요.',
         '정겨운 옛 노래가 흘러나올 것 같아요.',
-        '곰이의 서재가 최고로 멋져졌습니다.'
+        '보리의 서재가 최고로 멋져졌습니다.'
       ]
     }
   };
@@ -193,6 +193,8 @@
     currentCharId: 'kongi',
     mode: 'easy', // 'easy' (default) | 'free'
     outfit: { top: 'top_cardigan', bottom: 'bot_pants', acc: 'acc_glasses' },
+    customizations: {},
+    rooms: {}, curtain: "yellow", rug: "yellow", rugShape: "square",
     roomType: 'room_spacious',
     wallStyle: 'w_cream',
     floorStyle: 'f_wood_light',
@@ -204,11 +206,20 @@
     lastUpdated: null
   };
 
+  const roomFields=['roomType','wallStyle','floorStyle','windowStyle','doorStyle','curtain','rug','rugShape','placedItems','mode'];
+  function snapshot(){return JSON.parse(JSON.stringify(Object.fromEntries(roomFields.map(k=>[k,state[k]]))));}
+  function rememberRoom(){if(state.screen==='studio')state.rooms[state.currentCharId]=snapshot();}
+  function defaultRoom(id){const theme=window.RoomDecor.themes[id];const catalog=[...Object.values(ITEM_CATALOG).flat(),...window.RoomDecor.special];return {roomType:'room_spacious',wallStyle:theme.wallStyle,floorStyle:'f_wood_light',windowStyle:'win_big',doorStyle:'door_wood',curtain:theme.curtain,rug:theme.rug,rugShape:'square',mode:'easy',placedItems:[['f_sofa',21,65],['f_table',24,82],['f_bookshelf',82,51],['p_tree',84,78],['l_stand',9,54],['pic_family',48,18],[theme.special,76,83]].map(([key,x,y],i)=>({...catalog.find(item=>item.id===key),uid:'starter_'+id+'_'+i,x,y,scale:1,rot:0}))};}
+  function resetRoom(){pushHistory();Object.assign(state,defaultRoom(state.currentCharId));state.customizations[state.currentCharId]=window.CharacterCustomizer.defaults(state.currentCharId);state.selectedItemUid=null;$('itemToolbar').hidden=true;$('easyPositionBar').hidden=true;renderCanvas();renderToolsPanel('curtain');showToast('기본 방으로 돌아왔어요. 되돌리기로 다시 복원할 수 있어요.');}
+
   const historyStack = [];
 
   function pushHistory() {
+    if($("roomSaveStatus"))$("roomSaveStatus").textContent="바뀐 모습이에요. 저장하기를 눌러주세요.";
     historyStack.push(JSON.stringify({
+      roomSnapshot: snapshot(),
       outfit: state.outfit,
+      customizations: state.customizations,
       roomType: state.roomType,
       wallStyle: state.wallStyle,
       floorStyle: state.floorStyle,
@@ -226,7 +237,9 @@
       return;
     }
     const prev = JSON.parse(historyStack.pop());
+    if(prev.roomSnapshot)Object.assign(state,prev.roomSnapshot);
     state.outfit = prev.outfit;
+    state.customizations = prev.customizations || {};
     state.roomType = prev.roomType;
     state.wallStyle = prev.wallStyle;
     state.floorStyle = prev.floorStyle;
@@ -271,10 +284,19 @@
 
   // --- STORAGE ---
   function saveToStorage() {
+    rememberRoom();
+    state.schemaVersion=2;
     state.lastUpdated = new Date().toISOString();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    showToast('💾 내 집이 안전하게 저장되었어요!');
-    speak('어르신이 꾸민 집이 소중하게 저장되었습니다.');
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      $('roomSaveStatus').textContent='저장했어요 · '+new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+      showToast('💾 꾸민 캐릭터와 집을 저장했어요!');
+      speak('꾸민 캐릭터와 집이 저장되었습니다.');
+    } catch {
+      $('roomSaveStatus').textContent='저장하지 못했어요. 지금 화면은 유지됩니다.';
+      showToast('저장 공간을 확인해 주세요. 지금 화면의 꾸미기는 유지돼요.');
+      speak('저장하지 못했어요. 지금 화면의 꾸미기는 유지됩니다.');
+    }
   }
 
   function loadFromStorage() {
@@ -316,6 +338,7 @@
       $('resetModal').style.display = 'none';
     }
 
+    window.RoomDecor.setup(renderToolsPanel,resetRoom,goToSelectScreen);
     renderCharCards();
     setupGlobalEvents();
 
@@ -329,6 +352,7 @@
 
     const saved = loadFromStorage();
     if (saved) {
+      if(CHARACTERS[saved.currentCharId]){selectCharacter(saved.currentCharId,saved);return;}
       $('resumeBanner').hidden = false;
       const charInfo = CHARACTERS[saved.currentCharId] || CHARACTERS.kongi;
       $('resumeCharText').textContent = `지난번에 꾸미던 [${charInfo.charName}의 ${charInfo.theme}]이 저장되어 있어요.`;
@@ -374,6 +398,7 @@
   }
 
   function goToSelectScreen() {
+    rememberRoom();
     state.screen = 'select';
     $('studioScreen').hidden = true;
     $('studioScreen').style.display = 'none';
@@ -395,27 +420,19 @@
   }
 
   function selectCharacter(charId, resumeData = null) {
-    state.currentCharId = charId;
-    state.screen = 'studio';
-
-    if (resumeData) {
-      state.outfit = resumeData.outfit || state.outfit;
-      state.roomType = resumeData.roomType || state.roomType;
-      state.wallStyle = resumeData.wallStyle || state.wallStyle;
-      state.floorStyle = resumeData.floorStyle || state.floorStyle;
-      state.windowStyle = resumeData.windowStyle || state.windowStyle;
-      state.doorStyle = resumeData.doorStyle || state.doorStyle;
-      state.placedItems = resumeData.placedItems || [];
-    } else {
-      // Default initialization
-      state.placedItems = [
-        ['f_sofa', 21, 65], ['f_table', 24, 82], ['f_bookshelf', 82, 51],
-        ['p_tree', 84, 78], ['l_stand', 9, 54], ['pic_family', 48, 18]
-      ].map(([id,x,y],i)=>({...Object.values(ITEM_CATALOG).flat().find(item=>item.id===id),uid:'starter_'+i,x,y,scale:1,rot:0}));
-      state.selectedItemUid = null;
-      state.pendingEasyItem = null;
+    rememberRoom();
+    const saved=resumeData||loadFromStorage();
+    if(saved?.customizations&&typeof saved.customizations==='object')state.customizations={...saved.customizations,...state.customizations};
+    if(saved?.rooms&&typeof saved.rooms==='object')state.rooms={...saved.rooms,...state.rooms};
+    // Migrate the old single-room record without dropping furniture or legacy choices.
+    if(saved&&CHARACTERS[saved.currentCharId]&&!state.rooms[saved.currentCharId]){
+      state.rooms[saved.currentCharId]={...defaultRoom(saved.currentCharId),...Object.fromEntries(roomFields.filter(k=>saved[k]!==undefined).map(k=>[k,saved[k]]))};
     }
-
+    state.currentCharId=charId;state.screen='studio';
+    Object.assign(state,JSON.parse(JSON.stringify(state.rooms[charId]||defaultRoom(charId))));
+    if(resumeData?.outfit)state.outfit=resumeData.outfit;
+    state.selectedItemUid=null;state.pendingEasyItem=null;
+    historyStack.length=0;
     pushHistory();
 
     $('selectScreen').hidden = true;
@@ -440,7 +457,8 @@
     $('chLocationBadge').innerHTML = `지금은 <strong>${charInfo.charName}의 방</strong>을 꾸미고 있어요`;
 
     renderCanvas();
-    renderToolsPanel('outfit');
+    renderToolsPanel(state.mode==='easy'?'curtain':'outfit');
+    $('roomSaveStatus').textContent=state.rooms[charId]?'이전에 꾸민 방을 불러왔어요.':'새 방이에요. 꾸민 뒤 저장해 주세요.';
 
     speak(`${charInfo.charName}의 방에 오신 것을 환영합니다. ${charInfo.greeting}`);
   }
@@ -473,14 +491,12 @@
       windowEl.textContent = '☀️';
     }
 
-    // Describe the actual unchanged avatar asset, not the saved clothing preferences.
-    const wornOutfits = {
-      kongi: ['🧥 노란색·흰색 운동복', '👖 노란 운동복 바지', '👓 둥근 안경'],
-      tori: ['👕 분홍색 운동복'],
-      nabi: ['👕 보라색 운동복'],
-      bori: ['👕 파란색·흰색 운동복']
-    };
-    badge.replaceChildren(...wornOutfits[state.currentCharId].map(text=>{const line=document.createElement('span');line.textContent=text;return line;}));
+    const custom = window.CharacterCustomizer.normalize(state.currentCharId, state.customizations[state.currentCharId]);
+    $('charAvatar').hidden = true;
+    let preview = $('customCharacterPreview');
+    if (!preview) { preview=document.createElement('div');preview.id='customCharacterPreview';charWrap.append(preview); }
+    preview.innerHTML = window.CharacterCustomizer.render(state.currentCharId, custom);
+    badge.textContent = window.CharacterCustomizer.summary(state.currentCharId, custom);
 
     // Placed Items
     const itemsLayer = $('itemsLayer');
@@ -514,6 +530,7 @@
 
       itemsLayer.appendChild(el);
     });
+    window.RoomDecor.paint(state);
   }
 
   function setupItemDrag(elem, item) {
@@ -521,6 +538,8 @@
     let startX = 0, startY = 0;
 
     const onStart = e => {
+      if(state.mode!=='free')return;
+      pushHistory();
       isDragging = true;
       const evt = e.touches ? e.touches[0] : e;
       startX = evt.clientX;
@@ -556,7 +575,6 @@
     const onEnd = () => {
       if (isDragging) {
         isDragging = false;
-        pushHistory();
       }
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onEnd);
@@ -573,6 +591,7 @@
 
   function renderToolsPanel(cat = currentCategory) {
     currentCategory = cat;
+    window.RoomDecor.guide(state.mode,cat,renderToolsPanel);
 
     // Update Category Menu buttons
     document.querySelectorAll('.ch-cat-btn').forEach(b => {
@@ -582,13 +601,23 @@
     const grid = $('optionsGrid');
     grid.innerHTML = '';
     const title = $('optionsTitle');
+    document.querySelector('.ch-items-col .ch-col-sub').textContent = cat==='outfit'?'누르면 캐릭터가 바로 바뀌어요':'누르면 방에 쏙 들어갑니다';
 
-    if (cat === 'outfit') {
-      title.textContent = '👕 콩이의 예쁜 옷을 골라보세요';
-      renderOutfitOptions(grid);
-    } else if (cat === 'room') {
-      title.textContent = '🏠 방 구조와 벽·바닥을 골라보세요';
-      renderRoomOptions(grid);
+    if (['outfit','colors','accessories','expression','heldprops'].includes(cat)) {
+      window.CharacterCustomizer.setCategory({outfit:'clothes',colors:'colors',accessories:'accessories',expression:'expressions',heldprops:'props'}[cat]);
+      title.textContent = `👕 ${CHARACTERS[state.currentCharId].charName} 꾸미기`;
+      const id=state.currentCharId;
+      const change=(next,message,focusKey)=>{
+        pushHistory();
+        state.customizations[id]=window.CharacterCustomizer.normalize(id,next);
+        renderCanvas();renderToolsPanel(cat);
+        $('speechMsg').textContent=message;showToast(message);speak(message);
+        if(focusKey)grid.querySelector(`[data-choice="${focusKey}"]`)?.focus({preventScroll:true});
+      };
+      window.CharacterCustomizer.mount(grid,id,state.customizations[id],change,()=>change(window.CharacterCustomizer.defaults(id),'기본 모습으로 돌아왔어요.'),saveToStorage);
+    } else if (['room','curtain','rug'].includes(cat)) {
+      title.textContent = {room:'벽과 바닥을 골라보세요',curtain:'커튼 색을 골라보세요',rug:'러그를 골라보세요'}[cat];
+      window.RoomDecor.simple(grid,cat,state,(field,value,message)=>{if(field){pushHistory();state[field]=value;renderCanvas();$('speechMsg').textContent=message+' 정말 잘 어울려요!';speak(message);$('roomSaveStatus').textContent='바뀐 모습이에요. 저장하기를 눌러주세요.';}renderToolsPanel(cat);},WALL_STYLES,FLOOR_STYLES,ROOM_TYPES);
     } else if (cat === 'furniture') {
       title.textContent = '🪑 편안한 가구를 골라 방에 놓아보세요';
       renderCatalogOptions(grid, [
@@ -598,6 +627,7 @@
     } else if (cat === 'decor') {
       title.textContent = '🌷 꽃과 소품으로 방을 화사하게 꾸며보세요';
       const decorItems = [
+        ...window.RoomDecor.special.filter(i=>i.id.startsWith("d_")),
         ...ITEM_CATALOG.plants,
         ...ITEM_CATALOG.frames,
         ...ITEM_CATALOG.lights,
@@ -607,6 +637,7 @@
     } else if (cat === 'play') {
       title.textContent = '🧸 재미있는 놀이와 음악, 운동 소품';
       const playItems = [
+        ...window.RoomDecor.special.filter(i=>i.id.startsWith("t_")),
         ...ITEM_CATALOG.toys,
         ...ITEM_CATALOG.music,
         ...ITEM_CATALOG.exercise,
@@ -614,6 +645,7 @@
       ];
       renderCatalogOptions(grid, playItems);
     }
+    window.RoomDecor.paginate(grid,state.mode,cat+"-"+state.mode+"-"+(grid.querySelector("select")?.value||""));
   }
 
   function renderOutfitOptions(grid) {
@@ -884,7 +916,7 @@
       // 나비 미션: 책이나 액자
       isMissionMatch = item.id.startsWith('b_') || item.id.startsWith('pic_') || item.name.includes('책') || item.name.includes('액자') || item.name.includes('시계');
     } else if (state.currentCharId === 'bori') {
-      // 곰이 미션: 의자나 라디오/음악
+      // 보리 미션: 의자나 라디오/음악
       isMissionMatch = item.id.startsWith('m_') || item.id.startsWith('f_') || item.name.includes('라디오') || item.name.includes('의자') || item.name.includes('소파') || item.name.includes('음악');
     }
 
@@ -929,12 +961,13 @@
 
   // --- GLOBAL EVENTS SETUP ---
   function setupGlobalEvents() {
+    $("optionsGrid").addEventListener("customizer:render",()=>window.RoomDecor.paginate($("optionsGrid"),state.mode,currentCategory+"-"+state.mode+"-"+($("optionsGrid").querySelector("select")?.value||"")));
     // Keep furniture controls outside the living space and away from the character.
     $('roomViewport').after($('itemToolbar'));
     // Top TTS
     $('btnTtsHelp').addEventListener('click', () => {
       if (state.screen === 'select') {
-        speak('누구의 집을 꾸며볼까요? 콩이의 운동방, 토리의 놀이방, 나비의 학습방, 곰이의 취미방 중 마음에 드는 친구를 선택해주세요.');
+        speak('누구의 집을 꾸며볼까요? 콩이의 운동방, 토리의 놀이방, 나비의 학습방, 보리의 취미방 중 마음에 드는 친구를 선택해주세요.');
       } else {
         const charInfo = CHARACTERS[state.currentCharId];
         speak(`지금은 ${charInfo.charName}의 방을 꾸미고 있습니다. 왼쪽 메뉴에서 옷, 가구, 소품을 골라 방을 예쁘게 꾸며보세요.`);
@@ -947,6 +980,7 @@
       $('btnModeEasy').classList.add('active');
       $('btnModeFree').classList.remove('active');
       showToast('✨ 쉬운 꾸미기 모드 (버튼으로 쏙쏙 배치)');
+      renderToolsPanel('curtain');
       speak('쉬운 꾸미기 모드로 변경되었습니다.');
     });
 
@@ -956,6 +990,7 @@
       $('btnModeEasy').classList.remove('active');
       $('easyPositionBar').hidden = true;
       showToast('🎨 자유롭게 꾸미기 모드 (자유 이동 및 조절)');
+      renderToolsPanel(currentCategory);
       speak('자유롭게 꾸미기 모드로 변경되었습니다.');
     });
 
@@ -965,7 +1000,7 @@
     $('btnPlaceRight').addEventListener('click', () => placeEasyItem('right'));
 
     // Category Buttons (5 Menu Buttons)
-    document.querySelectorAll('.ch-cat-btn').forEach(btn => {
+    document.querySelectorAll('.ch-cat-btn:not([data-cat])').forEach(btn => {
       btn.addEventListener('click', () => {
         renderToolsPanel(btn.dataset.cat);
       });
@@ -1039,6 +1074,12 @@
       const charInfo = CHARACTERS[state.currentCharId];
       if (charInfo) {
         $('completeCharImg').src = charInfo.completeImg;
+        $('completeCharImg').hidden = true;
+        const completeStage=$('completeCharImg').parentElement;
+        completeStage.querySelector('.cc-complete-preview')?.remove();
+        const finalPreview=document.createElement('div');finalPreview.className='cc-complete-preview';
+        finalPreview.innerHTML=window.CharacterCustomizer.render(state.currentCharId,state.customizations[state.currentCharId]);
+        completeStage.append(finalPreview);
         $('completeDesc').textContent = `어르신의 따뜻한 손길로 ${charInfo.charName}의 ${charInfo.theme}이 반짝반짝 완성되었습니다.`;
       }
       $('completeView').hidden = false;

@@ -1252,3 +1252,68 @@
 - [오늘_작업_일지_2026-09-22.md](./오늘_작업_일지_2026-09-22.md)
 
 </details>
+
+## 자동 저장 / 2026-09-22 11:16:29 — 실시간 캐릭터 커스터마이징 구현
+- **수행 내역**: 최신 사용자 요청에 따라 집 꾸미기 화면의 선택 기록 방식을 실제 레이어 변경으로 전환. 콩이·토리·나비·곰이 의상 6종, 상의/하의/신발/포인트/안경 6색 팔레트, 액세서리 6종 착탈, 표정 4종, 소품 6종 즉시 반영. 원본 PNG 보존, 의상/소품 SVG 레이어와 image_gen 얼굴 부분 편집 5개 자산 사용. 한 카테고리 4~6개 큰 버튼, 저장·다시 꾸미기·기본 모습 복귀, 캐릭터별 customizations 저장 및 완료 화면 실제 미리보기 연결. 기존 방과 선택 기록 데이터 보존. 4캐릭터의 실제 미리보기 변화·원본 레이어 복원·저장 복원 및 4개 화면 크기 기존 방 기능 검사 통과. 관련 파일: [구현](file:///J:/sh/js/character-customizer.js), [제작 상세](file:///J:/sh/assets/character-customization/README.md), [검증](file:///J:/sh/tests/character-customizer.cjs).
+
+## 자동 저장 / 2026-09-22 11:33:19 — 네 캐릭터 방 실시간 꾸미기 개선
+- **수행 내역**: 콩이·토리·나비·보리별 방 테마와 독립 저장/자동 복원을 구현했습니다. 커튼·러그·벽/바닥·가구·미끄럼틀·텐트·테마 소품을 즉시 반영하며 기존 의상/색상/액세서리/표정/손 소품 편집을 유지했습니다. 쉬운 모드 4개, 자유 모드 6개 선택지와 페이지 이동을 적용했습니다. 현재 방 초기화/되돌리기 및 이전 단일 방 저장 데이터 이관을 검증했습니다. 보리 표시 이름을 통일하고 기존 곰이 음성 호출 별칭을 보존했습니다. room-decor, character-house-layout, character-customizer 테스트 통과(1440/1024/768/390px). JS 59개 문법 검사 통과; 수정하지 않은 user-profile.js 24행의 기존 문법 오류는 릴리즈와 동일함을 확인했으며 별도 해결이 필요합니다. documents/ROOM_DECOR.md에 구조와 사용법을 기록했습니다. 원격 푸시/배포는 이번 요청에 포함되지 않아 실행하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 11:39:05 — 홈페이지 네 캐릭터 중심 Hero 구성
+- **수행 내역**: 첨부 image_3a8430e8.jpg를 원본 그대로 assets/images/home-hero/four-friends.jpg에 보존하고 SVG 표시 영역으로 네 친구를 개별 링크에 연결했습니다. 얼굴/색상/비율 재생성이나 이미지 편집 없이 사용했습니다. 인사말, 보조 문구, 큰 오늘 활동 시작하기 버튼과 선생님 공간을 배치하고 기존 메뉴·소리·글자 도구를 아래로 이동했습니다. 콩이/토리/나비/보리는 기존 운동/놀이/학습/취미 페이지로 연결됩니다. 첫 방문 팝업의 자동 표시만 중단하고 수동 인사 듣기는 보존했습니다. 1440/768/390px 4열/2열 및 가로 넘침 없음, 모든 활동 URL 정상 응답, 실제 토리 링크 이동과 선생님 버튼 동작을 확인했습니다. 변경 파일: index.html, css/home-character-hero.css, js/home-character-hero.js, js/welcome-greeting.js, assets/images/home-hero/four-friends.jpg. 원격 배포는 실행하지 않았습니다.
+
+## 자동 저장 / 2026-09-22 11:44:52 — 체조 화면 이미지 넘침 및 안내문 줄바꿈 수정
+- **수행 내역**: HTML/JS가 생성하는 se-ready-card-img/body 클래스와 CSS의 기존 thumb/info 클래스 불일치를 확인했습니다. 실제 클래스에 이미지 width/max-width 100%, height auto, contain을 적용하고 카드를 이미지 위·안내문 아래 구조로 수정했습니다. 좁은 화면에서 240px 최소 그리드와 280px 본문 최소 너비가 넘치지 않도록 개선하고 keep-all 줄바꿈을 적용했습니다. 재생 장면의 cover를 contain으로 바꾸고 전체 프레임 확대/회전만 중단해 가장자리 잘림을 방지했습니다. 장면 전환과 재생/일시정지는 유지했습니다. 1440/768/390/320px 준비·재생 화면 가로 넘침 없음, 이미지 부모 영역 이내, 안내문 너비 200px 이상, contain/확대 없음 및 시작/일시정지 동작 확인. 변경: css/senior-exercise.css, senior-exercise.html.
+
+## 자동 저장 / 2026-09-22 11:46:00 — GitHub 및 Vercel 배포 준비
+- **수행 내역**: 완료한 캐릭터 방 실시간 꾸미기, 홈페이지 네 친구 Hero, 체조 이미지 및 줄바꿈 수정을 배포합니다. 앞선 기능·반응형 검사 통과 결과와 작업 문서를 포함합니다. 기존 user-profile.js 문법 오류는 이번 변경과 무관하며 별도 기록되어 있습니다.
+
+## 자동 저장 / 2026-09-22 11:46:27 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 42
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/character-customization/README.md](./assets/character-customization/README.md)
+- [assets/character-customization/bori-closed-eyes.png](./assets/character-customization/bori-closed-eyes.png)
+- [assets/character-customization/kongi-closed-eyes.png](./assets/character-customization/kongi-closed-eyes.png)
+- [assets/character-customization/kongi-no-glasses.png](./assets/character-customization/kongi-no-glasses.png)
+- [assets/character-customization/nabi-closed-eyes.png](./assets/character-customization/nabi-closed-eyes.png)
+- [assets/character-customization/tori-closed-eyes.png](./assets/character-customization/tori-closed-eyes.png)
+- [assets/images/home-hero/four-friends.jpg](./assets/images/home-hero/four-friends.jpg)
+- [bori-hobby.html](./bori-hobby.html)
+- [character-house.html](./character-house.html)
+- [characters/manifest.json](./characters/manifest.json)
+- [css/character-house.css](./css/character-house.css)
+- [css/home-character-hero.css](./css/home-character-hero.css)
+- [css/senior-exercise.css](./css/senior-exercise.css)
+- [documents/ROOM_DECOR.md](./documents/ROOM_DECOR.md)
+- [index.html](./index.html)
+- [js/app.js](./js/app.js)
+- [js/character-3d-renderer.js](./js/character-3d-renderer.js)
+- [js/character-audio-player.js](./js/character-audio-player.js)
+- [js/character-customizer.js](./js/character-customizer.js)
+- [js/character-house.js](./js/character-house.js)
+- [js/character-rooms.js](./js/character-rooms.js)
+- [js/character-voice-recognizer.js](./js/character-voice-recognizer.js)
+- [js/characters.js](./js/characters.js)
+- [js/friends-and-play.js](./js/friends-and-play.js)
+- [js/home-care-experience.js](./js/home-care-experience.js)
+- [js/home-care-recommendations.js](./js/home-care-recommendations.js)
+- [js/home-character-hero.js](./js/home-character-hero.js)
+- [js/house-furnishings.js](./js/house-furnishings.js)
+- [js/joint-room.js](./js/joint-room.js)
+- [js/morning-program.js](./js/morning-program.js)
+- [js/room-decor.js](./js/room-decor.js)
+- [js/senior-finish.js](./js/senior-finish.js)
+- [js/voice.js](./js/voice.js)
+- [js/warmup-intro.js](./js/warmup-intro.js)
+- [js/weather-service.js](./js/weather-service.js)
+- [js/welcome-greeting.js](./js/welcome-greeting.js)
+- [senior-exercise.html](./senior-exercise.html)
+- [tests/character-customizer.cjs](./tests/character-customizer.cjs)
+- [tests/character-house-layout.cjs](./tests/character-house-layout.cjs)
+- [tests/room-decor.cjs](./tests/room-decor.cjs)
+- [오늘_작업_일지_2026-09-22.md](./오늘_작업_일지_2026-09-22.md)
+
+</details>

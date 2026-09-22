@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   {id:'kongi',name:'콩이',emoji:'🐶',note:'햇살처럼 밝은 방에서 편하게 쉬어가요.',items:['운동매트','작은 공','화분','옷장']},
   {id:'tori',name:'토리',emoji:'🐰',note:'포근한 소파에 앉아 마음을 나눠요.',items:['작은 소파','쿠션','꽃','거울','옷장']},
   {id:'nabi',name:'나비',emoji:'🐱',note:'책과 앨범을 보며 추억을 떠올려요.',items:['책장','앨범','그림카드','책상','옷장']},
-  {id:'bori',name:'곰이',emoji:'🐻',note:'편안한 의자에서 좋아하는 음악과 취미를 즐겨봐요.',items:['스피커','작은 악기','편안한 의자','옷장']}
+  {id:'bori',name:'보리',emoji:'🐻',note:'편안한 의자에서 좋아하는 음악과 취미를 즐겨봐요.',items:['스피커','작은 악기','편안한 의자','옷장']}
  ];
  const drawings={
  '옷장':'<rect x="24" y="8" width="72" height="80" rx="6"/><path d="M60 8v80M30 88v7M90 88v7"/><circle cx="51" cy="50" r="2"/><circle cx="69" cy="50" r="2"/>',

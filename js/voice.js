@@ -48,7 +48,7 @@ const VoiceManager = {
       greeting: "안녕하세요. 마음 친구 토리예요. 오늘 기분은 어떠세요?"
     },
     bori: {
-      name: '곰이',
+      name: '보리',
       animal: '곰',
       emoji: '🐻',
       voiceDesc: '포근하고 듬직한 목소리',
@@ -61,7 +61,7 @@ const VoiceManager = {
         { freq: 329.63, delay: 0.00, dur: 0.18, type: 'sine', gain: 0.08 },
         { freq: 392.00, delay: 0.12, dur: 0.25, type: 'sine', gain: 0.08 }
       ],
-      greeting: "안녕하세요. 취미 친구 곰이예요. 좋아하는 노래와 활동을 같이 즐겨봐요!"
+      greeting: "안녕하세요. 취미 친구 보리예요. 좋아하는 노래와 활동을 같이 즐겨봐요!"
     },
     nabi: {
       name: '나비',

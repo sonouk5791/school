@@ -1,0 +1,30 @@
+/* Scoped homepage layout; existing activities and teacher screens retain their controls. */
+body.character-home .site-header {position:relative;}
+body.character-home .header-container {display:flex;justify-content:space-between;flex-wrap:nowrap;gap:16px;padding:16px 24px;}
+body.character-home .brand-title {font-size:26px;white-space:normal;}
+body.character-home .btn-teacher-space {min-height:56px;font-size:20px;white-space:nowrap;}
+body.character-home .main-wrapper {padding-top:20px;}
+.character-home-hero.hero-classroom {display:block;background:#fffaf0;border:1px solid #eee1ca;border-radius:28px;padding:28px 24px 20px;box-shadow:none;text-align:center;overflow:visible;}
+.character-home-hero[hidden] {display:none!important;}
+.home-welcome h1 {font-size:clamp(32px,3vw,44px);line-height:1.35;color:#493c30;margin:0 0 12px;font-weight:800;}
+body.character-home .home-welcome p {font-size:clamp(20px,1.8vw,24px);line-height:1.6;color:#635446;margin:0;}
+.home-friends-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:1080px;margin:20px auto 24px;background:#fff;border-radius:32px;box-shadow:0 0 24px 8px #ffffffb3;}
+.home-friend {display:flex;flex-direction:column;align-items:center;min-width:0;padding:8px 8px 16px;border:2px solid transparent;border-radius:24px;color:#493c30;text-decoration:none;}
+.home-friend-picture {display:block;width:100%;max-width:180px;aspect-ratio:344 / 576;height:auto;overflow:hidden;isolation:isolate;background:#fff;}
+.home-friend {background:transparent;}
+.home-friend strong {font-size:26px;line-height:1.4;margin-top:4px;}
+.home-friend>span {font-size:22px;line-height:1.5;}
+.home-friend:hover {border-color:#b8955c;background:#fff;}
+.home-friend:focus-visible,.home-start-activity:focus-visible {outline:4px solid #386641;outline-offset:4px;}
+.home-start-activity {display:inline-flex;align-items:center;justify-content:center;gap:24px;min-height:64px;padding:12px 36px;border-radius:18px;background:#356b43;color:#fff;text-decoration:none;font-size:26px;font-weight:800;}
+.home-start-activity:hover {background:#285535;}
+#homeQuickLinks {display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;border-top:1px solid #e6dccb;margin-top:28px;padding-top:22px;text-align:left;}
+body.character-home #homeQuickLinks .main-nav {display:flex;flex-wrap:wrap;justify-content:center;gap:8px;position:static;width:100%;}
+body.character-home #homeQuickLinks .nav-link {min-height:56px;display:inline-flex;align-items:center;font-size:20px;}
+body.character-home #homeQuickLinks .teacher-voice-controls {display:flex;flex-wrap:wrap;gap:8px;}
+body.character-home #homeQuickLinks button,body.character-home #homeQuickLinks summary {font-size:20px;min-height:56px;}
+.home-legacy-greeting {text-align:left;margin-top:20px;}
+.home-legacy-greeting>summary {font-size:20px;cursor:pointer;min-height:56px;padding:14px;}
+@media(max-width:1000px){.home-friends-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:660px;gap:12px;}.home-friend-picture{max-width:160px;}}
+@media(max-width:600px){body.character-home .header-container{padding:12px;gap:8px;}body.character-home .brand-icon{display:none;}body.character-home .brand-title{font-size:22px;}body.character-home .btn-teacher-space{padding:10px;font-size:20px;}body.character-home .main-wrapper{padding:12px 10px 40px;}.character-home-hero.hero-classroom{padding:24px 10px 16px;border-radius:20px;}.home-welcome h1{font-size:32px;}.home-friends-grid{gap:4px;margin:12px auto 20px;}.home-friend{padding:4px 2px 12px;}.home-friend-picture{max-width:140px;}.home-friend strong{font-size:24px;}.home-friend>span{font-size:20px;}.home-start-activity{font-size:22px;padding:12px 18px;gap:12px;width:100%;}}
+@media(prefers-reduced-motion:reduce){.home-friend{transition:none;}}
