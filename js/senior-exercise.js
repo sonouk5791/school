@@ -11,6 +11,7 @@
   const $ = id => document.getElementById(id);
   const frontImg = $('sceneFront');
   const backImg = $('sceneBack');
+  const sceneVideo = $('sceneVideo');
   const stageWrapper = $('stageWrapper');
   const sceneBadge = $('sceneBadge');
   const characterTag = $('characterTag');
@@ -49,6 +50,10 @@
 
   // State Variables
   let program = null;
+  let programReady = false;
+  let stampAwarded = false;
+  let mediaRevision = 0;
+  let mediaReady = false;
   let scenes = [];
   let currentSceneIdx = 0;
   let currentStepIdx = -1;
@@ -66,6 +71,42 @@
   let exerciseSpeed = 1;
   const watchedSeconds = new Map();
   const completedScenes = new Set(); // 완료한 씬 인덱스 추적
+
+  // Existing basename images remain valid. Videos use site-relative MP4/WebM paths.
+  const imagePath = scene => scene.image.includes('/') ? scene.image : `assets/senior-exercise/images/${scene.image}`;
+  function syncVideo() {
+    if (!sceneVideo || !mediaReady) return;
+    if (!isPlaying || currentExerciseState !== 'playing') { sceneVideo.pause(); return; }
+    sceneVideo.playbackRate = exerciseSpeed;
+    const revision = mediaRevision;
+    sceneVideo.play().catch(error => { if (revision === mediaRevision && error.name !== 'AbortError' && isPlaying) useImage(); });
+  }
+  function useImage() {
+    mediaReady = false;
+    if (sceneVideo) { sceneVideo.pause(); sceneVideo.hidden = true; }
+    if (frontImg) frontImg.style.opacity = '1';
+    stageWrapper.dataset.media = 'image';
+  }
+  function loadSceneMedia(scene) {
+    const revision = ++mediaRevision;
+    useImage();
+    if (!sceneVideo) return;
+    sceneVideo.onloadeddata = null; sceneVideo.onerror = null;
+    sceneVideo.removeAttribute('src'); sceneVideo.replaceChildren();sceneVideo.load();
+    sceneVideo.poster = imagePath(scene);
+    if (!scene.video) return;
+    const sources = Array.isArray(scene.video) ? scene.video : [scene.video];
+    const valid = sources.filter(src => typeof src === 'string' && /\.(mp4|webm)(?:[?#].*)?$/i.test(src));
+    if (!valid.length) return;
+    sceneVideo.onloadeddata = () => {
+      if (revision !== mediaRevision) return;
+      mediaReady = true; sceneVideo.hidden = false;stageWrapper.dataset.media = 'video';syncVideo();
+    };
+    sceneVideo.onerror = () => { if (revision === mediaRevision) useImage(); };
+    if (valid.length === 1) sceneVideo.src = valid[0];
+    else valid.forEach((src,index) => {const source=document.createElement('source');source.src=src;source.type=/\.webm(?:[?#].*)?$/i.test(src)?'video/webm':'video/mp4';if(index===valid.length-1)source.onerror=sceneVideo.onerror;sceneVideo.append(source);});
+    sceneVideo.load();
+  }
 
   // Format MM:SS
   const formatTime = seconds => {
@@ -143,6 +184,7 @@
   async function speakText(text) {
     text = String(text || '').trim();
     if (!text) return;
+    stopNarration();
     const revision = ++speechRevision;
     // The caption and Kongi's bubble always use the exact spoken sentence.
     if (captionText) captionText.textContent = text;
@@ -165,6 +207,7 @@
   let currentExerciseState = 'ready';
 
   function setExerciseState(state) {
+    if (state === 'playing' && !programReady) return;
     currentExerciseState = state;
     document.body.dataset.exerciseStatus = state;
 
@@ -197,7 +240,7 @@
       }
       if (playerCard) {
         try {
-          playerCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          playerCard.scrollIntoView({ behavior: 'auto', block: 'start' });
         } catch (e) {}
       }
     } else if (state === 'completed') {
@@ -224,7 +267,7 @@
       card.setAttribute('tabindex', '0');
       card.setAttribute('aria-label', `${sc.index}단계 ${sc.title} 바로 시작하기`);
       card.innerHTML = `
-        <img class="se-ready-card-img" src="assets/senior-exercise/images/${sc.image}" alt="${sc.title}" loading="lazy">
+        <img class="se-ready-card-img" src="${imagePath(sc)}" alt="${sc.title}" loading="lazy">
         <div class="se-ready-card-body">
           <div class="se-ready-card-top">
             <span class="se-ready-step-num">${sc.index}단계</span>
@@ -263,7 +306,7 @@
       card.setAttribute('tabindex', '0');
       card.setAttribute('aria-label', `${sc.index}번 ${sc.title}${isCompleted ? ' 완료' : ''}`);
       card.innerHTML = `
-        <img class="se-thumb-img" src="assets/senior-exercise/images/${sc.image}" alt="${sc.title}" loading="lazy">
+        <img class="se-thumb-img" src="${imagePath(sc)}" alt="${sc.title}" loading="lazy">
         <div class="se-thumb-info">
           <div class="se-thumb-num">SCENE ${sc.index}</div>
           <div class="se-thumb-title">${sc.title}</div>
@@ -331,7 +374,7 @@
     const scene = scenes[sceneIdx];
 
     // Smooth Crossfade
-    const newSrc = `assets/senior-exercise/images/${scene.image}`;
+    const newSrc = imagePath(scene);
     if (backImg && frontImg) {
       backImg.src = frontImg.src;
       backImg.style.opacity = '1';
@@ -347,6 +390,9 @@
         }, 1000);
       }, 40);
     }
+    loadSceneMedia(scene);
+    if ($('exerciseCounter')) $('exerciseCounter').textContent = `${scene.index} / ${scenes.length}`;
+    if ($('exerciseTitle')) $('exerciseTitle').textContent = scene.title;
 
     // Top Header Badge
     if (sceneBadge) {
@@ -364,12 +410,12 @@
     }
 
     // Kongi Speech
-    if (kongiSpeechLead) kongiSpeechLead.textContent = scene.speechSteps[0]?.text || scene.subtitle;
+    if (kongiSpeechLead) kongiSpeechLead.textContent = scene.audioText || scene.speechSteps[0]?.text || scene.instruction;
 
     // Reset Cues
     currentStepIdx = -1;
     if (cueLead) cueLead.textContent = scene.subtitle;
-    if (captionText) captionText.textContent = scene.speechSteps[0]?.text || scene.subtitle;
+    if (captionText) captionText.textContent = scene.audioText || scene.speechSteps[0]?.text || scene.instruction;
     if (countBadge) countBadge.hidden = true;
 
     updateActiveThumbnail();
@@ -434,6 +480,8 @@
           currentSceneIdx++;
           sceneElapsed = 0;
           displayScene(currentSceneIdx);
+          currentStepIdx = 0;
+          speakText(scenes[currentSceneIdx].audioText);
           runSceneLoop();
         } else {
           // Program Complete - All 10 Scenes Finished!
@@ -471,7 +519,7 @@
 
   // --- Public Playback Actions ---
   function play() {
-    if (isPlaying) return;
+    if (isPlaying || !programReady || currentExerciseState !== 'playing') return;
     isPlaying = true;
     initBgm();
     updateBgmGain();
@@ -481,6 +529,12 @@
       sceneElapsed = 0;
     }
 
+    syncVideo();
+    // Start immediately with Kongi's first line; subsequent cues retain their timing.
+    if (currentStepIdx === -1 && sceneElapsed === 0) {
+      currentStepIdx = 0;
+      speakText(scenes[currentSceneIdx].audioText || scenes[currentSceneIdx].speechSteps[0]?.text);
+    }
     runSceneLoop();
     updateControls();
     if (statusMsg) {
@@ -491,6 +545,7 @@
   function pause(message = '잠시 쉬고 있어요. 준비되면 이어서 해요.') {
     isPlaying = false;
     clearTimeout(sceneTimer);
+    sceneVideo?.pause();
     const interrupted = speechBusy;
     stopNarration();
     if (interrupted) currentStepIdx = -1;
@@ -500,6 +555,7 @@
   }
 
   function jumpToScene(idx) {
+    if (!programReady) return;
     const wasPlaying = isPlaying;
     pause('');
     currentSceneIdx = Math.max(0, Math.min(scenes.length - 1, idx));
@@ -538,6 +594,7 @@
 
     // Award Stamp & Show Complete Modal
     try {
+      if (stampAwarded) return;
       const stamps = JSON.parse(localStorage.getItem('senior_stamps_v1') || '[]');
       const newStamp = {
         type: 'flower',
@@ -546,6 +603,7 @@
       };
       stamps.push(newStamp);
       localStorage.setItem('senior_stamps_v1', JSON.stringify(stamps));
+      stampAwarded = true;
     } catch (e) {
       console.warn('Stamp save error:', e);
     }
@@ -555,7 +613,7 @@
     if (completeModal) {
       completeModal.hidden = false;
       completeModal.style.display = 'flex';
-      const completionText = '오늘도 정말 잘하셨습니다! 열 가지 건강 의자 체조를 모두 마치셨습니다.';
+      const completionText = '오늘도 정말 잘하셨어요!';
       const completionCaption = document.querySelector('.se-completed-desc');
       if (completionCaption) completionCaption.textContent = completionText;
       speakText(completionText);
@@ -564,7 +622,7 @@
 
   function updateControls() {
     if (btnStart) {
-      btnStart.disabled = isPlaying;
+      btnStart.disabled = !programReady || isPlaying;
       btnStart.textContent = '▶ 운동 시작하기';
     }
     if (btnHeroStart) {
@@ -572,7 +630,7 @@
     }
     if (btnPause) {
       btnPause.disabled = false;
-      btnPause.textContent = isPlaying ? '⏸ 잠시 멈춤' : '▶ 이어서 체조하기';
+      btnPause.textContent = isPlaying ? '⏸ 잠깐 쉬기' : '▶ 이어서 하기';
       btnPause.setAttribute('aria-label', isPlaying ? '체조 잠시 멈춤' : '체조 이어서 하기');
     }
     if (btnPrev) {
@@ -583,9 +641,10 @@
     }
   }
 
-  $('btnExerciseReplay')?.addEventListener('click', () => speakText(captionText?.textContent || scenes[currentSceneIdx]?.subtitle || '천천히 함께해요.'));
+  $('btnExerciseReplay')?.addEventListener('click', () => { jumpToScene(currentSceneIdx);play(); });
   $('btnExerciseSlow')?.addEventListener('click', () => {
     exerciseSpeed = exerciseSpeed === 1 ? 0.8 : 1;
+    syncVideo();
     $('btnExerciseSlow').setAttribute('aria-pressed', String(exerciseSpeed !== 1));
     $('btnExerciseSlow').textContent = exerciseSpeed === 1 ? '🐢 천천히' : '🐢 천천히 켜짐';
   });
@@ -617,6 +676,7 @@
   if (btnRestart) {
     btnRestart.addEventListener('click', () => {
       completedScenes.clear();
+      stampAwarded = false;
       watchedSeconds.clear();
       jumpToScene(0);
       setExerciseState('playing');
@@ -730,6 +790,7 @@
         completeModal.style.display = 'none';
       }
       completedScenes.clear();
+      stampAwarded = false;
       watchedSeconds.clear();
       jumpToScene(0);
       setExerciseState('playing');
@@ -747,6 +808,7 @@
 
   // Keyboard accessibility
   document.addEventListener('keydown', (e) => {
+    if (!programReady || currentExerciseState === 'completed') return;
     if (e.target.closest('input,textarea,button,a,select,summary,[role="button"]')) return;
     if (e.code === 'Space') {
       e.preventDefault();
@@ -758,9 +820,9 @@
       } else {
         play();
       }
-    } else if (e.code === 'ArrowLeft') {
+    } else if (e.code === 'ArrowLeft' && currentExerciseState === 'playing') {
       if (currentSceneIdx > 0) jumpToScene(currentSceneIdx - 1);
-    } else if (e.code === 'ArrowRight') {
+    } else if (e.code === 'ArrowRight' && currentExerciseState === 'playing') {
       if (currentSceneIdx < scenes.length - 1) jumpToScene(currentSceneIdx + 1);
     }
   });
@@ -781,7 +843,13 @@
       const res = await fetch('assets/senior-exercise/program.json');
       if (!res.ok) throw new Error('program.json load failed');
       program = await res.json();
-      scenes = program.scenes;
+      scenes = program.scenes.map((scene,i) => ({...scene,
+        exerciseId:scene.exerciseId || `exercise-${String(i+1).padStart(2,'0')}`,
+        instruction:scene.instruction || scene.subtitle || scene.title,
+        audioText:scene.audioText || scene.speechSteps?.[0]?.text || scene.instruction || scene.title,
+        speechSteps:scene.speechSteps?.length ? scene.speechSteps : [{at:0,text:scene.audioText || scene.instruction || scene.title}]
+      }));
+      if (scenes.length !== 10 || scenes.some(sc => !sc.image || !Number.isFinite(sc.duration) || sc.duration <= 0)) throw new Error('Invalid exercise data');
 
       totalDuration = scenes.reduce((sum, sc) => sum + sc.duration, 0);
       if (progressTimeline) {
@@ -791,10 +859,12 @@
       // Preload images
       const imgPromises = scenes.map(sc => {
         const img = new Image();
-        img.src = `assets/senior-exercise/images/${sc.image}`;
+        img.src = imagePath(sc);
         return img.decode ? img.decode().catch(() => {}) : Promise.resolve();
       });
       await Promise.all(imgPromises);
+      programReady = true;
+      if ($('readyLoadStatus')) $('readyLoadStatus').textContent = '';
 
       renderReadySceneList();
       renderSceneGrid();
@@ -819,9 +889,12 @@
       if (statusMsg) {
         statusMsg.textContent = '체조 자료를 불러오지 못했습니다. 새로고침 해주세요.';
       }
+      if ($('readyLoadStatus')) $('readyLoadStatus').textContent = '운동 자료를 불러오지 못했어요. 새로고침 해주세요.';
+      updateControls();
     }
   }
 
-  window.addEventListener('pagehide', () => { isPlaying = false; clearTimeout(sceneTimer); stopNarration(); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && isPlaying) pause(); });
+  window.addEventListener('pagehide', () => { pause('');mediaRevision++;sceneVideo?.removeAttribute('src'); });
   init();
 })();

@@ -34,7 +34,7 @@ console.log('✅ 3. 운동 중(Playing) 16:9 영상, 대형 자막, 재생/정�
 // 4. 운동 완료 후 (Completed) 구성요소 검증
 assert(html.includes('id="exerciseCompleteModal"'), '완료 모달/카드가 존재해야 합니다.');
 assert(html.includes('id="btnReplayExercise"'), '체조 다시 하기 버튼이 존재해야 합니다.');
-assert(html.includes('index.html') && html.includes('학교 홈으로 가기'), '학교 홈으로 가기 링크가 존재해야 합니다.');
+assert(html.includes('index.html') && html.includes('🏠 학교 홈'), '학교 홈 링크가 존재해야 합니다.');
 assert(html.includes('🌸 건강 꽃 도장 획득!'), '건강 도장 획득 안내가 포함되어 있어야 합니다.');
 console.log('✅ 4. 운동 완료 후(Completed) 꽃 도장, 칭찬 문구, 다시하기, 홈으로 가기 확인');
 

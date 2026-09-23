@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff9ed">
   <title>콩이의 운동방 · 디지털 AI 학교</title>
-  <link rel="stylesheet" href="css/senior-exercise.css?v=20260922-state4">
+  <link rel="stylesheet" href="css/senior-exercise.css?v=20260923-follow4">
 <script src="js/character-voice-system.js?v=20260922-separated"></script>
 <link rel="stylesheet" href="css/character-animation.css?v=20260922"><script defer src="js/character-rig-data.js?v=20260922"></script><script defer src="js/character-animation.js?v=20260922"></script>
 <link rel="stylesheet" href="css/senior-common-header.css?v=20260923-nav2"><script defer src="js/senior-common-header.js?v=20260923-nav2"></script></head>
@@ -41,16 +41,16 @@
             <span class="se-ready-emoji-bubble">🐶</span>
           </div>
           <div class="se-ready-copy">
-            <span class="se-ready-badge">🌸 어르신 맞춤 건강 의자 체조</span>
-            <h2 class="se-ready-title">안녕하세요.<br>오늘도 천천히 같이 움직여볼까요?</h2>
-            <p class="se-ready-desc">10가지 건강 의자 체조 · 약 12~15분<br>의자에 앉아 편안한 만큼만 움직여요.</p>
+            <span class="se-ready-badge">🐶 콩이</span>
+            <h2 class="se-ready-title">오늘도 저랑 천천히 움직여볼까요?</h2>
+            <p class="se-ready-desc">10가지 건강 체조</p>
             <div class="se-ready-stats">
               <div class="se-stat-pill">⏱ <strong>총 소요 시간:</strong> 약 12분</div>
               <div class="se-stat-pill">📋 <strong>운동 구성:</strong> 10단계 자동 재생</div>
               <div class="se-stat-pill">🪑 <strong>진행 방식:</strong> 안전한 의자 체조</div>
             </div>
-            <div class="se-ready-action-area">
-              <button id="btnStart" class="se-btn-huge-start" type="button">
+            <p id="readyLoadStatus" role="status">운동 자료를 준비하고 있어요.</p><div class="se-ready-action-area">
+              <button id="btnStart" class="se-btn-huge-start" type="button" disabled>
                 ▶ 운동 시작하기
               </button>
               <button id="heroStartBtn" type="button" style="display: none;" aria-hidden="true">
@@ -60,7 +60,7 @@
           </div>
         </div>
 
-        <p style="margin:16px;text-align:center"><a href="character-house.html?char=kongi" style="display:inline-flex;align-items:center;min-height:56px;padding:12px 22px;border:2px solid #d9ceb9;border-radius:16px;font-size:20px;color:#355832;background:#fffaf0;text-decoration:none">🏡 내 방 꾸미기</a></p>
+        <details class="se-ready-more"><summary>운동 안내 더보기</summary><p style="margin:16px;text-align:center"><a href="character-house.html?char=kongi" style="display:inline-flex;align-items:center;min-height:56px;padding:12px 22px;border:2px solid #d9ceb9;border-radius:16px;font-size:20px;color:#355832;background:#fffaf0;text-decoration:none">🏡 내 방 꾸미기</a></p>
 <!-- 10개 체조 순서 안내 미리보기 -->
         <div class="se-ready-preview-wrap">
           <h3 class="se-preview-heading">📋 오늘 함께할 10가지 건강 체조 순서</h3>
@@ -69,6 +69,7 @@
             <!-- Dynamically rendered scene cards in ready view -->
           </div>
         </div>
+        </details>
       </div>
     </section>
 
@@ -85,7 +86,7 @@
 
       <!-- 메인 16:9 체조 영상 카드 -->
       <main id="playerCard" class="se-player-card" aria-label="체조 진행 화면">
-        <div id="stageWrapper" class="se-stage-wrapper">
+        <div class="se-current-heading"><span id="exerciseCounter">1 / 10</span><h2 id="exerciseTitle">시작 인사</h2></div><div id="stageWrapper" class="se-stage-wrapper"><video id="sceneVideo" class="se-scene-video" muted playsinline loop preload="metadata" hidden aria-label="현재 운동 영상"></video>
           <img id="sceneBack" class="se-scene-layer" alt="" aria-hidden="true" style="opacity: 0;">
           <img id="sceneFront" class="se-scene-layer" src="assets/senior-exercise/images/scene01_intro.jpg" alt="체조 안내 영상">
           
@@ -101,7 +102,7 @@
 
         <!-- Large Caption & Subtitle Area -->
         <div id="captionContainer" class="se-caption-container">
-          <div class="se-caption-text-group">
+          <div class="se-caption-text-group"><p class="se-guide-name">🐶 콩이</p>
             <div class="se-caption-header">
               <span id="cueLead" class="se-cue-lead">시작 인사</span>
               <span id="stepProgressIndicator" class="se-step-progress-tag">1 / 10 동작 진행 중</span>
@@ -125,20 +126,12 @@
       <!-- 운동 중 조작 버튼 바 -->
       <div class="se-playing-controls-card" aria-label="체조 조작 제어">
         <div class="se-controls-main-row">
-          <button id="btnPause" class="se-btn se-btn-playpause" type="button">
-            ⏸ 잠시 멈춤
-          </button>
-          <div class="se-btn-nav-group">
-            <button id="btnPrev" class="se-btn se-btn-step" type="button" disabled>
-              ⏮ 이전 동작
-            </button>
-            <button id="btnNext" class="se-btn se-btn-step" type="button">
-              ⏭ 다음 동작
-            </button>
-          </div>
-          
+          <button id="btnPrev" class="se-btn se-btn-step" type="button" disabled>◀ 이전</button>
+          <button id="btnPause" class="se-btn se-btn-playpause" type="button">⏸ 잠깐 쉬기</button>
+          <button id="btnExerciseReplay" class="se-btn se-btn-step" type="button">다시 보기</button>
+          <button id="btnNext" class="se-btn se-btn-step" type="button">다음 ▶</button>
         </div>
-        <div class="se-controls-sub-row"><button id="btnExerciseReplay" class="se-btn" type="button">🔊 다시 듣기</button><button id="btnExerciseSlow" class="se-btn" type="button" aria-pressed="false">🐢 천천히</button></div><details class="se-extra-controls"><summary>소리·화면 설정</summary><button id="btnRestart" class="se-btn se-btn-restart" type="button">
+        <details class="se-extra-controls"><summary>운동 설정</summary><button id="btnExerciseSlow" class="se-btn" type="button" aria-pressed="false">🐢 천천히</button><button id="btnRestart" class="se-btn se-btn-restart" type="button">
             🔄 처음부터 다시
           </button><div class="se-controls-sub-row">
           <button id="btnTextSize" class="se-btn se-btn-sub" type="button">
@@ -161,7 +154,7 @@
       </div>
 
       <!-- 10 Scenes Thumbnail Navigator -->
-      <section class="se-gallery-section" aria-label="10개 체조 동작 순서">
+      <details class="se-movement-list"><summary>전체 동작 보기</summary><section class="se-gallery-section" aria-label="10개 체조 동작 순서">
         <div class="se-gallery-header">
           <h3 class="se-gallery-title">📋 10개 체조 동작 순서</h3>
           <p class="se-gallery-sub">원하는 동작을 누르면 바로 이동해요. 완료한 동작에는 초록색 체크(✅)가 붙습니다.</p>
@@ -169,7 +162,7 @@
         <div id="sceneGrid" class="se-scene-grid">
           <!-- Dynamically rendered scene cards -->
         </div>
-      </section>
+      </section></details>
     </section>
 
     <!-- [상태 3] 운동 완료 후 화면 (Completed State - 오직 10개 동작 완료 후에만 노출) -->
@@ -180,7 +173,7 @@
           🌸 건강 꽃 도장 획득!
         </div>
         <h2 class="se-completed-title">
-          🎉 10가지 건강 체조를 모두 마치셨어요!
+          오늘도 정말 잘하셨어요!
         </h2>
         <p class="se-completed-desc">
           콩이, 토리, 나비, 보리와 함께 10가지 건강 의자 체조를 모두 끝마치셨습니다.<br>
@@ -204,10 +197,10 @@
 
         <div class="se-completed-actions">
           <button id="btnReplayExercise" class="se-completed-btn replay" type="button">
-            🔄 체조 다시 하기
+            다시 운동하기
           </button>
           <a href="index.html" class="se-completed-btn home">
-            🏠 학교 홈으로 가기
+            🏠 학교 홈
           </a>
         </div>
       </div>
@@ -220,6 +213,6 @@
     </footer>
   </div>
 
-  <script src="js/senior-exercise.js?v=20260923-nav2"></script>
+  <script src="js/senior-exercise.js?v=20260923-follow4"></script>
 </body>
 </html>

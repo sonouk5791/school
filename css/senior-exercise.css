@@ -1207,3 +1207,37 @@ body {
 .se-controls-main-row #btnPrev { order:1; }
 .se-controls-main-row #btnPause { order:2; }
 .se-controls-main-row #btnNext { order:3; }
+
+/* Follow-along view: one large demonstration, one caption, four controls. */
+.se-ready-hero {flex-direction:column;text-align:center;gap:16px;padding-bottom:0;border:0;}
+.se-ready-avatar-wrap {width:160px;height:220px;}
+.se-ready-avatar-wrap .room-character-rig {display:block;width:100%;height:100%;max-height:220px;}
+.se-ready-emoji-bubble {display:none;}
+.se-ready-copy {min-width:0;width:100%;}
+.se-ready-title {font-size:clamp(28px,3vw,36px);word-break:keep-all;}
+.se-ready-desc {font-size:24px;}
+.se-ready-action-area {justify-content:center;}
+#readyLoadStatus:empty {display:none;}
+#readyLoadStatus {font-size:20px;line-height:1.5;}
+.se-ready-more,.se-movement-list {margin:20px auto 0;max-width:1100px;}
+.se-ready-more>summary,.se-movement-list>summary {padding:16px;min-height:56px;font-size:20px;cursor:pointer;word-break:keep-all;}
+.se-ready-more .se-ready-preview-wrap {display:block;}
+.se-playing-speech-card,.se-caption-header,.se-stage-overlay,.se-top-time-box {display:none;}
+.se-current-heading {display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:16px 24px;background:#fffdf4;}
+.se-current-heading span {font-size:24px;font-weight:800;}
+.se-current-heading h2 {font-size:30px;margin:0;word-break:keep-all;}
+.se-stage-wrapper {width:100%;aspect-ratio:16/9;max-height:64vh;min-height:220px;}
+.se-scene-video {position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;background:#fbf2e3;}
+.se-scene-video[hidden] {display:none!important;}
+.se-count-badge {z-index:2;}
+.se-caption-container {padding:18px 24px;min-height:0;}
+.se-caption-h2 {font-size:clamp(24px,2.6vw,32px);line-height:1.5;word-break:keep-all;}
+.se-guide-name {font-size:20px;margin:0 0 6px;}
+.se-controls-main-row {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+.se-controls-main-row :is(#btnPrev,#btnPause,#btnExerciseReplay,#btnNext) {order:initial;min-width:0;min-height:64px;margin:0;padding:14px 10px;font-size:22px;white-space:normal;word-break:keep-all;}
+.se-timeline-bar {padding:10px 20px;}
+.se-completed-desc,.se-completed-summary-box {display:none;}
+.se-completed-title {font-size:clamp(28px,3vw,36px);word-break:keep-all;}
+.se-footer {display:none;}
+.se-player-card:fullscreen .se-scene-video {object-fit:contain;}
+@media(max-width:600px){.se-controls-main-row{grid-template-columns:repeat(2,minmax(0,1fr));}.se-current-heading{padding:14px 16px;gap:10px;}.se-current-heading h2{font-size:26px;}.se-stage-wrapper{min-height:200px;max-height:none;}.se-caption-container{padding:16px;}.se-ready-card{padding:20px 16px;}.se-ready-hero{gap:12px;}.se-playing-controls-card{padding:14px;}}
