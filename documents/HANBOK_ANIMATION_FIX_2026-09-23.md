@@ -27,7 +27,7 @@
 ## 범위와 한계
 - 2D 상체 자세 합성과 허리 회전이다. 3D 골격 애니메이션이 아니다.
 - 입은 오디오 재생 구간에 맞춘 순환이며 발음별 정밀 립싱크가 아니다.
-- 위 브라우저 음성 검증은 통제된 WAV 응답으로 진행했다. Google 서버 설정/음성 ID 자체는 변경하지 않았다.
+- 브라우저 상태 전환 검증은 통제된 WAV 응답으로 진행했고, 배포 후 Google 서버 실호출도 4명 모두 확인했다. 음색의 주관적 청취 평가는 별도이다.
 - 기존 비시즌 캐릭터/과거 자산/운동 동작 영상은 삭제하거나 교체하지 않았다.
 
 ## 관련 파일
@@ -36,3 +36,9 @@
 - [음성 재생 이벤트](file:///J:/sh/js/character-voice-system.js)
 - [절하기 실행](file:///J:/sh/js/chuseok-bow.js), [CSS](file:///J:/sh/css/chuseok-bow.css)
 - [자세 이미지 생성 프롬프트](./HANBOK_BOW_IMAGE_PROMPTS.md)
+
+## 운영 배포 확인
+- 코드 커밋: 57535f4, GitHub main 푸시 완료.
+- Vercel: dpl_GrbwDHnDYY5eqvp5N4rP1DxNoDVU, READY, https://school-tau-pearl.vercel.app
+- 운영 HTML 5개 / JS 4개 / CSS 1개 / 자세 PNG 4개: 로컬 소스와 SHA-256 일치(14개).
+- 운영 Google TTS POST “반가워요.”: 콩이 Achird, 토리 Aoede, 나비 Gacrux, 보리 Charon 모두 HTTP 200, audio/wav 및 RIFF 확인.
