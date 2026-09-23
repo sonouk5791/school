@@ -78,5 +78,18 @@ body[data-senior-page="home"] .senior-start {display:none!important;}
 .character-home-hero .home-friend:hover{background:transparent;border-color:transparent}.character-home-hero .home-friend:hover strong{text-decoration:underline;text-underline-offset:6px}
 .character-home-hero .home-friend:focus-visible{outline:3px solid #41634a;outline-offset:3px}
 .hero-ground-shadow{fill:#766445;opacity:.18;filter:blur(5px)}
+/* QA: keep secondary information readable when expanded. */
+.home-school-info{width:100%;box-sizing:border-box;}
+.home-school-info .site-footer p{word-break:keep-all;}
+.home-school-info .site-footer .care-btn{flex:0 0 auto;white-space:normal;word-break:keep-all;}
+/* Short desktop displays still show the daily activity after the four friends. */
+@media(min-width:1001px) and (max-height:900px){
+ body.character-home .character-home-hero.hero-classroom{padding:20px 20px 18px;}
+ body.character-home .home-welcome h1{font-size:32px;margin-bottom:6px;}
+ body.character-home .character-home-hero .home-friends-grid{--stage-height:190px;margin:14px auto;padding:14px 20px;}
+ body.character-home .character-home-hero .home-friend-picture{max-height:190px;}
+ body.character-home .home-one-recommendation .home-start-activity{min-height:56px;margin-top:6px;}
+}
 @media(max-width:1000px){.character-home-hero .home-friends-grid{--stage-height:290px;grid-template-columns:repeat(2,minmax(0,1fr));max-width:720px;padding:24px 28px;gap:28px 24px;background:linear-gradient(180deg,#f3f5e8 0%,#faf5e9 26%,#dfd1b7 26%,#eee1ca 26.5%,#f5ebd9 100%)}.character-home-hero .home-friend-picture{max-width:174px}.character-home-hero .home-friends-grid::before{height:18%;width:27%;top:4%}.character-home-hero .home-friends-grid::after{height:16%;width:16%;top:7%}.home-lobby-shelf{display:none}}
 @media(max-width:600px){.character-home-hero.hero-classroom{padding:24px 10px 20px}.character-home-hero .home-friends-grid{--stage-height:clamp(190px,58vw,260px);gap:24px 8px;padding:24px 8px 20px;border-radius:22px}.character-home-hero .home-friend-picture{max-width:156px}.character-home-hero .home-friend strong{font-size:24px}.character-home-hero .home-friend>span{font-size:20px}.character-home-hero .home-friends-grid::before{border-width:4px}}
+@media(min-width:1001px) and (max-height:800px){body.character-home .character-home-hero .home-friends-grid{--stage-height:160px;padding:10px 20px;margin:10px auto;}body.character-home .character-home-hero .home-friend-picture{max-height:160px;}}

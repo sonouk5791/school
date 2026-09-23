@@ -20,4 +20,6 @@
 [data-activity-status="completed"] :is(.stamp-msg,.completion-banner h2){font-size:30px;word-break:keep-all;}
 [data-activity-status="completed"] :is(.stamp-area,.completion-banner) button{min-height:64px;font-size:22px;}
 #panelSong:has(.lyrics-area.active) #songList{display:none;}
+/* Keep Korean number/unit groups together instead of orphaning '일'. */
+.today-date-big{word-break:keep-all;overflow-wrap:normal;}
 @media(max-width:600px){.room-flow-toolbar h2{order:-1;width:100%;font-size:26px;}[data-activity-status="select"] :is(.tp-game-menu,.nl-menu,.bh-menu)>button{font-size:22px;padding:14px;}.coloring-workspace.active{flex-direction:column;}}
