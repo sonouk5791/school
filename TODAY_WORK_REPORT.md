@@ -1498,3 +1498,22 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 09:02:23 — 1차 수정: 네 캐릭터 중심 메인화면 단순화
+- **수행 내역**: 메인 상단은 학교 이름·선생님 공간, 중앙은 기존 이미지·URL의 콩이/토리/나비/보리, 아래는 오늘의 20분 활동 시작하기와 지난 활동 보기로 정리. 전체 활동·화면 설정 및 학교 안내는 접힘 처리. AI 수업은 전체 활동 > 디지털 배우기, 인지활동 데이터·카드와 기존 중복 진입은 보존. 자동 마이크 권한 안내를 방지하고 음성 명령을 명시적 켜기/끄기로 유지. TTS API·환경변수·캐릭터 음성 연결 및 저장 로직 변경 없음. 1440/768/390/320px 가로 넘침 없음, 링크·설정·수업 실행·기록·선생님/홈 전환 및 브라우저 JS 오류 없음 확인. 음성인식 기존 테스트 및 빌드 통과. 변경 파일: [index.html](file:///J:/sh/index.html), [메인 JS](file:///J:/sh/js/home-character-hero.js), [도구 JS](file:///J:/sh/js/home-accessibility-menu.js), [메인 CSS](file:///J:/sh/css/home-character-hero.css), [음성인식](file:///J:/sh/js/character-voice-recognizer.js), [검증](file:///J:/sh/tests/home-first-screen.cjs).
+
+## 자동 저장 / 2026-09-23 09:03:31 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 8
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [css/home-character-hero.css](./css/home-character-hero.css)
+- [index.html](./index.html)
+- [js/character-voice-recognizer.js](./js/character-voice-recognizer.js)
+- [js/home-accessibility-menu.js](./js/home-accessibility-menu.js)
+- [js/home-character-hero.js](./js/home-character-hero.js)
+- [tests/home-first-screen.cjs](./tests/home-first-screen.cjs)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>

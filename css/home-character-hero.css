@@ -30,6 +30,25 @@ body.character-home #homeQuickLinks button,body.character-home #homeQuickLinks s
 @media(prefers-reduced-motion:reduce){.home-friend{transition:none;}}
 
 .home-one-recommendation h2 {font-size:24px;line-height:1.4;margin:0 0 8px;}
+.home-one-recommendation .home-start-activity {margin-top:12px;}
+#homeMoreOptions {width:100%;max-width:680px;text-align:center;}
+#homeMoreOptions>summary {padding:16px;color:#534538;cursor:pointer;font-size:20px;min-height:56px;}
+.home-more-actions {display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:16px 0;}
+.home-more-actions>a {display:inline-flex;align-items:center;justify-content:center;text-decoration:none;}
+body.character-home #homeMoreOptions button {font-size:20px;min-height:56px;}
+body.character-home[data-senior-page="home"] .header-container {flex-wrap:nowrap;justify-content:space-between;}
+body.character-home[data-senior-page="home"] .header-actions {display:flex;width:auto;flex-shrink:0;}
+body.character-home[data-senior-page="home"] .brand-logo {min-width:0;}
+body.character-home[data-senior-page="home"] .brand-title {line-height:1.3;}
+body.character-home[data-senior-page="home"] .site-footer {padding:20px;font-size:20px;}
+body.character-home[data-senior-page="home"] .footer-comfort-message {display:none;}
+body.character-home[data-senior-page="home"] .floating-action-group {display:none;}
+.home-school-info {text-align:center;margin:0 auto 24px;max-width:960px;}
+.home-school-info>summary {font-size:20px;min-height:56px;padding:16px;cursor:pointer;color:#534538;}
+/* Shorten the first screen without changing the character artwork or proportions. */
+body.character-home .character-home-hero .home-friends-grid {--stage-height:280px;padding-top:24px;padding-bottom:20px;}
+@media(max-width:1000px){body.character-home .character-home-hero .home-friends-grid{--stage-height:220px;gap:20px 12px;}}
+@media(max-width:600px){body.character-home .character-home-hero .home-friends-grid{--stage-height:190px;gap:20px 8px;}body.character-home .home-welcome h1{font-size:28px;}body.character-home #homeQuickLinks{margin-top:20px;padding-top:16px;gap:8px;}}
 body.character-home .home-one-recommendation p {font-size:20px;margin:0 0 16px;}
 #homeQuickLinks .care-btn {min-height:56px;font-size:20px;}
 #homeCatalogTools {padding:24px;background:#fffaf0;border-radius:20px;margin:20px 0;}

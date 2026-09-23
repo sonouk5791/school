@@ -599,7 +599,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     // 음성 인식 자동 시작 (기본: 콩이 대기)
     setTimeout(() => {
-      if (global.voiceRecognizer && !global.voiceRecognizer.isRunning) {
+      if (!document.querySelector('.character-home-hero') && global.voiceRecognizer && !global.voiceRecognizer.isRunning) {
         global.voiceRecognizer.start('kongi');
       }
     }, 1200);

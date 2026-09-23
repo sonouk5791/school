@@ -17,7 +17,20 @@ document.addEventListener('DOMContentLoaded',()=>{
   help.textContent='❓ 도움';
   const helpPanel=document.createElement('p');helpPanel.id='headerHelpText';helpPanel.hidden=true;helpPanel.textContent='친구를 누르면 활동방으로 이동해요. 보기에서 글씨와 소리를 조절할 수 있어요. 어려우면 선생님께 도움을 요청해주세요.';helpPanel.setAttribute('role','status');document.querySelector('.site-header').append(helpPanel);
   help.setAttribute('aria-controls',helpPanel.id);help.setAttribute('aria-expanded','false');help.addEventListener('click',()=>{helpPanel.hidden=!helpPanel.hidden;help.setAttribute('aria-expanded',String(!helpPanel.hidden));});
-  actions.append(sound,view,help,teacher);
+  const more = document.querySelector('#homeMoreOptions .home-more-actions');
+  if (more) {
+    const placeTools = () => {
+      const onHome = document.body.dataset.seniorPage === 'home';
+      (onHome ? more : actions).append(sound,view,help);
+      if (onHome) more.after(panel,helpPanel);
+      else document.querySelector('.site-header').append(panel,helpPanel);
+      actions.append(teacher);
+      panel.hidden = true; helpPanel.hidden = true;
+      view.setAttribute('aria-expanded','false'); help.setAttribute('aria-expanded','false');
+    };
+    placeTools();
+    new MutationObserver(placeTools).observe(document.body,{attributes:true,attributeFilter:['data-senior-page']});
+  } else actions.append(sound,view,help,teacher);
   const logo=header.querySelector('.brand-logo');logo.setAttribute('aria-label','홈 · 디지털 AI 학교');logo.title='홈으로';
   // Existing activity toolbars already provide pause/replay. Keep legacy IDs available.
   document.getElementById('teacherVoiceControls').hidden=true;
