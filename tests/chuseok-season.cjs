@@ -1,0 +1,4 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});const p=await b.newPage();let errors=[];p.on('pageerror',e=>errors.push(e.message));
+for(const width of [1440,768,390,320]){await p.setViewportSize({width,height:1000});for(const file of ['index.html','senior-exercise.html','tori-play.html','nabi-learn.html','bori-hobby.html']){await p.goto('http://localhost:8085/'+file);await p.waitForTimeout(700);const n=await p.locator('.hanbok-character').count();if(n!==(file==='index.html'?4:1))throw Error(file+' hanbok '+n);if(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1))throw Error(file+' overflow '+width);if(width===390)await p.screenshot({path:'tests/chuseok-'+file+'.png',fullPage:false});} }
+if(errors.length)throw Error(errors.join('\n'));await b.close();console.log('PASS 5 pages x 4 widths: hanbok mount, no overflow, no page errors');})();

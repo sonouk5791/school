@@ -3,14 +3,20 @@
  'use strict';
  const rigs=[],state={kongi:'idle',tori:'idle',nabi:'idle',bori:'idle'},media=matchMedia('(prefers-reduced-motion: reduce)');
  let timer=null,tick=0,waveIndex=0,serial=0;const ns='http://www.w3.org/2000/svg';
- function create(id){const d=CharacterRigData[id],uid='rig'+(++serial),svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`${d.x} 96 344 576`);svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig');svg.dataset.character=id;svg.style.setProperty('--breath',d.period+'s');svg.style.setProperty('--wave-angle',d.angle+'deg');
+ function create(id){
+ if(document.documentElement.dataset.season==='chuseok'){
+  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1254 1254');svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig','hanbok-character');svg.dataset.character=id;
+  const image=document.createElementNS(ns,'image');image.setAttribute('href','/assets/images/chuseok/'+id+'-hanbok.png');image.setAttribute('width','1254');image.setAttribute('height','1254');svg.append(image);
+  rigs.push({id,svg,nextBlink:Infinity,blinkUntil:0,waveUntil:0});return svg;
+ }
+ const d=CharacterRigData[id],uid='rig'+(++serial),svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`${d.x} 96 344 576`);svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig');svg.dataset.character=id;svg.style.setProperty('--breath',d.period+'s');svg.style.setProperty('--wave-angle',d.angle+'deg');
  const image=`<image href="/assets/images/home-hero/four-friends.jpg" width="1376" height="768"/>`;
  const [mx,my,mw,mh]=d.mouth;
  svg.innerHTML=`<defs><clipPath id="${uid}-frame"><rect x="${d.x}" y="96" width="${d.width}" height="576"/></clipPath><clipPath id="${uid}-arm"><path d="${d.arm}"/></clipPath><clipPath id="${uid}-hand"><path d="${d.hand}"/></clipPath><mask id="${uid}-body" maskUnits="userSpaceOnUse" x="0" y="0" width="1376" height="768"><rect width="1376" height="768" fill="white"/><path d="${d.arm}" fill="black"/></mask><mask id="${uid}-forearm" maskUnits="userSpaceOnUse" x="0" y="0" width="1376" height="768"><rect width="1376" height="768" fill="white"/><path d="${d.hand}" fill="black"/></mask></defs>
  <g clip-path="url(#${uid}-frame)"><rect x="${d.x}" y="96" width="344" height="576" fill="white"/><g class="rig-breath"><g data-part="body" mask="url(#${uid}-body)">${image}</g><g data-part="rightArm" style="transform-origin:${d.shoulder[0]}px ${d.shoulder[1]}px"><g clip-path="url(#${uid}-arm)" mask="url(#${uid}-forearm)">${image}</g><g data-part="rightHand" style="transform-origin:${d.wrist[0]}px ${d.wrist[1]}px" clip-path="url(#${uid}-hand)">${image}</g></g><g data-part="eyes" class="rig-eyelids">${d.eyes.map(([x,y,rx,ry])=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${d.eyeSkin||d.skin}"/><path d="M${x-rx+3} ${y} Q${x} ${y+9} ${x+rx-3} ${y}" fill="none" stroke="#634b3f" stroke-width="4" stroke-linecap="round"/>`).join('')}</g><g data-part="mouth" class="rig-mouth"><ellipse cx="${mx}" cy="${my+2}" rx="${mw+3}" ry="${mh+4}" fill="${d.skin}"/><path class="rig-mouth-closed" d="M${mx-mw*.65} ${my} Q${mx} ${my+10} ${mx+mw*.65} ${my}" fill="none" stroke="#85483d" stroke-width="3" stroke-linecap="round"/><ellipse class="rig-mouth-a" cx="${mx}" cy="${my+2}" rx="${mw*.62}" ry="${mh*.82}" fill="#833932"/><ellipse class="rig-mouth-o" cx="${mx}" cy="${my+2}" rx="${mw*.4}" ry="${mh*.6}" fill="#833932"/></g></g></g>`;
  rigs.push({id,svg,nextBlink:performance.now()+3000+Math.random()*2000,blinkUntil:0,waveUntil:0});return svg;}
  function mount(){for(const id of Object.keys(state)){const home=document.querySelector('.home-friend-'+id+' svg');if(home){const svg=create(id);svg.classList.add('home-friend-picture');
- const contour=window.HeroContours?.[id];if(contour){
+ const contour=window.HeroContours?.[id];if(contour&&document.documentElement.dataset.season!=='chuseok'){
    const clipId='hero-outline-'+id,clip=document.createElementNS(ns,'clipPath'),path=document.createElementNS(ns,'path');clip.id=clipId;path.setAttribute('d',contour.path);clip.append(path);svg.querySelector('defs').append(clip);
    svg.querySelectorAll('image').forEach(image=>image.setAttribute('clip-path','url(#'+clipId+')'));
    svg.querySelector(':scope > g > rect')?.remove();
