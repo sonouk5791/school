@@ -1,0 +1,26 @@
+/* Room-only seasonal accents, outside question/answer and exercise media areas. */
+body[data-season-room]{--season-accent:#c79e4e;--season-line:#ead9b6;background:#fffaf2;}
+body[data-season-room="tori"]{--season-accent:#bd6e8b;--season-line:#ecd1dc;background:#fff9f7;}
+body[data-season-room="nabi"]{--season-accent:#8d78a7;--season-line:#ded4e9;background:#faf8fc;}
+body[data-season-room="bori"]{--season-accent:#6e98b3;--season-line:#d1e0e8;background:#fcf9f2;}
+html[data-season="chuseok"] [data-season-room] :is(.tp-hero,.nl-hero,.bh-hero,.se-ready-card){position:relative;isolation:isolate;overflow:hidden;border-color:var(--season-line);background:linear-gradient(135deg,#fffdf7,#f8f0e2);}
+[data-season-room] :is(.tp-hero,.nl-hero,.bh-hero,.se-ready-card)::before{content:"";position:absolute;pointer-events:none;z-index:-1;right:5%;top:28px;width:84px;height:84px;opacity:.22;}
+[data-season-room="kongi"] .se-ready-card::before,[data-season-room="nabi"] .nl-hero::before{border:2px solid var(--season-accent);border-radius:24px 24px 4px 4px;background:repeating-linear-gradient(90deg,transparent 0 24px,var(--season-accent) 24px 26px),repeating-linear-gradient(0deg,transparent 0 24px,var(--season-accent) 24px 26px);}
+[data-season-room="tori"] .tp-hero::before{width:44px;height:54px;border-radius:8px 8px 24px 24px;border-top:5px solid #bd8e70;background:linear-gradient(90deg,#dbb978 0 25%,#d798ac 25% 50%,#ad9cbd 50% 75%,#91b6c5 75%);transform:rotate(-8deg);}
+html[data-season="chuseok"] [data-season-room="nabi"] .nl-hero{background:linear-gradient(135deg,#fffcf6,#f2edf7);}
+html[data-season="chuseok"] [data-season-room="bori"] .bh-hero{background:radial-gradient(ellipse at 15% 80%,#f7e7cd,transparent 60%),linear-gradient(135deg,#fffaf0,#edf3f7);}
+[data-season-room="bori"] .bh-hero::before{border-radius:50%;background:#dfbd74;box-shadow:0 0 26px 8px #eed7a5;}
+[data-season-room] :is(.game-card,.learn-card,.hobby-card,.se-player-card){border-color:var(--season-line);box-shadow:0 4px 18px #6850350a;}
+[data-season-room] .room-flow-toolbar{border-bottom:2px solid var(--season-line);padding-bottom:12px;}
+[data-season-room] .season-room-companion{width:72px;height:72px;object-fit:contain;flex-shrink:0;}
+[data-season-room] .room-flow-toolbar h2{flex:1;min-width:0;}
+[data-season-room] .se-guide-name{display:flex;align-items:center;justify-content:center;gap:10px;}
+[data-season-room] .se-guide-name .season-room-companion{width:64px;height:64px;}
+[data-season-room] :is(.tp-hero,.nl-hero,.bh-hero)>p{color:#554a42;line-height:1.65;}
+[data-season-room="nabi"] .nl-hero>p{color:#5b486b;}
+[data-season-room="bori"] .bh-hero>p{color:#405d70;}
+[data-season-room] .bh-speech{font-size:20px;color:#405d70;border-color:var(--season-line);box-shadow:none;}
+@media(max-width:600px){[data-season-room] .room-flow-toolbar .season-room-companion{order:-2;width:56px;height:56px;}[data-season-room] .room-flow-toolbar h2{order:-1;width:auto;flex-basis:calc(100% - 90px);}}
+html[data-season="chuseok"] body.common-contrast[data-season-room] :is(.tp-hero,.nl-hero,.bh-hero,.se-ready-card){background:#151515!important;color:#fff!important;}
+.common-contrast[data-season-room] :is(.tp-hero,.nl-hero,.bh-hero,.se-ready-card)::before{display:none;}
+[data-season-room] #characterVoiceNotice{max-width:100%;box-sizing:border-box;overflow-wrap:anywhere;word-break:keep-all;}

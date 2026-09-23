@@ -1711,3 +1711,24 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 09:55:58 — 네 캐릭터 방 추석 시즌 연결 보강
+- **수행 내역**: 네 방 시작 인사/한복 fallback와 활동 중 작은 한복 안내 캐릭터 연결. 콩이·나비 옅은 창살, 토리 색동 복주머니, 보리 달과 따뜻한 조명 배경. 문제/운동 미디어 바깥에만 장식. 고대비 장식 제거. 음성 오류 안내 긴 문자열 모바일 줄바꿈 수정. 기존 12활동 완료/재시도 회귀 테스트와 빌드 통과. TTS/문제/저장 로직 보존, 실제 Google 호출 검증 제외.
+
+## 자동 저장 / 2026-09-23 09:56:13 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 10
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [bori-hobby.html](./bori-hobby.html)
+- [css/chuseok-rooms.css](./css/chuseok-rooms.css)
+- [documents/CHUSEOK_SEASON.md](./documents/CHUSEOK_SEASON.md)
+- [js/chuseok-season.js](./js/chuseok-season.js)
+- [nabi-learn.html](./nabi-learn.html)
+- [senior-exercise.html](./senior-exercise.html)
+- [tests/chuseok-rooms.cjs](./tests/chuseok-rooms.cjs)
+- [tori-play.html](./tori-play.html)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>

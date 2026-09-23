@@ -1,8 +1,15 @@
 /* Display-only season: no changes to voices, activity state, questions or saved records. */
 document.addEventListener('DOMContentLoaded',()=>{
  if(document.documentElement.dataset.season!=='chuseok')return;
- const greetings={tori:'추석을 기다리며, 토리와 즐겁게 놀아요.',nabi:'추석을 기다리며, 나비와 천천히 생각해봐요.',bori:'추석을 기다리며, 보리와 따뜻한 추억을 나눠요.'};
- const id=document.body.dataset.activityRoom;
+ const greetings={kongi:'명절을 앞두고, 천천히 몸을 움직여볼까요?',tori:'명절을 앞두고, 토리와 즐겁게 놀아볼까요?',nabi:'나비와 함께 차분하게 생각해볼까요?',bori:'보리와 함께 따뜻한 시간을 보내볼까요?'};
+ const id=document.body.dataset.activityRoom||(document.getElementById('viewReady')?'kongi':null);
+ if(!id)return;
+ document.body.dataset.seasonRoom=id;
  const greeting=document.querySelector('.tp-hero>p,.nl-hero>p,.bh-hero>p');
  if(greeting&&greetings[id])greeting.textContent=greetings[id];
+ const title=document.querySelector('.se-ready-title');if(title)title.textContent=greetings.kongi;
+ const speech=document.querySelector('.tp-speech,.nl-speech,.bh-speech');if(speech)speech.textContent=id==='bori'?'명절을 앞두고, 편안하게 함께해요.':'천천히 함께해요.';
+ // Keep a small, non-interactive friend beside the current activity, outside questions/media.
+ const host=document.querySelector('.room-flow-toolbar,.se-guide-name');
+ if(host){const image=document.createElement('img');image.className='season-room-companion';image.src=`assets/images/chuseok/${id}-hanbok.png`;image.alt='';image.setAttribute('aria-hidden','true');host.prepend(image);}
 });
