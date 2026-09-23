@@ -1,10 +1,19 @@
-/* A modest forward bow, not a sideways dance. Feet and links stay fixed.
-   Slight inward compression gathers the existing hand pose without redrawing it. */
-.home-friend .hanbok-bow-upper {transform-box:view-box;transform:perspective(1600px) rotateX(0deg);}
-.home-friend .is-bowing .hanbok-bow-upper {animation:chuseok-gentle-bow 2.2s cubic-bezier(.45,0,.25,1) 1;}
-@keyframes chuseok-gentle-bow {
-  0%,100% {transform:perspective(1600px) rotateX(0deg) scaleX(1);}
-  42%,58% {transform:perspective(1600px) rotateX(16deg) scaleX(.96);}
+/* Only the upper-body clip is projected around the waist; no translation,
+   scale, bounce or animation on the outer SVG or lower body. */
+.home-friend .hanbok-bow-lower {transform:none!important;animation:none!important;}
+.home-friend .hanbok-bow-upper {transform-box:view-box;transform:perspective(850px) rotateX(0deg);}
+.home-friend .is-bowing .hanbok-bow-upper {animation:chuseok-waist-bow var(--bow-duration) cubic-bezier(.4,0,.3,1) 1;}
+/* 0.8s down, 0.6s hold, 1.0s return (2.4s total). */
+@keyframes chuseok-waist-bow {
+  0%,100% {transform:perspective(850px) rotateX(0deg);}
+  33.333%,58.333% {transform:perspective(850px) rotateX(var(--bow-angle));}
+}
+/* Bori: 0.9s down, 0.7s hold, 1.0s return. */
+.home-friend .is-bowing[data-character="bori"] .hanbok-bow-upper{animation-name:chuseok-bori-waist-bow;}
+@keyframes chuseok-bori-waist-bow {
+  0%,100% {transform:perspective(850px) rotateX(0deg);}
+  34.615%,61.538% {transform:perspective(850px) rotateX(var(--bow-angle));}
 }
 @media(prefers-reduced-motion:reduce){.home-friend .hanbok-bow-upper{animation:none!important;transform:none!important;}}
-
+/* The global senior theme sets all durations to 3.5/6s; this greeting has its own tested timing. */
+.home-friend .is-bowing .hanbok-bow-upper{animation-duration:var(--bow-duration)!important;}

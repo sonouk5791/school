@@ -1805,3 +1805,21 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 10:09:28 — 캐릭터 허리 절하기 동작 수정
+- **수행 내역**: 기존 가로 scale 제거, SVG upper/lower clip 및 하체 변형 금지. 허리축 x627/y940·880·850·930, 콩이14/토리15/나비12/보리13.5도 상체 회전. 일반2.4초·보리2.6초, 0.6~0.7초 유지. 공통 CSS 시간 강제값 충돌 수정. 이미지 decode 후 4명 동시1회, 자동반복 없음, hover/초점10초 간격. 머리/팔은 원본 상체를 따르며 새 팔 자세 생성 없음. 동시시작/고정하체/유지구간/반복없음/reduced-motion/반응형 검증과 빌드 통과.
+
+## 자동 저장 / 2026-09-23 10:09:34 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 7
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [css/chuseok-bow.css](./css/chuseok-bow.css)
+- [documents/CHUSEOK_SEASON.md](./documents/CHUSEOK_SEASON.md)
+- [index.html](./index.html)
+- [js/chuseok-bow.js](./js/chuseok-bow.js)
+- [tests/chuseok-bow.cjs](./tests/chuseok-bow.cjs)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>
