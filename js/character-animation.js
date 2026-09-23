@@ -2,12 +2,11 @@
 (() => {
  'use strict';
  const rigs=[],state={kongi:'idle',tori:'idle',nabi:'idle',bori:'idle'},media=matchMedia('(prefers-reduced-motion: reduce)');
+ const mouthStates={kongi:'mouthSmile',tori:'mouthSmile',nabi:'mouthSmile',bori:'mouthSmile'},talkStarted={};
  let timer=null,tick=0,waveIndex=0,serial=0;const ns='http://www.w3.org/2000/svg';
  function create(id){
  if(document.documentElement.dataset.season==='chuseok'){
-  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1122 1402');svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig','hanbok-character');svg.dataset.character=id;
-  const image=document.createElementNS(ns,'image');image.setAttribute('href','/assets/images/chuseok/'+id+'-hanbok-v2.png');image.setAttribute('width','1122');image.setAttribute('height','1402');svg.append(image);
-  rigs.push({id,svg,nextBlink:Infinity,blinkUntil:0,waveUntil:0});return svg;
+  const svg=HanbokCharacter.create(id);rigs.push({id,svg,nextBlink:Infinity,blinkUntil:0,waveUntil:0});return svg;
  }
  const d=CharacterRigData[id],uid='rig'+(++serial),svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`${d.x} 96 344 576`);svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig');svg.dataset.character=id;svg.style.setProperty('--breath',d.period+'s');svg.style.setProperty('--wave-angle',d.angle+'deg');
  const image=`<image href="/assets/images/home-hero/four-friends.jpg" width="1376" height="768"/>`;
@@ -30,13 +29,13 @@
  for(const [selector,id]of [['.tp-char-img','tori'],['.nl-char-img','nabi'],['.bh-char-img','bori'],['.se-ready-avatar','kongi']]){const old=document.querySelector(selector);if(!old)continue;const svg=create(id);svg.classList.add('room-character-rig');old.hidden=true;old.after(svg);}
  document.querySelectorAll('.tp-game-tab,.nl-tab,.bh-tab,#btnStartExercise').forEach(el=>el.addEventListener('click',()=>{const id=rigs.find(r=>r.svg.classList.contains('room-character-rig'))?.id;if(id)gesture(id,true);}));
  start();}
- function set(id,value,duration=0){if(!state[id])return;state[id]=value;for(const r of rigs.filter(r=>r.id===id)){r.svg.dataset.state=value;r.waveUntil=duration?performance.now()+duration:0;}}
+ function set(id,value,duration=0){if(!state[id])return;if(value==='talking'&&state[id]!==value)talkStarted[id]=performance.now();state[id]=value;mouthStates[id]=value==='talking'?'mouthClosed':'mouthSmile';for(const r of rigs.filter(r=>r.id===id)){r.svg.dataset.state=value;r.svg.dataset.mouth=r.svg.classList.contains('hanbok-character')?mouthStates[id]:'smile';r.waveUntil=duration?performance.now()+duration:0;}}
  function gesture(id,signature=false){if(state[id]==='talking'||media.matches)return;set(id,signature?'exercising':'waving',id==='bori'?2400:1800);}
- function reset(){for(const id of Object.keys(state))set(id,'idle');for(const r of rigs){r.svg.classList.remove('is-blinking');r.svg.dataset.mouth='smile';}}
- function step(){tick++;const now=performance.now();for(const r of rigs){if(!r.svg.getClientRects().length)continue;if(r.waveUntil&&now>r.waveUntil)set(r.id,'idle');if(now>r.nextBlink){r.blinkUntil=now+220;r.nextBlink=now+3000+Math.random()*2000;}r.svg.classList.toggle('is-blinking',now<r.blinkUntil);r.svg.dataset.mouth=state[r.id]==='talking'?['closed','a','o','smile'][Math.floor(tick/3)%4]:'smile';}
- if(tick%120===0){const visible=rigs.filter(r=>r.svg.getClientRects().length);if(visible.length)gesture(visible[(waveIndex++)%visible.length].id,true);}}
+ function reset(){for(const id of Object.keys(state))set(id,'idle');for(const r of rigs){r.svg.classList.remove('is-blinking');r.svg.dataset.mouth=r.svg.classList.contains('hanbok-character')?'mouthSmile':'smile';}}
+ function step(){tick++;const now=performance.now();for(const r of rigs){if(!r.svg.getClientRects().length)continue;if(r.waveUntil&&now>r.waveUntil)set(r.id,'idle');if(now>r.nextBlink){r.blinkUntil=now+220;r.nextBlink=now+3000+Math.random()*2000;}r.svg.classList.toggle('is-blinking',now<r.blinkUntil);if(r.svg.classList.contains('hanbok-character')){mouthStates[r.id]=state[r.id]==='talking'?HanbokCharacter.states[Math.floor((now-talkStarted[r.id])/180)%5]:'mouthSmile';r.svg.dataset.mouth=mouthStates[r.id];}else r.svg.dataset.mouth=state[r.id]==='talking'?['closed','a','o','smile'][Math.floor(tick/3)%4]:'smile';}
+ if(document.documentElement.dataset.season!=='chuseok'&&tick%120===0){const visible=rigs.filter(r=>r.svg.getClientRects().length);if(visible.length)gesture(visible[(waveIndex++)%visible.length].id,true);}}
  function start(){clearInterval(timer);reset();document.documentElement.classList.toggle('character-motion-reduced',media.matches);if(!media.matches&&!document.hidden)timer=setInterval(step,100);}
- window.addEventListener('character-voice-state',e=>{const {state:status,characterId:id}=e.detail;if(status==='speaking'&&id){for(const key of Object.keys(state))set(key,'idle');set(id,'talking');}else if(['ended','error','cancelled','stopped','unavailable'].includes(status)){if(id)set(id,'idle');else reset();}});
+ window.addEventListener('character-voice-state',e=>{const {state:status,characterId:id}=e.detail;if(['speaking','playing'].includes(status)&&id){for(const key of Object.keys(state))set(key,'idle');set(id,status==='playing'?'talking':'preparing');}else if(['paused','waiting','ended','error','cancelled','stopped','unavailable'].includes(status)){if(id)set(id,'idle');else reset();}});
  media.addEventListener('change',start);document.addEventListener('visibilitychange',start);window.addEventListener('pagehide',()=>{clearInterval(timer);reset();});document.addEventListener('DOMContentLoaded',mount);
- window.CharacterAnimation={state,set,gesture};
+ window.CharacterAnimation={state,mouthStates,set,gesture,create};
 })();

@@ -1,19 +1,20 @@
-/* Only the upper-body clip is projected around the waist; no translation,
-   scale, bounce or animation on the outer SVG or lower body. */
-.home-friend .hanbok-bow-lower {transform:none!important;animation:none!important;}
-.home-friend .hanbok-bow-upper {transform-box:view-box;transform:perspective(850px) rotateX(0deg);}
-.home-friend .is-bowing .hanbok-bow-upper {animation:chuseok-waist-bow var(--bow-duration) cubic-bezier(.4,0,.3,1) 1;}
-/* 0.8s down, 0.6s hold, 1.0s return (2.4s total). */
-@keyframes chuseok-waist-bow {
-  0%,100% {transform:perspective(850px) rotateX(0deg);}
-  33.333%,58.333% {transform:perspective(850px) rotateX(var(--bow-angle));}
-}
-/* Bori: 0.9s down, 0.7s hold, 1.0s return. */
-.home-friend .is-bowing[data-character="bori"] .hanbok-bow-upper{animation-name:chuseok-bori-waist-bow;}
-@keyframes chuseok-bori-waist-bow {
-  0%,100% {transform:perspective(850px) rotateX(0deg);}
-  34.615%,61.538% {transform:perspective(850px) rotateX(var(--bow-angle));}
-}
-@media(prefers-reduced-motion:reduce){.home-friend .hanbok-bow-upper{animation:none!important;transform:none!important;}}
-/* The global senior theme sets all durations to 3.5/6s; this greeting has its own tested timing. */
-.home-friend .is-bowing .hanbok-bow-upper{animation-duration:var(--bow-duration)!important;}
+/* Feet remain the original PNG; only upper body and pose blend animate. */
+.hanbok-character .hanbok-bow-lower{transform:none!important;animation:none!important}
+.hanbok-character .hanbok-bow-upper{transform-box:view-box;transform:perspective(1800px) rotateX(0deg)}
+.hanbok-greeting-pose{opacity:0}
+.hanbok-character.is-bowing .hanbok-bow-upper{animation:chuseok-waist-bow var(--bow-duration) cubic-bezier(.4,0,.3,1) 1;animation-duration:var(--bow-duration)!important}
+.hanbok-character.is-bowing .hanbok-upright-pose{animation:hanbok-upright-out var(--bow-duration) ease-in-out 1;animation-duration:var(--bow-duration)!important}
+.hanbok-character.is-bowing .hanbok-greeting-pose{animation:hanbok-greeting-in var(--bow-duration) ease-in-out 1;animation-duration:var(--bow-duration)!important}
+/* 0.8s down, 0.6s hold, 1s return; Bori 0.87 / 0.65 / 1.08s. */
+@keyframes chuseok-waist-bow{0%,100%{transform:perspective(1800px) rotateX(0deg)}33.333%,58.333%{transform:perspective(1800px) rotateX(var(--bow-angle))}}
+@keyframes hanbok-upright-out{0%,100%{opacity:1}33.333%,58.333%{opacity:0}}
+@keyframes hanbok-greeting-in{0%,100%{opacity:0}33.333%,58.333%{opacity:1}}
+.hanbok-mouth-overlay [data-mouth-shape]{display:none}
+[data-mouth="mouthClosed"] [data-mouth-shape="mouthClosed"],
+[data-mouth="mouthA"] [data-mouth-shape="mouthA"],
+[data-mouth="mouthO"] [data-mouth-shape="mouthO"],
+[data-mouth="mouthE"] [data-mouth-shape="mouthE"],
+[data-mouth="mouthSmile"] [data-mouth-shape="mouthSmile"]{display:block}
+@media(prefers-reduced-motion:reduce){.hanbok-character .hanbok-bow-upper{animation:none!important;transform:none!important}.hanbok-greeting-pose{opacity:0!important}.hanbok-upright-pose{opacity:1!important}}
+
+[data-mouth="mouthSmile"] .hanbok-greeting-pose .hanbok-mouth-overlay,[data-mouth="mouthClosed"] .hanbok-greeting-pose .hanbok-mouth-overlay{display:none}

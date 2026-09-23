@@ -37,7 +37,7 @@ window.CharacterVoice = (() => {
     const voice=voices().find(v=>v.voiceURI===mapping[id]);
     if(!voice){emit('unavailable',{characterId:id,message:profiles[id].name+'의 별도 목소리가 아직 준비되지 않았어요. 화면 안내를 봐주세요.'});resolve({status:'unavailable'});return;}
     const u=new SpeechSynthesisUtterance(text);u.voice=voice;u.lang=voice.lang;u.pitch=1;u.rate=profiles[id].speed*(localStorage.getItem('digital_school_voice_speed')==='slow'?.9:1)*(options.rateScale||1);
-    const done=status=>{signal.removeEventListener('abort',abort);resolve({status});};const abort=()=>{synth.cancel();done('cancelled');};signal.addEventListener('abort',abort,{once:true});u.onend=()=>done('ended');u.onerror=()=>done('error');u.onboundary=options.onboundary||null;synth.speak(u);
+    const done=status=>{signal.removeEventListener('abort',abort);resolve({status});};const abort=()=>{synth.cancel();done('cancelled');};signal.addEventListener('abort',abort,{once:true});u.onstart=()=>{if(!signal.aborted)emit('playing',{characterId:id});};u.onend=()=>done('ended');u.onerror=()=>done('error');u.onboundary=options.onboundary||null;synth.speak(u);
   });}
   ready();
   window.addEventListener('character-voice-state',event=>{if(!['unavailable','error'].includes(event.detail.state))return;let note=document.getElementById('characterVoiceNotice');if(!note){note=document.createElement('p');note.id='characterVoiceNotice';note.setAttribute('role','status');note.style.cssText='font-size:20px;padding:12px;background:#fff9e9;position:relative;z-index:5';document.body.append(note);}note.textContent=event.detail.message;});
@@ -69,12 +69,12 @@ window.CharacterVoice = (() => {
         if(signal.aborted||token!==sequence)return {status:'cancelled'};
         if(!(blob instanceof Blob)||!blob.type.startsWith('audio/'))throw Error('음성 응답을 확인할 수 없습니다.');
         url=URL.createObjectURL(blob);audio=new Audio(url);audio.preservesPitch=true;audio.playbackRate=(options.rateScale||1)*(localStorage.getItem('digital_school_voice_speed')==='slow'?.9:1);
-        await new Promise((resolve,reject)=>{const current=audio;const cleanup=()=>signal.removeEventListener('abort',abort);const abort=()=>{cleanup();reject(new DOMException('Stopped','AbortError'));};signal.addEventListener('abort',abort,{once:true});current.onended=()=>{cleanup();resolve();};current.onerror=()=>{cleanup();reject(Error('음성을 재생하지 못했어요.'));};current.play().catch(e=>{cleanup();reject(e);});});
+        await new Promise((resolve,reject)=>{const current=audio;current.onplaying=()=>{if(token===sequence)emit('playing',{characterId:id});};current.onwaiting=()=>{if(token===sequence)emit('waiting',{characterId:id});};const cleanup=()=>signal.removeEventListener('abort',abort);const abort=()=>{cleanup();reject(new DOMException('Stopped','AbortError'));};signal.addEventListener('abort',abort,{once:true});current.onended=()=>{cleanup();if(token===sequence)emit('paused',{characterId:id});resolve();};current.onerror=()=>{cleanup();reject(Error('음성을 재생하지 못했어요.'));};current.play().catch(e=>{cleanup();reject(e);});});
         URL.revokeObjectURL(url);url=null;audio=null;
         if(i<sentences.length-1)await wait(/[?？]\s*$/.test(sentences[i])?(profile.questionPause||900):profile.pause,signal);
       }
-      emit('ended',{characterId:id});return {status:'ended'};
-    }catch(error){if(error.name==='AbortError')return {status:'cancelled'};emit('error',{message:error.message});return {status:'error',message:error.message};}
+      if(token===sequence)emit('ended',{characterId:id});return {status:'ended'};
+    }catch(error){if(error.name==='AbortError')return {status:'cancelled'};if(token===sequence)emit('error',{characterId:id,message:error.message});return {status:'error',message:error.message};}
     finally{if(token===sequence){active=null;controller=null;if(url)URL.revokeObjectURL(url);url=null;audio=null;}}
   }
   function speak(id,text,options={}){const {restart=false}=options;
@@ -99,7 +99,7 @@ window.CharacterVoice = (() => {
     active.promise=new Promise(resolve=>{
       const done=status=>{signal.removeEventListener('abort',abort);current.onended=null;current.onerror=null;if(token===sequence){audio=null;controller=null;active=null;emit(status,{characterId:id,source:'recording'});}resolve({status});};
       const abort=()=>{current.pause();done('cancelled');};signal.addEventListener('abort',abort,{once:true});
-      current.onended=()=>done('ended');current.onerror=()=>done('error');current.play().catch(()=>done(signal.aborted?'cancelled':'error'));
+      current.onplaying=()=>{if(token===sequence)emit('playing',{characterId:id,source:'recording'});};current.onwaiting=()=>{if(token===sequence)emit('waiting',{characterId:id});};current.onended=()=>done('ended');current.onerror=()=>done('error');current.play().catch(()=>done(signal.aborted?'cancelled':'error'));
     });return active.promise;
   }
 

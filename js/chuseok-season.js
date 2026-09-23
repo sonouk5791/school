@@ -11,5 +11,5 @@ document.addEventListener('DOMContentLoaded',()=>{
  const speech=document.querySelector('.tp-speech,.nl-speech,.bh-speech');if(speech)speech.textContent=id==='bori'?'명절을 앞두고, 편안하게 함께해요.':'천천히 함께해요.';
  // Keep a small, non-interactive friend beside the current activity, outside questions/media.
  const host=document.querySelector('.room-flow-toolbar,.se-guide-name');
- if(host){const image=document.createElement('img');image.className='season-room-companion';image.src=`assets/images/chuseok/${id}-hanbok-v2.png`;image.alt='';image.setAttribute('aria-hidden','true');host.prepend(image);}
+ if(host){const image=CharacterAnimation.create(id);image.classList.add('season-room-companion');image.setAttribute('aria-hidden','true');host.prepend(image);}
 });
