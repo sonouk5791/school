@@ -5,8 +5,8 @@
  let timer=null,tick=0,waveIndex=0,serial=0;const ns='http://www.w3.org/2000/svg';
  function create(id){
  if(document.documentElement.dataset.season==='chuseok'){
-  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1254 1254');svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig','hanbok-character');svg.dataset.character=id;
-  const image=document.createElementNS(ns,'image');image.setAttribute('href','/assets/images/chuseok/'+id+'-hanbok.png');image.setAttribute('width','1254');image.setAttribute('height','1254');svg.append(image);
+  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1122 1402');svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig','hanbok-character');svg.dataset.character=id;
+  const image=document.createElementNS(ns,'image');image.setAttribute('href','/assets/images/chuseok/'+id+'-hanbok-v2.png');image.setAttribute('width','1122');image.setAttribute('height','1402');svg.append(image);
   rigs.push({id,svg,nextBlink:Infinity,blinkUntil:0,waveUntil:0});return svg;
  }
  const d=CharacterRigData[id],uid='rig'+(++serial),svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`${d.x} 96 344 576`);svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig');svg.dataset.character=id;svg.style.setProperty('--breath',d.period+'s');svg.style.setProperty('--wave-angle',d.angle+'deg');

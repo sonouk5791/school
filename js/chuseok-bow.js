@@ -3,17 +3,17 @@ document.addEventListener('DOMContentLoaded',()=>{
  if(document.documentElement.dataset.season!=='chuseok')return;
  const reduce=matchMedia('(prefers-reduced-motion: reduce)'),ns='http://www.w3.org/2000/svg';
  const friends=[];let introduced=false,ready=false;
- const specs={kongi:{waist:940,angle:14,duration:2400},tori:{waist:880,angle:15,duration:2400},nabi:{waist:850,angle:12,duration:2400},bori:{waist:930,angle:13.5,duration:2600}};
+ const specs={kongi:{waist:1110,angle:14,duration:2400},tori:{waist:1110,angle:15,duration:2400},nabi:{waist:1080,angle:12,duration:2400},bori:{waist:1030,angle:13.5,duration:2600}};
  const node=(tag,attrs)=>{const el=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);return el;};
  const images=[];
  document.querySelectorAll('.home-friend .hanbok-character').forEach(svg=>{
   const id=svg.dataset.character,image=svg.querySelector('image'),spec=specs[id];if(!image||!spec)return;
   const {waist,angle,duration}=spec;
   const defs=node('defs',{}),top=node('clipPath',{id:'bow-top-'+id}),bottom=node('clipPath',{id:'bow-bottom-'+id});
-  top.append(node('rect',{x:0,y:0,width:1254,height:waist+2}));bottom.append(node('rect',{x:0,y:waist-2,width:1254,height:1256-waist}));defs.append(top,bottom);
+  top.append(node('rect',{x:0,y:0,width:1122,height:waist+2}));bottom.append(node('rect',{x:0,y:waist-2,width:1122,height:1404-waist}));defs.append(top,bottom);
   const lower=node('g',{class:'hanbok-bow-lower','clip-path':'url(#bow-bottom-'+id+')'}),upper=node('g',{class:'hanbok-bow-upper'}),crop=node('g',{'clip-path':'url(#bow-top-'+id+')'});
   lower.append(image.cloneNode(true));crop.append(image);upper.append(crop);
-  upper.style.transformOrigin='627px '+waist+'px';svg.style.setProperty('--bow-angle',angle+'deg');svg.style.setProperty('--bow-duration',duration+'ms');svg.append(defs,lower,upper);
+  upper.style.transformOrigin='561px '+waist+'px';svg.style.setProperty('--bow-angle',angle+'deg');svg.style.setProperty('--bow-duration',duration+'ms');svg.append(defs,lower,upper);
   const item={svg,upper,last:-Infinity,timer:null};friends.push(item);
   const preload=new Image();preload.src=image.getAttribute('href');images.push(preload.decode().catch(()=>{}));
   upper.addEventListener('animationend',()=>finish(item));

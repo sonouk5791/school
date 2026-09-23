@@ -1874,3 +1874,29 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 10:25:33 — 사용자 첨부 한복 캐릭터 4종 교체
+- **수행 내역**: 사용자 원본 PNG를 재생성/편집 없이 hanbok-v2.png 4개로 복사. 콩이 강아지/토리 토끼/나비 고양이/보리 곰 연결. 메인·네방·활동 안내 교체, SVG1122×1402 비율 및 절하기 허리축 조정. 기존 이미지·링크·활동·TTS·저장 유지. 절하기/네방16화면폭과 상태/콘솔/저장 유지 검증 및 빌드 통과.
+
+## 자동 저장 / 2026-09-23 10:25:49 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 15
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/images/chuseok/bori-hanbok-v2.png](./assets/images/chuseok/bori-hanbok-v2.png)
+- [assets/images/chuseok/kongi-hanbok-v2.png](./assets/images/chuseok/kongi-hanbok-v2.png)
+- [assets/images/chuseok/nabi-hanbok-v2.png](./assets/images/chuseok/nabi-hanbok-v2.png)
+- [assets/images/chuseok/tori-hanbok-v2.png](./assets/images/chuseok/tori-hanbok-v2.png)
+- [bori-hobby.html](./bori-hobby.html)
+- [documents/CHUSEOK_SEASON.md](./documents/CHUSEOK_SEASON.md)
+- [index.html](./index.html)
+- [js/character-animation.js](./js/character-animation.js)
+- [js/chuseok-bow.js](./js/chuseok-bow.js)
+- [js/chuseok-season.js](./js/chuseok-season.js)
+- [nabi-learn.html](./nabi-learn.html)
+- [senior-exercise.html](./senior-exercise.html)
+- [tori-play.html](./tori-play.html)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>
