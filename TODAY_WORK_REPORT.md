@@ -1572,3 +1572,25 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 09:28:34 — 3차 수정: 토리·나비·보리 활동 화면 흐름 통일
+- **수행 내역**: 기존 room-activity-flow 상태 계층을 보완해 select→playing→completed 통일. 첫 화면의 캐릭터·인사·4가지 활동 이름 및 나비 순서 정리, 보조 방/기록 링크 접힘 처리. 선택한 활동만 표시하고 완료 뒤 정말 잘하셨어요!/다시 하기/다른 활동 고르기로 통일. 재시작/이탈 시 이전 지연 처리 무효화 및 보리 재진입 초기화. 수수께끼 중복 정답·건너뛰기 완료 및 빈 색칠 저장 완료 방지, 이야기 오답 재시도 보완. 기존 문제/노래/이야기/색칠 데이터 13개 배열을 이전 Git 소스와 비교해 내용 동일 확인(줄바꿈 정규화). Google/Gemini TTS API·환경변수·캐릭터 음성 연결 및 기존 저장 키/기록 유지. 관련 파일: [공통 흐름](file:///J:/sh/js/room-activity-flow.js), [공통 CSS](file:///J:/sh/css/room-activity-flow.css), [토리](file:///J:/sh/tori-play.html), [나비](file:///J:/sh/nabi-learn.html), [보리](file:///J:/sh/bori-hobby.html), [검증](file:///J:/sh/tests/room-three-stage.cjs).
+
+## 자동 저장 / 2026-09-23 09:28:54 — 3차 활동 흐름 최종 검증 통과
+- **수행 내역**: 12개 활동을 UI로 진행해 실제 완료·재시작·다른 활동 선택 검증 통과. 1440/768/390/320px 선택 화면 및 모바일 진행/완료 화면 확인. 완료 전 메시지 숨김, 한 패널 노출, 수수께끼 중복/건너뛰기 차단, 이야기 오답 재시도, 빈 색칠 저장 차단, 그림 저장 및 음악 끝까지 진행, 이탈 후 이전 완료/도장 미반영 검증 통과. 브라우저 JS 오류 없음, 빌드 통과. 테스트 음성은 모의 응답을 사용했으며 Google/Gemini 실서비스 합성 호출은 이번 검증에서 미실행.
+
+## 자동 저장 / 2026-09-23 09:29:13 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 8
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [bori-hobby.html](./bori-hobby.html)
+- [css/room-activity-flow.css](./css/room-activity-flow.css)
+- [js/room-activity-flow.js](./js/room-activity-flow.js)
+- [nabi-learn.html](./nabi-learn.html)
+- [tests/room-three-stage.cjs](./tests/room-three-stage.cjs)
+- [tori-play.html](./tori-play.html)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>

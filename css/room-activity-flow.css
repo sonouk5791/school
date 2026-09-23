@@ -11,4 +11,13 @@
 [data-activity-room] :is(.game-panel,.learn-panel,.hobby-panel){min-width:0;}
 [data-activity-room] :is(.game-panel,.learn-panel,.hobby-panel) button{min-height:56px;font-size:20px;word-break:keep-all;}
 [data-activity-room] .coloring-canvas{max-width:100%;height:auto;}
+[data-activity-room] :is(.tp-speech,.nl-speech){display:none;}
+[data-activity-room] :is(.tp-hero,.nl-hero,.bh-hero)>p{font-size:22px;line-height:1.6;word-break:keep-all;}
+.room-selection-extras{max-width:850px;margin:20px auto;padding:0 16px;text-align:center;}
+.room-selection-extras>summary{font-size:20px;min-height:56px;padding:16px;cursor:pointer;word-break:keep-all;}
+.room-selection-extras a{display:inline-flex;align-items:center;justify-content:center;min-height:56px;font-size:20px;padding:12px;}
+[data-activity-status="completed"] :is(.stamp-area,.completion-banner){display:block;text-align:center;}
+[data-activity-status="completed"] :is(.stamp-msg,.completion-banner h2){font-size:30px;word-break:keep-all;}
+[data-activity-status="completed"] :is(.stamp-area,.completion-banner) button{min-height:64px;font-size:22px;}
+#panelSong:has(.lyrics-area.active) #songList{display:none;}
 @media(max-width:600px){.room-flow-toolbar h2{order:-1;width:100%;font-size:26px;}[data-activity-status="select"] :is(.tp-game-menu,.nl-menu,.bh-menu)>button{font-size:22px;padding:14px;}.coloring-workspace.active{flex-direction:column;}}
