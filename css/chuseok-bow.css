@@ -1,0 +1,10 @@
+/* A modest forward bow, not a sideways dance. Feet and links stay fixed.
+   Slight inward compression gathers the existing hand pose without redrawing it. */
+.home-friend .hanbok-bow-upper {transform-box:view-box;transform:perspective(1600px) rotateX(0deg);}
+.home-friend .is-bowing .hanbok-bow-upper {animation:chuseok-gentle-bow 2.2s cubic-bezier(.45,0,.25,1) 1;}
+@keyframes chuseok-gentle-bow {
+  0%,100% {transform:perspective(1600px) rotateX(0deg) scaleX(1);}
+  42%,58% {transform:perspective(1600px) rotateX(16deg) scaleX(.96);}
+}
+@media(prefers-reduced-motion:reduce){.home-friend .hanbok-bow-upper{animation:none!important;transform:none!important;}}
+

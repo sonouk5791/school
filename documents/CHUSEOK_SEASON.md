@@ -27,3 +27,9 @@
 - Asset: assets/images/chuseok/bori-hanbok.png
 - Tool: built-in image_gen (identity-preserve edit)
 - Prompt: Use case: identity-preserve. Edit target: attached official bori character. Change ONLY the clothing into a simple authentic Korean hanbok in sky blue with cream collar and small tied goreum ribbon. Preserve the exact face, species, eyes, glasses if present, ears, fur markings, head proportions, expression, hands, pose and friendly soft 3D rendering. Full body same centered framing, no clipping. Calm cute Chuseok holiday outfit for senior education platform. No hats, props, text, lettering, watermark or scenery. Genuinely transparent background. High resolution single character asset.
+
+## 메인 절하기 인사
+- CSS 상체 16도 앞으로 숙이기, 2.2초, 허리 기준 변형과 고정된 하체.
+- 첫 화면 노출 시 각 캐릭터 1회 순차 인사. hover/키보드 초점 재인사는 전체 30초 간격. 클릭 이동을 지연하지 않는다.
+- 움직임 줄이기 설정에서는 정지. 탭을 숨기면 진행 중 인사 취소. 기존 손 그림은 유지하고 상체 폭을 4% 모아 안쪽으로 모이는 느낌만 적용하며 실제 합장 자세로 바꾸지는 않는다.
+- js/chuseok-bow.js, css/chuseok-bow.css는 메인에만 연결. 음성/활동/저장 로직 변경 없음.

@@ -1680,3 +1680,21 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 09:50:24 — 메인 한복 캐릭터 꾸벅 인사
+- **수행 내역**: 메인 전용 CSS keyframes/transform 상체 16도·2.2초 인사, 고정 하체, 처음 노출 1회씩 순차 실행과 hover/초점 30초 간격. 손은 원본 자세 보존 및 상체 폭 4% 안쪽 표현. reduced-motion/탭 숨김 중단. 링크·이미지·TTS·데이터 유지. js/chuseok-bow.js css/chuseok-bow.css index.html 및 문서 수정.
+
+## 자동 저장 / 2026-09-23 09:50:37 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 7
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [css/chuseok-bow.css](./css/chuseok-bow.css)
+- [documents/CHUSEOK_SEASON.md](./documents/CHUSEOK_SEASON.md)
+- [index.html](./index.html)
+- [js/chuseok-bow.js](./js/chuseok-bow.js)
+- [tests/chuseok-bow.cjs](./tests/chuseok-bow.cjs)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>
