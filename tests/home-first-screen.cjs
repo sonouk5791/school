@@ -16,8 +16,8 @@ const {chromium} = require('playwright');
     for (const width of [1440,768,390,320]) {
       await page.setViewportSize({width,height:1000});
       assert.equal(await page.locator('.home-friend:visible').count(),4);
-      assert.equal(await page.locator('.header-actions button:visible').count(),1);
-      for (const selector of ['#seniorActivitiesSection','#dailyRecommendSection','#characterDoors','#lessons','#morningLauncher','.warmup-intro','#btnTtsToggle']) {
+      assert.equal(await page.locator('.header-actions button:visible').count(),5);
+      for (const selector of ['#seniorActivitiesSection','#dailyRecommendSection','#characterDoors','#lessons','#morningLauncher','.warmup-intro']) {
         assert.equal(await page.locator(selector).isVisible(),false,selector);
       }
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'horizontal overflow '+width);

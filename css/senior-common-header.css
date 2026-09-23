@@ -1,0 +1,26 @@
+/* Wrap whole Korean labels, never squeeze them into vertical characters. */
+.senior-common-nav {display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;width:100%;min-width:0;}
+.senior-common-nav>a,.senior-common-nav>button {box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:0 0 auto;min-width:max-content;min-height:60px;margin:0;padding:12px 18px;border:2px solid #cbbfa9;border-radius:16px;background:#fffaf0;color:#342e24;font:700 20px/1.5 'Malgun Gothic',sans-serif;text-decoration:none;white-space:nowrap;word-break:keep-all;overflow:visible;cursor:pointer;}
+.senior-common-nav>:focus-visible,.common-settings button:focus-visible {outline:4px solid #356b43;outline-offset:3px;}
+.senior-common-header {display:block!important;position:relative!important;top:auto!important;max-width:100%;box-sizing:border-box;padding:14px!important;}
+.senior-common-page [hidden] {display:none!important;}
+.common-settings {box-sizing:border-box;width:100%;max-width:900px;margin:16px auto 0;padding:20px;border:2px solid #cbbfa9;border-radius:18px;background:#fffdf7;color:#342e24;word-break:keep-all;overflow-wrap:break-word;}
+.common-settings h2 {font-size:28px;line-height:1.4;margin:0 0 16px;}
+.common-settings p {font-size:22px;line-height:1.6;}
+.common-settings-options {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.common-settings button {min-height:64px;max-width:100%;padding:14px;font:700 22px/1.5 'Malgun Gothic',sans-serif;white-space:normal;word-break:keep-all;overflow-wrap:normal;border:2px solid #cbbfa9;border-radius:14px;background:#fff;color:#342e24;cursor:pointer;}
+.common-settings button[aria-pressed=true] {background:#dfefda;border-color:#356b43;}
+.common-settings [data-common-close] {margin-top:16px;}
+.common-original-help>div {display:flex;flex-wrap:wrap;gap:12px;min-width:0;}
+.senior-common-page :is(.room-flow-toolbar,.se-controls,.ch-header-left,.ch-header-right) {flex-wrap:wrap;min-width:0;word-break:keep-all;}
+.senior-common-page :is(button,a,label) {word-break:keep-all;}
+.senior-common-page.common-large :is(p,button,a,label,li) {font-size:24px!important;}
+.senior-common-page.common-xlarge :is(p,button,a,label,li) {font-size:28px!important;}
+.senior-common-page.common-contrast,.senior-common-page.common-contrast :is(section,header,main,footer,nav,article,div,p,h1,h2,h3,span,label,button,a) {background-color:#151515!important;color:#fff!important;border-color:#fff!important;}
+.senior-common-page.common-contrast button[aria-pressed=true] {outline:3px solid #ffdf58;color:#ffdf58!important;}
+/* Override earlier homepage-only toolbar placement while preserving other pages. */
+body.character-home.simple-header .header-container {flex-wrap:wrap;justify-content:space-between;}
+body.character-home.simple-header .header-actions.senior-common-nav {display:flex;width:auto;flex:1 1 620px;justify-content:flex-end;flex-shrink:1;}
+body.character-home.simple-header .senior-common-nav>button {min-width:max-content;flex-shrink:0;white-space:nowrap;}
+@media(max-width:760px){.senior-common-nav {justify-content:center;gap:8px;}.senior-common-nav>a,.senior-common-nav>button {padding:12px;}.senior-common-header{padding:10px!important;}body.character-home.simple-header .header-actions.senior-common-nav{width:100%;justify-content:center;}.common-settings{padding:16px;}}
+@media(max-width:420px){.common-settings-options{grid-template-columns:minmax(0,1fr);}.senior-common-nav>a,.senior-common-nav>button{min-width:0;flex-shrink:0;}}

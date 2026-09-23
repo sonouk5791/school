@@ -747,7 +747,7 @@
 
   // Keyboard accessibility
   document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.target.closest('input,textarea,button,a,select,summary,[role="button"]')) return;
     if (e.code === 'Space') {
       e.preventDefault();
       if (currentExerciseState === 'ready') {
