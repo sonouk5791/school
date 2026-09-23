@@ -1774,3 +1774,21 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 10:02:59 — 보리 명절 한정 추천 활동 카드
+- **수행 내역**: 보리 방 기존 핵심 4메뉴 아래 명절 추억 이야기 카드 1개 추가. 기존 추석과 송편 이야기/질문/도장 처리 재사용. 시즌에만 표시, 진행/완료 때 숨김. js/chuseok-recommendation.js css/chuseok-recommendation.css bori-hobby.html 수정. 4화면폭 카드→이야기→정답→완료→복귀 및 기존 4메뉴/6이야기 유지, 넘침/콘솔 검증과 빌드 통과.
+
+## 자동 저장 / 2026-09-23 10:03:04 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 7
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [bori-hobby.html](./bori-hobby.html)
+- [css/chuseok-recommendation.css](./css/chuseok-recommendation.css)
+- [documents/CHUSEOK_SEASON.md](./documents/CHUSEOK_SEASON.md)
+- [js/chuseok-recommendation.js](./js/chuseok-recommendation.js)
+- [tests/chuseok-recommendation.cjs](./tests/chuseok-recommendation.cjs)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>

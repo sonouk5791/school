@@ -1,0 +1,7 @@
+.season-recommendation{max-width:850px;margin:20px auto;padding:0 16px;word-break:keep-all;}
+.season-recommendation h2{font-size:22px;line-height:1.5;color:#594c3e;margin:0 0 10px;text-align:center;}
+.season-recommendation-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;min-height:72px;padding:16px;border:1px solid #dfd2ba;border-radius:18px;background:#fff8ec;color:#493e31;font-family:inherit;cursor:pointer;}
+.season-recommendation-card strong{font-size:22px;line-height:1.5;}
+.season-recommendation-card span{font-size:20px;line-height:1.5;}
+.season-recommendation-card:focus-visible{outline:3px solid #356b43;outline-offset:3px;}
+[data-activity-status="playing"] .season-recommendation,[data-activity-status="completed"] .season-recommendation{display:none;}
