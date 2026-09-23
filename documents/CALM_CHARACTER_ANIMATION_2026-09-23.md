@@ -68,3 +68,10 @@
 - [음성 RMS 연동](file:///J:/sh/js/character-voice-system.js), [정지 스타일](file:///J:/sh/css/chuseok-bow.css)
 - [생성 프롬프트 및 자산 기록](./CALM_CHARACTER_ASSET_PROMPTS_2026-09-23.md)
 - 로컬 비교: [표정](../tests/calm-expression-sheet.png), [확대](../tests/calm-face-detail.png). 테스트 PNG는 Git/배포 제외.
+
+## 운영 배포 결과
+- 코드 e66cfc4 GitHub main 푸시 완료.
+- Vercel dpl_2tzKDGT23czbhfQA2btgqLxgZSy5 READY. https://school-tau-pearl.vercel.app
+- 운영 HTML 5개, JS 4개, CSS 1개, 새 PNG 8개(총 18개) SHA-256 로컬 일치.
+- 실제 Google TTS “반가워요. 천천히 함께해요.”: 콩이 Achird/토리 Aoede/나비 Gacrux/보리 Charon 모두 HTTP 200, RIFF WAV 확인.
+- 네 캐릭터의 기존 메인 링크를 실제 클릭해 각 방 이동 및 선택한 친구만 인사 요청하는 흐름 확인.
