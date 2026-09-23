@@ -2,8 +2,11 @@
 (() => {
  'use strict';
  const rigs=[],state={kongi:'idle',tori:'idle',nabi:'idle',bori:'idle'},media=matchMedia('(prefers-reduced-motion: reduce)');
- const mouthStates={kongi:'mouthSmile',tori:'mouthSmile',nabi:'mouthSmile',bori:'mouthSmile'},talkStarted={};
- let timer=null,tick=0,waveIndex=0,serial=0;const ns='http://www.w3.org/2000/svg';
+ const ids=Object.keys(state),season=document.documentElement.dataset.season==='chuseok';
+ const mouthStates=Object.fromEntries(ids.map(id=>[id,'mouthSmile']));
+ const behavior=Object.fromEntries(ids.map((id,i)=>[id,{audible:false,mouthIndex:0,nextMouth:0,blinkAt:Infinity,blinkUntil:0,greetUntil:0}]));
+ const mouthCycle=['mouthClosed','mouthA','mouthClosed','mouthO','mouthE','mouthClosed','mouthSmile'];
+ let timer=null,serial=0;const ns='http://www.w3.org/2000/svg';
  function create(id){
  if(document.documentElement.dataset.season==='chuseok'){
   const svg=HanbokCharacter.create(id);rigs.push({id,svg,nextBlink:Infinity,blinkUntil:0,waveUntil:0});return svg;
@@ -25,17 +28,44 @@
    const scale={kongi:1,tori:.93,nabi:1.07,bori:1}[id];
    const breath=svg.querySelector('.rig-breath'),alignment=document.createElementNS(ns,'g');alignment.setAttribute('transform',`translate(${contour.center} 626) scale(${scale}) translate(${-contour.center} ${-contour.foot})`);breath.before(alignment);alignment.append(breath);
  }
- home.replaceWith(svg);const link=svg.closest('a');link.addEventListener('pointerenter',()=>gesture(id));link.addEventListener('focus',()=>gesture(id));link.addEventListener('pointerdown',()=>set(id,'selected',600));}}
+ home.replaceWith(svg);const link=svg.closest('a');if(!season){link.addEventListener('pointerenter',()=>gesture(id));link.addEventListener('focus',()=>gesture(id));}link.addEventListener('click',e=>{if(e.button||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;gesture(id);if(season)try{sessionStorage.setItem('school_character_entry_greeting',JSON.stringify({id,at:Date.now()}));}catch{}});}}
  for(const [selector,id]of [['.tp-char-img','tori'],['.nl-char-img','nabi'],['.bh-char-img','bori'],['.se-ready-avatar','kongi']]){const old=document.querySelector(selector);if(!old)continue;const svg=create(id);svg.classList.add('room-character-rig');old.hidden=true;old.after(svg);}
  document.querySelectorAll('.tp-game-tab,.nl-tab,.bh-tab,#btnStartExercise').forEach(el=>el.addEventListener('click',()=>{const id=rigs.find(r=>r.svg.classList.contains('room-character-rig'))?.id;if(id)gesture(id,true);}));
- start();}
- function set(id,value,duration=0){if(!state[id])return;if(value==='talking'&&state[id]!==value)talkStarted[id]=performance.now();state[id]=value;mouthStates[id]=value==='talking'?'mouthClosed':'mouthSmile';for(const r of rigs.filter(r=>r.id===id)){r.svg.dataset.state=value;r.svg.dataset.mouth=r.svg.classList.contains('hanbok-character')?mouthStates[id]:'smile';r.waveUntil=duration?performance.now()+duration:0;}}
- function gesture(id,signature=false){if(state[id]==='talking'||media.matches)return;set(id,signature?'exercising':'waving',id==='bori'?2400:1800);}
- function reset(){for(const id of Object.keys(state))set(id,'idle');for(const r of rigs){r.svg.classList.remove('is-blinking');r.svg.dataset.mouth=r.svg.classList.contains('hanbok-character')?'mouthSmile':'smile';}}
- function step(){tick++;const now=performance.now();for(const r of rigs){if(!r.svg.getClientRects().length)continue;if(r.waveUntil&&now>r.waveUntil)set(r.id,'idle');if(now>r.nextBlink){r.blinkUntil=now+220;r.nextBlink=now+3000+Math.random()*2000;}r.svg.classList.toggle('is-blinking',now<r.blinkUntil);if(r.svg.classList.contains('hanbok-character')){mouthStates[r.id]=state[r.id]==='talking'?HanbokCharacter.states[Math.floor((now-talkStarted[r.id])/180)%5]:'mouthSmile';r.svg.dataset.mouth=mouthStates[r.id];}else r.svg.dataset.mouth=state[r.id]==='talking'?['closed','a','o','smile'][Math.floor(tick/3)%4]:'smile';}
- if(document.documentElement.dataset.season!=='chuseok'&&tick%120===0){const visible=rigs.filter(r=>r.svg.getClientRects().length);if(visible.length)gesture(visible[(waveIndex++)%visible.length].id,true);}}
- function start(){clearInterval(timer);reset();document.documentElement.classList.toggle('character-motion-reduced',media.matches);if(!media.matches&&!document.hidden)timer=setInterval(step,100);}
- window.addEventListener('character-voice-state',e=>{const {state:status,characterId:id}=e.detail;if(['speaking','playing'].includes(status)&&id){for(const key of Object.keys(state))set(key,'idle');set(id,status==='playing'?'talking':'preparing');}else if(['paused','waiting','ended','error','cancelled','stopped','unavailable'].includes(status)){if(id)set(id,'idle');else reset();}});
+ start();
+ if(season){Promise.all(ids.flatMap(id=>['expressions','blink'].map(kind=>{const img=new Image();img.src='/assets/images/chuseok/'+id+'-'+kind+'-v3.png';return img.decode().catch(()=>{});}))).then(()=>{ids.forEach((id,i)=>behavior[id].blinkAt=performance.now()+1100+i*320);window.CharacterAnimation.expressionsReady=true;});}
+ if(season){try{const entry=JSON.parse(sessionStorage.getItem('school_character_entry_greeting')||'null');const room=document.body.dataset.activityRoom||(document.getElementById('viewReady')?'kongi':null);if(entry&&room===entry.id){sessionStorage.removeItem('school_character_entry_greeting');if(Date.now()-entry.at<10000)setTimeout(()=>{if(!document.hidden&&!window.CharacterVoice?.getState().characterId&&(!window.RoomActivity||RoomActivity.activityStatus==='select')&&(!document.getElementById('viewReady')||document.getElementById('viewReady').getClientRects().length))window.speakAsCharacter?.(room,{kongi:'반가워요. 천천히 몸을 움직여요.',tori:'반가워요. 즐겁게 놀아볼까요?',nabi:'반가워요. 천천히 생각해봐요.',bori:'반가워요. 편안하게 함께해요.'}[room]);},300);}}catch{}}
+ }
+
+ function paint(id){const b=behavior[id];for(const r of rigs.filter(r=>r.id===id)){if(r.svg.dataset.state!==state[id])r.svg.dataset.state=state[id];const mouth=season?mouthStates[id]:({mouthClosed:'closed',mouthA:'a',mouthO:'o'}[mouthStates[id]]||'smile');if(r.svg.dataset.mouth!==mouth)r.svg.dataset.mouth=mouth;r.svg.classList.toggle('is-blinking',!media.matches&&performance.now()<b.blinkUntil);}}
+ function set(id,value,duration=0){if(!behavior[id])return;if(value==='idle'||value==='talking')for(const r of rigs.filter(r=>r.id===id)){const cancel=r.cancelMotion;r.cancelMotion=null;cancel?.();}state[id]=value;const b=behavior[id];if(value!=='talking'){b.audible=false;mouthStates[id]='mouthSmile';}b.greetUntil=duration?performance.now()+duration:0;paint(id);}
+ function motion(id,name){if(!behavior[id]||media.matches||state[id]==='talking')return false;
+  const asset=window.HanbokCharacter?.motionAssets[id]?.[name];
+  if(asset?.validated){set(id,name);let played=false;for(const r of rigs.filter(r=>r.id===id&&r.svg.getClientRects().length)){r.cancelMotion=HanbokCharacter.playMotion(r.svg,name,()=>set(id,'idle'));played=played||!!r.cancelMotion;}if(!played)set(id,'idle');return played;}
+  // Without a validated clip, no body PNG simulation or improvised hand rotation.
+  if(name==='bowing')return false;
+  if(name==='greeting'){set(id,'greeting',400);behavior[id].blinkAt=performance.now();return true;}return false;
+ }
+ function gesture(id){return motion(id,'greeting');}
+ function reset(){for(const id of ids){behavior[id].blinkUntil=0;set(id,'idle');}}
+ function step(){const now=performance.now();let blinking=ids.some(id=>behavior[id].blinkUntil>now);
+  for(const id of ids){const b=behavior[id];if(!rigs.some(r=>r.id===id&&r.svg.getClientRects().length))continue;
+   if(b.greetUntil&&now>b.greetUntil)set(id,'idle');if(state[id]==='bowing')continue;
+   if(now>=b.blinkAt){if(blinking){b.blinkAt=now+200+Math.random()*200;}else{b.blinkUntil=now+150;b.blinkAt=now+4000+Math.random()*2800;blinking=true;}}
+   if(state[id]==='talking'&&b.audible&&now>=b.nextMouth){
+    const level=window.CharacterVoice?.getAudioLevel?.();const candidate=mouthCycle[b.mouthIndex++%mouthCycle.length];
+    mouthStates[id]=level==null?candidate:level<.012?'mouthClosed':level<.1&&candidate==='mouthO'?'mouthA':candidate;
+    b.nextMouth=now+120+Math.random()*80;
+   }
+   paint(id);
+  }
+ }
+ function start(){clearInterval(timer);document.documentElement.classList.toggle('character-motion-reduced',media.matches);if(document.hidden){reset();return;}if(media.matches){for(const id of ids){mouthStates[id]='mouthSmile';behavior[id].blinkUntil=0;paint(id);}return;}timer=setInterval(step,20);}
+ window.addEventListener('character-voice-state',e=>{const {state:status,characterId:id}=e.detail;
+  if(status==='speaking'&&behavior[id]){reset();set(id,'talking');behavior[id].mouthIndex=0;}
+  else if(status==='playing'&&behavior[id]){for(const other of ids)if(other!==id)set(other,'idle');set(id,'talking');behavior[id].audible=true;behavior[id].nextMouth=performance.now();}
+  else if(['paused','waiting'].includes(status)&&behavior[id]){behavior[id].audible=false;mouthStates[id]='mouthClosed';paint(id);}
+  else if(['ended','error','cancelled','stopped','unavailable'].includes(status)){if(behavior[id])set(id,'idle');else reset();}
+ });
  media.addEventListener('change',start);document.addEventListener('visibilitychange',start);window.addEventListener('pagehide',()=>{clearInterval(timer);reset();});document.addEventListener('DOMContentLoaded',mount);
- window.CharacterAnimation={state,mouthStates,set,gesture,create};
+ window.CharacterAnimation={state,mouthStates,set,gesture,motion,create};
 })();

@@ -1959,3 +1959,39 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-23 11:28:18 — 캐릭터 가짜 절 제거 및 차분한 3D 표정 수정
+- **수행 내역**: 수정 전 CSS/입/눈/상태/overlay 진단 보고 후 가짜 PNG 절·crossfade·평면 입을 제거. 원본 몸 고정, 캐릭터별 3D 입 5종과 정렬된 blink 파츠, 120~220ms 가변 입 및 실제 재생 위치 RMS 무음 닫기 적용. 4캐릭터 독립 상태·blink 분산·reduced-motion·기존 링크·방 진입 음성·운동/저장 회귀 통과. 손/절 전용 모션은 없으므로 비활성화하고 향후 검증된 WebM/WebP 연결 구조 마련. documents/CALM_CHARACTER_ANIMATION_2026-09-23.md 및 자산 프롬프트 기록.
+
+## 자동 저장 / 2026-09-23 11:29:15 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 25
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/images/chuseok/bori-blink-v3.png](./assets/images/chuseok/bori-blink-v3.png)
+- [assets/images/chuseok/bori-expressions-v3.png](./assets/images/chuseok/bori-expressions-v3.png)
+- [assets/images/chuseok/kongi-blink-v3.png](./assets/images/chuseok/kongi-blink-v3.png)
+- [assets/images/chuseok/kongi-expressions-v3.png](./assets/images/chuseok/kongi-expressions-v3.png)
+- [assets/images/chuseok/nabi-blink-v3.png](./assets/images/chuseok/nabi-blink-v3.png)
+- [assets/images/chuseok/nabi-expressions-v3.png](./assets/images/chuseok/nabi-expressions-v3.png)
+- [assets/images/chuseok/tori-blink-v3.png](./assets/images/chuseok/tori-blink-v3.png)
+- [assets/images/chuseok/tori-expressions-v3.png](./assets/images/chuseok/tori-expressions-v3.png)
+- [bori-hobby.html](./bori-hobby.html)
+- [css/chuseok-bow.css](./css/chuseok-bow.css)
+- [documents/CALM_CHARACTER_ANIMATION_2026-09-23.md](./documents/CALM_CHARACTER_ANIMATION_2026-09-23.md)
+- [documents/CALM_CHARACTER_ASSET_PROMPTS_2026-09-23.md](./documents/CALM_CHARACTER_ASSET_PROMPTS_2026-09-23.md)
+- [index.html](./index.html)
+- [js/character-animation.js](./js/character-animation.js)
+- [js/character-voice-system.js](./js/character-voice-system.js)
+- [js/chuseok-bow.js](./js/chuseok-bow.js)
+- [js/hanbok-character.js](./js/hanbok-character.js)
+- [nabi-learn.html](./nabi-learn.html)
+- [senior-exercise.html](./senior-exercise.html)
+- [tests/character-calm.cjs](./tests/character-calm.cjs)
+- [tests/chuseok-bow.cjs](./tests/chuseok-bow.cjs)
+- [tests/hanbok-mouth.cjs](./tests/hanbok-mouth.cjs)
+- [tori-play.html](./tori-play.html)
+- [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
+
+</details>

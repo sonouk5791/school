@@ -1,20 +1,12 @@
-/* Feet remain the original PNG; only upper body and pose blend animate. */
-.hanbok-character .hanbok-bow-lower{transform:none!important;animation:none!important}
-.hanbok-character .hanbok-bow-upper{transform-box:view-box;transform:perspective(1800px) rotateX(0deg)}
-.hanbok-greeting-pose{opacity:0}
-.hanbok-character.is-bowing .hanbok-bow-upper{animation:chuseok-waist-bow var(--bow-duration) cubic-bezier(.4,0,.3,1) 1;animation-duration:var(--bow-duration)!important}
-.hanbok-character.is-bowing .hanbok-upright-pose{animation:hanbok-upright-out var(--bow-duration) ease-in-out 1;animation-duration:var(--bow-duration)!important}
-.hanbok-character.is-bowing .hanbok-greeting-pose{animation:hanbok-greeting-in var(--bow-duration) ease-in-out 1;animation-duration:var(--bow-duration)!important}
-/* 0.8s down, 0.6s hold, 1s return; Bori 0.87 / 0.65 / 1.08s. */
-@keyframes chuseok-waist-bow{0%,100%{transform:perspective(1800px) rotateX(0deg)}33.333%,58.333%{transform:perspective(1800px) rotateX(var(--bow-angle))}}
-@keyframes hanbok-upright-out{0%,100%{opacity:1}33.333%,58.333%{opacity:0}}
-@keyframes hanbok-greeting-in{0%,100%{opacity:0}33.333%,58.333%{opacity:1}}
-.hanbok-mouth-overlay [data-mouth-shape]{display:none}
-[data-mouth="mouthClosed"] [data-mouth-shape="mouthClosed"],
-[data-mouth="mouthA"] [data-mouth-shape="mouthA"],
-[data-mouth="mouthO"] [data-mouth-shape="mouthO"],
-[data-mouth="mouthE"] [data-mouth-shape="mouthE"],
-[data-mouth="mouthSmile"] [data-mouth-shape="mouthSmile"]{display:block}
-@media(prefers-reduced-motion:reduce){.hanbok-character .hanbok-bow-upper{animation:none!important;transform:none!important}.hanbok-greeting-pose{opacity:0!important}.hanbok-upright-pose{opacity:1!important}}
+/* Static body. No simulated waist projection, pose crossfade, bounce or breathing. */
+.hanbok-character,.hanbok-character [data-part="fixed-body"],.home-friend .rig-breath{animation:none!important;transform:none!important}
+.hanbok-character [data-mouth-shape],.hanbok-eye-patch{display:none}
+.hanbok-character[data-mouth="mouthClosed"] [data-mouth-shape="mouthClosed"],
+.hanbok-character[data-mouth="mouthA"] [data-mouth-shape="mouthA"],
+.hanbok-character[data-mouth="mouthO"] [data-mouth-shape="mouthO"],
+.hanbok-character[data-mouth="mouthE"] [data-mouth-shape="mouthE"],
+.hanbok-character[data-mouth="mouthSmile"] [data-mouth-shape="mouthSmile"],
+.hanbok-character.is-blinking .hanbok-eye-patch{display:block}
+@media(prefers-reduced-motion:reduce){.hanbok-eye-patch{display:none!important}}
 
-[data-mouth="mouthSmile"] .hanbok-greeting-pose .hanbok-mouth-overlay,[data-mouth="mouthClosed"] .hanbok-greeting-pose .hanbok-mouth-overlay{display:none}
+.hanbok-character.has-dedicated-motion > :not(.dedicated-motion){visibility:hidden}

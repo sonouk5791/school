@@ -11,6 +11,7 @@ window.CharacterVoice = (() => {
     bori: Object.freeze({voiceId:characterVoices.bori,name:'보리',role:'hobby',speed:0.89,style:'warm calm comforting adult male',pause:650})
   });
   let provider={name:'vertex-ai',voiceIds:characterVoices,synthesize:serverSynthesize},sequence=0,active=null,last=null,audio=null,controller=null,url=null;
+  let levelMeter=null;
   let prefs={muted:false,slow:false};
   try {const saved=JSON.parse(localStorage.getItem('school_character_voice_prefs_v1'));if(saved)prefs={muted:saved.muted===true,slow:saved.slow===true};} catch {}
 
@@ -45,7 +46,7 @@ window.CharacterVoice = (() => {
 
   function emit(state,detail={}) {window.dispatchEvent(new CustomEvent('character-voice-state',{detail:{state,...detail}}));}
   function save(){try{localStorage.setItem('school_character_voice_prefs_v1',JSON.stringify(prefs));localStorage.setItem('digital_school_muted',String(prefs.muted));localStorage.setItem('digital_school_voice_speed',prefs.slow?'slow':'normal');}catch{}emit('preferences',prefs);}
-  function stop(){sequence++;controller?.abort();synth?.cancel();controller=null;if(audio){audio.pause();audio.removeAttribute('src');audio.load();audio=null;}if(url)URL.revokeObjectURL(url);url=null;active=null;emit('stopped');}
+  function stop(){sequence++;levelMeter=null;controller?.abort();synth?.cancel();controller=null;if(audio){audio.pause();audio.removeAttribute('src');audio.load();audio=null;}if(url)URL.revokeObjectURL(url);url=null;active=null;emit('stopped');}
   function configure(next){
     if(next)next={...next,voiceIds:next.voiceIds||characterVoices};
     const ids=Object.keys(profiles).map(id=>next?.voiceIds?.[id]);
@@ -59,6 +60,16 @@ window.CharacterVoice = (() => {
     if(!response.ok){const data=await response.json().catch(()=>({}));console.error('[Google TTS]',response.status,data.error,data.message);throw Object.assign(Error(data.message||('TTS HTTP '+response.status)),{code:data.error||'TTS_REQUEST_FAILED',googleStatus:data.googleStatus});}
     if(!response.headers.get('content-type')?.startsWith('audio/'))throw Error('TTS response is not audio');return response.blob();
   }
+  // Decode for RMS metering only. Audio playback stays on the existing HTMLAudioElement.
+  async function meterFor(blob){
+    try{const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!Offline)return null;
+      const context=new Offline(1,1,24000),decoded=await context.decodeAudioData(await blob.arrayBuffer());
+      const frames=Math.max(1,Math.round(decoded.sampleRate*.04)),levels=new Float32Array(Math.ceil(decoded.length/frames));
+      for(let n=0;n<levels.length;n++){let sum=0,count=0;for(let c=0;c<decoded.numberOfChannels;c++){const data=decoded.getChannelData(c);for(let i=n*frames;i<Math.min(data.length,(n+1)*frames);i++){sum+=data[i]*data[i];count++;}}levels[n]=Math.sqrt(sum/Math.max(1,count));}
+      return time=>levels[Math.min(levels.length-1,Math.floor(time/.04))]||0;
+    }catch{return null;}
+  }
+  function getAudioLevel(){return audio&&!audio.paused&&levelMeter?levelMeter(audio.currentTime):null;}
   async function run(id,text,token,signal,options){
     try {
       if(!provider)await ready();if(signal.aborted)return {status:'cancelled'};
@@ -68,6 +79,7 @@ window.CharacterVoice = (() => {
         let blob;try{blob=await provider.synthesize({characterId:id,voiceId:provider.voiceIds[id],text:sentences[i].trim(),speed:profile.speed*(prefs.slow?0.9:1),style:profile.style,signal});}catch(error){if(signal.aborted)throw new DOMException('Stopped','AbortError');if(error.code!=='GOOGLE_TTS_FAILED')throw error;await ready();if(!getAvailableBrowserVoice(id)){emit('unavailable',{characterId:id,message:'Google 음성 연결을 확인해주세요. 별도 브라우저 음성도 없습니다.'});return {status:'unavailable'};}console.warn('Google TTS failed - browser fallback used');emit('fallback',{characterId:id,voiceURI:getAvailableBrowserVoice(id).voiceURI});const result=await browserSpeak(id,text,signal,options);emit(result.status,{characterId:id});return {...result,provider:'browser-fallback'};}
         if(signal.aborted||token!==sequence)return {status:'cancelled'};
         if(!(blob instanceof Blob)||!blob.type.startsWith('audio/'))throw Error('음성 응답을 확인할 수 없습니다.');
+        const nextMeter=await meterFor(blob);if(signal.aborted||token!==sequence)return {status:'cancelled'};levelMeter=nextMeter;
         url=URL.createObjectURL(blob);audio=new Audio(url);audio.preservesPitch=true;audio.playbackRate=(options.rateScale||1)*(localStorage.getItem('digital_school_voice_speed')==='slow'?.9:1);
         await new Promise((resolve,reject)=>{const current=audio;current.onplaying=()=>{if(token===sequence)emit('playing',{characterId:id});};current.onwaiting=()=>{if(token===sequence)emit('waiting',{characterId:id});};const cleanup=()=>signal.removeEventListener('abort',abort);const abort=()=>{cleanup();reject(new DOMException('Stopped','AbortError'));};signal.addEventListener('abort',abort,{once:true});current.onended=()=>{cleanup();if(token===sequence)emit('paused',{characterId:id});resolve();};current.onerror=()=>{cleanup();reject(Error('음성을 재생하지 못했어요.'));};current.play().catch(e=>{cleanup();reject(e);});});
         URL.revokeObjectURL(url);url=null;audio=null;
@@ -95,6 +107,7 @@ window.CharacterVoice = (() => {
     stop();window.dispatchEvent(new Event('character-audio-start'));window.CharacterAudioPlayer?.stop();
     const token=sequence;controller=new AbortController();const signal=controller.signal;
     const current=new Audio(recordings[id]);audio=current;last={id,recording:true};
+    fetch(recordings[id],{signal}).then(r=>r.ok?r.blob():null).then(blob=>blob?meterFor(blob):null).then(next=>{if(token===sequence)levelMeter=next;}).catch(()=>{});
     active={id,recording:true};emit('speaking',{characterId:id,source:'recording'});
     active.promise=new Promise(resolve=>{
       const done=status=>{signal.removeEventListener('abort',abort);current.onended=null;current.onerror=null;if(token===sequence){audio=null;controller=null;active=null;emit(status,{characterId:id,source:'recording'});}resolve({status});};
@@ -106,5 +119,5 @@ window.CharacterVoice = (() => {
   function mount(container){const labels=['🔊 음성 켜짐','🔁 다시 듣기','🐢 천천히 듣기'];const buttons=labels.map((text,i)=>{const b=document.createElement('button');b.type='button';b.textContent=text;b.style.cssText='min-height:56px;font-size:20px;padding:12px 18px;border:2px solid #d8cfbd;border-radius:14px;background:#fffaf0;cursor:pointer';b.onclick=()=>{if(i===0){prefs.muted=!prefs.muted;if(prefs.muted)stop();save();}else if(i===1){if(last)speak(last.id,last.text,{restart:true});}else{prefs.slow=!prefs.slow;save();if(active&&last)speak(last.id,last.text,{restart:true});}paint();};container.append(b);return b;});function paint(){buttons[0].textContent=prefs.muted?'🔇 음성 꺼짐':'🔊 음성 켜짐';buttons[0].setAttribute('aria-pressed',String(!prefs.muted));buttons[2].setAttribute('aria-pressed',String(prefs.slow));}paint();return buttons;}
   window.addEventListener('pagehide',stop);document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('welcome-audio-start',stop);
   window.speakAsCharacter=speak;
-  return {recordings,playRecording,characterVoices,profiles,diagnostics,assign,ready,getVoice:id=>voices().find(v=>v.voiceURI===mapping[id])||null,configure,speak,stop,mount,replay:()=>last?(last.recording?playRecording(last.id,{restart:true}):speak(last.id,last.text,{restart:true})):Promise.resolve({status:'empty'}),getState:()=>({configured:!!provider,characterId:active?.id||null,...prefs})};
+  return {getAudioLevel,recordings,playRecording,characterVoices,profiles,diagnostics,assign,ready,getVoice:id=>voices().find(v=>v.voiceURI===mapping[id])||null,configure,speak,stop,mount,replay:()=>last?(last.recording?playRecording(last.id,{restart:true}):speak(last.id,last.text,{restart:true})):Promise.resolve({status:'empty'}),getState:()=>({configured:!!provider,characterId:active?.id||null,...prefs})};
 })();
