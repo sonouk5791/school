@@ -202,7 +202,17 @@
       <details class="home-legacy-greeting"><summary>콩이의 인사 듣기</summary>
       <div class="hero-content-grid">
         <div class="hero-robot-wrapper">
-          <div class="kongi-character-wrap" id="kongiCharacterWrap">
+          <div class="kongi-greeting-video" data-kongi-greeting>
+            <div class="kgv-stage">
+              <img class="kgv-poster" src="assets/images/kongi-greeting-poster.png" alt="손을 흔들며 인사하는 콩이">
+              <video class="kgv-video" preload="metadata" playsinline poster="assets/images/kongi-greeting-poster.png" aria-label="콩이의 손 인사 영상" hidden><source src="assets/videos/kongi-greeting.mp4" type="video/mp4"></video>
+              <button type="button" class="kgv-touch" aria-label="콩이 인사 영상 재생"></button>
+            </div>
+            <p class="kgv-line">안녕하세요! 콩이에요. 오늘도 같이 즐겁게 시작해볼까요?</p>
+            <div class="kgv-actions"><button type="button" class="kgv-play">▶ 콩이 인사 듣기</button><button type="button" class="kgv-sound" aria-pressed="true">🔊 소리 끄기</button></div>
+            <p class="kgv-status" role="status" aria-live="polite">버튼이나 영상을 눌러 콩이를 만나보세요.</p>
+          </div>
+          <div class="kongi-character-wrap" id="kongiCharacterWrap" hidden>
             <!-- 콩이 기본 베이스 전신 이미지 -->
             <img src="assets/images/friend-kongi.png" alt="AI 친구 콩이" class="hero-robot-img" id="kongiHeroImg">
             <!-- 눈 감은 오버레이 (자연스러운 깜빡임용) -->
@@ -964,7 +974,7 @@
   <!-- Legacy user-profile.js is preserved on disk; consent rooms use the shared elder registry. -->
   <script src="js/consent-forms.js?v=20260916forms8"></script>
   <script src="js/consent-rooms.js?v=20260916forms8"></script>
-  <script src="js/friends-and-play.js?v=20260921-actions"></script>
+  <script src="js/friends-and-play.js?v=20260928-video"></script>
   <script src="js/daily-games.js?v=15"></script>
   <script src="js/extra-games.js?v=16"></script>
   <script src="js/word-search.js?v=16"></script>
@@ -997,7 +1007,9 @@
   <script src="js/character-audio-player.js?v=20260921-reference"></script>
   <!-- 캐릭터 음성인식 & 웨이크워드 엔진 (Web Speech API STT) -->
   <script src="js/character-voice-recognizer.js?v=20260923-home"></script>
-  <script src="js/animated-character.js?v=20260921-hd"></script>
+  <script src="js/animated-character.js?v=20260928-video"></script>
+  <link rel="stylesheet" href="css/kongi-greeting-video.css?v=20260928">
+  <script src="js/kongi-greeting-video.js?v=20260928"></script>
   <script src="js/character-actions.js?v=20260921-actions"></script>
 <script src="js/home-character-hero.js?v=20260928-20260923-home"></script>
 <script src="js/home-accessibility-menu.js?v=20260928-reference2"></script>

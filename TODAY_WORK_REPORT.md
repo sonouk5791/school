@@ -2343,3 +2343,25 @@
 - [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
 
 </details>
+
+## 자동 저장 / 2026-09-28 11:13:51 — 콩이 인사 MP4 연결
+- **수행 내역**: 사용자 MP4 원본을 assets/videos/kongi-greeting.mp4로 복사하고 SHA256 동일 확인. 기존 전체 활동의 콩이 인사 영역에 터치/버튼 재생, 다시 인사해요, 음소거, contain, 종료 poster, 기존 이미지 fallback 연결. 기존 단순 애니메이션과 TTS 중복 인사 생성만 해당 영역에서 제외. 5화면 크기 실제 재생·종료·새로고침·404 fallback 테스트 통과. source 오류 및 12초 로딩 제한 처리. 상세 documents/KONGI_GREETING_VIDEO_2026-09-28.md. 푸시/배포 이어 진행.
+
+## 자동 저장 / 2026-09-28 11:14:12 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 11
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/images/kongi-greeting-poster.png](./assets/images/kongi-greeting-poster.png)
+- [assets/videos/kongi-greeting.mp4](./assets/videos/kongi-greeting.mp4)
+- [css/kongi-greeting-video.css](./css/kongi-greeting-video.css)
+- [documents/KONGI_GREETING_VIDEO_2026-09-28.md](./documents/KONGI_GREETING_VIDEO_2026-09-28.md)
+- [index.html](./index.html)
+- [js/animated-character.js](./js/animated-character.js)
+- [js/friends-and-play.js](./js/friends-and-play.js)
+- [js/kongi-greeting-video.js](./js/kongi-greeting-video.js)
+- [tests/kongi-greeting-video.cjs](./tests/kongi-greeting-video.cjs)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>

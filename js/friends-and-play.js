@@ -215,7 +215,7 @@ window.speakKongiGreeting=function(){
 
 // 컨트롤 버튼 영역 (친구 목소리 듣기 + 말하기 테스트 버튼)
 const heroWrapper = document.querySelector('.hero-robot-wrapper');
-if(heroWrapper){
+if(heroWrapper&&!heroWrapper.querySelector('[data-kongi-greeting]')){
   const btnGroup = document.createElement('div');
   btnGroup.className = 'character-action-buttons';
   btnGroup.style.cssText = 'display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center;';

@@ -85,7 +85,7 @@
   }
   window.AnimatedCharacter=AnimatedCharacter;
   document.addEventListener('DOMContentLoaded',()=>{
-    const hero=document.querySelector('.hero-robot-wrapper'); if(!hero)return;
+    const hero=document.querySelector('.hero-robot-wrapper'); if(!hero||hero.querySelector('[data-kongi-greeting]'))return;
     document.getElementById('kongiCharacterWrap')?.remove(); hero.querySelector('.character-action-buttons')?.remove(); hero.querySelector('.character-audio-controls')?.remove();
     const host=document.createElement('div');hero.prepend(host);window.animatedCharacter=new AnimatedCharacter(host);
   });
