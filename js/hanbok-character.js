@@ -8,7 +8,8 @@ window.HanbokCharacter=(()=>{
   nabi:{mouth:{x:560,y:583,width:110,height:74},eyes:[[321,407,190,157],[611,407,190,157]],waist:{x:561,y:1080},sources:[[208,354,96,64],[720,354,96,64],[1232,354,96,64],[208,865,96,64],[720,860,96,64]]},
   bori:{mouth:{x:561,y:569,width:130,height:82},eyes:[[349,393,175,130],[600,393,175,130]],waist:{x:561,y:1030},sources:[[221,357,120,74],[734,357,120,74],[1245,357,120,74],[221,868,120,74],[734,866,120,74]]}
  };
- const art=id=>'assets/images/chuseok/'+id+'-hanbok-v2.png';
+ // Legacy public API name is retained for voice and expression compatibility.
+ const art=id=>'assets/images/everyday/'+id+'-active.png';
  const fallback=id=>'assets/images/friend-'+id+'.png';
  function patch(uid,id,box,source,attrs='',blink=false){
   const [x,y,w,h]=box;

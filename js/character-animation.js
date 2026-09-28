@@ -2,13 +2,13 @@
 (() => {
  'use strict';
  const rigs=[],state={kongi:'idle',tori:'idle',nabi:'idle',bori:'idle'},media=matchMedia('(prefers-reduced-motion: reduce)');
- const ids=Object.keys(state),season=document.documentElement.dataset.season==='chuseok';
+ const ids=Object.keys(state),season=['chuseok','everyday'].includes(document.documentElement.dataset.season);
  const mouthStates=Object.fromEntries(ids.map(id=>[id,'mouthSmile']));
  const behavior=Object.fromEntries(ids.map((id,i)=>[id,{audible:false,mouthIndex:0,nextMouth:0,blinkAt:Infinity,blinkUntil:0,greetUntil:0}]));
  const mouthCycle=['mouthClosed','mouthA','mouthClosed','mouthO','mouthE','mouthClosed','mouthSmile'];
  let timer=null,serial=0;const ns='http://www.w3.org/2000/svg';
  function create(id){
- if(document.documentElement.dataset.season==='chuseok'){
+ if(['chuseok','everyday'].includes(document.documentElement.dataset.season)){
   const svg=HanbokCharacter.create(id);rigs.push({id,svg,nextBlink:Infinity,blinkUntil:0,waveUntil:0});return svg;
  }
  const d=CharacterRigData[id],uid='rig'+(++serial),svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`${d.x} 96 344 576`);svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig');svg.dataset.character=id;svg.style.setProperty('--breath',d.period+'s');svg.style.setProperty('--wave-angle',d.angle+'deg');
@@ -18,7 +18,7 @@
  <g clip-path="url(#${uid}-frame)"><rect x="${d.x}" y="96" width="344" height="576" fill="white"/><g class="rig-breath"><g data-part="body" mask="url(#${uid}-body)">${image}</g><g data-part="rightArm" style="transform-origin:${d.shoulder[0]}px ${d.shoulder[1]}px"><g clip-path="url(#${uid}-arm)" mask="url(#${uid}-forearm)">${image}</g><g data-part="rightHand" style="transform-origin:${d.wrist[0]}px ${d.wrist[1]}px" clip-path="url(#${uid}-hand)">${image}</g></g><g data-part="eyes" class="rig-eyelids">${d.eyes.map(([x,y,rx,ry])=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${d.eyeSkin||d.skin}"/><path d="M${x-rx+3} ${y} Q${x} ${y+9} ${x+rx-3} ${y}" fill="none" stroke="#634b3f" stroke-width="4" stroke-linecap="round"/>`).join('')}</g><g data-part="mouth" class="rig-mouth"><ellipse cx="${mx}" cy="${my+2}" rx="${mw+3}" ry="${mh+4}" fill="${d.skin}"/><path class="rig-mouth-closed" d="M${mx-mw*.65} ${my} Q${mx} ${my+10} ${mx+mw*.65} ${my}" fill="none" stroke="#85483d" stroke-width="3" stroke-linecap="round"/><ellipse class="rig-mouth-a" cx="${mx}" cy="${my+2}" rx="${mw*.62}" ry="${mh*.82}" fill="#833932"/><ellipse class="rig-mouth-o" cx="${mx}" cy="${my+2}" rx="${mw*.4}" ry="${mh*.6}" fill="#833932"/></g></g></g>`;
  rigs.push({id,svg,nextBlink:performance.now()+3000+Math.random()*2000,blinkUntil:0,waveUntil:0});return svg;}
  function mount(){for(const id of Object.keys(state)){const home=document.querySelector('.home-friend-'+id+' svg');if(home){const reference=home.dataset.referenceArt==='true';const svg=reference?home:create(id);svg.classList.add('home-friend-picture');
- const contour=window.HeroContours?.[id];if(!reference&&contour&&document.documentElement.dataset.season!=='chuseok'){
+ const contour=window.HeroContours?.[id];if(!reference&&contour&&!season){
    const clipId='hero-outline-'+id,clip=document.createElementNS(ns,'clipPath'),path=document.createElementNS(ns,'path');clip.id=clipId;path.setAttribute('d',contour.path);clip.append(path);svg.querySelector('defs').append(clip);
    svg.querySelectorAll('image').forEach(image=>image.setAttribute('clip-path','url(#'+clipId+')'));
    svg.querySelector(':scope > g > rect')?.remove();

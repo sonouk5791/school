@@ -7,7 +7,7 @@
     D = SchoolOperations;
   const params = new URLSearchParams(location.search),
     embedded = params.get("embedded") === "class";
-  const image = "assets/images/chuseok/bori-hanbok-v2.png",
+  const image = "assets/images/everyday/bori-active.png",
     resumeKey = "school_bori_resume_" + kind;
   const esc = (s) =>
     String(s ?? "").replace(

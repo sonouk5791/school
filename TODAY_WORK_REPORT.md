@@ -2265,3 +2265,52 @@
 - [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
 
 </details>
+
+## 자동 저장 / 2026-09-28 10:57:42 — 일상형 건강체조 의상 및 명절 화면 정리
+- **수행 내역**: 요청: 한복·명절 인사 대신 일상형 건강체조. 캐릭터 4종 활동복, 기존 체조 삽화 7장 의상 편집, 운동 시작 문구, 네 방 시즌 장식 해제, 표정/음성 연결 보존. everyday-exercise 6해상도, exercise-follow-along, caption-sync, 운영 메인 및 보리 미디어 회귀 검증 통과. Google TTS API/저장 로직 미변경. 상세: documents/EVERYDAY_EXERCISE_2026-09-28.md. 푸시·배포는 이어 수행하며 아직 완료로 기록하지 않음.
+
+## 자동 저장 / 2026-09-28 10:58:43 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 29
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/images/everyday/bori-active.png](./assets/images/everyday/bori-active.png)
+- [assets/images/everyday/kongi-active.png](./assets/images/everyday/kongi-active.png)
+- [assets/images/everyday/nabi-active.png](./assets/images/everyday/nabi-active.png)
+- [assets/images/everyday/tori-active.png](./assets/images/everyday/tori-active.png)
+- [assets/senior-exercise/images/everyday/scene02_breathing.png](./assets/senior-exercise/images/everyday/scene02_breathing.png)
+- [assets/senior-exercise/images/everyday/scene04_shoulders.png](./assets/senior-exercise/images/everyday/scene04_shoulders.png)
+- [assets/senior-exercise/images/everyday/scene05_arms.png](./assets/senior-exercise/images/everyday/scene05_arms.png)
+- [assets/senior-exercise/images/everyday/scene06_clapping.png](./assets/senior-exercise/images/everyday/scene06_clapping.png)
+- [assets/senior-exercise/images/everyday/scene08_ankles.png](./assets/senior-exercise/images/everyday/scene08_ankles.png)
+- [assets/senior-exercise/images/everyday/scene09_hands.png](./assets/senior-exercise/images/everyday/scene09_hands.png)
+- [assets/senior-exercise/images/everyday/scene10_ending.png](./assets/senior-exercise/images/everyday/scene10_ending.png)
+- [assets/senior-exercise/program.json](./assets/senior-exercise/program.json)
+- [bori-hobby.html](./bori-hobby.html)
+- [css/character-expressions.css](./css/character-expressions.css)
+- [css/everyday-characters.css](./css/everyday-characters.css)
+- [documents/EVERYDAY_EXERCISE_2026-09-28.md](./documents/EVERYDAY_EXERCISE_2026-09-28.md)
+- [index.html](./index.html)
+- [js/bori-media-player.js](./js/bori-media-player.js)
+- [js/character-animation.js](./js/character-animation.js)
+- [js/everyday-characters.js](./js/everyday-characters.js)
+- [js/hanbok-character.js](./js/hanbok-character.js)
+- [nabi-learn.html](./nabi-learn.html)
+- [scripts/apply-everyday-presentation.cjs](./scripts/apply-everyday-presentation.cjs)
+- [scripts/connect-everyday-scenes.cjs](./scripts/connect-everyday-scenes.cjs)
+- [senior-exercise.html](./senior-exercise.html)
+- [tests/everyday-exercise.cjs](./tests/everyday-exercise.cjs)
+- [tori-play.html](./tori-play.html)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>
+
+## 자동 저장 / 2026-09-28 10:59:07 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 1
+<details><summary>변경 파일 목록</summary>
+
+- [tests/everyday-exercise.cjs](./tests/everyday-exercise.cjs)
+
+</details>
