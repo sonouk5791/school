@@ -2009,3 +2009,57 @@
 - [오늘_작업_일지_2026-09-23.md](./오늘_작업_일지_2026-09-23.md)
 
 </details>
+
+## 자동 저장 / 2026-09-26 14:51:26 — 메인 및 각 방 한복 캐릭터 이미지 경로 상대경로화 및 엑스박스(깨짐) 방지 폴백 추가
+- **수행 내역**: 메인 교실(index.html) 및 각 캐릭터 방에서 한복 캐릭터 이미지가 깨지는 현상 수정. js/hanbok-character.js 및 js/character-animation.js의 절대경로(/assets/)를 상대경로(assets/)로 수정하여 로컬/서브경로/file:// 환경에서도 정상 로드되도록 조치. SVG 및 img 태그에 xlink:href 및 onerror 폴백을 적용하여 로드 실패 시에도 기존 캐릭터 이미지로 자동 복구되도록 안전망 구현. verify-hanbok-paths 검증 통과 및 school-release 동기화 완료.
+
+## 자동 저장 / 2026-09-26 15:05:07 — 주간보호센터 실사용형 디지털 AI 학교 60분 수업 및 통합 관리 시스템 구축
+- **수행 내역**: 1. 오전(10:00~11:00)/오후(14:00~15:00) 60분 구조 및 월~금 커리큘럼/시간변경 기능 구현. 2. 메인 화면 오늘 오전/오후 60분 프로그램 카드 및 🔒 선생님 PIN 인증 모달 추가. 3. 60분 수업 러너(출석→인사→1교시→5분휴식→2교시→회상→기분선택→완료) 및 일시정지/재개/중간휴식 분리 기록 구현. 4. 선생님 공간 주간 프로그램표 탭, AI 수업일지 자동작성/수정/저장/출력, 대상자별 통계/기분추이, CSV/JSON 백업 구현. 5. 데이터 부재 시 '아직 기록이 없습니다.' 정상 처리. 6. tests/daycare-platform-test.cjs 검증 100% 통과.
+
+## 자동 저장 / 2026-09-26 15:21:07 — 콩이/토리/나비/보리 교복 캐릭터 이미지 교체 및 월~토 자동 프로그램 편성 시스템 구축
+- **수행 내역**: 1. 콩이, 토리, 나비, 보리 4대 캐릭터를 사용자 첨부 교복 이미지로 크롭 및 교체(uniform-kongi, uniform-tori, uniform-nabi, uniform-bori 및 banner). 2. 캐릭터 역할 불변 보존(콩이=운동, 토리=놀이, 나비=학습인지, 보리=취미). 3. 4대 캐릭터별 11개 이상 메타데이터 완비 프로그램 라이브러리(ProgramLibrary) 및 CRUD 구현. 4. 10대 우선순위 판단 기반 일간/주간/월간 지능형 자동 편성 엔진(AutoScheduler) 구축. 5. 7일 이내 중복 방지, 이틀 연속 방지, 10대 도메인 균형, 어르신 반응 피드백, 난이도 조절, 계절/기념일 테마 반영, 기관행사/휴무일 처리, 토요일 회상/레크리에이션 특화, 후보 부족 시 최고령 프로그램 재사용 알림 구현. 6. 선생님 공간 내 🤖 프로그램 자동 편성 탭 및 서브뷰(주간, 캘린더, 라이브러리, 행사/휴무일, 설정, 보고서)와 A4 인쇄/CSV 다운로드 구현. 7. 필수 8대 자동화 테스트(tests/auto-scheduler-test.cjs) 및 주간보호 회귀 테스트(tests/daycare-platform-test.cjs) 100% 통과.
+
+## 자동 저장 / 2026-09-28 09:07:05 — 첨부 화면 기준 메인 교복 캐릭터 및 배치 적용
+- **수행 내역**: 기존 four-friends.jpg 원본을 재사용하여 메인 네 캐릭터를 교복 일러스트로 표시. SVG 영역별 clipPath 적용, 기존 얼굴 변형 및 한복 리그의 메인 덮어쓰기 방지. 크림색 Hero와 흰색 캐릭터 카드, 기본 인사 및 오늘 추천 20분 활동 배치. 오전/오후 수업과 계절 소식은 접이식으로 보존. 방별 기능과 음성 API 및 저장 로직 변경 없음. 변경 파일 index.html, css/home-reference.css, js/character-animation.js, js/seasonal-greeting.js, js/home-character-hero.js, tests/home-reference.cjs. 주간보호 및 자동편성 테스트 통과, 방별 16 화면/상태 회귀 통과. 배포 진행 전 기록이며 배포 결과는 별도 기록.
+
+## 자동 저장 / 2026-09-28 09:08:12 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 34
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/images/characters-uniform-banner.png](./assets/images/characters-uniform-banner.png)
+- [assets/images/uniform-bori.png](./assets/images/uniform-bori.png)
+- [assets/images/uniform-kongi.png](./assets/images/uniform-kongi.png)
+- [assets/images/uniform-nabi.png](./assets/images/uniform-nabi.png)
+- [assets/images/uniform-tori.png](./assets/images/uniform-tori.png)
+- [css/auto-scheduler.css](./css/auto-scheduler.css)
+- [css/daycare-class.css](./css/daycare-class.css)
+- [css/daycare-home.css](./css/daycare-home.css)
+- [css/home-reference.css](./css/home-reference.css)
+- [daycare-class.html](./daycare-class.html)
+- [index.html](./index.html)
+- [js/app.js](./js/app.js)
+- [js/auto-scheduler-ui.js](./js/auto-scheduler-ui.js)
+- [js/auto-scheduler.js](./js/auto-scheduler.js)
+- [js/character-animation.js](./js/character-animation.js)
+- [js/character-voice-system.js](./js/character-voice-system.js)
+- [js/daycare-class.js](./js/daycare-class.js)
+- [js/daycare-home-ui.js](./js/daycare-home-ui.js)
+- [js/daycare-schedule.js](./js/daycare-schedule.js)
+- [js/hanbok-character.js](./js/hanbok-character.js)
+- [js/home-character-hero.js](./js/home-character-hero.js)
+- [js/program-library.js](./js/program-library.js)
+- [js/record-manager.js](./js/record-manager.js)
+- [js/seasonal-greeting.js](./js/seasonal-greeting.js)
+- [nabi-learn.html](./nabi-learn.html)
+- [scripts/crop-uniform-characters.cjs](./scripts/crop-uniform-characters.cjs)
+- [tests/auto-scheduler-test.cjs](./tests/auto-scheduler-test.cjs)
+- [tests/daycare-platform-test.cjs](./tests/daycare-platform-test.cjs)
+- [tests/home-reference.cjs](./tests/home-reference.cjs)
+- [tests/verify-hanbok-paths.cjs](./tests/verify-hanbok-paths.cjs)
+- [tori-play.html](./tori-play.html)
+- [오늘_작업_일지_2026-09-26.md](./오늘_작업_일지_2026-09-26.md)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>

@@ -60,7 +60,8 @@ const RecordManager = {
       moodEmoji: record.moodEmoji || '😊',
       assistanceNeeded: record.assistanceNeeded || '스스로 원활히 참여하심',
       durationText: record.durationText || '3분 20초',
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      ...record
     };
 
     records.unshift(newRecord);
@@ -156,7 +157,7 @@ const RecordManager = {
       const m = String(r.mood || '');
       return positiveKeywords.some(k => m.includes(k));
     }).length;
-    const positiveRate = totalSessions > 0 ? Math.round((positiveMoods / totalSessions) * 100) : 100;
+    const positiveRate = totalSessions > 0 ? Math.round((positiveMoods / totalSessions) * 100) : null;
 
     const registered = this.getRegisteredLearners();
     const activeLearnersCount = filterLearner === 'all' 

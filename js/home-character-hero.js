@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const greeting = hero.querySelector('.home-legacy-greeting');
   if (greeting) catalogTools.append(greeting);
-  tools.innerHTML = '<button type="button" class="care-btn" data-senior-page="history">지난 활동 보기</button><details id="homeMoreOptions"><summary>전체 활동 · 화면 설정</summary><div class="home-more-actions"><button type="button" class="care-btn" data-senior-page="activities">전체 활동</button><a class="care-btn" href="character-house.html">캐릭터 집 꾸미기</a></div></details>';
+  tools.innerHTML = '<button type="button" class="care-btn" data-senior-page="history">지난 활동 보기</button><details id="homeMoreOptions"><summary>전체 활동 보기</summary><div class="home-more-actions"><button type="button" class="care-btn" data-senior-page="activities">전체 활동</button><a class="care-btn" href="character-house.html">캐릭터 집 꾸미기</a></div></details>';
   // Microphone use is an explicit choice; synthesis and character voices are unchanged.
   if (window.voiceRecognizer) {
     for (const [label, action] of [['음성 명령 켜기','start'],['음성 명령 끄기','stop']]) {

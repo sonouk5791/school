@@ -99,7 +99,7 @@ window.CharacterVoice = (() => {
     active={id,text};emit('speaking',{characterId:id});active.promise=run(id,text,token,controller.signal,options);return active.promise;
   }
 
-  const recordings=Object.freeze(Object.fromEntries(Object.keys(profiles).map(id=>[id,'/assets/audio/character-samples/'+id+'.wav'])));
+  const recordings=Object.freeze(Object.fromEntries(Object.keys(profiles).map(id=>[id,'assets/audio/character-samples/'+id+'.wav'])));
   function playRecording(id,{restart=false}={}){
     if(!recordings[id])return Promise.resolve({status:'unknown-character'});
     if(localStorage.getItem('digital_school_muted')==='true')return Promise.resolve({status:'muted'});

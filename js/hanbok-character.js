@@ -8,14 +8,23 @@ window.HanbokCharacter=(()=>{
   nabi:{mouth:{x:560,y:583,width:110,height:74},eyes:[[321,407,190,157],[611,407,190,157]],waist:{x:561,y:1080},sources:[[208,354,96,64],[720,354,96,64],[1232,354,96,64],[208,865,96,64],[720,860,96,64]]},
   bori:{mouth:{x:561,y:569,width:130,height:82},eyes:[[349,393,175,130],[600,393,175,130]],waist:{x:561,y:1030},sources:[[221,357,120,74],[734,357,120,74],[1245,357,120,74],[221,868,120,74],[734,866,120,74]]}
  };
- const art=id=>'/assets/images/chuseok/'+id+'-hanbok-v2.png';
+ const art=id=>'assets/images/chuseok/'+id+'-hanbok-v2.png';
+ const fallback=id=>'assets/images/friend-'+id+'.png';
  function patch(uid,id,box,source,attrs='',blink=false){
   const [x,y,w,h]=box;
-  return `<g ${attrs}><defs><filter id="${uid}-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter><mask id="${uid}-mask" maskUnits="userSpaceOnUse" x="${x}" y="${y}" width="${w}" height="${h}"><rect x="${x+5}" y="${y+5}" width="${w-10}" height="${h-10}" rx="18" fill="white" filter="url(#${uid}-soft)"/></mask></defs><g mask="url(#${uid}-mask)"><svg x="${x}" y="${y}" width="${w}" height="${h}" viewBox="${source.join(' ')}" preserveAspectRatio="none"><image href="/assets/images/chuseok/${id}-${blink?'blink':'expressions'}-v3.png" width="${blink?1122:1536}" height="${blink?1402:1024}"/></svg></g></g>`;
+  return `<g ${attrs}><defs><filter id="${uid}-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter><mask id="${uid}-mask" maskUnits="userSpaceOnUse" x="${x}" y="${y}" width="${w}" height="${h}"><rect x="${x+5}" y="${y+5}" width="${w-10}" height="${h-10}" rx="18" fill="white" filter="url(#${uid}-soft)"/></mask></defs><g mask="url(#${uid}-mask)"><svg x="${x}" y="${y}" width="${w}" height="${h}" viewBox="${source.join(' ')}" preserveAspectRatio="none"><image href="assets/images/chuseok/${id}-${blink?'blink':'expressions'}-v3.png" xlink:href="assets/images/chuseok/${id}-${blink?'blink':'expressions'}-v3.png" width="${blink?1122:1536}" height="${blink?1402:1024}"/></svg></g></g>`;
  }
  function create(id){const a=characterAnchors[id],uid='expression-'+(++serial),svg=document.createElementNS(ns,'svg'),m=a.mouth;
   svg.setAttribute('viewBox','0 0 1122 1402');svg.setAttribute('aria-hidden','true');svg.classList.add('character-parts-rig','hanbok-character');svg.dataset.character=id;svg.dataset.state='idle';svg.dataset.mouth='mouthSmile';
-  svg.innerHTML=`<image data-part="fixed-body" href="${art(id)}" width="1122" height="1402"/>`+states.map((name,i)=>patch(uid+'-mouth-'+i,id,[m.x-m.width/2,m.y-m.height/2,m.width,m.height],a.sources[i],`data-mouth-shape="${name}" class="hanbok-mouth-patch"`)).join('')+a.eyes.map((box,i)=>patch(uid+'-eye-'+i,id,box,box,'class="hanbok-eye-patch" data-part="eyelid"',true)).join('');
+  svg.innerHTML=`<image data-part="fixed-body" href="${art(id)}" xlink:href="${art(id)}" width="1122" height="1402"/>`+states.map((name,i)=>patch(uid+'-mouth-'+i,id,[m.x-m.width/2,m.y-m.height/2,m.width,m.height],a.sources[i],`data-mouth-shape="${name}" class="hanbok-mouth-patch"`)).join('')+a.eyes.map((box,i)=>patch(uid+'-eye-'+i,id,box,box,'class="hanbok-eye-patch" data-part="eyelid"',true)).join('');
+  const bodyImg=svg.querySelector('[data-part="fixed-body"]');
+  if(bodyImg){
+   bodyImg.addEventListener('error',()=>{
+    const fb=fallback(id);
+    bodyImg.setAttribute('href',fb);
+    bodyImg.setAttribute('xlink:href',fb);
+   },{once:true});
+  }
   return svg;
  }
  // Dedicated transparent motion files can be registered later; null means no fake motion.

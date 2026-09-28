@@ -442,7 +442,7 @@ function renderTeacherRecords(filterLearner = 'all') {
 
   if (elTotal) elTotal.textContent = `${stats.totalSessions}회`;
   if (elCompleted) elCompleted.textContent = `${stats.completedSessions}회 완료`;
-  if (elPositive) elPositive.textContent = `${stats.positiveRate}%`;
+  if (elPositive) elPositive.textContent = stats.positiveRate !== null ? `${stats.positiveRate}%` : '아직 기록이 없습니다.';
   if (elActive) elActive.textContent = `${stats.activeLearnersCount}명`;
 
   // 테이블 행 렌더링
