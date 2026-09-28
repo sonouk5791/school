@@ -37,7 +37,7 @@ html[data-home-flow="video"] #friendRooms .home-friend.is-introducing{border:3px
 
 /* A shared garden and crossing paths connect the four accessible house links. */
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend{grid-template-rows:auto;align-content:center}
-html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{mix-blend-mode:multiply}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{mix-blend-mode:normal;border-radius:46%;background:#fff;box-shadow:0 2px 8px #77734212}
 html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{position:relative;isolation:isolate;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 48px;padding:22px;background:linear-gradient(90deg,transparent 47%,#f7e5c5 47%,#f7e5c5 53%,transparent 53%),linear-gradient(transparent 46%,#f7e5c5 46%,#f7e5c5 54%,transparent 54%),#eaf0db;border:2px solid #d5dfbd;border-radius:36px;overflow:visible}
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend{display:grid;grid-template-columns:45% 55%;align-items:center;gap:0;padding:8px 12px;border:2px solid transparent;background:transparent;border-radius:28px;min-height:244px;overflow:visible;transform:none}
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introducing{padding:8px 12px;border-color:#467447;background:#fffbed;box-shadow:0 0 0 4px #d3dfb7}
