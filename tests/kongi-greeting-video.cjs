@@ -6,7 +6,7 @@ const base=process.argv[2]||'http://127.0.0.1:8085';
  for(const [width,height] of [[1920,1080],[1366,768],[768,1024],[390,844],[320,900]]){
   await page.setViewportSize({width,height});await open();const video=page.locator('.kgv-video');
   assert(await video.evaluate(v=>v.paused&&!v.loop&&!v.controls&&!v.autoplay&&v.playsInline));assert(await page.locator('.kgv-poster').isVisible());
-  await page.locator('.kgv-play').click();await page.waitForFunction(()=>document.querySelector('.kgv-video').currentTime>.2);
+  await page.locator(width===390?'.kgv-touch':'.kgv-play').click();await page.waitForFunction(()=>document.querySelector('.kgv-video').currentTime>.2);
   assert.equal(await video.evaluate(v=>getComputedStyle(v).objectFit),'contain');assert(await video.isVisible());
   await page.locator('.kgv-sound').click();assert(await video.evaluate(v=>v.muted));await page.locator('.kgv-sound').click();assert(!(await video.evaluate(v=>v.muted)));
   await video.evaluate(v=>v.currentTime=v.duration-.3);await page.waitForFunction(()=>document.querySelector('.kgv-video').ended);

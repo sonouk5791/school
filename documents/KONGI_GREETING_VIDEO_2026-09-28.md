@@ -28,3 +28,12 @@
 - 실제 MP4 재생 시간 증가, 음소거/해제, 종료 후 poster, 다시 재생, 새로고침 시 자동재생 OFF, 영역 닫을 때 정지, 가로 넘침/JS 오류 없음 확인.
 - MP4 404를 주입해 대체 이미지와 안내 유지 확인. `<source>` 오류 이벤트도 처리하며 12초 로딩 제한을 두어 준비 중 화면에 고정되지 않도록 함.
 - 기존 녹음 manifest 빌드와 새 JS 문법 검사 통과. 새 Google TTS 합성 없이 첨부 MP4의 음성 사용.
+- 기존 메인 3개 수업 버튼, 4개 친구 카드, 7개 관련 URL 회귀 검사 통과.
+
+## 배포
+- 기능 커밋 `ff18da5`, GitHub `origin/main` 푸시 완료.
+- 기존 Vercel school 운영 배포 `dpl_6BJW5N2xGPxsWuCJM3sF6qGHSGoQ`, `READY`.
+- https://school-tau-pearl.vercel.app 기존 별칭 반영.
+- 운영 HTML/JS/CSS/poster/MP4 SHA256 일치 확인.
+- 운영 브라우저 검증: 5개 화면 크기에서 재생, 화면 터치, 소리 켜기/끄기, 종료 poster, 다시 인사해요, 새로고침, 영역 닫기 정지, 404 fallback 모두 통과.
+- 실제 기기 실물 테스트가 아니라 Edge 브라우저의 PC/태블릿/모바일 크기 검증임.
