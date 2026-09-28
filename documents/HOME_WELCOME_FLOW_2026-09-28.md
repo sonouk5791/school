@@ -26,4 +26,8 @@
 - 실제 Google 음성 합성은 로컬 서버 인증 환경이 없어 검증하지 않았다. 기존 음성 연결 유지 및 실패 대응은 테스트했다. 운영 DB 미연결 상태는 이번 요청 범위 밖의 기존 제한이다.
 
 ## 배포
-GitHub 푸시 및 기존 Vercel 운영 프로젝트 배포 후 결과를 추가 기록한다.
+- GitHub main 커밋 3bc0bcc 푸시 완료.
+- Vercel 배포 dpl_4pXzvrMA3MrPWUVaP8MoMAcbhp78: READY. 운영 주소 https://school-tau-pearl.vercel.app 연결 완료.
+- 운영 사이트에서도 실제 영상 종료/4명 순차 소개/방 이동/뒤로가기/재생/실패 대응 테스트 통과.
+- 운영 5가지 화면 크기(1600×900 포함), 기존 7개 수업·방 URL, 브라우저 JS 오류 없음 확인.
+- 운영 자동화 상태는 기존과 같이 서버 연결 필요(configured/authConfigured/schedulerConfigured=false). 이번 메인 UI 변경으로 DB 또는 예약 서버를 새로 연결하지 않았다.

@@ -2406,3 +2406,17 @@
 - [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
 
 </details>
+
+## 자동 저장 / 2026-09-28 12:05:23 — 메인 인사 흐름 운영 배포 및 최종 검증
+- **수행 내역**: 3bc0bcc GitHub main 푸시, Vercel dpl_4pXzvrMA3MrPWUVaP8MoMAcbhp78 READY 및 운영 별칭 연결 완료. 운영 실제 MP4 종료·순차 소개·네 방 이동·뒤로가기·재생·실패 대응, 5개 화면 크기 및 기존 7개 URL 통과. 기존 서버 DB 연결 필요 상태는 유지.
+
+## 자동 저장 / 2026-09-28 12:05:33 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 3
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [documents/HOME_WELCOME_FLOW_2026-09-28.md](./documents/HOME_WELCOME_FLOW_2026-09-28.md)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>
