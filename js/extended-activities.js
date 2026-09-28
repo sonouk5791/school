@@ -53,6 +53,7 @@
       level = Number(new URLSearchParams(location.search).get("level")) || 1;
     const speak = (text) => window.CharacterVoice?.speak(id, text);
     function leave() {
+      window.ServiceActivity?.stop();
       window.CharacterVoice?.stop();
       panel.hidden = true;
       details.hidden = false;
@@ -64,6 +65,7 @@
     }
     function begin(k) {
       category = k;
+      window.ServiceActivity?.start(id,k,k);
       RoomActivity.generation++;
       RoomActivity.activityStatus = "playing";
       document.body.dataset.activityStatus = "playing";
@@ -95,6 +97,7 @@
         btn("다시 하기", () => begin(category)),
         btn("다른 활동 고르기", leave),
       );
+      window.ServiceActivity?.complete(panel);
       RoomActivity.activityStatus = "completed";
       document.body.dataset.activityStatus = "completed";
       try {

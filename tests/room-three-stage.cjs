@@ -7,8 +7,8 @@ const bank=(file,name)=>{const s=fs.readFileSync(file,'utf8');const start=s.inde
   const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.addInitScript(()=>{localStorage.setItem('digital_school_muted','true');});
   const state=async v=>{await page.waitForFunction(v=>RoomActivity.activityStatus===v,v);};
-  const select=async key=>{await page.locator(`[data-game="${key}"],[data-learn="${key}"],[data-tab="${key}"]`).click();await state('playing');assert.equal(await page.locator('.game-panel:visible,.learn-panel:visible,.hobby-panel:visible').count(),1);assert.equal(await page.locator('.stamp-area:visible,.completion-banner:visible').count(),0);};
-  const completed=async()=>{await state('completed');assert.equal(await page.locator('.stamp-area:visible,.completion-banner:visible').count(),1);assert(await page.getByText('정말 잘하셨어요!',{exact:true}).filter({visible:true}).count());assert.equal(await page.locator('.stamp-area:visible button,.completion-banner:visible button').count(),2);};
+  const select=async key=>{await page.locator(`[data-game="${key}"],[data-learn="${key}"],[data-tab="${key}"]`).click();await state('preparing');await page.locator('[data-service-start]').click();await state('playing');assert.equal(await page.locator('.game-panel:visible,.learn-panel:visible,.hobby-panel:visible').count(),1);assert.equal(await page.locator('.stamp-area:visible,.completion-banner:visible').count(),0);};
+  const completed=async()=>{await state('completed');assert.equal(await page.locator('.stamp-area:visible,.completion-banner:visible').count(),1);assert(await page.getByText('정말 잘하셨어요!',{exact:true}).filter({visible:true}).count());assert.equal(await page.locator('.stamp-area:visible button,.completion-banner:visible button').count(),2);assert(await page.locator('.service-result:visible').count());};
   const back=async()=>{await page.getByRole('button',{name:'다른 활동 고르기',exact:true}).click();await state('select');};
   for(const room of ['tori','nabi','bori']){
    const file={tori:'tori-play.html',nabi:'nabi-learn.html',bori:'bori-hobby.html'}[room];

@@ -2,7 +2,8 @@
 document.addEventListener('DOMContentLoaded',()=>{
  'use strict';
  const hero=document.querySelector('.character-home-hero'),grid=hero?.querySelector('.home-friends-grid');if(!hero||!grid)return;
- const names={kongi:'콩이',tori:'토리',nabi:'나비',bori:'보리'},roles={kongi:'운동방',tori:'놀이방',nabi:'학습방',bori:'취미방'};
+ const config=window.SchoolServiceConfig;
+ const names=Object.fromEntries(Object.entries(config).map(([id,c])=>[id,c.name])),roles=Object.fromEntries(Object.entries(config).map(([id,c])=>[id,c.role]));
  const lines={kongi:'여기는 제 운동방이에요!',tori:'여기는 신나는 놀이방이에요!',nabi:'차분하게 배우는 학습방이에요.',bori:'노래와 추억이 있는 취미방이에요.'};
  const descriptions={kongi:'건강체조와 즐거운 운동을 해요',tori:'재미있는 놀이와 활동을 해요',nabi:'천천히 생각하고 배우는 방이에요',bori:'노래와 추억 이야기, 취미활동을 해요'};
  const heading=hero.querySelector('h1'),subtitle=hero.querySelector('.home-welcome p');heading.tabIndex=-1;

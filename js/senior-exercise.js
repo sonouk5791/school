@@ -521,6 +521,7 @@
   function play() {
     if (isPlaying || !programReady || currentExerciseState !== 'playing') return;
     isPlaying = true;
+    window.ServiceActivity?.pause(false);
     initBgm();
     updateBgmGain();
 
@@ -543,6 +544,7 @@
   }
 
   function pause(message = '잠시 쉬고 있어요. 준비되면 이어서 해요.') {
+    window.ServiceActivity?.pause(true);
     isPlaying = false;
     clearTimeout(sceneTimer);
     sceneVideo?.pause();

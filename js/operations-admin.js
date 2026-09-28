@@ -83,7 +83,7 @@
   }
   function records() {
     const s = current();
-    return `<h2>대상자별 수업 기록</h2>${s.participationRecords.length ? "" : "<p>아직 평가 기록이 없습니다.</p>"}<div class="table-scroll"><table><thead><tr><th>날짜 / 대상자</th><th>수업 / 시간</th><th>평가</th></tr></thead><tbody>${s.participationRecords
+    return `<h2>대상자별 수업 기록</h2><details><summary>이 기기의 개인 식별 없는 활동 결과</summary><p>기관 대상자 평가와 별도로 보관하며 서버 동기화 대상이 아닙니다.</p><ul>${(window.ServiceActivity?.read()||[]).slice().reverse().map(r=>`<li>${esc(r.date)} · ${esc(r.title)} · ${Math.round(r.durationSeconds/60)}분 · 완료 ${esc(r.completion)}%</li>`).join('')||'<li>아직 결과가 없습니다.</li>'}</ul></details>${s.participationRecords.length ? "" : "<p>아직 평가 기록이 없습니다.</p>"}<div class="table-scroll"><table><thead><tr><th>날짜 / 대상자</th><th>수업 / 시간</th><th>평가</th></tr></thead><tbody>${s.participationRecords
       .slice()
       .reverse()
       .map(
@@ -218,7 +218,7 @@
     host
       .querySelector("#activitySearch")
       ?.addEventListener("input", (e) => search(e.target.value));
-    if (tab === "library") search("");
+    if (tab === "library") {search("");window.ServiceContent?.mountAdmin(host);}
     if (tab === "media") BoriMediaAdmin.render(host.querySelector('#boriMediaAdmin'));
     host.querySelector("#seniorForm")?.addEventListener("submit", async (e) => {
       e.preventDefault();

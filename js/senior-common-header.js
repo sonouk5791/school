@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.classList.add('senior-common-page');
   const original=[...header.childNodes];
   const nav=document.createElement('nav');nav.className='senior-common-nav';nav.setAttribute('aria-label','어르신 공통 메뉴');
-  nav.innerHTML='<a href="index.html">🏠 홈</a><button type="button" data-common-sound>🔊 소리</button><button type="button" data-common-view aria-controls="commonView" aria-expanded="false">Aa 보기 편하게</button><button type="button" data-common-help aria-controls="commonHelp" aria-expanded="false">❓ 도움</button><a href="index.html#teacher">👨‍🏫 선생님 공간</a>';
+  nav.innerHTML='<a href="index.html">🏠 마을로 돌아가기</a><button type="button" data-common-sound>🔊 소리</button><button type="button" data-common-view aria-controls="commonView" aria-expanded="false">Aa 보기 편하게</button><button type="button" data-common-help aria-controls="commonHelp" aria-expanded="false">❓ 도움</button><a href="index.html#teacher">👨‍🏫 선생님 공간</a>';
   const view=document.createElement('section');view.id='commonView';view.className='common-settings';view.hidden=true;
   view.innerHTML='<h2>보기 편하게</h2><div class="common-settings-options"><button type="button" data-common-font="normal">기본 글씨</button><button type="button" data-common-font="large">큰 글씨</button><button type="button" data-common-contrast>고대비</button><button type="button" data-common-slow>천천히 듣기</button></div><button type="button" data-common-close>닫기</button>';
   const help=document.createElement('section');help.id='commonHelp';help.className='common-settings';help.hidden=true;
-  help.innerHTML='<h2>도움</h2><p>하고 싶은 활동을 눌러주세요. 처음 화면은 홈을 눌러요.</p><div class="common-original-help"></div><button type="button" data-common-close>닫기</button>';
+  help.innerHTML='<h2>도움</h2><p>하고 싶은 활동을 눌러주세요. 친구들을 만나려면 마을로 돌아가기를 눌러요.</p><div class="common-original-help"></div><button type="button" data-common-close>닫기</button>';
   const preserved=help.querySelector('.common-original-help');original.forEach(node=>preserved.append(node));
   preserved.querySelectorAll('a[href="index.html"]').forEach(a=>a.hidden=true);
   const timer=preserved.querySelector('.se-top-time-box');

@@ -65,10 +65,12 @@
 <link rel="stylesheet" href="css/operations.css?v=20260928-ops">
 <script defer src="automation/domain.js?v=20260928"></script>
 <script defer src="js/operations-store.js?v=20260928"></script><script defer src="js/operations-sync.js?v=20260928-media2"></script>
-<link rel="stylesheet" href="css/home-welcome-flow.css?v=20260928-walk"><script defer src="js/home-welcome-flow.js?v=20260928-walk"></script>
-<script defer src="js/admin-access.js?v=20260928"></script><script defer src="automation/media.js?v=20260928-media"></script><script defer src="js/bori-media-store.js?v=20260928-media"></script><script defer src="js/bori-media-admin.js?v=20260928-media"></script><script defer src="js/operations-admin.js?v=20260928-flow"></script><link rel="stylesheet" href="css/bori-media.css?v=20260928-media">
+<link rel="stylesheet" href="css/home-welcome-flow.css?v=20260928-walk"><script defer src="js/home-welcome-flow.js?v=20260928-service"></script>
+<script defer src="js/admin-access.js?v=20260928"></script><script defer src="automation/media.js?v=20260928-media"></script><script defer src="js/bori-media-store.js?v=20260928-media"></script><script defer src="js/bori-media-admin.js?v=20260928-media"></script><script defer src="js/operations-admin.js?v=20260928-service"></script><link rel="stylesheet" href="css/bori-media.css?v=20260928-media">
 <script src="js/korean-visemes.js?v=20260928"></script>
 <link rel="stylesheet" href="css/everyday-characters.css?v=20260928-active"><script defer src="js/everyday-characters.js?v=20260928-active"></script>
+<link rel="stylesheet" href="css/service-platform.css?v=20260928"><script src="js/service-config.js?v=20260928"></script><script src="js/service-activity.js?v=20260928"></script>
+<script src="js/service-content.js?v=20260928"></script>
 </head>
 <body>
 
@@ -719,7 +721,8 @@
   <!-- =======================================================================
        푸터 (Site Footer)
        ======================================================================= -->
-  <footer class="site-footer">
+  <nav class="service-location" aria-label="서비스 안내"><a href="service-info.html#privacy">개인정보 안내</a><a href="service-info.html#terms">이용 안내</a><a href="service-info.html#content">콘텐츠 이용</a><a href="service-info.html#contact">문의</a></nav>
+<footer class="site-footer">
     <div class="footer-comfort-message">
       "천천히, 쉽고, 즐겁게 배우는 우리 모두의 디지털 학교입니다 🧡"
     </div>
@@ -909,27 +912,7 @@
       <h2 id="privacyHeading" style="font-size: 22px; color: #4A3525; margin: 0;">🔒 개인정보처리방침 안내</h2>
       <button type="button" id="btnClosePrivacy" class="care-btn" style="min-height: 44px; min-width: 44px; font-size: 18px; background: transparent; border: none; cursor: pointer;" aria-label="개인정보처리방침 닫기">✕</button>
     </header>
-    <div style="max-height: 60vh; overflow-y: auto; color: #4A3525; font-size: 16px; line-height: 1.7;">
-      <h3 style="font-size: 17px; color: #E65100; margin-top: 12px;">1. 수집하는 개인정보 항목</h3>
-      <p>디지털 학교는 어르신 맞춤형 인지 돌봄 및 사회복지사 돌봄 일지 작성을 위해 최소한의 정보를 다룹니다.</p>
-      <ul>
-        <li><strong>기본 정보:</strong> 어르신 성명(별칭), 생년월일, 장기요양 등급(선택)</li>
-        <li><strong>활동 기록:</strong> 참여 수업명, 참여 일시, 소요 시간, 완료 여부</li>
-        <li><strong>정서 및 케어 정보:</strong> 수업 후 선택한 기분 상태, 돌봄 필요 사항(도움 필요도)</li>
-      </ul>
-
-      <h3 style="font-size: 17px; color: #E65100; margin-top: 16px;">2. 개인정보의 이용 목적</h3>
-      <ul>
-        <li>어르신의 인지 상태 및 선호에 맞춘 일상 인지 훈련 수업 제공</li>
-        <li>보호자 및 사회복지사용 돌봄 일지 및 주간/월간 케어 리포트 생성</li>
-      </ul>
-
-      <h3 style="font-size: 17px; color: #E65100; margin-top: 16px;">3. 보관 기간 및 관리</h3>
-      <p>모든 데이터는 브라우저 로컬 저장소(LocalStorage) 및 기관의 안전한 환경에 저장되며, 서비스 이용 기간 동안 보관됩니다. 노인장기요양보험법 등 관계 법령에 따른 서식은 법정 보존 기간(5년) 동안 안전하게 관리됩니다.</p>
-
-      <h3 style="font-size: 17px; color: #E65100; margin-top: 16px;">4. 이용자 및 보호자의 권리 (열람 및 삭제)</h3>
-      <p>이용자 본인 또는 법정대리인(보호자)은 언제든지 기록된 개인정보 및 활동 이력의 열람, 정정, 삭제(초기화)를 요청할 수 있습니다.</p>
-    </div>
+    <div style="font-size:20px;line-height:1.7"><p>운영 기관과 문의처는 미정이며, 개인정보 처리방침은 준비 중입니다.</p><p>공개 활동 결과는 이 기기에 저장됩니다. 기관용 데이터의 운영정책과 서버 설정은 아직 확정되지 않았습니다.</p><a href="service-info.html#privacy">현재 저장 방식과 준비 사항 보기</a></div>
     <footer style="margin-top: 24px; text-align: right; border-top: 1px solid #F0E6DA; padding-top: 16px;">
       <button type="button" id="btnConfirmPrivacy" class="care-btn btn-hero-primary" style="min-height: 44px; min-width: 100px; font-size: 16px; padding: 10px 24px;">
         확인했습니다
