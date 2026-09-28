@@ -14,3 +14,18 @@ html[data-home-art="reference"] .home-friend span {word-break:keep-all;white-spa
 @media(max-width:1000px){html[data-home-art="reference"] .character-home-hero .home-friends-grid {--stage-height:240px;}}
 @media(max-width:600px){html[data-home-art="reference"] .character-home-hero.hero-classroom {padding:20px 12px;}html[data-home-art="reference"] .character-home-hero .home-friends-grid {--stage-height:200px;padding:12px 8px;gap:8px;}html[data-home-art="reference"] .home-friend strong {font-size:22px;}html[data-home-art="reference"] .home-friend span {font-size:20px;}}
 html[data-home-art="reference"] body.common-contrast .character-home-hero {background:#151515!important;color:#fff!important;}
+/* Match the supplied compact home: four controls, then friends and one primary action. */
+html[data-home-art="reference"] body.character-home .header-actions.senior-common-nav {flex:0 1 auto;}
+html[data-home-art="reference"] .home-one-recommendation .home-start-activity {margin-top:0;}
+html[data-home-art="reference"] #homeQuickLinks {margin-top:24px;padding-top:20px;}
+@media(min-width:820px) and (max-width:1000px){
+ html[data-home-art="reference"] .character-home-hero .home-friends-grid {grid-template-columns:repeat(4,minmax(0,1fr));--stage-height:190px;padding:16px 18px;gap:8px;margin:20px auto;}
+ html[data-home-art="reference"] .home-welcome h1 {font-size:32px;}
+ html[data-home-art="reference"] .home-welcome p {font-size:22px;}
+ html[data-home-art="reference"] .home-friend strong {font-size:22px;}
+ html[data-home-art="reference"] .home-friend span {font-size:20px;}
+ html[data-home-art="reference"] body.character-home .header-container {gap:8px;padding:12px 16px;}
+ html[data-home-art="reference"] body.character-home .header-actions {gap:6px;}
+ html[data-home-art="reference"] body.character-home .header-actions>button {padding:10px;font-size:20px;}
+}
+@media(max-width:420px){html[data-home-art="reference"] body.character-home .header-actions.senior-common-nav {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}html[data-home-art="reference"] body.character-home .header-actions>button {padding:10px 6px;font-size:20px;}}
