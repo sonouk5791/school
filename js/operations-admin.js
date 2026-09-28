@@ -61,7 +61,7 @@
       today = D.dateKey(),
       sessions = s.sessions.filter((x) => x.date === today),
       records = s.participationRecords.filter((r) => r.date === today);
-    return `<h2>오늘 수업</h2><p>${today} · 완료 수업 ${sessions.filter((x) => x.status === "completed").length}회 · 참여 어르신 ${new Set(records.map((r) => r.seniorId)).size}명</p><p>확인할 일지 ${s.dailyReports.filter((r) => r.status !== "approved").length}건 · 승인 대기 프로그램 ${s.programs.filter((p) => p.status === "pending").length}건</p><p>서버 최근 실행: ${esc(s.lastServerRun || "실행 확인 전")}</p>${(
+    return `<nav class="hw-course-links" aria-label="수업 시작"><a href="daycare-class.html?session=am">오전 수업 시작 · 60분</a><a href="daycare-class.html?session=pm">오후 수업 시작 · 60분</a><a href="daily-course.html">간편 수업 · 20분</a></nav><h2>오늘 수업</h2><p>${today} · 완료 수업 ${sessions.filter((x) => x.status === "completed").length}회 · 참여 어르신 ${new Set(records.map((r) => r.seniorId)).size}명</p><p>확인할 일지 ${s.dailyReports.filter((r) => r.status !== "approved").length}건 · 승인 대기 프로그램 ${s.programs.filter((p) => p.status === "pending").length}건</p><p>서버 최근 실행: ${esc(s.lastServerRun || "실행 확인 전")}</p>${(
       s.notifications || []
     )
       .filter((n) => !n.read)

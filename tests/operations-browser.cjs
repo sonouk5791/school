@@ -22,8 +22,9 @@ const { chromium } = require("playwright"),
     await p.goto("http://localhost:8085/index.html", {
       waitUntil: "domcontentloaded",
     });
-    await p.waitForSelector("#classChoices");
-    assert.equal(await p.locator(".class-choice:visible").count(), 3);
+    if(await p.locator('#friendRooms').isVisible())await p.locator('#replayHomeGreeting').click();
+    await p.waitForSelector("#homeGreetingPlay");
+    assert.equal(await p.locator(".class-choice:visible").count(), 0);
     assert(!(await p.locator("#friendRooms").isVisible()));
     assert.equal(
       await p.evaluate(
@@ -32,7 +33,8 @@ const { chromium } = require("playwright"),
       false,
     );
     await p.screenshot({ path: `tests/operations-home-${width}.png` });
-    await p.locator("#openFriendRooms").click();
+    await p.locator("#skipHomeGreeting").click();
+    await p.waitForSelector('#friendRooms:visible');
     assert(await p.locator(".home-friend-kongi").isVisible());
   }
   await p.goto("http://localhost:8085/daycare-class.html?session=am");

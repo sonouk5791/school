@@ -2381,3 +2381,28 @@
 - [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
 
 </details>
+
+## 자동 저장 / 2026-09-28 12:02:15 — 메인 인사 영상에서 네 친구방으로 이어지는 흐름
+- **수행 내역**: 제공 MP4와 실제 ended 이벤트 전환, 기존 캐릭터 순차 소개, 바로 입장·뒤로가기·다시 보기·실패 대응 구현. 수업 링크는 선생님 공간과 오늘의 수업으로 유지. 4가지 화면 크기 및 기존 오전/오후/운동/인증/콩이 영상 회귀 검증 통과. 상세: documents/HOME_WELCOME_FLOW_2026-09-28.md. 실제 Google 합성 및 실기기 검증은 미실행.
+
+## 자동 저장 / 2026-09-28 12:02:39 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 14
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/images/home-greeting-poster.png](./assets/images/home-greeting-poster.png)
+- [assets/videos/home-greeting.mp4](./assets/videos/home-greeting.mp4)
+- [css/home-welcome-flow.css](./css/home-welcome-flow.css)
+- [documents/HOME_WELCOME_FLOW_2026-09-28.md](./documents/HOME_WELCOME_FLOW_2026-09-28.md)
+- [index.html](./index.html)
+- [js/home-welcome-flow.js](./js/home-welcome-flow.js)
+- [js/operations-admin.js](./js/operations-admin.js)
+- [tests/home-flow-resilience.cjs](./tests/home-flow-resilience.cjs)
+- [tests/home-welcome-flow.cjs](./tests/home-welcome-flow.cjs)
+- [tests/kongi-greeting-video.cjs](./tests/kongi-greeting-video.cjs)
+- [tests/operations-browser.cjs](./tests/operations-browser.cjs)
+- [tests/operations-production-smoke.cjs](./tests/operations-production-smoke.cjs)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>
