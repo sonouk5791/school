@@ -419,6 +419,13 @@ body {
 }
 
 /* 인라인 활동 iframe 래퍼 */
+#act1Content,
+#act2Content {
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+}
+
 .activity-frame-wrap {
   width: 100%;
   min-height: 520px;
@@ -430,6 +437,7 @@ body {
 }
 
 .activity-frame {
+  display: block;
   width: 100%;
   height: 560px;
   border: none;

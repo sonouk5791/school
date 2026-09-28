@@ -138,6 +138,29 @@
     host.replaceChildren(frame);
     frame.addEventListener("load", () => {
       loaded = true;
+      // Size the same-origin activity to its contents, avoiding a second scrollbar.
+      const activityFrame = frame;
+      try {
+        const child = activityFrame.contentWindow;
+        const doc = activityFrame.contentDocument;
+        const style = doc.createElement("style");
+        style.textContent = "html,body{min-height:0!important;height:auto!important}";
+        doc.head.append(style);
+        let pending = 0;
+        const resize = () => {
+          child.cancelAnimationFrame(pending);
+          pending = child.requestAnimationFrame(() => {
+            if (!activityFrame.isConnected) return;
+            const border = activityFrame.offsetHeight - activityFrame.clientHeight;
+            const height = Math.max(560, Math.ceil(doc.body.scrollHeight), Math.ceil(doc.body.getBoundingClientRect().height)) + border;
+            if (activityFrame.style.height !== height + "px") activityFrame.style.height = height + "px";
+          });
+        };
+        const observer = new child.ResizeObserver(resize);
+        observer.observe(doc.body);
+        child.addEventListener("pagehide", () => observer.disconnect(), { once: true });
+        resize();
+      } catch {}
       if (mediaRoute?.media) return;
       try {
         const doc = frame.contentDocument;

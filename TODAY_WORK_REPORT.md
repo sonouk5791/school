@@ -2420,3 +2420,20 @@
 - [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
 
 </details>
+
+## 자동 저장 / 2026-09-28 12:09:24 — 데스크톱 수업 활동 화면이 300px로 좁아지는 오류 수정
+- **수행 내역**: 원인: 가운데 정렬 flex 카드 안의 act1Content/act2Content에 width가 없어 iframe 기본 폭으로 축소. 두 호스트 width 100%와 iframe block 적용. same-origin ResizeObserver로 높이를 콘텐츠에 맞춰 내부 세로 스크롤 제거. daycare-class.html 캐시 갱신. tests/class-frame-layout.cjs: 운동 진행 상태에서 1920/1366/768/390 폭 및 스크롤 검증 통과. 오전 수업 전체 회귀 테스트 통과. 기존 데이터·TTS·활동 기능 보존.
+
+## 자동 저장 / 2026-09-28 12:10:17 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 6
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [css/daycare-class.css](./css/daycare-class.css)
+- [daycare-class.html](./daycare-class.html)
+- [js/daycare-session.js](./js/daycare-session.js)
+- [tests/class-frame-layout.cjs](./tests/class-frame-layout.cjs)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>
