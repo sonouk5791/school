@@ -143,7 +143,7 @@
         ? rows
             .map(
               (r) =>
-                `${r.type === "am" ? "오전" : "오후"} ${r.programTitle} 수업에 ${Math.round(r.durationSeconds / 60)}분 참여하였다. 참여도: ${r.participation || "미입력"}, 표정: ${r.expression || "미입력"}, 도움: ${r.assistance || "미입력"}, 기분: ${r.mood || "미입력"}. 특이사항: ${r.notes || "입력 없음"}.`,
+                r.type === "garden" ? `생활 활동: ${r.notes}. 화면 활성 시간 ${r.durationSeconds}초. 참여도·기분은 미입력입니다.` : `${r.type === "am" ? "오전" : "오후"} ${r.programTitle} 수업에 ${Math.round(r.durationSeconds / 60)}분 참여하였다. 참여도: ${r.participation || "미입력"}, 표정: ${r.expression || "미입력"}, 도움: ${r.assistance || "미입력"}, 기분: ${r.mood || "미입력"}. 특이사항: ${r.notes || "입력 없음"}.`,
             )
             .join("\n")
         : "해당 날짜의 평가 기록이 없습니다.",
@@ -205,6 +205,7 @@
       domains = { 운동: 0, 인지: 0, 놀이: 0, 취미: 0 },
       popular = {};
     for (const r of rows) {
+      if(r.type === "garden"){domains["생활 활동"]=(domains["생활 활동"]||0)+(r.durationSeconds||0);continue;}
       domains[r.type === "am" ? "운동" : "놀이"] += r.phaseTimes?.act1 || 0;
       domains[r.type === "am" ? "인지" : "취미"] += r.phaseTimes?.act2 || 0;
       popular[r.programTitle] = (popular[r.programTitle] || 0) + 1;

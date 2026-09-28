@@ -9,6 +9,9 @@
     "api/operations.js": {
       "maxDuration": 60,
       "includeFiles": "assets/images/uniform-*.png"
+    },
+    "api/garden.js": {
+      "maxDuration": 30
     }
   }
 }

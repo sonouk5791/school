@@ -49,7 +49,7 @@ const server = http.createServer((req, res) => {
 
   let reqPath = req.url.split('?')[0];
 
-  if(reqPath === '/api/operations') {res.removeHeader('Access-Control-Allow-Origin');res.status=n=>{res.statusCode=n;return res;};res.json=data=>{res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(data));};let chunks='';req.on('data',c=>{chunks+=c;if(chunks.length>600000)req.destroy();});req.on('end',()=>{try{req.body=chunks?JSON.parse(chunks):{};require('./api/operations')(req,res);}catch{res.status(400).json({error:'Invalid request'});}});return;}
+  if(reqPath === '/api/operations' || reqPath === '/api/garden') {res.removeHeader('Access-Control-Allow-Origin');res.status=n=>{res.statusCode=n;return res;};res.json=data=>{res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(data));};let chunks='';req.on('data',c=>{chunks+=c;if(chunks.length>600000)req.destroy();});req.on('end',()=>{try{req.body=chunks?JSON.parse(chunks):{};require(reqPath === '/api/garden' ? './api/garden' : './api/operations')(req,res);}catch{res.status(400).json({error:'Invalid request'});}});return;}
   if(reqPath === '/api/tts'){require('./api/tts.js')(req,res);return;}
 
   // ── 1. 타입캐스트 TTS 프록시 API ────────────────────────────

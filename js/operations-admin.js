@@ -189,6 +189,7 @@
   function library() {
     return `<h2>프로그램 검색</h2><details><summary>사용 허가된 음원 등록</summary><label>HTTPS 음원 주소<input id="approvedAudioUrl" type="url"></label><label><input id="audioRights" type="checkbox">기관에서 사용 가능한 음원임을 확인했습니다.</label>${button("음원 등록", "audio")}</details><label>검색<input id="activitySearch" placeholder="운동, 계절, 명절, 제목"></label><div id="activityResults"></div>`;
   }
+  function garden() { return '<section id="gardenAdmin"></section>'; }
   function media() { return '<section id="boriMediaAdmin"></section>'; }
   function render() {
     if (
@@ -200,7 +201,7 @@
     host.innerHTML = `<p class="operations-warning">${AdminAccess.isCloud() ? "서버 연결 모드 · 예약 작업의 실제 실행 여부는 마지막 실행 기록을 확인해주세요." : "서버 연결 필요 · 현재 기록과 초안은 이 기기에만 저장됩니다. 예약 작업은 실행되지 않습니다."}</p><details class="operations-menu"><summary>관리 메뉴 선택</summary><nav>${[
       ["overview", "오늘 운영"],
       ["programs", "프로그램 승인"],
-      ["seniors", "어르신 관리"],
+      ["seniors", "어르신 관리"], ["garden", "우리 집·텃밭"],
       ["records", "수업 기록"],
       ["reports", "일지·보고서"],
       ["automation", "자동화 관리"],
@@ -210,7 +211,7 @@
       .map(([k, l]) => button(l, "tab", `data-tab="${k}"`))
       .join(
         "",
-      )}${button("잠그기", "logout")}${button("운영 데이터 백업", "backup")}</nav></details><p role="status"></p>${({ overview: summary, programs, records, reports, automation, seniors, library, media }[tab] || summary)()}`;
+      )}${button("잠그기", "logout")}${button("운영 데이터 백업", "backup")}</nav></details><p role="status"></p>${({ overview: summary, programs, records, reports, automation, seniors, library, media, garden }[tab] || summary)()}`;
     host.onclick = (e) => {
       const b = e.target.closest("[data-op]");
       if (b) act(b).catch((e) => notice(e.message));
@@ -219,6 +220,7 @@
       .querySelector("#activitySearch")
       ?.addEventListener("input", (e) => search(e.target.value));
     if (tab === "library") {search("");window.ServiceContent?.mountAdmin(host);}
+    if (tab === 'garden') GardenAdmin.render(host.querySelector('#gardenAdmin'));
     if (tab === "media") BoriMediaAdmin.render(host.querySelector('#boriMediaAdmin'));
     host.querySelector("#seniorForm")?.addEventListener("submit", async (e) => {
       e.preventDefault();
