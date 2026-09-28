@@ -43,3 +43,12 @@
 - 실제 유료 TTS 합성 호출은 새로 실행하지 않음. 기존 음성 코드를 유지하고 음성 이벤트/재생 흐름을 검증함.
 
 배포 결과는 아래와 오늘 작업 일지에 이어 기록한다.
+
+## 운영 반영 결과
+- 기능 커밋 `7c7ca62` → 기존 GitHub `origin/main` 푸시 완료.
+- 기존 Vercel `school` 프로젝트 배포 `dpl_Ap5rfv5hBr5fGW8xWYsRAtztkTse`, 상태 `READY`.
+- 운영 주소: https://school-tau-pearl.vercel.app (기존 별칭 유지).
+- `tests/everyday-deployment.cjs`: 실제 운영 HTML/JS/CSS/프로그램/캐릭터/장면 22개 파일 SHA256 일치.
+- `tests/everyday-exercise.cjs https://school-tau-pearl.vercel.app`: 네 방 × 6개 화면 크기 및 10개 장면 HTTP 확인 최종 통과.
+- 운영 최초 이미지 검사에서 다운로드 미완료와 1회 대기 시간 초과가 발생. 로딩 완료 대기 및 진단을 포함하여 다시 실행한 전체 검증은 통과. 지속 재현되는 이미지 오류는 확인되지 않음.
+- `js/character-voice-system.js` 기존 SHA256 `067BB64B0291085326809BCB098D7E54EDA9AEDAD32EB94DABAA19A2F1E4AD3D` 유지.

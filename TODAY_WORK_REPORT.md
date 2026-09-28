@@ -2314,3 +2314,19 @@
 - [tests/everyday-exercise.cjs](./tests/everyday-exercise.cjs)
 
 </details>
+
+## 자동 저장 / 2026-09-28 11:03:53 — 일상형 건강체조 운영 배포 확인
+- **수행 내역**: 기능 커밋 7c7ca62 origin/main 푸시 완료. 기존 Vercel school 배포 dpl_Ap5rfv5hBr5fGW8xWYsRAtztkTse READY, school-tau-pearl.vercel.app 별칭 반영. 운영 파일 22개 SHA256 일치, 네 방 6해상도와 10개 장면 확인 최종 통과. 최초 이미지 로딩 대기 실패 이후 진단 및 재실행 통과; 지속 오류 미확인. Google TTS 코드 해시 유지. 상세 documents/EVERYDAY_EXERCISE_2026-09-28.md.
+
+## 자동 저장 / 2026-09-28 11:04:03 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 5
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [documents/EVERYDAY_EXERCISE_2026-09-28.md](./documents/EVERYDAY_EXERCISE_2026-09-28.md)
+- [tests/everyday-deployment.cjs](./tests/everyday-deployment.cjs)
+- [tests/everyday-exercise.cjs](./tests/everyday-exercise.cjs)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>

@@ -21,7 +21,7 @@ const base=process.argv[2]||'http://127.0.0.1:8085';
     assert(!/명절을 앞두고|추석을 기다리며|한가위/.test(await page.locator('body').innerText()));
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),file+' overflow '+width);
     assert.equal(await page.evaluate(()=>localStorage.getItem('everyday-preserve')),'saved');
-    assert.equal(await page.evaluate(()=>[...document.images].filter(i=>i.getClientRects().length && (!i.complete||i.naturalWidth===0)).length),0);
+    await page.waitForFunction(()=>[...document.images].filter(i=>i.getClientRects().length).every(i=>i.complete&&i.naturalWidth>0),null,{timeout:30000}).catch(async error=>{console.error(file,width,await page.evaluate(()=>[...document.images].filter(i=>i.getClientRects().length&&(!i.complete||!i.naturalWidth)).map(i=>({src:i.src,complete:i.complete,loading:i.loading}))));throw error;});
     // Exercise real voice-state listeners without making paid synthesis requests.
     await page.evaluate(id=>window.dispatchEvent(new CustomEvent('character-voice-state',{detail:{state:'playing',characterId:id,text:'아 오 에'}})),id);
     assert.equal(await page.evaluate(id=>CharacterAnimation.state[id],id),'talking');
