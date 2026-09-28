@@ -80,4 +80,8 @@ PostgreSQL school_operations(id, body jsonb, updated_at) 구조를 그대로 유
 3. legacy 개별 활동 공통화·문제별 재개와 실제 기기/현장 QA.
 
 ## 배포 결과
-작업 일지 및 GitHub 저장, 기존 Vercel 프로젝트 배포 후 검증 결과를 누적한다.
+- GitHub main 50a4831 푸시 완료.
+- Vercel dpl_HSeKkKYfuLHz4LsiaDhGweZGwT1X READY, https://school-tau-pearl.vercel.app 운영 반영.
+- 운영 서비스 흐름 테스트 통과: 4개 화면 크기, 실제 학습 완료/저장/마을 복귀, 재진입, 인증 화면의 기기 내 콘텐츠 편집/실행, 저장 용량 오류 안내, 정책 미정 표시.
+- 기존 운영 파일 10개의 SHA256 일치 확인(원본 캐릭터 시트·음성 연결 파일 포함).
+- 기관 운영 전체 구축 완료를 의미하지 않는다. 미연결/미구현 항목은 10–18절에 구분했다.
