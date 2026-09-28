@@ -2471,3 +2471,16 @@
 - [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
 
 </details>
+
+## 자동 저장 / 2026-09-28 12:18:51 — 인사 자동재생 운영 배포 검증 완료
+- **수행 내역**: c405624 GitHub main 푸시, Vercel dpl_4fvqadpmzyWpai49Vq46Gnjc65Bd READY 및 운영 별칭 반영. 운영 home-autoplay 테스트 통과: 4 화면 크기, 무음 자동재생, 유음 0초 재시작, 실제 ended 전환, 네 친구 소개, 세션 복귀 반복 방지, 재시청, 건너뛰기, autoplay 차단/404 복구. Android/iPhone Safari 실기기 미검증.
+
+## 자동 저장 / 2026-09-28 12:19:00 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 2
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>
