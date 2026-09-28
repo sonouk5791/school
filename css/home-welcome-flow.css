@@ -86,3 +86,37 @@ html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introd
 @media(max-width:600px){html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{background:#edf2dc;gap:30px;padding:12px 20px}.village-landscape>svg{width:170%;margin-left:-35%}.village-rest{display:none}.friend-village .home-friend:nth-of-type(even) .village-scene{left:-10px}.friend-village .home-friend:nth-of-type(odd) .village-scene{left:10px}.village-message{min-height:82px}}
 
 .hw-room-tools .home-living-link{display:inline-flex;align-items:center;justify-content:center;min-height:80px;font-size:22px;padding:16px 25px;background:#edf2de;border:2px solid #759260;border-radius:22px;color:#30442c;text-decoration:none;word-break:keep-all}.hw-room-tools .home-living-link:focus-visible{outline:4px solid #315faa;outline-offset:4px}
+
+/* A continuous landscape with paths measured from the existing house footprints. */
+html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{background:linear-gradient(180deg,#f4f5e7 0%,#edf2dc 24%,#e8efda 100%);border-color:#e3e8cd;box-shadow:0 16px 34px -30px #68794c55}
+.village-landscape>.village-nature,.village-landscape>.village-paths{position:absolute;inset:0;width:100%;height:100%;margin:0}
+.village-shrub{position:absolute;width:62px;height:28px;border-radius:60% 55% 45% 45%;background:#c2d3a6;box-shadow:22px 3px 0 -5px #d0dfb8,-14px 7px 0 -8px #adc396;opacity:.85}
+.shrub-north{left:2%;top:9%}.shrub-east{right:1%;top:47%}.shrub-west{left:1%;bottom:5%}
+.village-flowerbed,.rest-flowers{position:absolute;width:70px;height:24px;border-radius:50%;background:radial-gradient(circle at 18% 36%,#e0b49b 0 4px,transparent 5px),radial-gradient(circle at 45% 24%,#fff7d6 0 4px,transparent 5px),radial-gradient(circle at 74% 40%,#d4b4bb 0 4px,transparent 5px),linear-gradient(transparent 50%,#c5d5a8 50%);box-shadow:0 3px 6px #81935c0d}
+.flowers-north{right:5%;top:6%;transform:rotate(-8deg)}.flowers-south{right:6%;bottom:4%;transform:rotate(9deg)}
+.village-rest{width:132px;height:95px}
+.rest-lawn{position:absolute;inset:14px -23px -4px;border-radius:50%;background:radial-gradient(ellipse,#d7e4bd 50%,#e2ebce 70%,transparent 73%)}
+.rest-tree{left:10px;top:3px;width:40px;height:37px;background:#a5bd8e;box-shadow:13px -6px 0 #bfd2a5}
+.rest-tree:after{top:30px;height:27px;left:21px;width:6px;background:#a48a69}
+.rest-tree-small{left:96px;top:0;width:25px;height:29px;background:#b6c89c;box-shadow:8px -5px 0 #c8d9b0}
+.rest-tree-small:after{left:12px;top:22px;height:25px;width:5px}
+.rest-bench{left:59px;top:48px;width:47px;background:#ac8864;box-shadow:0 -11px 0 #c0a27a}
+.rest-bench:after{content:"";position:absolute;left:5px;right:5px;top:7px;height:7px;border-inline:4px solid #9a7f5f}
+.rest-flowers{width:45px;height:19px;left:6px;top:59px}
+.rest-sign{top:74px;left:13px;font-size:20px;color:#415538;line-height:1.2}
+.village-scene:before{content:"";position:absolute;left:0;right:-3%;bottom:-5px;height:46px;background:radial-gradient(ellipse,#d5e2be 35%,#e0e9cb 62%,transparent 73%);border-radius:50%}
+.village-scene:after{content:"";position:absolute;left:5%;bottom:0;width:39%;height:13px;background:#84966c24;border-radius:50%;filter:blur(3px);z-index:1}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{box-shadow:none;border-radius:48% 48% 40% 40%;bottom:5px}
+.village-yard-detail{position:absolute;right:6%;bottom:6%;width:50px;height:18px;z-index:1;border-radius:50%;background:#c6d8ae}
+.yard-kongi .village-yard-detail{width:59px;height:19px;background:#b1c3aa;border:2px solid #8ca58c;border-radius:5px;transform:skewX(-16deg);right:6%;bottom:9%}
+.yard-tori .village-yard-detail,.yard-nabi .village-yard-detail{background:radial-gradient(circle at 20% 27%,#e4b8b4 0 4px,transparent 5px),radial-gradient(circle at 50% 22%,#fff2cf 0 4px,transparent 5px),radial-gradient(circle at 80% 35%,#ccb7d5 0 4px,transparent 5px),#c5d7b0;height:25px;right:1%}
+.yard-nabi .village-yard-detail{border-bottom:4px solid #b6baa0;border-radius:8px}
+.yard-bori .village-yard-detail{border-radius:4px;height:9px;background:#bd9d79;box-shadow:0 -9px 0 #c9af8c;bottom:9%}
+.village-prop{z-index:2;font-size:29px;bottom:16%}
+.village-copy .hw-enter{border-color:#8ca079;background:#f8f6e6;box-shadow:0 2px 3px #73825313;color:#294b30}
+.friend-village .village-message .hw-intro{background:#f8faed;border-color:#c9d6b5;border-radius:14px 14px 14px 4px}
+.hw-room-tools{padding-top:8px;background:radial-gradient(ellipse at 50% 0,#e9efda88,transparent 70%);border-radius:0 0 36px 36px}
+.high-contrast-mode .village-landscape{opacity:.2}.high-contrast-mode .village-copy .hw-enter{background:#111;color:#fff;border-color:#fff}
+.high-contrast-mode #friendRooms .friend-village{background:#151515!important;border-color:#fff!important}
+@media(max-width:1000px){.village-rest{transform:scale(.92);transform-origin:center}.village-shrub{width:42px;height:22px}.flowers-north{right:3%;top:2%}}
+@media(max-width:600px){.village-landscape>.village-nature{width:100%;margin:0}.village-landscape>.village-paths{width:100%;margin:0}.village-rest{display:none}.shrub-north{left:2%;top:1%}.shrub-east{right:1%;top:49%}.shrub-west{left:1%;bottom:2%}.flowers-north{right:4%;top:24%}.flowers-south{right:4%;bottom:24%}.village-copy .hw-enter{max-width:320px;margin:auto;width:100%}}
