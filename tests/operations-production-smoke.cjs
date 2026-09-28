@@ -11,7 +11,7 @@ const base = process.argv[2] || 'http://localhost:8085';
     await page.setViewportSize({width,height});
     await page.goto(base+'/index.html');
     if(await page.locator('#friendRooms').isVisible())await page.locator('#replayHomeGreeting').click();
-    await page.waitForSelector('#homeGreetingPlay');
+    await page.waitForSelector('#homeGreetingSound');
     assert.equal(await page.locator('.class-choice:visible').count(),0);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
     if(width===1600)await page.screenshot({path:'tests/operations-home-1600.png'});

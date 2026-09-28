@@ -23,7 +23,7 @@ const { chromium } = require("playwright"),
       waitUntil: "domcontentloaded",
     });
     if(await p.locator('#friendRooms').isVisible())await p.locator('#replayHomeGreeting').click();
-    await p.waitForSelector("#homeGreetingPlay");
+    await p.waitForSelector("#homeGreetingSound");
     assert.equal(await p.locator(".class-choice:visible").count(), 0);
     assert(!(await p.locator("#friendRooms").isVisible()));
     assert.equal(

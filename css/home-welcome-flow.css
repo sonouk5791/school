@@ -2,6 +2,7 @@
 html[data-home-flow="video"] .character-home-hero>.home-friends-grid{visibility:hidden}
 html[data-home-flow="video"] .character-home-hero{max-width:1380px;margin-inline:auto;word-break:keep-all}
 .hw-panel[hidden]{display:none!important}
+.hw-actions [hidden]{display:none!important}
 .hw-panel{opacity:1}
 .hw-media{position:relative;width:min(100%,800px);aspect-ratio:16/9;max-height:44dvh;margin:18px auto;background:#f5e8d5;border-radius:24px;overflow:hidden}
 .hw-media video,.hw-media img{width:100%;height:100%;object-fit:contain;position:absolute;inset:0}
@@ -16,6 +17,8 @@ html[data-home-flow="video"] #friendRooms .home-friend-picture{height:190px;max-
 html[data-home-flow="video"] #friendRooms .home-friend strong{font-size:28px;margin:0}
 .hw-room-name{font-size:22px;font-weight:700}
 .hw-intro{font-size:20px;line-height:1.55;margin:6px 0;flex:1;color:#594b3e}
+.home-friend.is-introducing .hw-intro{background:#eef4e9;border-radius:14px;padding:8px}
+html[data-home-flow="video"] #friendRooms .home-friend.is-introducing .home-friend-picture{transform:scale(1.035)}
 .hw-enter{display:block;width:100%;border-radius:12px;padding:12px 6px;background:#eef4e9;color:#294f32;font-size:20px!important;font-weight:700}
 .hw-speaking-label{font-size:20px;min-height:30px;color:#356b43;font-weight:700}
 html[data-home-flow="video"] #friendRooms .home-friend.is-introducing{border:3px solid #356b43;padding:13px 11px;background:#f7fbf3}
