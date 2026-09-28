@@ -149,6 +149,7 @@
 <div class="stamp-row">
   <div class="stamp-chip">오늘 도장: <span id="bhStampNum">0</span>개 &#127467;</div>
 </div>
+<section class="media-entries" aria-label="보리의 새로운 활동"><a class="media-entry" href="bori-memory-theater.html">📺 추억극장<span>옛날 드라마와 추억 영상을 함께 봐요</span></a><a class="media-entry" href="bori-song-class.html">🎤 옛 노래 교실<span>추억의 노래를 함께 따라 불러요</span></a></section>
 <nav class="bh-menu" aria-label="취미 선택">
   <button type="button" class="bh-tab active" data-tab="song">&#127908; 노래 부르기</button>
   <button type="button" class="bh-tab" data-tab="story">&#128214; 옛날 이야기</button>
@@ -367,5 +368,7 @@ window.addEventListener('load',()=>roomActivityDelay(()=>speak('보리의 취미
 })();
 </script>
 <script src="js/activity-bank.js?v=20260928"></script><script src="js/extended-activities.js?v=20260928"></script>
+<link rel="stylesheet" href="css/bori-media.css?v=20260928-media">
+<script>document.addEventListener('DOMContentLoaded',()=>{const activity=new URLSearchParams(location.search).get('activity');if(['story','color'].includes(activity))document.querySelector('[data-tab="'+activity+'"]').click();});</script>
 </body>
 </html>

@@ -754,14 +754,19 @@
 
   const ProgramLibrary = {
     // 라이브러리 전체 조회
+    withMedia(list) {
+      const extra=window.BoriMediaDomain?.programs||[];
+      let contents=[];try{contents=JSON.parse(localStorage.getItem('school_bori_media_v1')||'{}').contents||[];}catch{}
+      return [...list.filter(p=>!extra.some(m=>m.id===p.id)),...extra.map(p=>({...p,enabled:contents.some(c=>c.kind===p.mediaKind&&c.enabled&&!c.deletedAt)}))];
+    },
     getAll() {
       try {
         const saved = localStorage.getItem(STORAGE_LIBRARY_KEY);
-        if (saved) return JSON.parse(saved);
+        if (saved) return this.withMedia(JSON.parse(saved));
       } catch (e) {
         console.error('프로그램 라이브러리 로드 실패:', e);
       }
-      return JSON.parse(JSON.stringify(DEFAULT_LIBRARY));
+      return this.withMedia(JSON.parse(JSON.stringify(DEFAULT_LIBRARY)));
     },
 
     // 라이브러리 저장

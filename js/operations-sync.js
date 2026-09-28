@@ -61,6 +61,7 @@
         s.syncMarks[session.id] = fingerprint;
         OperationsStore.save();
       }
+      await window.BoriMediaStore?.flushRecords();
     },
   };
   window.addEventListener("online", () =>

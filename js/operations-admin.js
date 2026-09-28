@@ -189,6 +189,7 @@
   function library() {
     return `<h2>프로그램 검색</h2><details><summary>사용 허가된 음원 등록</summary><label>HTTPS 음원 주소<input id="approvedAudioUrl" type="url"></label><label><input id="audioRights" type="checkbox">기관에서 사용 가능한 음원임을 확인했습니다.</label>${button("음원 등록", "audio")}</details><label>검색<input id="activitySearch" placeholder="운동, 계절, 명절, 제목"></label><div id="activityResults"></div>`;
   }
+  function media() { return '<section id="boriMediaAdmin"></section>'; }
   function render() {
     if (
       !host ||
@@ -204,11 +205,12 @@
       ["reports", "일지·보고서"],
       ["automation", "자동화 관리"],
       ["library", "프로그램 검색"],
+      ["media", "영상·음악 콘텐츠 관리"],
     ]
       .map(([k, l]) => button(l, "tab", `data-tab="${k}"`))
       .join(
         "",
-      )}${button("잠그기", "logout")}${button("운영 데이터 백업", "backup")}</nav></details><p role="status"></p>${({ overview: summary, programs, records, reports, automation, seniors, library }[tab] || summary)()}`;
+      )}${button("잠그기", "logout")}${button("운영 데이터 백업", "backup")}</nav></details><p role="status"></p>${({ overview: summary, programs, records, reports, automation, seniors, library, media }[tab] || summary)()}`;
     host.onclick = (e) => {
       const b = e.target.closest("[data-op]");
       if (b) act(b).catch((e) => notice(e.message));
@@ -217,6 +219,7 @@
       .querySelector("#activitySearch")
       ?.addEventListener("input", (e) => search(e.target.value));
     if (tab === "library") search("");
+    if (tab === "media") BoriMediaAdmin.render(host.querySelector('#boriMediaAdmin'));
     host.querySelector("#seniorForm")?.addEventListener("submit", async (e) => {
       e.preventDefault();
       try {

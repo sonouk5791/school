@@ -35,6 +35,7 @@
     if (!frame) return;
     frame.inert = paused;
     try {
+      if (paused) frame.contentWindow.BoriMediaPlayer?.pause();
       const button = frame.contentDocument.getElementById("btnPause");
       if (paused && button?.getAttribute("aria-label") === "체조 잠시 멈춤") {
         button.click();
@@ -89,17 +90,37 @@
     }[phase];
     if (text) CharacterVoice.speak(id, text);
   }
+  function captureMedia() {
+    try {
+      const child = frame?.contentWindow.BoriMediaPlayer;
+      child?.checkpoint();
+      const r = child?.getState().record;
+      if (r?.parentSessionId === session.id) {
+        session.mediaResults = session.mediaResults || [];
+        D.upsert(session.mediaResults, r);
+      }
+    } catch {}
+  }
   function setFrame(force = false) {
     const phase = D.phases[session.phase]?.[0];
+    const mediaActivity =
+      type === "pm" && phase === "act2"
+        ? session.program?.activities?.find((a) => a.character === "bori")
+        : null;
+    const mediaRoute = mediaActivity
+      ? window.SchoolActivityRoutes?.resolve(mediaActivity, "bori")
+      : null;
     if (!["act1", "act2"].includes(phase)) {
+      captureMedia();
       frame?.remove();
       frame = null;
       return;
     }
     const host = $(phase === "act1" ? "act1Content" : "act2Content"),
-      index = Math.floor(session.phaseSeconds / 180);
+      index = mediaRoute?.media ? 0 : Math.floor(session.phaseSeconds / 180);
     if (frame && !force && topic === index) return;
     silence();
+    captureMedia();
     frame?.remove();
     topic = index;
     loaded = false;
@@ -107,12 +128,17 @@
     frame.className = "activity-frame";
     frame.title = phase === "act1" ? "첫 번째 활동" : "두 번째 활동";
     frame.src =
-      room[phase === "act1" ? 0 : 1] +
+      (mediaRoute?.media ? mediaRoute.url : room[phase === "act1" ? 0 : 1]) +
       "?embedded=class&level=" +
-      recommendLevel();
+      recommendLevel() +
+      "&participants=" +
+      encodeURIComponent(session.participants.join(",")) +
+      "&sessionId=" +
+      encodeURIComponent(session.id);
     host.replaceChildren(frame);
     frame.addEventListener("load", () => {
       loaded = true;
+      if (mediaRoute?.media) return;
       try {
         const doc = frame.contentDocument;
         const nav = doc.querySelector("header");
@@ -377,6 +403,17 @@
           (input) => (e[input.name] = input.value),
         );
         evaluations[f.dataset.senior] = e;
+        if (session.mediaResults?.length)
+          e.notes = [
+            e.notes,
+            ...session.mediaResults.map(
+              (r) =>
+                `감상: ${r.title} · 실제 재생 ${Math.round(r.watchedSeconds)}초 · 다시보기 ${r.replayCount}회 · 회상 ${r.responses?.[f.dataset.senior]?.memoryResponse || "미입력"} · 기분 ${r.responses?.[f.dataset.senior]?.mood || "미입력"}`,
+            ),
+          ]
+            .filter(Boolean)
+            .join("\n")
+            .slice(0, 2000);
       });
     D.saveEvaluation(store.get(), session, evaluations);
     if (!store.save()) {
@@ -569,6 +606,40 @@
     window.addEventListener("online", () => status("인터넷이 연결되었습니다."));
   }
   window.addEventListener("message", (e) => {
+    if (
+      e.origin === location.origin &&
+      e.source === frame?.contentWindow &&
+      e.data?.type === "bori-media-result" &&
+      session
+    ) {
+      const r = e.data.record;
+      if (r?.parentSessionId !== session.id) return;
+      session.mediaResults = session.mediaResults || [];
+      D.upsert(session.mediaResults, {
+        id: String(r.id).slice(0, 100),
+        title: String(r.title).slice(0, 100),
+        watchedSeconds: Math.max(
+          0,
+          Math.min(86400, Number(r.watchedSeconds) || 0),
+        ),
+        replayCount: Math.max(0, Number(r.replayCount) || 0),
+        memoryResponse: String(r.memoryResponse || "").slice(0, 50),
+        mood: String(r.mood || "").slice(0, 30),
+        responses: Object.fromEntries(
+          session.participants.map((id) => [
+            id,
+            {
+              memoryResponse: String(
+                r.responses?.[id]?.memoryResponse || "",
+              ).slice(0, 50),
+              mood: String(r.responses?.[id]?.mood || "").slice(0, 30),
+            },
+          ]),
+        ),
+      });
+      save();
+      return;
+    }
     if (
       e.origin !== location.origin ||
       e.source !== frame?.contentWindow ||

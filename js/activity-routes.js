@@ -45,6 +45,17 @@ window.SchoolActivityRoutes = {
               : '[data-learn="today"]',
       };
     }
+    if (
+      character === "bori" &&
+      (activity?.mediaKind || /추억극장|옛 노래 교실/.test(text))
+    )
+      return {
+        url:
+          activity?.mediaKind === "theater" || /추억극장/.test(text)
+            ? "bori-memory-theater.html"
+            : "bori-song-class.html",
+        media: true,
+      };
     return {
       url: "bori-hobby.html",
       selector: /색칠|미술|그림/.test(text)

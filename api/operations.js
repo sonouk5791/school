@@ -6,7 +6,10 @@ const D = require("../automation/domain"),
   db = require("../automation/database"),
   auth = require("../automation/auth"),
   engine = require("../automation/engine"),
-  library = require("../automation/library.json");
+  library = [
+    ...require("../automation/library.json"),
+    ...require("../automation/media").programs,
+  ];
 function safeEqual(a, b) {
   const x = Buffer.from(a || ""),
     y = Buffer.from(b || "");
@@ -85,16 +88,14 @@ module.exports = async (req, res) => {
     "status";
   try {
     if (action === "status") {
-      return res
-        .status(200)
-        .json({
-          configured: !!process.env.DATABASE_URL,
-          authConfigured: !!process.env.ADMIN_INITIAL_PASSWORD,
-          schedulerConfigured: !!process.env.CRON_SECRET,
-          message: process.env.DATABASE_URL
-            ? "서버 연결 설정 있음"
-            : "서버 연결 필요",
-        });
+      return res.status(200).json({
+        configured: !!process.env.DATABASE_URL,
+        authConfigured: !!process.env.ADMIN_INITIAL_PASSWORD,
+        schedulerConfigured: !!process.env.CRON_SECRET,
+        message: process.env.DATABASE_URL
+          ? "서버 연결 설정 있음"
+          : "서버 연결 필요",
+      });
     }
     const cron =
       action === "run" &&
@@ -115,6 +116,12 @@ module.exports = async (req, res) => {
       let state = D.normalize(raw);
       Object.assign(raw, state);
       let identity = null;
+      if (action === "media-catalog" && req.method === "GET")
+        return {
+          contents: (raw.mediaContents || []).filter(
+            (c) => c.enabled && !c.deletedAt && c.videoType !== "local",
+          ),
+        };
       if (action === "today" && req.method === "GET") {
         const date = D.dateKey();
         const program = raw.programs.find(
@@ -181,7 +188,16 @@ module.exports = async (req, res) => {
       if (action === "state") return { state: publicState(raw) };
       if (action === "run") {
         const next = await engine.run(raw, {
-          library,
+          library: library.map((p) =>
+            p.mediaKind
+              ? {
+                  ...p,
+                  enabled: (raw.mediaContents || []).some(
+                    (c) => c.kind === p.mediaKind && c.enabled && !c.deletedAt,
+                  ),
+                }
+              : p,
+          ),
           checkAssets: assets,
           generateDraft: (records) =>
             require("../automation/reportGenerator")(records, req),
@@ -190,7 +206,20 @@ module.exports = async (req, res) => {
         return { ok: true, lastRun: raw.lastServerRun };
       }
       if (req.method !== "POST") throw fail("POST 요청이 필요합니다.", 405);
-      if (action === "generate") {
+      if(action==='media-record'){
+        let record;try{record=require('../automation/media').validateRecord(body.record);}catch(e){throw fail(e.message);}
+        raw.mediaRecords=raw.mediaRecords||[];const old=raw.mediaRecords.find(r=>r.id===record.id);
+        if(!old||old.savedAt<=record.savedAt)D.upsert(raw.mediaRecords,record);
+      }else if (action === "media-save") {
+        let content;try{content=require("../automation/media").validate(body.content, {cloud:true});}catch(e){throw fail(e.message);}
+        raw.mediaContents = raw.mediaContents || [];
+        D.upsert(raw.mediaContents, content);
+      } else if (action === "media-delete") {
+        const content = raw.mediaContents?.find((c) => c.id === body.id);
+        if (!content) throw fail("콘텐츠 없음", 404);
+        content.deletedAt = new Date().toISOString();
+        content.enabled = false;
+      } else if (action === "generate") {
         if (
           !/^\d{4}-\d{2}-\d{2}$/.test(body.start) ||
           D.weekday(body.start) !== 1
@@ -199,7 +228,16 @@ module.exports = async (req, res) => {
         D.generateProgram(
           raw,
           body.start,
-          library,
+          library.map((p) =>
+            p.mediaKind
+              ? {
+                  ...p,
+                  enabled: (raw.mediaContents || []).some(
+                    (c) => c.kind === p.mediaKind && c.enabled && !c.deletedAt,
+                  ),
+                }
+              : p,
+          ),
           raw.settings.events || [],
           raw.settings.offDays || [],
         );
@@ -294,7 +332,10 @@ module.exports = async (req, res) => {
         }
         p.days = body.days;
         p.status = "pending";
-      } else if(action==='approve-month'){const m=raw.monthCandidates?.find(m=>m.id===body.id);if(!m)throw fail('콘텐츠 후보 없음',404);m.status='approved';
+      } else if (action === "approve-month") {
+        const m = raw.monthCandidates?.find((m) => m.id === body.id);
+        if (!m) throw fail("콘텐츠 후보 없음", 404);
+        m.status = "approved";
       } else if (action === "report-review") {
         const row = [
           ...raw.dailyReports,
@@ -382,15 +423,13 @@ module.exports = async (req, res) => {
     return res.status(result.status || 200).json(result);
   } catch (e) {
     const status = e.status || 500;
-    return res
-      .status(status)
-      .json({
-        error:
-          status === 500
-            ? "서버 작업을 완료하지 못했습니다. 다시 시도해주세요."
-            : e.message,
-        code: e.code || "OPERATIONS_ERROR",
-      });
+    return res.status(status).json({
+      error:
+        status === 500
+          ? "서버 작업을 완료하지 못했습니다. 다시 시도해주세요."
+          : e.message,
+      code: e.code || "OPERATIONS_ERROR",
+    });
   }
 };
 module.exports.settings = settings;
