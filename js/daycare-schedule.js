@@ -184,55 +184,9 @@
 
     // 날짜별 AI 수업일지 자동 생성 (Requirement 17)
     generateAiJournal(targetDateStr) {
-      const allRecords = window.RecordManager ? window.RecordManager.getAllRecords() : [];
-      // 해당 날짜 기록 필터
-      const dayRecords = allRecords.filter(r => (r.date || '').includes(targetDateStr));
-      const amRecords = dayRecords.filter(r => r.sessionType === 'am' || (r.timeSlot === '오전'));
-      const pmRecords = dayRecords.filter(r => r.sessionType === 'pm' || (r.timeSlot === '오후'));
-
-      // 오늘 프로그램 정보
-      const dateParts = targetDateStr.split('-');
-      const year = dateParts[0] || '2026';
-      const month = dateParts[1] || '09';
-      const day = dateParts[2] || '26';
-      const dateObj = new Date(year, parseInt(month, 10) - 1, parseInt(day, 10));
-      const prog = this.getTodayProgram(dateObj);
-
-      const amProgramName = `콩이와 ${prog.am.activity} 및 나비와 ${prog.am.partnerActivity}`;
-      const pmProgramName = `토리와 ${prog.pm.activity} 및 보리와 ${prog.pm.partnerActivity}`;
-
-      // 참여자 목록 마스킹 취합
-      const attendees = Array.from(new Set(dayRecords.map(r => this.maskName(r.learner)))).join(', ') || '등록 어르신 다수';
-
-      // 참여도 통계
-      const activeCount = dayRecords.filter(r => (r.participation || '').includes('적극')).length;
-      const normalCount = dayRecords.filter(r => (r.participation || '').includes('보통')).length;
-      const needHelpCount = dayRecords.filter(r => (r.assistance || '').includes('도움')).length;
-
-      let participationSummary = '대부분의 이용 어르신께서 캐릭터의 친근한 음성 안내에 집중하여 전 과정에 편안하게 참여하셨습니다.';
-      if (amRecords.length > 0 && pmRecords.length > 0) {
-        participationSummary += ' 특히 오전 체조 활동 시 큰 호응을 보였으며, 오후 인지·취미 시간에도 차분히 집중하여 완성도를 높였습니다.';
-      }
-
-      let notes = '특이사항: 참여자 전원 이상 반응 없이 안정적으로 일과를 마쳤으며, ';
-      if (needHelpCount > 0) {
-        notes += '신체 동작 시 일부 어르신께 가벼운 자세 보조를 제공하였습니다.';
-      } else {
-        notes += '모든 어르신께서 스스로 원활히 동작과 퀴즈에 참여하셨습니다.';
-      }
-
-      return {
-        date: `${year}년 ${parseInt(month, 10)}월 ${parseInt(day, 10)}일 (${prog.dayName})`,
-        rawDate: targetDateStr,
-        programTitle: '디지털 AI 학교 인지·신체 통합 돌봄 프로그램',
-        attendees,
-        amProgram: `${amProgramName} (오전 진행 완료 / 총 60분)`,
-        pmProgram: `${pmProgramName} (오후 진행 완료 / 총 60분)`,
-        participationSummary,
-        notes,
-        totalSessions: dayRecords.length,
-        createdAt: new Date().toISOString()
-      };
+      const records=(window.RecordManager?.getAllRecords()||[]).filter(r=>r.rawDate===targetDateStr||(r.date||'').includes(targetDateStr));
+      const describe=type=>records.filter(r=>r.sessionType===type).map(r=>[(r.learner||'대상자'),r.lessonTitle,r.durationText].filter(Boolean).join(' · ')).join('; ')||'기록 없음';
+      return {date:targetDateStr,rawDate:targetDateStr,programTitle:'기록 기반 수업일지 초안',status:'pending',source:'record-summary',attendees:[...new Set(records.map(r=>this.maskName(r.learner||'')))].join(', ')||'기록 없음',amProgram:describe('am'),pmProgram:describe('pm'),participationSummary:records.map(r=>[(r.learner||'대상자'),'참여도: '+(r.participation||'미입력'),'도움: '+(r.assistance||'미입력'),'기분: '+(r.mood||'미입력')].join(' · ')).join('\n')||'해당 날짜의 기록이 없습니다.',notes:records.map(r=>r.notes).filter(Boolean).join('\n')||'특이사항 입력 없음',totalSessions:records.length,createdAt:new Date().toISOString()};
     },
 
     // AI 수업일지 목록 조회

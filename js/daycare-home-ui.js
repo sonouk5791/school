@@ -53,7 +53,7 @@
 
     btnTeacher.addEventListener('click', (e) => {
       // 자동화 테스트 또는 이미 인증된 경우 바로 모달 오픈
-      const isAuthed = sessionStorage.getItem('digital_school_teacher_authed') === 'true' || window.__BYPASS_PIN;
+      const isAuthed = sessionStorage.getItem('digital_school_teacher_authed') === 'true';
       if (isAuthed) {
         openTeacherPanel();
         return;
@@ -71,9 +71,9 @@
       }
     }, true);
 
-    const submitPin = () => {
+    const submitPin = async () => {
       const val = inputPin?.value?.trim();
-      const isValid = window.DaycareSchedule ? window.DaycareSchedule.verifyPin(val) : (val === '1234');
+      let isValid=false;try{isValid=await window.AdminAccess.verify(val,document.getElementById('newTeacherPassword')?.value||'');}catch(e){if(errorMsg){errorMsg.textContent=e.message;errorMsg.style.display='block';}return;}
       if (isValid) {
         sessionStorage.setItem('digital_school_teacher_authed', 'true');
         if (typeof pinDialog.close === 'function') pinDialog.close();
@@ -108,7 +108,7 @@
     const subnav = $('teacherSubnav');
     if (subnav) subnav.style.display = '';
 
-    renderTeacherActiveTab('records');
+    renderTeacherActiveTab('operations');
   }
 
   // 3. 선생님 공간 탭 제어 & 렌더링
@@ -128,7 +128,9 @@
     const container = $('teacherPanelDefaultBody');
     if (!container) return;
 
-    if (tab === 'records') {
+    if (tab === 'operations') {
+      window.renderOperationsPanel?.(container);
+    } else if (tab === 'records') {
       renderRecordsTab(container);
     } else if (tab === 'auto-scheduler') {
       renderAutoSchedulerTab(container);
@@ -531,7 +533,7 @@
         <div style="background:#fff; border:3px solid #E8DDD1; border-radius:20px; padding:24px;">
           <h4 style="font-size:22px; font-weight:900; margin-bottom:14px;">🔒 관리자 비밀번호 (PIN) 변경</h4>
           <div style="display:flex; gap:12px; align-items:center;">
-            <input type="password" id="setNewPin" maxlength="8" placeholder="새 비밀번호 (4자리 이상)" style="padding:10px; font-size:18px; border:2px solid #E8DDD1; border-radius:8px; width:260px;">
+            <input type="password" id="setNewPin" maxlength="128" placeholder="새 비밀번호 (8자 이상)" style="padding:10px; font-size:18px; border:2px solid #E8DDD1; border-radius:8px; width:260px;">
             <button type="button" class="btn-care-action" id="btnSavePin">비밀번호 변경</button>
           </div>
         </div>
@@ -556,13 +558,13 @@
       alert('프로그램 운영 시간이 저장되었습니다.');
     });
 
-    $('btnSavePin')?.addEventListener('click', () => {
+    $('btnSavePin')?.addEventListener('click', async () => {
       const pin = $('setNewPin')?.value?.trim();
-      if (!pin || pin.length < 4) {
-        alert('비밀번호는 4자리 이상 입력해주세요.');
+      if (!pin || pin.length < 8) {
+        alert('비밀번호는 8자 이상 입력해주세요.');
         return;
       }
-      window.DaycareSchedule.changePin(pin);
+      try{if(AdminAccess.isCloud())await AdminAccess.api('password',{password:pin});else await AdminAccess.setPassword(pin);}catch(e){alert(e.message);return;}
       alert('관리자 비밀번호가 성공적으로 변경되었습니다.');
       $('setNewPin').value = '';
     });

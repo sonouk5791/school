@@ -56,3 +56,4 @@ async function handler(req,res){
  }catch(e){const status=e.status||502;console.error('[Vertex TTS]',JSON.stringify({code:e.code||'TTS_SERVER_ERROR',status,googleStatus:e.googleStatus||null,message:e.message}));return json(res,status,{error:e.code||'TTS_SERVER_ERROR',message:e.message,googleStatus:e.googleStatus||null,model:MODEL});}
 }
 module.exports=handler;module.exports._test={config,payload,wav,decode,MODEL,CHARACTER_VOICES};
+module.exports._serverAuth={config,token};

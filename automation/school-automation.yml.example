@@ -1,0 +1,32 @@
+name: School server automation
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: school-server-automation
+  cancel-in-progress: false
+jobs:
+  dispatch:
+    if: ${{ vars.SCHOOL_AUTOMATION_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Call authenticated production scheduler
+        env:
+          SCHOOL_AUTOMATION_URL: ${{ secrets.SCHOOL_AUTOMATION_URL }}
+          SCHOOL_CRON_SECRET: ${{ secrets.SCHOOL_CRON_SECRET }}
+        shell: bash
+        run: |
+          if [ -z "$SCHOOL_AUTOMATION_URL" ] || [ -z "$SCHOOL_CRON_SECRET" ]; then
+            echo 'Scheduler not connected: configure SCHOOL_AUTOMATION_URL and SCHOOL_CRON_SECRET.'
+            exit 0
+          fi
+          case "$SCHOOL_AUTOMATION_URL" in
+            https://*) ;;
+            *) echo 'HTTPS endpoint required'; exit 1 ;;
+          esac
+          curl --fail --silent --show-error --max-time 70 \
+            --header "Authorization: Bearer $SCHOOL_CRON_SECRET" \
+            "$SCHOOL_AUTOMATION_URL"

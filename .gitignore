@@ -11,3 +11,6 @@ tests/*.pdf
 .video-tools/
 .video-build/
 .vercel
+
+.npm-cache/
+.npm-format-cache/

@@ -1,0 +1,3 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+(async()=>{if(!process.env.DATABASE_URL)throw Error('Set DATABASE_URL privately in the environment.');const{Client}=require('pg');const client=new Client({connectionString:process.env.DATABASE_URL});await client.connect();try{await client.query(fs.readFileSync(path.join(__dirname,'../automation/schema.sql'),'utf8'));console.log('Operations schema initialized; no existing records removed.');}finally{await client.end();}})().catch(()=>{console.error('Database initialization failed. Check the connection and database permissions.');process.exitCode=1;});

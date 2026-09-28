@@ -7,6 +7,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext y=%2727%27 font-size=%2728%27%3E%F0%9F%8D%8A%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/daycare-class.css">
   <link rel="stylesheet" href="css/senior-common-header.css?v=20260923-nav2">
+<link rel="stylesheet" href="css/operations.css?v=20260928">
 </head>
 <body>
 
@@ -34,7 +35,7 @@
         ⏸ 잠시 멈추기
       </button>
       <button type="button" class="btn-ctrl btn-ctrl-break" id="btnTakeBreak" title="5분간 편안하게 쉬어가기">
-        ☕ 5분 쉬기
+        ☕ 천천히
       </button>
     </div>
   </header>
@@ -77,7 +78,7 @@
       </div>
 
       <button type="button" class="btn-primary-action" id="btnGreetingNext">
-        첫 번째 활동 시작하기 ▶
+        첫 번째 활동 · 20분 (2분 휴식 포함) ▶
       </button>
     </section>
 
@@ -91,7 +92,7 @@
         <img src="assets/images/friend-kongi.png" alt="캐릭터" class="character-guide-img" id="act1CharImg">
       </div>
 
-      <div class="activity-nav-bar">
+      <div id="act1Content"></div><div class="activity-nav-bar">
         <button type="button" class="btn-secondary-action" id="btnAct1Prev">
           ◀ 이전 동작
         </button>
@@ -132,7 +133,7 @@
         사회복지사 선생님의 가이드와 함께 즐겁게 참여하실 수 있습니다.
       </div>
 
-      <button type="button" class="btn-primary-action" id="btnAct2Next">
+      <div id="act2Content"></div><button type="button" class="btn-primary-action" id="btnAct2Next">
         활동 마무리하기 ▶
       </button>
     </section>
@@ -152,11 +153,11 @@
 
     <!-- Step 7: 기분 확인 (Requirement 12) -->
     <section class="step-card hidden" id="card_mood" aria-labelledby="moodTitle">
-      <span class="step-indicator">마지막 단계 · 기분 선택</span>
-      <h2 class="step-title" id="moodTitle">오늘 수업은 어떠셨어요?</h2>
-      <p class="step-subtext">어르신의 오늘 기분을 큰 버튼으로 꾹 눌러주세요.</p>
+      <span class="step-indicator">수업 종료 · 선생님 빠른 평가</span>
+      <h2 class="step-title" id="moodTitle">관찰한 내용을 기록해주세요</h2>
+      <p class="step-subtext">입력하지 않은 항목은 미입력으로 남습니다. 기록 기반 초안은 선생님 확인 후 확정합니다.</p>
 
-      <div class="mood-selection-grid">
+      <div class="mood-selection-grid" hidden>
         <button type="button" class="btn-mood-choice" data-mood="😀 재미있었어요">
           <span class="emoji">😀</span>
           <span>재미있었어요</span>
@@ -176,6 +177,7 @@
       </div>
     </section>
 
+    <div id="evaluationFields" class="evaluation-grid"></div><button id="saveAssessment" class="btn-primary-action" type="button">평가 저장 · 일지 초안 만들기</button>
     <!-- Step 8: 수업 완료 & 자동 저장 (Requirement 13, 14, 26) -->
     <section class="step-card hidden" id="card_done" aria-labelledby="doneTitle">
       <div class="stamp-container">
@@ -185,8 +187,7 @@
       </div>
 
       <div style="background:#F0FDF4; border:2px solid #BBF7D0; border-radius:18px; padding:20px 32px; width:100%; max-width:680px; color:#166534; font-size:24px; font-weight:700;">
-        ✓ 참여 어르신의 수업 출석 및 참여도 기록 자동 완료<br>
-        ✓ 선생님 공간 AI 수업일지 작성 자료로 연동 완료
+        ✓ 평가와 기록 기반 일지 초안을 저장했어요.<br>선생님 확인 후 확정해주세요.
       </div>
 
       <a href="index.html" class="btn-primary-action" style="text-decoration:none; margin-top:12px;">
@@ -194,6 +195,7 @@
       </a>
     </section>
 
+<div id="classControls" class="class-step-controls"><button id="previousPhase">◀ 이전</button><button id="restartPhase">다시하기</button><button id="nextPhase">다음 ▶</button></div>
   </main>
 
   <!-- 이어서 하기 안내 대화상자 (Requirement 26) -->
@@ -218,6 +220,6 @@
 
   <script src="js/record-manager.js"></script>
   <script src="js/daycare-schedule.js"></script>
-  <script src="js/daycare-class.js"></script>
+  <script src="js/program-library.js"></script><script src="js/auto-scheduler.js"></script><script src="js/character-voice-system.js"></script><script src="automation/domain.js"></script><script src="js/operations-store.js"></script><script src="js/operations-sync.js"></script><script>document.getElementById("card_mood").append(document.getElementById("evaluationFields"),document.getElementById("saveAssessment"));</script><script src="js/activity-routes.js?v=20260928"></script><script src="js/daycare-session.js?v=20260928"></script>
 </body>
 </html>

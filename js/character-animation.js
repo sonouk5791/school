@@ -52,7 +52,7 @@
    if(b.greetUntil&&now>b.greetUntil)set(id,'idle');if(state[id]==='bowing')continue;
    if(now>=b.blinkAt){if(blinking){b.blinkAt=now+200+Math.random()*200;}else{b.blinkUntil=now+150;b.blinkAt=now+4000+Math.random()*2800;blinking=true;}}
    if(state[id]==='talking'&&b.audible&&now>=b.nextMouth){
-    const level=window.CharacterVoice?.getAudioLevel?.();const candidate=mouthCycle[b.mouthIndex++%mouthCycle.length];
+    const level=window.CharacterVoice?.getAudioLevel?.();const playback=window.CharacterVoice?.getPlayback?.();const cue=b.text&&playback?.duration&&window.KoreanVisemes?KoreanVisemes.at(b.text,playback.time,playback.duration):null;const candidate=cue?KoreanVisemes.shape(cue):mouthCycle[b.mouthIndex++%mouthCycle.length];for(const r of rigs.filter(r=>r.id===id))r.svg.dataset.viseme=cue||'closed';
     mouthStates[id]=level==null?candidate:level<.012?'mouthClosed':level<.1&&candidate==='mouthO'?'mouthA':candidate;
     b.nextMouth=now+120+Math.random()*80;
    }
@@ -62,7 +62,7 @@
  function start(){clearInterval(timer);document.documentElement.classList.toggle('character-motion-reduced',media.matches);if(document.hidden){reset();return;}if(media.matches){for(const id of ids){mouthStates[id]='mouthSmile';behavior[id].blinkUntil=0;paint(id);}return;}timer=setInterval(step,20);}
  window.addEventListener('character-voice-state',e=>{const {state:status,characterId:id}=e.detail;
   if(status==='speaking'&&behavior[id]){reset();set(id,'talking');behavior[id].mouthIndex=0;}
-  else if(status==='playing'&&behavior[id]){for(const other of ids)if(other!==id)set(other,'idle');set(id,'talking');behavior[id].audible=true;behavior[id].nextMouth=performance.now();}
+  else if(status==='playing'&&behavior[id]){for(const other of ids)if(other!==id)set(other,'idle');set(id,'talking');behavior[id].text=e.detail.text||'';behavior[id].audible=true;behavior[id].nextMouth=performance.now();}
   else if(['paused','waiting'].includes(status)&&behavior[id]){behavior[id].audible=false;mouthStates[id]='mouthClosed';paint(id);}
   else if(['ended','error','cancelled','stopped','unavailable'].includes(status)){if(behavior[id])set(id,'idle');else reset();}
  });

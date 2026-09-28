@@ -1,0 +1,64 @@
+.extended-activities,
+.extended-activity-panel {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 24px;
+  border: 2px solid #e1d5c4;
+  border-radius: 22px;
+  background: #fffaf0;
+  color: #382c25;
+  font-size: 22px;
+  word-break: keep-all;
+}
+.extended-activities summary {
+  cursor: pointer;
+  min-height: 64px;
+  padding: 16px;
+}
+.extension-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 20px 0;
+}
+.extended-activities button,
+.extended-activity-panel button,
+.extended-activities select {
+  font-size: 22px;
+  min-height: 64px;
+  padding: 14px 20px;
+  border: 2px solid #bda889;
+  border-radius: 14px;
+  background: white;
+  color: #382c25;
+  cursor: pointer;
+  margin: 6px;
+}
+.extended-activity-panel p {
+  font-size: 26px;
+  line-height: 1.7;
+}
+.activity-sample,
+.activity-art {
+  font-size: 40px !important;
+  padding: 24px;
+  border-radius: 18px;
+  text-align: center;
+}
+.extended-activity-panel [hidden] {
+  display: none !important;
+}
+@media (max-width: 600px) {
+  .extended-activities,
+  .extended-activity-panel {
+    padding: 14px;
+    margin: 12px;
+  }
+  .extension-options button {
+    flex: 1 1 40%;
+    margin: 0;
+  }
+  .extended-activity-panel h2 {
+    font-size: 28px;
+  }
+}

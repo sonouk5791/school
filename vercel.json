@@ -5,6 +5,10 @@
   "functions": {
     "api/tts.js": {
       "maxDuration": 60
+    },
+    "api/operations.js": {
+      "maxDuration": 60,
+      "includeFiles": "assets/images/uniform-*.png"
     }
   }
 }

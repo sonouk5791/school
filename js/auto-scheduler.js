@@ -29,7 +29,7 @@
     amEnd: '11:00',
     pmStart: '14:00',
     pmEnd: '15:00',
-    repeatLimitDays: 7, // 같은 프로그램 7일 이내 반복 금지
+    repeatLimitDays: 14, // 같은 프로그램 7일 이내 반복 금지
     preventConsecutiveDays: true, // 이틀 연속 반복 금지
     seasonEnabled: true,
     holidayEnabled: true,
@@ -511,14 +511,11 @@
     getTodayResolvedProgram(dateObj = new Date()) {
       const ds = dateObj.toISOString().slice(0, 10);
       const all = this.getAllSchedules();
-      if (all[ds] && all[ds].am && all[ds].pm) {
+      if (all[ds] && ['confirmed','approved','active'].includes(all[ds].status) && all[ds].am && all[ds].pm) {
         return all[ds];
       }
-      // 없으면 즉시 동적 생성하여 반환 (저장)
-      const slot = this.generateDaily(ds, { autoConfirm: false });
-      all[ds] = slot;
-      this.saveAllSchedules(all);
-      return slot;
+      // Unapproved proposals must never become a live lesson. Caller retains the legacy baseline.
+      return null;
     },
 
     // ═════════════════════════════════════════════════════════════════════
