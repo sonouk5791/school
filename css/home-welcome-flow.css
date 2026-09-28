@@ -59,3 +59,28 @@ html[data-home-flow="video"] #friendRooms .village-copy strong{font-size:28px;co
 @media(max-width:1000px){html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{gap:22px;padding:14px}html[data-home-flow="video"] #friendRooms .friend-village .home-friend{grid-template-columns:1fr;padding:8px 12px}.village-scene{height:180px;max-width:260px;margin:auto}.village-copy{padding:8px 0}.friend-village .hw-speaking-label{display:none}}
 @media(max-width:600px){html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{grid-template-columns:1fr;gap:26px;padding:14px;background:linear-gradient(90deg,#eaf0db 42%,#f7e5c5 42%,#f7e5c5 58%,#eaf0db 58%)}.village-scene{height:200px}.village-copy{text-align:center}}
 @media(min-width:1001px) and (max-height:800px){html[data-home-flow="video"] .character-home-hero{padding-top:16px}html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{gap:18px 32px;padding:12px;margin:12px auto}html[data-home-flow="video"] #friendRooms .friend-village .home-friend{min-height:216px;padding-block:2px}.village-scene{height:190px}.village-copy{padding-block:4px}}
+
+/* One continuous garden: curved footpaths, no quadrants or house panels. */
+html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{background:#edf2dc;gap:54px 58px;border-radius:48px 65px 42px 58px;padding:18px 24px}
+.village-landscape{position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none}
+.village-landscape>svg{width:100%;height:100%;display:block}
+.village-rest{position:absolute;top:46%;left:46%;width:100px;height:76px}
+.rest-tree{position:absolute;left:8px;top:-15px;width:46px;height:43px;border-radius:48%;background:#9eb986;box-shadow:14px -8px 0 #b6cb98}
+.rest-tree:after{content:"";position:absolute;top:32px;left:22px;width:7px;height:32px;background:#967552;border-radius:5px}
+.rest-bench{position:absolute;top:42px;left:54px;width:44px;height:9px;background:#b58d60;border-radius:3px;box-shadow:0 -12px 0 #c39e71}
+.rest-sign{position:absolute;left:0;top:58px;white-space:nowrap;font-size:20px;color:#4e6045}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend,html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introducing{border:0;background:transparent!important;box-shadow:none;padding:8px 12px;border-radius:0}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introducing .hw-room-name{text-decoration:underline;text-underline-offset:5px}
+.friend-village .home-friend-tori .village-scene{top:12px}
+.friend-village .home-friend-nabi .village-scene{left:8px}
+.village-message{display:grid;min-height:82px;align-items:center;margin:4px 0 8px}
+.village-message>*{grid-area:1/1}
+.friend-village .village-message .hw-intro{display:block;position:static;visibility:hidden;width:auto;max-width:none;margin:0;box-shadow:none;border:1px solid #bdcda5;background:#fffdf1;font-size:20px;padding:8px!important;border-radius:14px;line-height:1.4}
+.friend-village .is-introducing .village-message .hw-intro{visibility:visible}
+.friend-village .is-introducing .village-description{visibility:hidden}
+.friend-village .hw-speaking-label{display:none}
+.village-copy .hw-enter{background:#fff9e9;color:#305437;border:2px solid #829568;border-radius:22px;box-shadow:0 3px 0 #d6debf}
+.high-contrast-mode .friend-village .village-message .hw-intro{background:#151515;color:white}
+@media(min-width:1001px) and (max-height:800px){html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{gap:32px 48px;padding:10px 18px}.village-message{min-height:72px}.village-rest{top:45%}}
+@media(max-width:1000px){html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{gap:48px 28px;padding:16px}.village-rest{left:43%;top:46%}}
+@media(max-width:600px){html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{background:#edf2dc;gap:30px;padding:12px 20px}.village-landscape>svg{width:170%;margin-left:-35%}.village-rest{display:none}.friend-village .home-friend:nth-of-type(even) .village-scene{left:-10px}.friend-village .home-friend:nth-of-type(odd) .village-scene{left:10px}.village-message{min-height:82px}}
