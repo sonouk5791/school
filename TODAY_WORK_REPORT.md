@@ -2250,3 +2250,18 @@
 - [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
 
 </details>
+
+## 자동 저장 / 2026-09-28 10:42:48 — 보리 확장 GitHub·Vercel 배포 검증 완료
+- **수행 내역**: 코드 8d0e5cd 기존 GitHub sonouk5791/school origin/main 푸시 완료. Vercel school dpl_DS8LgUVGLbKibt4C6iMpow3UqA9n READY, school-tau-pearl.vercel.app 운영 별칭 반영. 운영 1920/1600/1366/768/390 폭 신규 메뉴·추억극장·노래교실·보리 원본·선생님 로그인 입구 검증 통과. 가로넘침 및 pageerror 없음, 소스/원본 PNG12개 SHA256 일치. DB·관리자·예약 설정 false, 서버 연결 필요 확인. 실제 미디어는 등록 전 빈 안내 제공; 기관 권한 콘텐츠 등록 필요. 로컬 업로드는 IndexedDB 기기 전용, 클라우드 업로드·실DB·실AI·기관실영상 검증은 미완료. 상세 보고 documents/BORI_MEDIA_2026-09-28.md.
+
+## 자동 저장 / 2026-09-28 10:43:17 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 4
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [documents/BORI_MEDIA_2026-09-28.md](./documents/BORI_MEDIA_2026-09-28.md)
+- [tests/bori-media-production.cjs](./tests/bori-media-production.cjs)
+- [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
+
+</details>

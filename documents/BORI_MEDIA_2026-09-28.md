@@ -132,4 +132,6 @@
 
 남은 범위: 실제 DB·AI·예약 서비스 연결, 클라우드 파일 업로드 어댑터, YouTube 이외의 iframe 공급자 지원, 기관 실영상/실음원의 코덱·권한·임베드·모바일 기기 검증. 전체 미디어 오프라인 캐싱과 기관 단위 암호화 백업은 이번 구현에 포함하지 않는다. 실제 음악·드라마 콘텐츠는 기관에서 등록해야 한다.
 
-배포 결과와 최종 검증은 오늘 작업 일지에 누적 기록한다.
+운영 배포 완료: 코드 커밋 `8d0e5cd`, Vercel `dpl_DS8LgUVGLbKibt4C6iMpow3UqA9n` READY. [보리 취미방](https://school-tau-pearl.vercel.app/bori-hobby.html), [추억극장](https://school-tau-pearl.vercel.app/bori-memory-theater.html), [옛 노래 교실](https://school-tau-pearl.vercel.app/bori-song-class.html).
+
+운영 읽기 전용 검증: 1920×1080 / 1600×900 / 1366×768 / 768×1024 / 390×844에서 새 메뉴·두 페이지·원본 이미지·선생님 로그인 입구 정상. 가로 넘침 및 pageerror 없음. 소스·원본 PNG 12개 SHA256이 로컬과 일치했다 (`tests/bori-media-production.cjs`). 운영 API는 DB/관리자/예약 설정 모두 false와 ‘서버 연결 필요’를 반환했다. 기관 콘텐츠를 운영 서버에 대신 등록하거나 실개인 데이터를 보내지 않았다. 배포 결과를 오늘 작업 일지에도 누적 기록했다.
