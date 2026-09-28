@@ -93,7 +93,9 @@ Vercel 기존 **school** 프로젝트에 비밀값을 직접 설정한다. 채�
 - 통과: 기존 음원 파일을 사용하는 환영 음원 manifest 빌드. 새 유료 음원 생성은 하지 않았다.
 - 배포 후 필수: 실제 DB 트랜잭션·서버 재시작·동시 저장, 예약 로그, 승인 후 다음 주 적용, 실제 Google 음성·AI 호출, 기관용 대상자 권한·오프라인 재연결·장시간 수업·터치 기기 확인.
 
-배포 URL 및 커밋 결과는 오늘 작업 일지에 추가 기록한다.
+운영 배포 완료: 코드 커밋 `e8e2365`, Vercel `dpl_ufHAyybTk6ZdpdThWF4iXXXqf6kp` READY. [운영 사이트](https://school-tau-pearl.vercel.app).
+
+배포 후 읽기 전용 검사도 통과했다: 1920×1080 / 1600×900 / 1366×768 / 768×1024 / 390×844 메인, 네 캐릭터 선택, 수업·기존 방 URL 7개 HTTP 200, pageerror 없음. 주요 배포 파일과 보존한 원화 총 10개 SHA256 일치. 운영 API는 `configured:false`, `authConfigured:false`, `schedulerConfigured:false`, ‘서버 연결 필요’를 반환했다. `tests/operations-production-smoke.cjs`, `tests/operations-deployment-files.cjs`에 재검증 코드를 남겼다. 실제 DB·예약·AI 일지 검증은 여전히 미실행이다.
 
 ## 9. 아직 완성하지 못한 기능
 
