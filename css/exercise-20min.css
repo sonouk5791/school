@@ -1,0 +1,977 @@
+/* ═══════════════════════════════════════════════════
+   디지털 AI 학교 – 20분 건강체조 플레이어 CSS
+   어르신 친화적: 큰 글씨, 큰 버튼, 편안한 색감
+   ═══════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+:root {
+  --ex-bg: #fffaf3;
+  --ex-surface: #ffffff;
+  --ex-card: #ffffffee;
+  --ex-border: #e8dfd0;
+  --ex-text: #2b2520;
+  --ex-text-muted: #7a7068;
+  --ex-primary: #2d6a2e;
+  --ex-primary-light: #e3f5e3;
+  --ex-gold: #e6a100;
+  --ex-pink: #f06292;
+  --ex-purple: #9c5ec5;
+  --ex-blue: #3b82c4;
+  --ex-warm-gradient: linear-gradient(135deg, #fffaf3 0%, #fef3e2 50%, #f7ead4 100%);
+  --ex-shadow: 0 8px 32px rgba(78, 59, 30, 0.10);
+  --ex-shadow-lg: 0 16px 48px rgba(78, 59, 30, 0.15);
+  --ex-radius: 20px;
+  --ex-radius-sm: 12px;
+  font-family: 'Noto Sans KR', 'Pretendard', 'Malgun Gothic', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+
+body {
+  background: var(--ex-warm-gradient);
+  min-height: 100vh;
+  color: var(--ex-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ ROOT ═══ */
+.ex20-root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+/* ═══ STATE MANAGEMENT ═══ */
+.ex20-state { transition: opacity 0.5s ease; }
+
+/* ═══════════════════════════════
+   STATE 1: READY (시작 전)
+   ═══════════════════════════════ */
+.ex20-ready-card {
+  background: var(--ex-surface);
+  border-radius: var(--ex-radius);
+  border: 2px solid var(--ex-border);
+  box-shadow: var(--ex-shadow-lg);
+  overflow: hidden;
+}
+
+/* Hero 영역 */
+.ex20-ready-hero {
+  background: linear-gradient(135deg, #fffde8 0%, #e8f5e9 40%, #e3f2fd 100%);
+  padding: 40px 24px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ex20-ready-hero::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(230, 161, 0, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.ex20-hero-characters {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.ex20-hero-char {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+  transition: transform 0.3s ease;
+}
+
+.ex20-hero-char:hover {
+  transform: scale(1.08) translateY(-4px);
+}
+
+.ex20-hero-char--kongi { animation: heroBounce 3s ease-in-out infinite 0s; }
+.ex20-hero-char--tori { animation: heroBounce 3s ease-in-out infinite 0.4s; }
+.ex20-hero-char--nabi { animation: heroBounce 3s ease-in-out infinite 0.8s; }
+.ex20-hero-char--bori { animation: heroBounce 3s ease-in-out infinite 1.2s; }
+
+@keyframes heroBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.ex20-ready-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--ex-primary);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.ex20-ready-sub {
+  font-size: 20px;
+  color: var(--ex-text-muted);
+  line-height: 1.5;
+}
+
+/* 파트 안내 카드 */
+.ex20-parts-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+  padding: 20px 16px;
+}
+
+.ex20-part-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fefbf5;
+  border: 1.5px solid #ede5d5;
+  border-radius: var(--ex-radius-sm);
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+.ex20-part-card:hover {
+  background: #fff8ec;
+  border-color: var(--ex-gold);
+  transform: translateX(4px);
+}
+
+.ex20-part-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 44px;
+  text-align: center;
+}
+
+.ex20-part-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ex20-part-info strong {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ex-text);
+}
+
+.ex20-part-info span {
+  font-size: 15px;
+  color: var(--ex-text-muted);
+}
+
+/* 시작 버튼 */
+.ex20-ready-action {
+  padding: 24px;
+  text-align: center;
+  border-top: 1.5px solid var(--ex-border);
+  background: #fffef9;
+}
+
+.ex20-load-status {
+  font-size: 18px;
+  color: var(--ex-text-muted);
+  margin-bottom: 16px;
+  min-height: 28px;
+}
+
+.ex20-btn-start {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+  min-height: 72px;
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, #43a047, #2d6a2e);
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(45, 106, 46, 0.3);
+  transition: all 0.3s ease;
+  padding: 0 32px;
+}
+
+.ex20-btn-start:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(45, 106, 46, 0.4);
+}
+
+.ex20-btn-start:disabled {
+  background: #c8c0b4;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.ex20-btn-start:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.ex20-link-home {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 18px;
+  color: var(--ex-primary);
+  text-decoration: none;
+}
+
+.ex20-link-home:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════
+   STATE 2: PLAYING (체조 진행)
+   ═══════════════════════════════ */
+
+/* 상단 바 */
+.ex20-player-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  background: var(--ex-surface);
+  border-radius: var(--ex-radius);
+  border: 2px solid var(--ex-border);
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.ex20-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  min-height: 52px;
+  font-size: 24px;
+  background: #f5f0e8;
+  border-radius: 14px;
+  text-decoration: none;
+  border: 1.5px solid #e0d8c3;
+  transition: background 0.2s;
+}
+
+.ex20-home-btn:hover { background: #ece5d8; }
+
+.ex20-header-title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ex20-part-label {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ex-primary);
+}
+
+.ex20-char-label {
+  font-size: 16px;
+  color: var(--ex-text-muted);
+}
+
+.ex20-header-time {
+  background: #f0faf0;
+  padding: 8px 18px;
+  border-radius: 12px;
+  border: 1.5px solid #c6e6c6;
+}
+
+.ex20-time-display {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ex-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 메인 스테이지 */
+.ex20-stage-area {
+  background: var(--ex-surface);
+  border-radius: var(--ex-radius);
+  border: 2px solid var(--ex-border);
+  box-shadow: var(--ex-shadow);
+  overflow: hidden;
+}
+
+.ex20-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #f5efe5;
+}
+
+/* 배경 레이어 */
+.ex20-bg-layer {
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/exercise-20min/exercise-room-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.45;
+  transition: opacity 0.6s ease;
+}
+
+/* 캐릭터 영역 */
+.ex20-character-area {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 5;
+}
+
+.ex20-char-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
+  transition: all 0.6s ease;
+}
+
+/* 동작 애니메이션 */
+.ex20-char-img[data-move="wave"] { animation: charWave 2s ease-in-out infinite; }
+.ex20-char-img[data-move="shoulder-up"] { animation: charShoulderUp 2.5s ease-in-out infinite; }
+.ex20-char-img[data-move="inhale"] { animation: charInhale 3s ease-in-out infinite; }
+.ex20-char-img[data-move="exhale"] { animation: charExhale 3s ease-in-out infinite; }
+.ex20-char-img[data-move="head-right"],
+.ex20-char-img[data-move="head-left"] { animation: charHeadTilt 3s ease-in-out infinite; }
+.ex20-char-img[data-move="shoulder-roll-f"],
+.ex20-char-img[data-move="shoulder-roll-b"] { animation: charShoulderRoll 2.5s ease-in-out infinite; }
+.ex20-char-img[data-move="finger-spread"] { animation: charFingerSpread 2s ease-in-out infinite; }
+.ex20-char-img[data-move="finger-curl"] { animation: charFingerCurl 2s ease-in-out infinite; }
+.ex20-char-img[data-move="wrist-roll"],
+.ex20-char-img[data-move="wrist-roll-r"] { animation: charWristRoll 2.5s linear infinite; }
+.ex20-char-img[data-move="arms-front"] { animation: charArmsFront 3s ease-in-out infinite; }
+.ex20-char-img[data-move="arms-side"] { animation: charArmsSide 3s ease-in-out infinite; }
+.ex20-char-img[data-move="arm-right"],
+.ex20-char-img[data-move="arm-left"] { animation: charArmRaise 3s ease-in-out infinite; }
+.ex20-char-img[data-move="heel-right"],
+.ex20-char-img[data-move="heel-left"] { animation: charHeelLift 2.5s ease-in-out infinite; }
+.ex20-char-img[data-move="toe-up"] { animation: charToeUp 2.5s ease-in-out infinite; }
+.ex20-char-img[data-move="knee-right"],
+.ex20-char-img[data-move="knee-left"] { animation: charKneeLift 3s ease-in-out infinite; }
+.ex20-char-img[data-move="clap"] { animation: charClap 1s ease-in-out infinite; }
+.ex20-char-img[data-move="right-hand"],
+.ex20-char-img[data-move="left-hand"] { animation: charHandWave 1.5s ease-in-out infinite; }
+.ex20-char-img[data-move="hands-up"] { animation: charHandsUp 2.5s ease-in-out infinite; }
+.ex20-char-img[data-move="sway"] { animation: charSway 2s ease-in-out infinite; }
+.ex20-char-img[data-move="pat-shoulder"] { animation: charPatShoulder 2s ease-in-out infinite; }
+
+@keyframes charWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg) translateY(-4px); }
+  75% { transform: rotate(5deg) translateY(-4px); }
+}
+
+@keyframes charShoulderUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes charInhale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes charExhale {
+  0%, 100% { transform: scale(1.04); }
+  50% { transform: scale(0.98); }
+}
+
+@keyframes charHeadTilt {
+  0%, 100% { transform: rotate(0); }
+  50% { transform: rotate(8deg); }
+}
+
+@keyframes charShoulderRoll {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(-6px) rotate(2deg); }
+  50% { transform: translateY(-2px) rotate(0); }
+  75% { transform: translateY(-6px) rotate(-2deg); }
+}
+
+@keyframes charFingerSpread {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes charFingerCurl {
+  0%, 100% { transform: scale(1.04); }
+  50% { transform: scale(0.96); }
+}
+
+@keyframes charWristRoll {
+  0% { transform: rotate(0); }
+  50% { transform: rotate(5deg); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes charArmsFront {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+@keyframes charArmsSide {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06) translateY(-6px); }
+}
+
+@keyframes charArmRaise {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-14px) rotate(-3deg); }
+}
+
+@keyframes charHeelLift {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-8px); }
+}
+
+@keyframes charToeUp {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-4px) rotate(-3deg); }
+}
+
+@keyframes charKneeLift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes charClap {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(0.94); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes charHandWave {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+@keyframes charHandsUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+@keyframes charSway {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+@keyframes charPatShoulder {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  25% { transform: rotate(-3deg) translateY(-4px); }
+  75% { transform: rotate(3deg) translateY(-4px); }
+}
+
+/* 동작 이름 뱃지 */
+.ex20-move-badge {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-radius: 40px;
+  border: 2px solid rgba(45, 106, 46, 0.2);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ex-primary);
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transition: all 0.4s ease;
+}
+
+#moveIcon { font-size: 28px; }
+
+/* 챕터 뱃지 */
+.ex20-chapter-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 8px 16px;
+  background: rgba(45, 106, 46, 0.88);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 10px;
+  z-index: 10;
+}
+
+/* 자막 영역 */
+.ex20-caption-area {
+  padding: 18px 24px;
+  background: #fffef8;
+  border-top: 2px solid #f0ead8;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.ex20-caption-char-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  background: var(--ex-primary-light);
+  color: var(--ex-primary);
+}
+
+.ex20-caption-text {
+  font-size: 28px;
+  font-weight: 800;
+  text-align: center;
+  color: var(--ex-text);
+  line-height: 1.5;
+  transition: opacity 0.3s ease;
+}
+
+/* 타임라인 */
+.ex20-timeline {
+  padding: 12px 24px 16px;
+  background: #faf7f0;
+}
+
+.ex20-timeline-chapters {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  gap: 2px;
+}
+
+.ex20-timeline-chapters .chapter-seg {
+  flex: 1;
+  background: #e0d8c3;
+  border-radius: 2px;
+  transition: background 0.5s ease;
+  position: relative;
+}
+
+.ex20-timeline-chapters .chapter-seg.active {
+  background: var(--ex-gold);
+}
+
+.ex20-timeline-chapters .chapter-seg.done {
+  background: var(--ex-primary);
+}
+
+.ex20-progress {
+  width: 100%;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  margin: 4px 0;
+}
+
+.ex20-progress::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  background: #e0d8c3;
+  border-radius: 4px;
+}
+
+.ex20-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: var(--ex-primary);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  margin-top: -8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.ex20-progress::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  background: #e0d8c3;
+  border-radius: 4px;
+}
+
+.ex20-progress::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: var(--ex-primary);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.ex20-time-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ex-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 조작 버튼 */
+.ex20-controls {
+  margin-top: 12px;
+  padding: 16px;
+  background: var(--ex-surface);
+  border-radius: var(--ex-radius);
+  border: 2px solid var(--ex-border);
+}
+
+.ex20-controls-main {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ex20-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 130px;
+  min-height: 60px;
+  font-size: 22px;
+  font-weight: 800;
+  border: 2px solid var(--ex-border);
+  border-radius: 16px;
+  background: #faf7f0;
+  color: var(--ex-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0 20px;
+}
+
+.ex20-ctrl-btn:hover:not(:disabled) {
+  background: #f0ead8;
+  border-color: var(--ex-gold);
+}
+
+.ex20-ctrl-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ex20-ctrl-btn--primary {
+  background: linear-gradient(135deg, #43a047, #2d6a2e);
+  color: #fff;
+  border-color: #2d6a2e;
+  min-width: 200px;
+}
+
+.ex20-ctrl-btn--primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  border-color: #388e3c;
+}
+
+.ex20-ctrl-btn--primary[data-paused="true"] {
+  background: linear-gradient(135deg, #e6a100, #cc8f00);
+  border-color: #cc8f00;
+}
+
+.ex20-controls-sub {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.ex20-ctrl-sub {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  font-size: 17px;
+  font-weight: 700;
+  border: 1.5px solid #ddd5c5;
+  border-radius: 12px;
+  background: #fffef9;
+  color: var(--ex-text);
+  cursor: pointer;
+  padding: 0 16px;
+  transition: all 0.2s ease;
+}
+
+.ex20-ctrl-sub:hover { background: #f5f0e8; }
+
+.ex20-ctrl-sub[aria-pressed="true"] {
+  background: var(--ex-primary-light);
+  border-color: var(--ex-primary);
+  color: var(--ex-primary);
+}
+
+/* ═══════════════════════════════
+   STATE 3: COMPLETE (완료)
+   ═══════════════════════════════ */
+.ex20-state--complete {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.ex20-complete-card {
+  background: var(--ex-surface);
+  border-radius: var(--ex-radius);
+  border: 2px solid var(--ex-border);
+  box-shadow: var(--ex-shadow-lg);
+  padding: 40px 32px;
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.ex20-complete-celebration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-top: 10px;
+  pointer-events: none;
+}
+
+.ex20-confetti {
+  font-size: 28px;
+  animation: confettiFall 3s ease-in-out infinite;
+}
+
+.ex20-confetti:nth-child(1) { animation-delay: 0s; }
+.ex20-confetti:nth-child(2) { animation-delay: 0.5s; }
+.ex20-confetti:nth-child(3) { animation-delay: 1s; }
+.ex20-confetti:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes confettiFall {
+  0%, 100% { transform: translateY(0) rotate(0); opacity: 0.7; }
+  50% { transform: translateY(20px) rotate(180deg); opacity: 1; }
+}
+
+.ex20-complete-badge {
+  display: inline-block;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--ex-gold);
+  background: #fff8e1;
+  border: 2px solid #ffe082;
+  border-radius: 40px;
+  padding: 10px 28px;
+  margin-bottom: 20px;
+}
+
+.ex20-complete-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--ex-primary);
+  margin-bottom: 16px;
+}
+
+.ex20-complete-desc {
+  font-size: 20px;
+  color: var(--ex-text);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.ex20-complete-stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.ex20-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 100px;
+  padding: 12px;
+  background: #f9f6f0;
+  border-radius: 14px;
+  border: 1.5px solid #ede5d5;
+}
+
+.ex20-stat-val {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--ex-primary);
+}
+
+.ex20-stat-lbl {
+  font-size: 15px;
+  color: var(--ex-text-muted);
+}
+
+.ex20-complete-heroes {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.ex20-end-char {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1));
+  animation: heroBounce 2s ease-in-out infinite;
+}
+
+.ex20-end-char:nth-child(2) { animation-delay: 0.3s; }
+.ex20-end-char:nth-child(3) { animation-delay: 0.6s; }
+.ex20-end-char:nth-child(4) { animation-delay: 0.9s; }
+
+.ex20-complete-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ex20-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  font-size: 20px;
+  font-weight: 800;
+  border: 2px solid var(--ex-border);
+  border-radius: 14px;
+  padding: 0 24px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.ex20-action-btn--replay {
+  background: linear-gradient(135deg, #43a047, #2d6a2e);
+  color: #fff;
+  border-color: #2d6a2e;
+}
+
+.ex20-action-btn--replay:hover {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+}
+
+.ex20-action-btn--home {
+  background: #faf7f0;
+  color: var(--ex-text);
+}
+
+.ex20-action-btn--home:hover { background: #f0ead8; }
+
+.ex20-action-btn--alt {
+  background: #f0f4ff;
+  color: var(--ex-blue);
+  border-color: #c4d8f0;
+}
+
+.ex20-action-btn--alt:hover { background: #e0ecff; }
+
+/* Footer */
+.ex20-footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 15px;
+  color: var(--ex-text-muted);
+  line-height: 1.6;
+}
+
+.ex20-footer a {
+  color: var(--ex-primary);
+  text-decoration: none;
+}
+
+.ex20-footer a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════
+   캐릭터별 색상 테마
+   ═══════════════════════════════ */
+[data-active-char="kongi"] .ex20-caption-char-tag { background: #fff8e1; color: #b8860b; }
+[data-active-char="tori"] .ex20-caption-char-tag { background: #fce4ec; color: #c2185b; }
+[data-active-char="nabi"] .ex20-caption-char-tag { background: #f3e5f5; color: #7b1fa2; }
+[data-active-char="bori"] .ex20-caption-char-tag { background: #e3f2fd; color: #1565c0; }
+
+[data-active-char="kongi"] .ex20-chapter-badge { background: rgba(184, 134, 11, 0.88); }
+[data-active-char="tori"] .ex20-chapter-badge { background: rgba(194, 24, 91, 0.88); }
+[data-active-char="nabi"] .ex20-chapter-badge { background: rgba(123, 31, 162, 0.88); }
+[data-active-char="bori"] .ex20-chapter-badge { background: rgba(21, 101, 192, 0.88); }
+
+/* ═══════════════════════════════
+   Fullscreen
+   ═══════════════════════════════ */
+.ex20-state--playing:fullscreen .ex20-stage-area,
+.ex20-state--playing:-webkit-full-screen .ex20-stage-area {
+  max-width: 100vw;
+  border-radius: 0;
+  border: none;
+}
+
+.ex20-state--playing:fullscreen .ex20-stage,
+.ex20-state--playing:-webkit-full-screen .ex20-stage {
+  height: 60vh;
+  aspect-ratio: auto;
+}
+
+/* ═══════════════════════════════
+   Responsive
+   ═══════════════════════════════ */
+@media (max-width: 768px) {
+  .ex20-root { padding: 8px; }
+  .ex20-ready-title { font-size: 24px; }
+  .ex20-ready-sub { font-size: 17px; }
+  .ex20-hero-char { width: 65px; height: 65px; }
+  .ex20-parts-preview { grid-template-columns: 1fr; gap: 8px; padding: 12px; }
+  .ex20-btn-start { min-width: 260px; font-size: 24px; min-height: 64px; }
+  .ex20-caption-text { font-size: 22px; }
+  .ex20-move-badge { font-size: 20px; padding: 8px 18px; }
+  .ex20-character-area { width: 200px; height: 200px; }
+  .ex20-ctrl-btn { min-width: 100px; font-size: 18px; min-height: 52px; }
+  .ex20-ctrl-sub { font-size: 15px; min-height: 42px; }
+  .ex20-complete-title { font-size: 26px; }
+  .ex20-complete-card { padding: 28px 16px; }
+}
+
+@media (max-width: 480px) {
+  .ex20-hero-characters { gap: 8px; }
+  .ex20-hero-char { width: 52px; height: 52px; }
+  .ex20-ready-title { font-size: 20px; }
+  .ex20-caption-text { font-size: 20px; }
+  .ex20-character-area { width: 160px; height: 160px; }
+}
