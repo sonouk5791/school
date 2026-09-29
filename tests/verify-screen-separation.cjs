@@ -23,15 +23,17 @@ assert(html.includes('card-nabi') && html.includes('nabi-learn.html'), '3. 나�
 assert(html.includes('card-bori') && html.includes('bori-hobby.html'), '4. 곰이와 취미하기 카드 연결 확인');
 console.log('✅ 2. 어르신 4대 대형 활동 카드 (운동, 놀이, 학습, 취미) 전면 배치 확인');
 
-// 3. 선생님 공간 6대 관리 메뉴 탭 통합 확인
-assert(html.includes('id="teacherModalTabs"'), '선생님 공간 모달 6대 탭 바 존재');
+// 3. 선생님 공간 8대 관리 메뉴 탭 통합 확인
+assert(html.includes('id="teacherModalTabs"'), '선생님 공간 모달 8대 탭 바 존재');
 assert(html.includes('data-tab="records"'), '수업 기록 탭 존재');
-assert(html.includes('data-tab="users"'), '어르신 관리 탭 존재');
-assert(html.includes('data-tab="ai-journal"'), 'AI 수업일지 탭 존재');
-assert(html.includes('data-tab="analysis"'), '변화 분석 탭 존재');
-assert(html.includes('data-tab="report"'), '보호자 보고서 탭 존재');
-assert(html.includes('data-tab="settings"'), '관리자 설정 탭 존재');
-console.log('✅ 3. 선생님 공간 모달 내 6대 관리자 기능 탭 통합 검증 통과');
+assert(html.includes('data-tab="users"'), '대상자 관리 탭 존재');
+assert(html.includes('data-tab="operations"'), '오늘의 수업 탭 존재');
+assert(html.includes('data-tab="schedule"'), '프로그램 관리 탭 존재');
+assert(html.includes('data-tab="report"'), '보고서 탭 존재');
+assert(html.includes('data-tab="content"'), '콘텐츠 관리 탭 존재');
+assert(html.includes('data-tab="auto-scheduler"'), '자동화 관리 탭 존재');
+assert(html.includes('data-tab="settings"'), '설정 탭 존재');
+console.log('✅ 3. 선생님 공간 모달 내 8대 관리자 기능 탭 통합 검증 통과');
 
 // 4. 기존 자산 및 수업 콘텐츠 보존 확인
 assert(html.includes('aiCoursesGrid'), '기존 AI 핵심 실습 코스 보존 확인');

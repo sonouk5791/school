@@ -26,7 +26,7 @@
   if(screen==='greetings')html+=`<h1>따뜻한 인사를 골라주세요.</h1><div class="choices">${G.greetings.map((t,i)=>btn(t,'greet',`data-index="${i}"`)).join('')}</div>`;
   if(screen==='quiz')html+=`<h1>🥬 이 채소는 무엇일까요?</h1>${guide('nabi','천천히 생각해봐요. 괜찮아요.')}<div class="choices">${G.vegetables.slice(0,3).map(v=>btn(v.name,'answer',`data-veg="${v.id}"`)).join('')}</div>`;
   if(screen==='memories')html+=`<h1>어떤 채소 이야기를 나눠볼까요?</h1><div class="choices">${G.vegetables.map(v=>btn(v.icon+' '+v.name,'memory',`data-veg="${v.id}"`)).join('')}</div>`;
-  app.innerHTML=html+`<nav class="actions">${mine&&screen!=='yard'?btn('우리 집 마당으로','yard'):''}<a class="home-link" href="index.html">친구들 마을로</a></nav>`;
+  app.innerHTML=html+`<nav class="actions">${mine&&screen!=='yard'?btn('우리 집 마당으로','yard'):''}<a class="home-link" href="index.html" onclick="sessionStorage.setItem('school_home_intro_played','true')">🏡 친구들 마을로 돌아가기</a></nav>`;
  }
  async function save(action,data={}){
   const request=pending||{action,plot,target:home.id,eventId:crypto.randomUUID(),durationSeconds:Math.floor(activeSeconds),...data};pending=request;

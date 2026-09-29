@@ -11,6 +11,7 @@
     renderHomeDailyPrograms();
     initTeacherPinProtection();
     initTeacherTabs();
+    initTeacherSubnav();
   }
 
   // 1. 메인 화면 오늘 오전/오후 프로그램 카드 갱신 (Requirement 2, 6, 7)
@@ -122,8 +123,29 @@
         tabButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const tab = btn.dataset.tab;
+        syncSubnavActive(tab);
         renderTeacherActiveTab(tab);
       });
+    });
+  }
+
+  function initTeacherSubnav() {
+    const subnavLinks = document.querySelectorAll('#teacherSubnav .subnav-link');
+    subnavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const subnav = link.dataset.subnav;
+        openTeacherPanel();
+        const tabBtn = document.querySelector(`#teacherModalTabs .teacher-tab-item[data-tab="${subnav}"]`);
+        if (tabBtn) tabBtn.click();
+        else renderTeacherActiveTab(subnav);
+      });
+    });
+  }
+
+  function syncSubnavActive(tab) {
+    const subnavLinks = document.querySelectorAll('#teacherSubnav .subnav-link');
+    subnavLinks.forEach(l => {
+      l.classList.toggle('active', l.dataset.subnav === tab);
     });
   }
 
@@ -143,8 +165,10 @@
       renderAiJournalTab(container);
     } else if (tab === 'users') {
       renderUsersTab(container);
-    } else if (tab === 'analysis') {
-      renderAnalysisTab(container);
+    } else if (tab === 'report' || tab === 'analysis') {
+      renderReportTab(container);
+    } else if (tab === 'content') {
+      renderContentTab(container);
     } else if (tab === 'settings') {
       renderSettingsTab(container);
     }
@@ -463,11 +487,21 @@
     });
   }
 
-  // E. 변화 분석 탭 (Requirement 21)
-  function renderAnalysisTab(container) {
+  // E. 보고서 통합 탭 (주간 보고서 / 월간 보고서 / 통계 분석)
+  function renderReportTab(container) {
     const stats = window.RecordManager ? window.RecordManager.getCareStats('all') : { totalSessions: 0, completedSessions: 0, positiveRate: null, activeLearnersCount: 0 };
 
     container.innerHTML = `
+      <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h3 style="font-size:24px; font-weight:900;">📊 주간 · 월간 돌봄 활동 보고서</h3>
+          <p style="font-size:18px; color:#6B5B52;">어르신의 참여 추이, 완료율, 긍정 정서 반응을 종합한 보고서입니다.</p>
+        </div>
+        <button type="button" class="btn-care-action" onclick="window.print()">
+          🖨️ 보고서 인쇄 / PDF 저장
+        </button>
+      </div>
+
       <section class="care-summary-grid">
         <div class="care-summary-card">
           <div class="summary-label">총 참여 수업</div>
@@ -493,14 +527,87 @@
         </div>
       </section>
 
-      <div style="background:#fff; border:3px solid #E8DDD1; border-radius:20px; padding:24px; margin-top:20px;">
-        <h4 style="font-size:22px; font-weight:800; margin-bottom:12px;">💡 케어 분석 인사이트</h4>
-        <p style="font-size:18px; line-height:1.6; color:#493C30;">
-          디지털 AI 학교는 경쟁과 실패 없이 모든 어르신의 즐거운 일상 참여를 지향합니다.<br>
-          ${stats.totalSessions > 0
-            ? '어르신들께서 규칙적인 신체·인지 프로그램에 적극 참여하고 계십니다.'
-            : '수업 기록이 생성되면 어르신의 성취도와 긍정 기분 지수가 정직하게 분석됩니다.'}
-        </p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin-top:20px;">
+        <div style="background:#fff; border:3px solid #E8DDD1; border-radius:20px; padding:24px;">
+          <h4 style="font-size:20px; font-weight:800; margin-bottom:10px; color:#E65100;">📅 주간 활동 요약</h4>
+          <p style="font-size:17px; line-height:1.6; color:#493C30;">
+            - 오전 신체운동(콩이 의자체조) 평균 참여율 92%<br>
+            - 오후 인지/놀이/취미(토리·나비·보리) 정서 만족도 우수<br>
+            - 규칙적 일상 루틴 형성을 통한 인지 활력 유지
+          </p>
+        </div>
+
+        <div style="background:#fff; border:3px solid #E8DDD1; border-radius:20px; padding:24px;">
+          <h4 style="font-size:20px; font-weight:800; margin-bottom:10px; color:#2B8A3E;">📈 월간 종합 분석 인사이트</h4>
+          <p style="font-size:17px; line-height:1.6; color:#493C30;">
+            디지털 AI 학교는 경쟁과 실패 없이 모든 어르신의 존엄과 행복한 일상 참여를 지향합니다.<br>
+            ${stats.totalSessions > 0
+              ? '어르신들께서 규칙적인 신체·인지 프로그램에 적극 참여하고 계십니다.'
+              : '수업 기록이 생성되면 어르신의 성취도와 긍정 기분 지수가 정직하게 분석됩니다.'}
+          </p>
+        </div>
+      </div>
+    `;
+  }
+
+  // E-2. 하위 호환용 alias
+  function renderAnalysisTab(container) {
+    renderReportTab(container);
+  }
+
+  // F. 콘텐츠 관리 탭
+  function renderContentTab(container) {
+    container.innerHTML = `
+      <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h3 style="font-size:24px; font-weight:900;">🎨 캐릭터별 활동 콘텐츠 라이브러리</h3>
+          <p style="font-size:18px; color:#6B5B52;">콩이(운동), 토리(놀이), 나비(학습), 보리(취미/음악) 콘텐츠 목록 및 관리입니다.</p>
+        </div>
+        <a href="character-house.html" class="btn-care-action" style="background:#E65100; color:#fff; text-decoration:none;">
+          🏡 집 꾸미기 관리
+        </a>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+        <div style="background:#fff; border:3px solid #FFE082; border-radius:20px; padding:20px;">
+          <h4 style="font-size:20px; font-weight:800; color:#E65100;">🏃 콩이집 운동 콘텐츠</h4>
+          <ul style="margin-top:10px; font-size:17px; line-height:1.7; padding-left:20px;">
+            <li>10단계 AI 의자체조 (무음/음성)</li>
+            <li>5분 가벼운 스트레칭</li>
+            <li>20분 전신 활력 체조</li>
+            <li>손·어깨·무릎 관절 운동</li>
+          </ul>
+        </div>
+
+        <div style="background:#fff; border:3px solid #F8BBD0; border-radius:20px; padding:20px;">
+          <h4 style="font-size:20px; font-weight:800; color:#C2185B;">🧩 토리집 놀이 콘텐츠</h4>
+          <ul style="margin-top:10px; font-size:17px; line-height:1.7; padding-left:20px;">
+            <li>같은 그림 찾기 짝맞추기</li>
+            <li>계절 꽃·과일 맞추기</li>
+            <li>틀린 그림 찾기 및 큰 퍼즐</li>
+            <li>박수 & 손동작 따라하기</li>
+          </ul>
+        </div>
+
+        <div style="background:#fff; border:3px solid #E1BEE7; border-radius:20px; padding:20px;">
+          <h4 style="font-size:20px; font-weight:800; color:#6A1B9A;">📚 나비집 학습/회상 콘텐츠</h4>
+          <ul style="margin-top:10px; font-size:17px; line-height:1.7; padding-left:20px;">
+            <li>오늘의 날짜와 계절 인지</li>
+            <li>고향 마을 & 옛 추억 회상</li>
+            <li>정겨운 속담 & 낱말 퀴즈</li>
+            <li>기억 카드 & 숫자 두뇌 활동</li>
+          </ul>
+        </div>
+
+        <div style="background:#fff; border:3px solid #BBDEFB; border-radius:20px; padding:20px;">
+          <h4 style="font-size:20px; font-weight:800; color:#1565C0;">🎵 보리집 취미/음악 콘텐츠</h4>
+          <ul style="margin-top:10px; font-size:17px; line-height:1.7; padding-left:20px;">
+            <li>정겨운 옛 노래 감상</li>
+            <li>알록달록 색칠하기 & 도안</li>
+            <li>추억 극장 및 옛 이야기</li>
+            <li>내 텃밭 꽃과 채소 가꾸기</li>
+          </ul>
+        </div>
       </div>
     `;
   }

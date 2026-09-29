@@ -3026,3 +3026,23 @@
 - [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
 
 </details>
+
+## 자동 저장 / 2026-09-29 12:19:26 — 디지털 AI 학교 중복 기능 제거 및 메뉴 구조 통합
+- **수행 내역**: 어르신용 화면 단순화(친구들 마을 중심 4대 캐릭터 집 및 우리 집 텃밭 연계), 선생님 공간 8대 핵심 관리 메뉴(오늘의 수업, 대상자 관리, 프로그램 관리, 수업 기록, 보고서, 콘텐츠 관리, 자동화 관리, 설정) 통합 및 중복 메뉴 정리 완료
+
+## 자동 저장 / 2026-09-29 12:19:58 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 9
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [index.html](./index.html)
+- [js/app.js](./js/app.js)
+- [js/daycare-home-ui.js](./js/daycare-home-ui.js)
+- [js/home-welcome-flow.js](./js/home-welcome-flow.js)
+- [js/our-home.js](./js/our-home.js)
+- [tests/verify-menu-consolidation.cjs](./tests/verify-menu-consolidation.cjs)
+- [tests/verify-screen-separation.cjs](./tests/verify-screen-separation.cjs)
+- [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
+
+</details>

@@ -25,24 +25,32 @@ function initNavigation() {
   const navLinks = document.querySelectorAll('.nav-link');
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && !href.startsWith('#')) {
+        // Direct page navigation
+        return;
+      }
       e.preventDefault();
       navLinks.forEach(l => l.classList.remove('active'));
       link.classList.add('active');
 
       const target = link.dataset.target;
-      if (target === 'home' || target === 'lessons') {
-        window.scrollTo({ top: target === 'lessons' ? 450 : 0, behavior: 'smooth' });
-        // Section 7: 메인 수업 선택 화면 진입 시 안내 음성 (세션당 1회)
-        if (target === 'lessons' && !sessionStorage.getItem('digital_school_lesson_select_guided') && !window.VoiceManager.isMuted) {
-          sessionStorage.setItem('digital_school_lesson_select_guided', 'true');
-          const script = window.VoiceScripts && window.VoiceScripts.lessonSelect;
-          if (script) {
-            window.VoiceManager.speak(script);
-          }
+      if (target === 'home' || target === 'lessons' || href === '#home') {
+        const rooms = document.getElementById('friendRooms');
+        if (rooms && !rooms.hidden) {
+          rooms.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      } else if (target === 'ai-friend') {
-        window.LessonEngine.startLesson('greeting');
-      } else if (target === 'history') {
+      } else if (target === 'ai-friend' || href === '#ai-friend') {
+        const rooms = document.getElementById('friendRooms');
+        if (rooms) {
+          rooms.hidden = false;
+          rooms.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else if (target === 'history' || href === '#history') {
         openTeacherModal();
       }
     });
