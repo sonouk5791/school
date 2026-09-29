@@ -35,479 +35,455 @@ html[data-home-flow="video"] #friendRooms .home-friend.is-introducing{border:3px
 @media(max-width:600px){html[data-home-flow="video"] .character-home-hero #friendRooms .home-friends-grid{grid-template-columns:1fr}.hw-actions{gap:8px}.hw-actions button{width:100%}.hw-media{border-radius:16px;margin:12px auto}.hw-room-tools button{width:100%}html[data-home-flow="video"] #friendRooms .home-friend-picture{height:180px}.hw-intro{max-width:320px}}
 @media(prefers-reduced-motion:reduce){[data-home-wave]{animation:none!important}}
 
-/* ── Lilac Village Scenic Walking Map & Central Shelter Plaza ── */
-html[data-home-flow="video"] #friendRooms .friend-village .home-friend{grid-template-rows:auto;align-content:center}
-html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{mix-blend-mode:normal;border-radius:46%;background:#fff;box-shadow:0 2px 8px #77734212}
-html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{
-  position:relative;
-  isolation:isolate;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:58px 64px;
-  padding:36px 32px 42px;
-  background:linear-gradient(180deg,#f3f7e8 0%,#edf4dd 35%,#e5f0d4 100%);
-  border:3px solid #d4e2c0;
-  border-radius:48px;
-  box-shadow:0 20px 45px -25px #556b3e44, inset 0 2px 6px #ffffffaa;
-  overflow:visible;
-  margin:20px auto 24px;
-}
-html[data-home-flow="video"] #friendRooms .friend-village .home-friend{
-  display:grid;
-  grid-template-columns:46% 54%;
-  align-items:center;
-  gap:8px;
-  padding:12px 14px;
-  border:2px solid transparent;
-  background:rgba(255,255,255,0.45);
-  backdrop-filter:blur(4px);
-  border-radius:32px;
-  min-height:250px;
-  overflow:visible;
-  transform:none;
-  transition:all 0.25s ease;
-}
-html[data-home-flow="video"] #friendRooms .friend-village .home-friend:hover{
-  background:rgba(255,255,255,0.85);
-  border-color:#b9d2a6;
-  box-shadow:0 8px 24px rgba(78,110,60,0.12);
-}
-html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introducing{
-  padding:12px 14px;
-  border-color:#356b43;
-  background:#fffdf3;
-  box-shadow:0 0 0 4px #c2deab, 0 8px 25px rgba(53,107,67,0.18);
-}
-.village-scene{position:relative;width:100%;height:224px;min-width:0}
-.village-house-art{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{
-  position:absolute;
-  left:2%;
-  bottom:4px;
-  width:106px;
-  max-width:48%;
-  height:124px;
-  margin:0;
-  z-index:2;
-  transform:none;
-  background:transparent;
-  border-radius:0;
-}
-.village-prop{
-  position:absolute;
-  z-index:3;
-  filter:drop-shadow(0 3px 5px rgba(0,0,0,0.18));
-  user-select:none;
-}
-.prop-primary{
-  right:8%;
-  bottom:14%;
-  font-size:32px;
-}
-.prop-secondary{
-  right:26%;
-  bottom:24%;
-  font-size:26px;
-  opacity:0.95;
-}
-.village-copy{
-  display:flex;
-  flex-direction:column;
-  align-items:stretch;
-  text-align:left;
-  gap:4px;
-  min-width:0;
-  padding:8px 6px 8px 12px;
-}
-html[data-home-flow="video"] #friendRooms .village-copy strong{
-  font-size:28px;
-  color:#312d26;
-  line-height:1.25;
-  text-decoration:none;
-}
-.village-description{
-  font-size:20px;
-  line-height:1.45;
-  color:#4d4739;
-  margin:3px 0 6px;
-  word-break:keep-all;
-}
-.village-copy .hw-room-name{
-  font-size:21px;
-  color:#3b5938;
-  font-weight:700;
-}
-.village-copy .hw-enter{
-  min-height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:#356b43;
-  color:#ffffff;
-  border:2px solid #285434;
-  border-radius:20px;
-  padding:8px 16px;
-  font-size:21px!important;
-  font-weight:800;
-  box-shadow:0 4px 10px rgba(53,107,67,0.25);
-  transition:transform 0.15s ease, background 0.15s ease;
-  cursor:pointer;
-  max-width:260px;
-  align-self:flex-start;
-}
-.village-copy .hw-enter:hover{
-  background:#285434;
-  transform:translateY(-2px);
-}
-.friend-village .hw-intro{
-  display:none;
-  position:absolute;
-  z-index:3;
-  top:0;
-  left:0;
-  right:-12px;
-  background:#fffef8;
-  border:2px solid #b9c89f;
-  border-radius:16px;
-  padding:8px!important;
-  margin:0;
-  font-size:20px;
-  line-height:1.35;
-  box-shadow:0 3px 9px #66563318;
-}
-.friend-village .is-introducing .hw-intro{display:block}
-.friend-village .hw-speaking-label{position:absolute;left:16px;bottom:4px;font-size:20px;min-height:0}
-.friend-village .home-friend:focus-visible{outline:4px solid #285c42;outline-offset:4px}
-.high-contrast-mode .friend-village .village-copy strong,.high-contrast-mode .friend-village .village-description,.high-contrast-mode .friend-village .hw-room-name{color:#fff!important}
-.high-contrast-mode .friend-village .hw-intro{background:#151515;color:#fff}
+/* ── Lilac Village Picture-Perfect Interactive Art Layout ── */
+.heart-pink { color: #e8557a; font-weight: bold; }
 
-/* ── Lilac Village Central Shelter Plaza Component ── */
-.village-landscape{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  overflow:hidden;
-  border-radius:inherit;
-  pointer-events:none;
-}
-.village-landscape>.village-nature,
-.village-landscape>.village-paths{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  margin:0;
-}
-.village-rest{
-  position:absolute;
-  top:45%;
-  left:44%;
-  width:270px;
-  height:150px;
-  pointer-events:auto;
-  z-index:2;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-.rest-plaza-bg{
-  position:absolute;
-  inset:-12px -20px -8px;
-  border-radius:50%;
-  background:radial-gradient(ellipse at center,#eaf4db 0%,#d8e9be 65%,transparent 74%);
-  border:2px dashed #b9cfa0;
-  opacity:0.9;
-  z-index:1;
-}
-.rest-lawn{
-  position:absolute;
-  inset:4px -4px 6px;
-  border-radius:50%;
-  background:radial-gradient(ellipse,#dbecc3 40%,#cfe3b0 75%,transparent 78%);
-  z-index:2;
-}
-.rest-lilac-cluster{
-  position:absolute;
-  left:10px;
-  top:12px;
-  z-index:4;
-  font-size:22px;
-  filter:drop-shadow(0 2px 4px rgba(138,98,175,0.25));
-  display:flex;
-  gap:2px;
-}
-.rest-tree{
-  position:absolute;
-  right:16px;
-  top:4px;
-  width:44px;
-  height:42px;
-  border-radius:50%;
-  background:#94b779;
-  box-shadow:12px -5px 0 #b0cb96;
-  z-index:3;
-}
-.rest-tree:after{
-  content:"";
-  position:absolute;
-  top:32px;
-  left:21px;
-  width:7px;
-  height:24px;
-  background:#8c6f4e;
-  border-radius:4px;
-}
-.rest-tree-small{
-  right:56px;
-  top:2px;
-  width:28px;
-  height:30px;
-  background:#a7c58c;
-  box-shadow:7px -4px 0 #bdd3a6;
-}
-.rest-tree-small:after{
-  top:23px;
-  left:12px;
-  width:5px;
-  height:18px;
-}
-.rest-bench{
-  position:absolute;
-  left:48px;
-  top:38px;
-  width:56px;
-  height:12px;
-  background:#a87d52;
-  border-radius:4px;
-  box-shadow:0 -12px 0 #be966b;
-  z-index:4;
-}
-.rest-bench:after{
-  content:"";
-  position:absolute;
-  left:6px;
-  right:6px;
-  top:9px;
-  height:8px;
-  border-inline:4px solid #8c643b;
-}
-.rest-lamp-post{
-  position:absolute;
-  left:16px;
-  bottom:32px;
-  font-size:24px;
-  z-index:4;
-  filter:drop-shadow(0 2px 5px rgba(230,160,50,0.3));
-}
-.rest-sign-board{
-  position:relative;
-  z-index:5;
-  margin-top:14px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-.rest-sign{
-  background:#fffaf0;
-  border:2.5px solid #7d6142;
-  border-radius:14px;
-  padding:6px 14px;
-  font-size:21px;
-  font-weight:900;
-  color:#433422;
-  box-shadow:0 3px 8px rgba(90,70,40,0.18);
-  white-space:nowrap;
-  letter-spacing:-0.2px;
-}
-.rest-quote{
-  position:relative;
-  z-index:5;
-  margin-top:5px;
-  font-size:18px;
-  font-weight:700;
-  color:#3d5733;
-  background:rgba(255,255,255,0.9);
-  padding:4px 12px;
-  border-radius:12px;
-  border:1.5px solid #bcd1a8;
-  white-space:nowrap;
-  box-shadow:0 2px 6px rgba(60,90,40,0.08);
+html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 72px 80px;
+  padding: 85px 44px 75px;
+  background: 
+    linear-gradient(180deg, rgba(248,252,240,0.85) 0%, rgba(240,248,230,0.8) 100%),
+    url("../assets/images/lilac-village-illustration.jpg") center center / cover no-repeat,
+    #edf5de;
+  border: 4px solid #b8cca0;
+  border-radius: 54px;
+  box-shadow: 0 24px 50px -20px rgba(60,85,45,0.35), inset 0 2px 10px rgba(255,255,255,0.8);
+  overflow: visible;
+  margin: 20px auto 28px;
 }
 
-/* Village Greenery & Decor */
-.village-shrub{
-  position:absolute;
-  width:64px;
-  height:30px;
-  border-radius:60% 55% 45% 45%;
-  background:#bfd3a2;
-  box-shadow:22px 3px 0 -5px #cee0b4,-14px 7px 0 -8px #adc593;
-  opacity:.9;
-  z-index:1;
-}
-.shrub-north{left:3%;top:7%}
-.shrub-east{right:2%;top:48%}
-.shrub-west{left:2%;bottom:6%}
-.village-flowerbed{
-  position:absolute;
-  width:78px;
-  height:28px;
-  border-radius:50%;
-  background:radial-gradient(circle at 20% 35%,#c8a5db 0 4px,transparent 5px),
-             radial-gradient(circle at 45% 25%,#fff6d0 0 4px,transparent 5px),
-             radial-gradient(circle at 75% 40%,#dca8c5 0 4px,transparent 5px),
-             linear-gradient(transparent 50%,#bcd09e 50%);
-  box-shadow:0 3px 8px rgba(100,120,70,0.12);
-  z-index:1;
-}
-.flowers-north{right:6%;top:5%;transform:rotate(-6deg)}
-.flowers-south{right:6%;bottom:5%;transform:rotate(8deg)}
-.village-lantern{
-  position:absolute;
-  font-size:26px;
-  z-index:2;
-  filter:drop-shadow(0 2px 6px rgba(220,150,40,0.25));
-}
-.lantern-left{left:4%;top:46%}
-.lantern-right{right:4%;top:18%}
-
-/* Yard Details for each Character */
-.village-yard-detail{
-  position:absolute;
-  right:4%;
-  bottom:8%;
-  width:60px;
-  height:20px;
-  z-index:1;
-  border-radius:50%;
-  background:#c6d8ae;
-}
-.yard-kongi .village-yard-detail{
-  width:68px;
-  height:22px;
-  background:#b3c8aa;
-  border:2px solid #829e80;
-  border-radius:6px;
-  transform:skewX(-14deg);
-  right:6%;
-  bottom:9%;
-}
-.yard-tori .village-yard-detail{
-  background:radial-gradient(circle at 20% 27%,#f4b6c3 0 4px,transparent 5px),radial-gradient(circle at 50% 22%,#fff1cc 0 4px,transparent 5px),radial-gradient(circle at 80% 35%,#d1bfe3 0 4px,transparent 5px),#c5d9ae;
-  height:28px;
-  width:72px;
-  right:2%;
-  border-radius:50%;
-}
-.yard-nabi .village-yard-detail{
-  background:radial-gradient(circle at 30% 30%,#c3b6df 0 4px,transparent 5px),#bfd5a6;
-  border-bottom:4px solid #aeb59a;
-  border-radius:10px;
-  height:24px;
-  width:65px;
-  right:3%;
-}
-.yard-bori .village-yard-detail{
-  border-radius:5px;
-  height:11px;
-  width:58px;
-  background:#b89874;
-  box-shadow:0 -9px 0 #caa985;
-  bottom:9%;
-  right:4%;
+/* Background Art & Decorative Canvas Elements */
+.village-art-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 0;
 }
 
-.village-message{display:grid;min-height:84px;align-items:center;margin:4px 0 8px}
-.village-message>*{grid-area:1/1}
-.friend-village .village-message .hw-intro{
-  display:block;
-  position:static;
-  visibility:hidden;
-  width:auto;
-  max-width:none;
-  margin:0;
-  box-shadow:none;
-  border:1.5px solid #bcd0a4;
-  background:#fffef3;
-  font-size:20px;
-  padding:8px 12px!important;
-  border-radius:16px;
-  line-height:1.4;
+/* Top Left Village Nameplate */
+.village-header-sign {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  z-index: 5;
+  background: #fdf5df;
+  border: 3px solid #9c7b50;
+  border-radius: 24px;
+  padding: 10px 24px;
+  box-shadow: 0 6px 16px rgba(90,65,35,0.22), inset 0 1px 4px #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
 }
-.friend-village .is-introducing .village-message .hw-intro{visibility:visible}
-.friend-village .is-introducing .village-description{visibility:hidden}
-.friend-village .hw-speaking-label{display:none}
-
-/* Organic Asymmetry for Village Atmosphere */
-@media(min-width:681px){
-  html[data-home-flow="video"] #friendRooms .friend-village .home-friend-kongi{margin-top:0}
-  html[data-home-flow="video"] #friendRooms .friend-village .home-friend-tori{margin-top:36px}
-  html[data-home-flow="video"] #friendRooms .friend-village .home-friend-nabi{margin-bottom:32px}
-  html[data-home-flow="video"] #friendRooms .friend-village .home-friend-bori{margin-top:12px}
+.header-sign-inner .sign-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #3b2c18;
+  display: block;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
 }
-
-@media(max-width:1050px){
-  html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{gap:42px 32px;padding:24px 18px}
-  .village-rest{transform:scale(0.9);transform-origin:center}
+.header-sign-inner .sign-sub {
+  font-size: 17px;
+  font-weight: 700;
+  color: #634b2f;
+  margin-top: 2px;
 }
 
-@media(max-width:680px){
-  html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{
-    grid-template-columns:1fr;
-    gap:36px;
-    padding:140px 14px 28px;
+/* Top Left Standing Wooden Motto Sign */
+.village-motto-board {
+  position: absolute;
+  z-index: 5;
+  background: #ecdcb9;
+  border: 3px solid #8f693e;
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-shadow: 0 5px 14px rgba(75,50,25,0.2);
+  text-align: center;
+  pointer-events: auto;
+}
+.board-left {
+  top: 110px;
+  left: 12px;
+  width: 110px;
+}
+.board-left .motto-inner span {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: #4a341b;
+  line-height: 1.35;
+}
+.board-bottom {
+  bottom: 12px;
+  left: 48%;
+  transform: translateX(-50%);
+  padding: 8px 18px;
+}
+.board-bottom .motto-inner span {
+  display: block;
+  font-size: 17px;
+  font-weight: 800;
+  color: #412f17;
+  line-height: 1.3;
+}
+
+/* Top Right Quote Banner */
+.village-quote-banner {
+  position: absolute;
+  top: 18px;
+  right: 28px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
+  border: 2px dashed #9d7cbb;
+  border-radius: 20px;
+  padding: 8px 18px;
+  box-shadow: 0 4px 14px rgba(130,90,160,0.18);
+  pointer-events: auto;
+}
+.village-quote-banner .quote-text {
+  font-size: 18px;
+  font-weight: 800;
+  color: #492a6b;
+}
+
+/* Central Lilac Gazebo / Pergola Shelter */
+.village-rest {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 220px;
+  z-index: 6;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.pergola-dome {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 210px;
+  height: 75px;
+  border-radius: 100px 100px 10px 10px;
+  background: radial-gradient(ellipse at top, #b790dd 20%, #9066c0 80%);
+  border: 3px solid #6b4499;
+  box-shadow: 0 8px 20px rgba(110,60,160,0.3);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 24px;
+}
+.pergola-roof-sign {
+  position: absolute;
+  top: 60px;
+  z-index: 7;
+  background: #fdf3de;
+  border: 3px solid #845f34;
+  border-radius: 14px;
+  padding: 6px 18px;
+  box-shadow: 0 4px 10px rgba(70,45,20,0.22);
+}
+.pergola-sign-text {
+  font-size: 22px;
+  font-weight: 900;
+  color: #382613;
+  letter-spacing: -0.3px;
+}
+.pergola-interior {
+  position: absolute;
+  top: 98px;
+  width: 170px;
+  height: 52px;
+  background: rgba(230, 218, 195, 0.7);
+  border: 2px solid #a88d67;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 14px;
+}
+.pergola-bench {
+  width: 48px;
+  height: 12px;
+  background: #9d754c;
+  border-radius: 3px;
+  margin-top: 18px;
+  box-shadow: 0 -8px 0 #b38c61;
+}
+.pergola-bottom-sign {
+  position: absolute;
+  bottom: 0;
+  z-index: 7;
+  background: #ffffff;
+  border: 2px solid #a684c7;
+  border-radius: 16px;
+  padding: 6px 16px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #3a274e;
+  box-shadow: 0 4px 12px rgba(90,50,130,0.18);
+  white-space: nowrap;
+}
+.shelter-butterfly {
+  position: absolute;
+  font-size: 22px;
+  animation: flutter 2.4s ease-in-out infinite alternate;
+}
+.bf-yellow { left: 8px; top: 70px; animation-delay: 0.2s; }
+.bf-purple { right: 8px; top: 120px; animation-delay: 0.8s; }
+@keyframes flutter {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(6px, -10px) rotate(15deg); }
+}
+
+/* Bottom Left Vegetable Garden Link */
+.village-garden-sign {
+  position: absolute;
+  bottom: 24px;
+  left: 20px;
+  z-index: 6;
+  background: #fdf5df;
+  border: 3px solid #728c46;
+  border-radius: 18px;
+  padding: 8px 16px;
+  box-shadow: 0 6px 16px rgba(50,80,30,0.22);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+  transition: transform 0.15s ease;
+}
+.village-garden-sign:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+.garden-sign-board {
+  font-size: 20px;
+  font-weight: 900;
+  color: #2b451a;
+}
+.garden-watering-can {
+  font-size: 20px;
+}
+
+/* Sleeping Cat on Right Stone Wall */
+.village-cat {
+  position: absolute;
+  right: 18px;
+  bottom: 120px;
+  z-index: 5;
+  font-size: 32px;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
+}
+
+/* ── Character Houses & Cards ── */
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend {
+  display: grid;
+  grid-template-columns: 46% 54%;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 3px solid rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(6px);
+  border-radius: 36px;
+  min-height: 254px;
+  overflow: visible;
+  transform: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px rgba(70,90,50,0.12);
+  position: relative;
+  z-index: 2;
+}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend:hover {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: #8bb36f;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(60,85,45,0.2);
+}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introducing {
+  border-color: #356b43;
+  background: #fffdf2;
+  box-shadow: 0 0 0 4px #b8dba0, 0 12px 30px rgba(53,107,67,0.22);
+}
+
+/* Roof-Top House Sign */
+.house-name-sign {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fdf5df;
+  border: 2.5px solid #8a6840;
+  border-radius: 14px;
+  padding: 4px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 3px 8px rgba(70,45,20,0.18);
+  z-index: 4;
+}
+.sign-roof-name {
+  font-size: 21px;
+  font-weight: 900;
+  color: #382715;
+  line-height: 1.1;
+}
+.sign-roof-room {
+  font-size: 15px;
+  font-weight: 700;
+  color: #5c4427;
+}
+
+/* Front Yard Mini Chalkboard */
+.house-chalkboard {
+  position: absolute;
+  right: 1%;
+  bottom: 34%;
+  background: #253328;
+  border: 3px solid #8f7253;
+  border-radius: 8px;
+  padding: 5px 8px;
+  color: #f7faee;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  z-index: 3;
+}
+
+/* Character Entrance Buttons with Distinct Identity Colors */
+.village-copy .hw-enter {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 22px;
+  padding: 8px 18px;
+  font-size: 21px!important;
+  font-weight: 900;
+  cursor: pointer;
+  max-width: 250px;
+  align-self: flex-start;
+  text-decoration: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+.village-copy .hw-enter:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.06);
+}
+.enter-arrow {
+  font-size: 24px;
+  margin-left: 6px;
+  line-height: 1;
+}
+
+/* Kongi: Exercise Green */
+.btn-kongi {
+  background: linear-gradient(180deg, #5aa356 0%, #438440 100%);
+  border: 2px solid #2f632d;
+}
+/* Tori: Play Pink */
+.btn-tori {
+  background: linear-gradient(180deg, #ea7996 0%, #d45979 100%);
+  border: 2px solid #ad3554;
+}
+/* Nabi: Study Lavender */
+.btn-nabi {
+  background: linear-gradient(180deg, #8c76c4 0%, #7058ad 100%);
+  border: 2px solid #543f8c;
+}
+/* Bori: Hobby Blue */
+.btn-bori {
+  background: linear-gradient(180deg, #3fa1cf 0%, #2583b0 100%);
+  border: 2px solid #1a6285;
+}
+
+/* Bottom Welcome Banner across village fence */
+.village-bottom-welcome-banner {
+  max-width: 720px;
+  margin: 12px auto 14px;
+  background: #fdf6e2;
+  border: 3px solid #a38258;
+  border-radius: 24px;
+  padding: 10px 24px;
+  box-shadow: 0 6px 18px rgba(80,55,25,0.16);
+  font-size: 21px;
+  color: #3b2a16;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.village-bottom-welcome-banner strong {
+  font-size: 22px;
+  font-weight: 900;
+  color: #274720;
+}
+.welcome-house-icon {
+  font-size: 26px;
+}
+.hw-room-tools-links {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive adjustments */
+@media(max-width: 1080px) {
+  html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village {
+    gap: 48px 36px;
+    padding: 70px 20px 50px;
   }
-  html[data-home-flow="video"] #friendRooms .friend-village .home-friend{
-    grid-template-columns:1fr;
-    padding:12px 14px;
-    background:rgba(255,255,255,0.7);
+  .village-rest {
+    transform: translate(-50%, -50%) scale(0.88);
   }
-  .village-scene{height:190px;max-width:270px;margin:auto}
-  .village-copy{text-align:center;padding:10px 0}
-  .village-copy .hw-enter{align-self:center;width:100%;max-width:280px}
-  .village-rest{
-    top:12px;
-    left:50%;
-    transform:translateX(-50%) scale(0.85);
-    transform-origin:top center;
-  }
-  .shrub-north{left:2%;top:2%}
-  .shrub-east{right:2%;top:46%}
-  .shrub-west{left:2%;bottom:2%}
+  .board-left { display: none; }
 }
 
-.hw-room-tools .home-living-link{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:76px;
-  font-size:22px;
-  font-weight:700;
-  padding:16px 26px;
-  background:#eef5e0;
-  border:2.5px solid #72905c;
-  border-radius:24px;
-  color:#2b4227;
-  text-decoration:none;
-  word-break:keep-all;
-  box-shadow:0 4px 12px rgba(60,90,40,0.1);
-  transition:all 0.2s ease;
+@media(max-width: 720px) {
+  html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 140px 14px 28px;
+  }
+  html[data-home-flow="video"] #friendRooms .friend-village .home-friend {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  .village-scene { height: 200px; max-width: 280px; margin: auto; }
+  .village-copy { text-align: center; padding: 10px 0; }
+  .village-copy .hw-enter { align-self: center; width: 100%; max-width: 260px; }
+  .village-rest {
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    transform-origin: top center;
+  }
+  .village-quote-banner { display: none; }
+  .village-header-sign { top: 10px; left: 10px; transform: scale(0.9); transform-origin: top left; }
+  .board-bottom { display: none; }
 }
-.hw-room-tools .home-living-link:hover{
-  background:#e2eed0;
-  transform:translateY(-2px);
-}
-.hw-room-tools .home-living-link:focus-visible{outline:4px solid #315faa;outline-offset:4px}
-
-.hw-media{width:min(95%,800px);max-height:none;margin:14px auto}
-.hw-status:empty{display:none}
-#skipHomeGreeting{min-height:64px;font-size:22px;padding:14px 24px}
-.hw-media-controls{margin:10px auto;text-align:center;font-size:20px}
-.hw-media-controls summary{display:list-item;width:max-content;margin:auto;cursor:pointer;padding:10px;color:#315a3c}
-.hw-media-controls summary:focus-visible{outline:3px solid #315a3c;outline-offset:3px}
-.hw-media-controls button{min-height:64px}
-@media(prefers-reduced-motion:reduce){.hw-panel{scroll-behavior:auto}}
 
 
 /* ── Character Choice Game Flow Styles (Daily Rec & Activity Board) ── */
