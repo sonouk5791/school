@@ -32,61 +32,50 @@
       </div>
     </header>
 
-    <!-- 콩이집 대표 화면 (Hero Greeting + Primary YouTube Video) -->
+    <!-- 콩이집 대표 화면 (Hero Greeting + Primary Seated Exercise Animation) -->
     <section class="se-hero-greeting" style="text-align: center; padding: 24px 16px 16px;">
       <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 8px;">
-        <img src="assets/images/everyday/kongi-active.png" alt="콩이 캐릭터" style="width: 80px; height: 80px; object-fit: contain;" onerror="this.src='assets/images/friend-kongi.png'">
+        <img src="assets/images/chair-exercise/kongi-chair-1-wave.jpg" alt="콩이 캐릭터" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid #86efac;">
         <div style="text-align: left;">
           <span style="font-size: 16px; font-weight: 800; color: #e65100; background: #fff3e0; padding: 4px 10px; border-radius: 10px;">🐶 콩이의 운동방</span>
           <h1 style="font-size: 26px; font-weight: 900; color: #1e4519; margin-top: 4px;">"오늘도 함께 몸을 움직여볼까요?"</h1>
         </div>
       </div>
-      <p style="font-size: 18px; color: #435b3e;">의자에 편안하게 앉아서 콩이와 함께 건강 체조를 시작해요.</p>
+      <p style="font-size: 19px; color: #435b3e; font-weight: 600;">의자에 편안하게 앉아서 콩이와 함께 천천히 따라해요.</p>
     </section>
 
-    <!-- [대표 활동] YouTube 운동 영상 플레이어 섹션 -->
-    <section id="viewYoutubeMain" class="se-youtube-section" aria-label="오늘의 대표 운동 영상" style="max-width: 900px; margin: 0 auto 32px; padding: 0 16px;">
-      <div style="background: #ffffff; border: 3px solid #b7deb0; border-radius: 24px; padding: 20px; box-shadow: 0 8px 24px rgba(46,102,40,0.12);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-          <span style="background: #2e6628; color: white; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 18px;">
-            🌟 오늘의 대표 운동
+    <!-- [대표 활동] 콩이 3D 의자 체조 애니메이션 플레이어 섹션 -->
+    <section id="viewExerciseMain" class="se-youtube-section" aria-label="오늘의 대표 의자 체조" style="max-width: 960px; margin: 0 auto 32px; padding: 0 16px;">
+      <div style="background: #ffffff; border: 3px solid #b7deb0; border-radius: 28px; padding: 22px; box-shadow: 0 8px 28px rgba(46,102,40,0.12);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+          <span style="background: #2e6628; color: white; padding: 8px 18px; border-radius: 20px; font-weight: 800; font-size: 19px;">
+            🌟 콩이와 함께하는 앉아서 체조
           </span>
-          <span id="ytPlayStatus" style="font-size: 16px; color: #435b3e; font-weight: 700;">
-            준비되면 아래 영상을 시작하세요
+          <span id="chairPlayStatus" style="font-size: 18px; color: #1b5e20; font-weight: 700;">
+            🌸 콩이 동작을 보며 천천히 따라해보세요
           </span>
         </div>
 
-        <!-- YouTube Video Iframe Wrapper (16:9 Aspect Ratio) -->
-        <div class="se-youtube-wrapper" id="ytVideoWrapper" style="position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: #000; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
-          <iframe id="ytPlayerIframe" class="se-youtube-iframe" style="width: 100%; height: 100%; border: none;"
-                  src="https://www.youtube.com/embed/c8c9zLy8jWM?enablejsapi=1&autoplay=1&playsinline=1&rel=0"
-                  title="콩이와 함께하는 어르신 맞춤 건강 체조"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen>
-          </iframe>
-
-          <!-- Fallback Card (영상이 차단되거나 로딩 실패 시 노출) -->
-          <div id="ytFallbackCard" style="display: none; position: absolute; inset: 0; background: #fdfaf5; color: #3d2f21; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px;">
-            <span style="font-size: 40px;">🎬</span>
-            <h3 style="font-size: 22px; font-weight: 800;">운동 영상을 불러오지 못했어요.</h3>
-            <p style="font-size: 17px; color: #6b5b52;">YouTube 직접 보기 버튼이나 다른 운동을 이용하실 수 있습니다.</p>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 8px;">
-              <button type="button" id="btnRetryYt" class="se-btn-huge-start" style="min-height: 48px; font-size: 16px; padding: 8px 18px;">🔄 다시 시도</button>
-              <a href="https://youtu.be/c8c9zLy8jWM" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 8px 18px; background: #e65100; color: #fff; font-weight: 800; font-size: 16px; border-radius: 12px; text-decoration: none;">▶ YouTube에서 보기</a>
-            </div>
+        <!-- 16:9 Aspect Ratio Animated Exercise Stage -->
+        <div class="se-chair-wrapper" id="chairExerciseWrapper" style="position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #fdfaf5; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 2px solid #e0d5c1;">
+          <img id="chairExerciseImg" src="assets/images/chair-exercise/kongi-chair-exercise.gif" alt="콩이와 함께하는 앉아서 하는 체조 4단계 반복 애니메이션" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+          
+          <!-- Step Sequence Overlay Pills -->
+          <div style="position: absolute; bottom: 12px; left: 12px; right: 12px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; pointer-events: none;">
+            <span style="background: rgba(255,255,255,0.92); color: #2e6628; font-size: 15px; font-weight: 800; padding: 5px 12px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #86efac;">1. 손인사 👋</span>
+            <span style="background: rgba(255,255,255,0.92); color: #2e6628; font-size: 15px; font-weight: 800; padding: 5px 12px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #86efac;">2. 양팔 올리기 🙆</span>
+            <span style="background: rgba(255,255,255,0.92); color: #2e6628; font-size: 15px; font-weight: 800; padding: 5px 12px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #86efac;">3. 무릎 톡톡 👏</span>
+            <span style="background: rgba(255,255,255,0.92); color: #2e6628; font-size: 15px; font-weight: 800; padding: 5px 12px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #86efac;">4. 마무리 인사 🌸</span>
           </div>
         </div>
 
-        <!-- 큰 운동 시작 & 조작 버튼 바 -->
-        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center;">
-          <button type="button" id="btnYtStartBig" class="se-btn-huge-start" style="flex: 2; min-width: 200px; min-height: 60px; font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #2e6628, #43a047); color: #fff; border-radius: 16px; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(46,102,40,0.3);">
-            ▶ 운동 시작하기
+        <!-- 큰 운동 조작 버튼 바 -->
+        <div style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center;">
+          <button type="button" id="btnChairPlayToggle" class="se-btn-huge-start" style="flex: 2; min-width: 220px; min-height: 62px; font-size: 22px; font-weight: 900; background: linear-gradient(135deg, #2e6628, #43a047); color: #fff; border-radius: 18px; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(46,102,40,0.3);">
+            ▶ 체조 따라하기
           </button>
-          <button type="button" id="btnYtPause" style="flex: 1; min-width: 120px; min-height: 60px; font-size: 18px; font-weight: 800; background: #f0f7ee; color: #2e6628; border: 2px solid #b7deb0; border-radius: 16px; cursor: pointer;">
-            ⏸ 잠깐 쉬기
-          </button>
-          <button type="button" id="btnYtCompleteManual" style="flex: 1; min-width: 140px; min-height: 60px; font-size: 18px; font-weight: 800; background: #fff3e0; color: #e65100; border: 2px solid #ffcc80; border-radius: 16px; cursor: pointer;">
-            ✓ 운동 마쳤어요
+          <button type="button" id="btnChairComplete" style="flex: 1.5; min-width: 180px; min-height: 62px; font-size: 20px; font-weight: 800; background: #fff3e0; color: #e65100; border: 2px solid #ffcc80; border-radius: 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(230,81,0,0.15);">
+            🌸 오늘 체조 마쳤어요!
           </button>
         </div>
       </div>

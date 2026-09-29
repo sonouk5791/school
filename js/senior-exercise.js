@@ -803,105 +803,50 @@
     });
   }
 
-  // --- YouTube Representative Exercise Player Integration ---
-  let ytPlayer = null;
-  let ytPlayerReady = false;
-  let ytStartTime = 0;
+  // --- Kongi 3D Seated Chair Exercise Player Integration ---
+  function initChairExercise() {
+    const btnPlayToggle = $('btnChairPlayToggle');
+    const btnComplete = $('btnChairComplete');
+    const chairStatus = $('chairPlayStatus');
+    const chairImg = $('chairExerciseImg');
+    let isPlayingExercise = true;
 
-  function initYoutubeExercise() {
-    const btnYtStart = $('btnYtStartBig');
-    const btnYtPause = $('btnYtPause');
-    const btnYtComplete = $('btnYtCompleteManual');
-    const btnRetryYt = $('btnRetryYt');
-    const ytStatus = $('ytPlayStatus');
-    const ytFallback = $('ytFallbackCard');
-
-    // 1. YouTube API script inclusion if not loaded
-    if (!window.YT || !window.YT.Player) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-
-    const setupPlayer = () => {
-      try {
-        ytPlayer = new YT.Player('ytPlayerIframe', {
-          events: {
-            onReady: (event) => {
-              ytPlayerReady = true;
-              ytStartTime = Date.now();
-              if (ytStatus) ytStatus.textContent = '운동 영상이 준비되었습니다.';
-              // 자동재생 시도 (브라우저 정책에 따라 음소거 필요할 수 있음)
-              try {
-                event.target.playVideo();
-              } catch (e) {
-                console.log('Autoplay blocked by browser policy:', e);
-              }
-            },
-            onStateChange: (event) => {
-              if (event.data === YT.PlayerState.PLAYING) {
-                if (ytStatus) ytStatus.textContent = '🎵 콩이와 함께 신나게 따라해요!';
-                if (btnYtStart) btnYtStart.textContent = '▶ 계속 따라하기';
-              } else if (event.data === YT.PlayerState.PAUSED) {
-                if (ytStatus) ytStatus.textContent = '⏸ 잠시 멈췄어요.';
-              } else if (event.data === YT.PlayerState.ENDED) {
-                if (ytStatus) ytStatus.textContent = '🌸 운동을 마쳤어요!';
-                awardExerciseCompletion('c8c9zLy8jWM', '콩이 대표 건강체조 영상');
-              }
-            },
-            onError: (event) => {
-              console.warn('YouTube Player Error:', event.data);
-              if (ytFallback) ytFallback.style.display = 'flex';
-              if (ytStatus) ytStatus.textContent = '영상을 불러오지 못했어요.';
-            }
-          }
-        });
-      } catch (e) {
-        console.warn('YT Player setup exception:', e);
+    function speakLead(text) {
+      if (window.speakAsCharacter) {
+        window.speakAsCharacter('kongi', text);
+      } else if (window.CharacterVoice?.speak) {
+        window.CharacterVoice.speak(text);
       }
-    };
-
-    if (window.YT && window.YT.Player) {
-      setupPlayer();
-    } else {
-      window.onYouTubeIframeAPIReady = setupPlayer;
     }
 
-    btnYtStart?.addEventListener('click', () => {
-      if (ytPlayerReady && ytPlayer?.playVideo) {
-        try {
-          ytPlayer.unMute?.();
-          ytPlayer.playVideo();
-        } catch (e) {
-          ytPlayer.playVideo();
+    btnPlayToggle?.addEventListener('click', () => {
+      isPlayingExercise = !isPlayingExercise;
+      if (isPlayingExercise) {
+        if (chairImg) chairImg.src = 'assets/images/chair-exercise/kongi-chair-exercise.gif?t=' + Date.now();
+        if (btnPlayToggle) {
+          btnPlayToggle.textContent = '⏸ 잠시 멈추기';
+          btnPlayToggle.style.background = '#2e6628';
         }
+        if (chairStatus) chairStatus.textContent = '🎵 콩이 동작을 보며 천천히 따라해보세요!';
+        speakLead('어르신, 양팔을 천천히 올리고 무릎을 톡톡 두드려볼게요.');
       } else {
-        const iframe = $('ytPlayerIframe');
-        if (iframe) iframe.src = 'https://www.youtube.com/embed/c8c9zLy8jWM?enablejsapi=1&autoplay=1&playsinline=1&rel=0';
+        if (btnPlayToggle) {
+          btnPlayToggle.textContent = '▶ 체조 다시 시작';
+          btnPlayToggle.style.background = 'linear-gradient(135deg, #2e6628, #43a047)';
+        }
+        if (chairStatus) chairStatus.textContent = '⏸ 편안하게 숨을 고르며 쉬어가세요.';
       }
     });
 
-    btnYtPause?.addEventListener('click', () => {
-      if (ytPlayerReady && ytPlayer?.pauseVideo) {
-        ytPlayer.pauseVideo();
-      }
-    });
-
-    btnYtComplete?.addEventListener('click', () => {
-      awardExerciseCompletion('c8c9zLy8jWM', '콩이 대표 건강체조 영상');
-    });
-
-    btnRetryYt?.addEventListener('click', () => {
-      if (ytFallback) ytFallback.style.display = 'none';
-      const iframe = $('ytPlayerIframe');
-      if (iframe) iframe.src = 'https://www.youtube.com/embed/c8c9zLy8jWM?enablejsapi=1&autoplay=1&playsinline=1&rel=0';
-      setupPlayer();
+    btnComplete?.addEventListener('click', () => {
+      if (chairStatus) chairStatus.textContent = '🌸 오늘도 체조를 정말 훌륭하게 마치셨어요!';
+      speakLead('어르신, 오늘도 정말 잘하셨어요! 몸이 한결 건강해졌어요.');
+      awardExerciseCompletion('kongi_chair_exercise', '콩이와 함께하는 앉아서 체조');
     });
 
     // Sub-exercise launchers
     $('btnLaunch5Min')?.addEventListener('click', () => {
-      $('viewYoutubeMain').style.display = 'none';
+      $('viewExerciseMain')?.style && ($('viewExerciseMain').style.display = 'none');
       setExerciseState('playing');
       displayScene(0);
       play();
@@ -909,12 +854,15 @@
     });
 
     $('btnLaunch10Min')?.addEventListener('click', () => {
-      $('viewYoutubeMain').style.display = 'none';
+      $('viewExerciseMain')?.style && ($('viewExerciseMain').style.display = 'none');
       setExerciseState('ready');
       viewReady.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  // Backward compatibility alias
+  const initYoutubeExercise = initChairExercise;
 
   function awardExerciseCompletion(contentId, contentTitle) {
     // 1. Mark completed for today
@@ -951,9 +899,9 @@
     }
 
     // 3. Show unified completion reward card
-    const youtubeSection = $('viewYoutubeMain');
-    if (youtubeSection) {
-      youtubeSection.innerHTML = `
+    const exerciseSection = $('viewExerciseMain') || $('viewYoutubeMain');
+    if (exerciseSection) {
+      exerciseSection.innerHTML = `
         <div class="service-reward-card" style="background:#fff; border:3px solid #86efac; border-radius:24px; padding:32px 20px; text-align:center; box-shadow:0 8px 30px rgba(22,101,52,0.12);">
           <div class="service-reward-flower" style="font-size:56px;" aria-hidden="true">🌼</div>
           <div class="service-reward-badge" style="display:inline-block; background:#dcfce7; color:#166534; font-weight:800; font-size:18px; padding:6px 18px; border-radius:20px; margin:12px 0;">
@@ -1050,6 +998,7 @@
       displayScene(0);
       updateOverallTimeline();
       updateControls();
+      initChairExercise();
 
       // Explicitly set Ready State (State 1: Starts before play)
       setExerciseState('ready');

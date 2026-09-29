@@ -2,7 +2,7 @@ const fs = require('fs');
 const assert = require('assert');
 
 function runTest() {
-  console.log('--- 4대 캐릭터 집 구조 표준화 & 콩이 대표 YouTube 영상 시스템 검증 시작 ---');
+  console.log('--- 4대 캐릭터 집 구조 표준화 & 콩이 대표 3D 의자 체조 애니메이션 시스템 검증 시작 ---');
 
   // 1. 콩이집 검증
   const kongiHtml = fs.readFileSync('senior-exercise.html', 'utf8');
@@ -10,14 +10,11 @@ function runTest() {
 
   assert(kongiHtml.includes('🐶 콩이집 · 운동방'), '콩이집 타이틀 일치');
   assert(kongiHtml.includes('오늘도 함께 몸을 움직여볼까요?'), '콩이 인사 대사 일치');
-  assert(kongiHtml.includes('https://www.youtube.com/embed/c8c9zLy8jWM'), '콩이 대표 YouTube 임베드 URL 일치');
-  assert(kongiHtml.includes('c8c9zLy8jWM'), 'YouTube 영상 ID c8c9zLy8jWM 일치');
-  assert(kongiHtml.includes('ytFallbackCard'), '영상 로드 실패 fallback 카드 존재');
+  assert(kongiHtml.includes('kongi-chair-exercise.gif'), '콩이 대표 3D 의자 체조 GIF 애니메이션 탑재');
   assert(kongiHtml.includes('🏡 친구들 마을로 돌아가기'), '마을로 돌아가기 버튼 일치');
 
-  assert(kongiJs.includes('initYoutubeExercise'), 'YouTube 플레이어 초기화 함수 존재');
+  assert(kongiJs.includes('initChairExercise'), '의자 체조 플레이어 초기화 함수 존재');
   assert(kongiJs.includes('awardExerciseCompletion'), '운동 완료 보상 및 기록 연동 함수 존재');
-  assert(kongiJs.includes('YT.PlayerState.ENDED'), 'YouTube 영상 종료 감지 연동');
 
   // 2. 토리집 검증
   const toriHtml = fs.readFileSync('tori-play.html', 'utf8');
