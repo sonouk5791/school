@@ -124,6 +124,10 @@ html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{b
 .hw-media{width:min(95%,800px);max-height:none;margin:14px auto}
 .hw-status:empty{display:none}
 #skipHomeGreeting{min-height:64px;font-size:22px;padding:14px 24px}
+.hw-media-controls{margin:10px auto;text-align:center;font-size:20px}
+.hw-media-controls summary{display:list-item;width:max-content;margin:auto;cursor:pointer;padding:10px;color:#315a3c}
+.hw-media-controls summary:focus-visible{outline:3px solid #315a3c;outline-offset:3px}
+.hw-media-controls button{min-height:64px}
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{background:transparent;border-radius:0;mix-blend-mode:normal}
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introducing .home-friend-picture{transform:none}
 .village-copy .hw-enter{max-width:260px;align-self:flex-start}

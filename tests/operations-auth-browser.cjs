@@ -4,7 +4,7 @@ const { chromium } = require("playwright"),
   const b = await chromium.launch({ channel: "msedge", headless: true }),
     p = await b.newPage();
   await p.clock.install();
-  await p.goto("http://localhost:8085/index.html");
+  await p.goto("http://localhost:8085/index.html?demo=1");
   await p.locator("#btnTeacherSpace").click();
   await p.locator("#inputTeacherPin").fill("initial-local-pass");
   await p.locator("#btnSubmitTeacherPin").click();

@@ -1,5 +1,6 @@
 'use strict';
 const crypto=require('node:crypto');
+const access=require('../automation/tts-access');
 const MODEL='gemini-3.1-flash-tts-preview';
 const CHARACTER_VOICES=Object.freeze(Object.fromEntries(Object.entries({kongi:'Achird',tori:'Aoede',nabi:'Gacrux',bori:'Charon'}).map(([id,voice])=>[id,{voice,languageCode:'ko-KR'}])));
 let cachedToken=null;
@@ -19,7 +20,7 @@ function config(env=process.env){
  if(!/^[a-z0-9-]+$/.test(project)||!/^[a-z0-9-]+$/.test(location))throw Object.assign(Error('Invalid project or location'),{code:'TTS_NOT_CONFIGURED',status:503});
  return {credentials,project,location};
 }
-function googleError(status,data,stage){const message=String(data?.error?.message||data?.error_description||data?.error||'Google request failed').slice(0,1200);console.error('[Vertex TTS]',JSON.stringify({stage,status,message}));return Object.assign(Error(message),{code:'GOOGLE_TTS_FAILED',status:502,googleStatus:status,stage});}
+function googleError(status,data,stage){const message=String(data?.error?.message||data?.error_description||data?.error||'Google request failed').slice(0,1200);console.error('[Vertex TTS]',JSON.stringify({stage,status}));return Object.assign(Error(message),{code:'GOOGLE_TTS_FAILED',status:502,googleStatus:status,stage});}
 async function token(c,fetcher=fetch,req={}){
  if(c.auth==='oidc'){
   const subjectToken=req.headers?.['x-vercel-oidc-token']||process.env.VERCEL_OIDC_TOKEN;
@@ -46,14 +47,17 @@ async function body(req){if(req.body!==undefined)return typeof req.body==='strin
 function json(res,status,data){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(data));}
 async function handler(req,res){
  res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
- if(req.method==='GET'){let configured=true,reason=null;try{config();}catch(e){configured=false;reason=e.message;}return json(res,200,{provider:'vertex-ai',model:MODEL,configured,connection:'not-tested',reason,voices:CHARACTER_VOICES});}
+ if(req.method==='GET'){let configured=true,reason=null;try{config();}catch(e){configured=false;reason=e.message;}return json(res,200,{provider:'vertex-ai',model:MODEL,configured,enabled:process.env.SCHOOL_DYNAMIC_TTS_ENABLED==='true',requiresLogin:true,connection:'not-tested',reason,voices:CHARACTER_VOICES});}
  if(req.method!=='POST'){res.setHeader('Allow','GET, POST');return json(res,405,{error:'METHOD_NOT_ALLOWED'});}
+ let lease;
  try{const input=await body(req);if(!Object.hasOwn(CHARACTER_VOICES,input?.characterId)||typeof input.text!=='string'||!input.text.trim()||Buffer.byteLength(input.text)>3000)return json(res,400,{error:'INVALID_REQUEST',message:'Valid characterId and text (1–3000 UTF-8 bytes) required'});
+ lease=await access.reserve(req);
  const c=config(),accessToken=await token(c,fetch,req),endpoint=`https://aiplatform.googleapis.com/v1beta1/projects/${c.project}/locations/${c.location}/publishers/google/models/${MODEL}:generateContent`;
  const response=await fetch(endpoint,{method:'POST',headers:{Authorization:'Bearer '+accessToken,'x-goog-user-project':c.project,'Content-Type':'application/json'},body:JSON.stringify(payload(input.characterId,input.text.trim())),signal:AbortSignal.timeout(45000)});
  const data=await response.json();if(!response.ok)throw googleError(response.status,data,'synthesis');let audio;try{audio=decode(data);}catch(e){throw Object.assign(e,{code:'GOOGLE_TTS_FAILED',status:502,googleStatus:200});}
  res.statusCode=200;res.setHeader('Content-Type','audio/wav');res.setHeader('Content-Length',audio.length);res.setHeader('X-TTS-Provider','vertex-ai');res.setHeader('X-TTS-Model',MODEL);res.setHeader('X-TTS-Voice',CHARACTER_VOICES[input.characterId].voice);res.end(audio);
- }catch(e){const status=e.status||502;console.error('[Vertex TTS]',JSON.stringify({code:e.code||'TTS_SERVER_ERROR',status,googleStatus:e.googleStatus||null,message:e.message}));return json(res,status,{error:e.code||'TTS_SERVER_ERROR',message:e.message,googleStatus:e.googleStatus||null,model:MODEL});}
+ }catch(e){const status=e.status||502;console.error('[Vertex TTS]',JSON.stringify({code:e.code||'TTS_SERVER_ERROR',status,googleStatus:e.googleStatus||null}));return json(res,status,{error:e.code||'TTS_SERVER_ERROR',message:status===502?'음성 연결을 확인해주세요.':e.message,googleStatus:e.googleStatus||null,model:MODEL});}
+ finally{await access.release(lease);}
 }
 module.exports=handler;module.exports._test={config,payload,wav,decode,MODEL,CHARACTER_VOICES};
 module.exports._serverAuth={config,token};

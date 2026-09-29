@@ -20,12 +20,12 @@ program.scenes.forEach((scene, index) => {
   assert.ok(scene.character, `캐릭터 배정 존재 (${scene.character})`);
   assert.ok(scene.image, `이미지 파일명 존재 (${scene.image})`);
   
-  const imgPath = path.join(imagesDir, scene.image);
+  const imgPath = scene.image.includes('/') ? path.join(__dirname, '..', scene.image) : path.join(imagesDir, scene.image);
   assert.ok(fs.existsSync(imgPath), `이미지 파일 실제 존재: ${scene.image}`);
   const stat = fs.statSync(imgPath);
   assert.ok(stat.size > 50000, `이미지 파일 크기가 충분히 고화질이어야 함: ${stat.size} bytes`);
 });
-console.log('✅ 10개 씬 고화질 이미지 에셋 검증 완료');
+console.log('✅ 10개 씬 고화질 이미지/GIF 에셋 검증 완료');
 
 // 3. senior-exercise.html 및 js/css 존재 검증
 const htmlPath = path.join(__dirname, '../senior-exercise.html');

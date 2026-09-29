@@ -185,6 +185,7 @@ module.exports = async (req, res) => {
         raw.authSessions = { [auth.hash(identity.cookie)]: identity.session };
         return { ok: true };
       }
+      if (action === "session") return { authenticated: true };
       if (action === "state") return { state: publicState(raw) };
       if (action === "run") {
         const next = await engine.run(raw, {

@@ -1,0 +1,37 @@
+'use strict';
+const assert=require('node:assert/strict'),db=require('../automation/database'),auth=require('../automation/auth');
+const access=require('../automation/tts-access'),handler=require('../api/tts');
+let state={},queue=Promise.resolve(),calls=0;
+const initialDb=db.transaction,initialFetch=global.fetch,initialEnabled=process.env.SCHOOL_DYNAMIC_TTS_ENABLED;
+db.transaction=fn=>{const next=queue.then(async()=>{const draft=structuredClone(state),result=await fn(draft);state=draft;return result;});queue=next.catch(()=>{});return next;};
+global.fetch=async()=>{calls++;throw Error('Provider must not be called in denied cases');};
+const now=Date.now(),cookie='fictional-session-only';
+const headers={host:'school.test',origin:'https://school.test',cookie:'school_admin='+cookie};
+function reset(){state={admins:{primary:{mustChange:false}},authSessions:{[auth.hash(cookie)]:{createdAt:now,lastSeen:now}}};}
+const denied=(fn,status)=>assert.rejects(fn,e=>e.status===status);
+(async()=>{try{
+ delete process.env.SCHOOL_DYNAMIC_TTS_ENABLED;reset();
+ await denied(()=>access.reserve({headers},now),503);
+ let response={setHeader(){},end(data){this.data=data;}};
+ await handler({method:'POST',headers,body:{characterId:'kongi',text:'가상 안내'}},response);
+ assert.equal(response.statusCode,503);assert.equal(calls,0);
+ process.env.SCHOOL_DYNAMIC_TTS_ENABLED='true';
+ await denied(()=>access.reserve({headers:{...headers,origin:'https://other.test'}},now),403);
+ await denied(()=>access.reserve({headers:{...headers,cookie:''}},now),401);
+ await denied(()=>access.reserve({headers:{...headers,cookie:'school_admin=forged'}},now),401);
+ state.admins.primary.mustChange=true;await denied(()=>access.reserve({headers},now),403);reset();
+ const results=await Promise.allSettled([1,2,3].map(()=>access.reserve({headers},now)));
+ assert.equal(results.filter(r=>r.status==='fulfilled').length,2);assert.equal(results.find(r=>r.status==='rejected').reason.status,429);
+ for(const result of results)if(result.status==='fulfilled')await access.release(result.value);
+ assert.equal(Object.keys(state.ttsUsage.active).length,0);
+ for(let i=0;i<8;i++)await access.release(await access.reserve({headers},now));
+ await denied(()=>access.reserve({headers},now),429);
+ await access.release(await access.reserve({headers},now+61000));
+ state.ttsUsage.count=200;await denied(()=>access.reserve({headers},now+62000),429);
+ reset();const lease=await access.reserve({headers},now);await access.reserve({headers},now);await access.reserve({headers},now+91000);assert(!state.ttsUsage.active[lease]);
+ reset();state.authSessions={};await denied(()=>access.reserve({headers},now),401);
+ reset();state.authSessions[auth.hash(cookie)].lastSeen=now-21*60000;await denied(()=>access.reserve({headers},now),401);
+ db.transaction=async()=>{throw Object.assign(Error('offline'),{status:503});};await denied(()=>access.reserve({headers},now),503);
+ assert.equal(calls,0);
+ console.log('PASS default disabled; anonymous/forged/revoked/expired/origin/initial-password denied; shared atomic 2 concurrent, 10/min, 200/day caps; lease expiry; DB failure; zero external calls. Transaction double, not real PostgreSQL.');
+}finally{db.transaction=initialDb;global.fetch=initialFetch;if(initialEnabled===undefined)delete process.env.SCHOOL_DYNAMIC_TTS_ENABLED;else process.env.SCHOOL_DYNAMIC_TTS_ENABLED=initialEnabled;}})().catch(e=>{console.error(e);process.exitCode=1;});

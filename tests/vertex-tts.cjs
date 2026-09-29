@@ -1,3 +1,5 @@
+// Provider contract test only; authorization/quotas are covered by pilot-tts-access.cjs.
+const ttsAccess=require('../automation/tts-access');ttsAccess.reserve=async()=>null;ttsAccess.release=async()=>{};
 const assert=require('node:assert/strict'),crypto=require('node:crypto');const handler=require('../api/tts.js'),{payload,decode}=handler._test;
 function response(){return {headers:{},setHeader(k,v){this.headers[k]=v;},end(b){this.data=b;}};}
 (async()=>{const old={...process.env},originalFetch=global.fetch;try{delete process.env.GOOGLE_CLOUD_PROJECT;delete process.env.GOOGLE_SERVICE_ACCOUNT_JSON;let r=response();await handler({method:'POST',body:{characterId:'kongi',text:'안녕하세요'}},r);assert.equal(r.statusCode,503);

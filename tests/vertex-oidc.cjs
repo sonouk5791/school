@@ -1,3 +1,5 @@
+// Provider contract test only; authorization/quotas are covered by pilot-tts-access.cjs.
+const ttsAccess=require('../automation/tts-access');ttsAccess.reserve=async()=>null;ttsAccess.release=async()=>{};
 'use strict';
 const assert=require('node:assert/strict');
 const handler=require('../api/tts.js');

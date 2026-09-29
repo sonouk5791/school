@@ -395,7 +395,11 @@ function initTeacherModal() {
   });
 }
 
-function openTeacherModal() {
+async function openTeacherModal() {
+  if (!await window.AdminAccess?.canOpen()) {
+    document.getElementById('btnTeacherSpace')?.click();
+    return;
+  }
   const modal = document.getElementById('teacherModal');
   if (modal) {
     modal.classList.add('active');

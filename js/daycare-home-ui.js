@@ -51,12 +51,12 @@
 
     if (!btnTeacher || !pinDialog) return;
 
-    btnTeacher.addEventListener('click', (e) => {
+    btnTeacher.addEventListener('click', async (e) => {
       // This authenticated entry owns the click; legacy listeners otherwise close it again.
       e.stopImmediatePropagation();
       e.preventDefault();
       // 자동화 테스트 또는 이미 인증된 경우 바로 모달 오픈
-      const isAuthed = sessionStorage.getItem('digital_school_teacher_authed') === 'true';
+      const isAuthed = await window.AdminAccess?.canOpen();
       if (isAuthed) {
         openTeacherPanel();
         return;
