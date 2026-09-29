@@ -3120,3 +3120,21 @@
 - [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
 
 </details>
+
+## 자동 저장 / 2026-09-29 13:26:14 — 라일락 마을 2.5D 생활형 RPG 고도화 (산책 이동·NPC 대화·할 일 체크)
+- **수행 내역**: 어르신 맞춤형 2.5D 생활형 RPG 시스템 구축. 목적지 터치 시 부드러운 산책길 자동 이동(1.4초), 집 앞 도착 시 NPC 손 인사 및 정겨운 대화 모달(오늘의 대표 활동, 목록, 마을 복귀), '오늘의 라일락 마을 산책' 체크리스트 및 활동 보상 연계 완료.
+
+## 자동 저장 / 2026-09-29 13:26:20 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 7
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [css/home-welcome-flow.css](./css/home-welcome-flow.css)
+- [index.html](./index.html)
+- [js/home-welcome-flow.js](./js/home-welcome-flow.js)
+- [js/village-rpg-engine.js](./js/village-rpg-engine.js)
+- [tests/verify-lilac-village.cjs](./tests/verify-lilac-village.cjs)
+- [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
+
+</details>

@@ -592,3 +592,256 @@ html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introd
   100% { transform: scale(1) rotate(0); opacity: 1; }
 }
 
+/* ── 2.5D Life RPG Walking Avatar & Trails ── */
+.village-walker {
+  position: absolute;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.walker-avatar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.walker-body {
+  font-size: 36px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+  transition: transform 0.2s ease;
+}
+.village-walker.is-walking .walker-body {
+  animation: walker-bob 0.35s ease-in-out infinite alternate;
+}
+@keyframes walker-bob {
+  0% { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-8px) rotate(3deg); }
+}
+.walker-shadow {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 10px;
+  background: rgba(0,0,0,0.22);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+.walker-footprint {
+  position: absolute;
+  font-size: 16px;
+  opacity: 0;
+  bottom: -6px;
+}
+.village-walker.is-walking .walker-footprint {
+  animation: footprint-fade 0.7s linear infinite;
+}
+@keyframes footprint-fade {
+  0% { opacity: 0.8; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(1.3) translateY(6px); }
+}
+
+/* ── Senior-Friendly Housefront RPG Dialog Modal ── */
+.village-rpg-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 45, 25, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.village-rpg-dialog-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.village-rpg-dialog-card {
+  width: min(92vw, 680px);
+  background: #fffdf5;
+  border: 4px solid #7d603d;
+  border-radius: 36px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.35), inset 0 2px 8px #ffffff;
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transform: scale(0.92);
+  transition: transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.village-rpg-dialog-backdrop.is-open .village-rpg-dialog-card {
+  transform: scale(1);
+}
+.rpg-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rpg-dialog-roof-badge {
+  background: #e89c36;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 900;
+  padding: 6px 18px;
+  border-radius: 14px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+.rpg-dialog-close {
+  background: #f4eee2;
+  border: 2px solid #a68d72;
+  color: #59422f;
+  font-size: 22px;
+  font-weight: 900;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.rpg-dialog-close:hover {
+  background: #ebdcc8;
+}
+.rpg-dialog-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 6px 0;
+}
+.rpg-dialog-character {
+  font-size: 64px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+}
+.rpg-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rpg-dialog-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #352617;
+  margin: 0;
+  line-height: 1.2;
+}
+.rpg-dialog-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #524231;
+  margin: 0;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+.rpg-dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+.rpg-dialog-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-size: 22px;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  word-break: keep-all;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.rpg-dialog-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+}
+.rpg-dialog-btn.is-primary {
+  background: linear-gradient(180deg, #448a47 0%, #2f6932 100%);
+  color: #ffffff;
+  border: 2px solid #234f26;
+}
+.rpg-dialog-btn.is-secondary {
+  background: #f7f1e4;
+  color: #3e2f1f;
+  border: 2px solid #ba9e7d;
+}
+
+/* ── RPG Daily Walk Checklist Banner ── */
+.village-rpg-quest-container {
+  max-width: 920px;
+  margin: 14px auto 18px;
+}
+.rpg-quest-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border: 3px solid #c4d7b2;
+  border-radius: 28px;
+  padding: 16px 24px;
+  box-shadow: 0 8px 20px rgba(70,95,50,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.quest-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.quest-icon { font-size: 24px; }
+.quest-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #274720;
+}
+.quest-sub {
+  font-size: 17px;
+  color: #5e5040;
+  background: #f3f7ec;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+.quest-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.quest-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 16px;
+  background: #fdfaf2;
+  border: 2px solid #d9e2cb;
+  border-radius: 16px;
+  font-size: 19px;
+  font-weight: 800;
+  color: #4b4134;
+  transition: all 0.2s ease;
+}
+.quest-item.is-done {
+  background: #e8f5e9;
+  border-color: #81c784;
+  color: #1b5e20;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+

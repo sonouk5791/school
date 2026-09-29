@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const message=document.createElement('div');message.className='village-message';message.append(description,line);copy.append(title,role,message,enter);card.replaceChildren(scene,copy,label);
   card.addEventListener('click',()=>{remember('rooms');stopIntroductions();stopVideo();});return card;});
  window.VillageLandscape?.mount(grid);
+ window.VillageRPG?.init(grid);
  function remember(value){if(value==='rooms'){try{sessionStorage.setItem('school_home_intro_played','true');}catch{}}try{history.replaceState({...history.state,schoolHomeFlow:value},'');}catch{}}
  function hasVisited(){try{return sessionStorage.getItem('school_home_intro_played')==='true';}catch{return false;}}
  function globalMuted(){try{return localStorage.getItem('digital_school_muted')==='true';}catch{return false;}}
