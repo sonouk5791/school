@@ -2894,3 +2894,19 @@
 - [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
 
 </details>
+
+## 자동 저장 / 2026-09-29 10:35:59 — 상용화 1차 안정화 운영 배포·검증 완료, 전체 전환은 미완료
+- **수행 내역**: 소스 b69510f origin/main 푸시. 기존 Vercel school 배포 dpl_3h27uBjUZz9fgvNiNKNkiqPW94GC READY 및 https://school-tau-pearl.vercel.app 별칭 확인. 운영 4개 HTML/JS 해시 일치, 공개 legacy 인증값 패턴 없음, 내부 audit 자료 URL 404. 운영 체조 readiness 브라우저 검사 통과(새로고침 DOM 대기 보완 후 재검사). 기존 Google TTS/자산/수업/기록/DB 보존. 실제 DB·관리자 초기 인증·cron 미설정 유지, 기관 분리·직원권한·민감정보 이관·노출값 폐기 및 체조 동작 일치 검수 필요. 실제 모바일/Safari·운영 DB 및 Google 합성은 미검증. [최종 보고서](file:///J:/sh/documents/commercial-audit-2026-09-29/REPORT.md). 기관 테스트용 DB 준비 여부를 사용자에게 질문함.
+
+## 자동 저장 / 2026-09-29 10:36:18 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 5
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [documents/commercial-audit-2026-09-29/REPORT.md](./documents/commercial-audit-2026-09-29/REPORT.md)
+- [documents/commercial-audit-2026-09-29/production-verification.json](./documents/commercial-audit-2026-09-29/production-verification.json)
+- [tests/exercise-production-readiness.cjs](./tests/exercise-production-readiness.cjs)
+- [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
+
+</details>

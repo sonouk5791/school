@@ -185,3 +185,13 @@ robots/sitemap은 404, 개발용 voice test와 schema/setup script는 200. serve
 - 신규 `tests/exercise-production-readiness.cjs`: 시작/일시정지/복귀, 실제 챕터 제목, 음성 404 후 재시도, 응답 지연 deadline, 배경음악 실패 안내, 재생 거부 시 복구 화면 검증.
 
 위 신규 2개 테스트는 통과했습니다. 기존 10개 도메인/API/음성 mock 테스트와 로컬 인증 브라우저 검사도 통과했습니다. 노출 후보 값 폐기, 실제 DB·기관별 권한·TTS 호출량 통제·전체 운동 시범 일치 문제는 이번 수정으로 해결되지 않았습니다.
+
+### 최종 검증 및 배포
+
+- 변경 후에도 Edge 9페이지 × 4해상도, 총 36 초기 화면에서 pageerror/가로 넘침/수집된 비-API HTTP 실패 없음. 체조 시작·일시정지도 4크기에서 성공. 이것은 실제 Safari/Android 또는 전 기능 완주 검증이 아닙니다.
+- GitHub origin/main에 소스 커밋 `b69510f` 푸시 완료.
+- 기존 school 프로젝트 운영 배포 `dpl_3h27uBjUZz9fgvNiNKNkiqPW94GC` READY, 기존 `https://school-tau-pearl.vercel.app` 별칭 연결 확인.
+- 운영 index/체조 HTML/체조 JS/legacy 캐릭터 JS의 HTTP 200 및 로컬 SHA-256 일치 확인. 공개 legacy JS에서 인증키 패턴 없음. 내부 audit JSON/Markdown URL은 404 확인.
+- 운영 주소에서도 exercise-production-readiness 테스트 통과: 정상 시작·일시정지·복귀, 챕터명, 음성 404와 재시도, 12초 지연 종료, 음악 실패 안내, 재생 거부 처리. 테스트의 새로고침 도중 DOM이 없는 경우를 기다리도록 검사 코드만 보완한 후 재실행했습니다. 실제 DB/TTS API는 격리·모의 처리했습니다.
+- 운영 DB/관리자 초기 인증/cron 설정은 여전히 false. 노출 후보 인증값의 실제 폐기·재발급은 수행하지 않았습니다. 다기관 운영/실제 개인정보 수집/유료 서비스 개시를 승인하지 않습니다.
+- 최종 배포 기록 및 보완된 테스트의 후속 커밋은 문서·테스트만 변경하며 운영 애플리케이션 내용은 위 배포와 동일합니다.

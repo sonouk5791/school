@@ -1,0 +1,36 @@
+[
+  {
+    "path": "index.html",
+    "status": 200,
+    "sha256Matches": true
+  },
+  {
+    "path": "exercise-20min.html",
+    "status": 200,
+    "sha256Matches": true
+  },
+  {
+    "path": "js/exercise-20min.js",
+    "status": 200,
+    "sha256Matches": true
+  },
+  {
+    "path": "js/companion-character.js",
+    "status": 200,
+    "sha256Matches": true
+  },
+  {
+    "path": "documents/commercial-audit-2026-09-29/inventory.json",
+    "status": 404
+  },
+  {
+    "path": "documents/commercial-audit-2026-09-29/REPORT.md",
+    "status": 404
+  },
+  {
+    "path": "api/operations?action=status",
+    "configured": false,
+    "authConfigured": false,
+    "schedulerConfigured": false
+  }
+]
