@@ -3138,3 +3138,20 @@
 - [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
 
 </details>
+
+## 자동 저장 / 2026-09-29 13:30:39 — 라일락 마을 메인 화면 16:9 와이드 비율 및 핏(Fit) 정돈
+- **수행 내역**: 메인 화면을 스크롤 없이 한눈에 들어오는 16:9 비율(aspect-ratio: 16/9, max-height: calc(100vh - 140px))로 설정하고, 4개 집 캐릭터와 버튼을 배경 일러스트 좌표에 정확하게 오버레이하여 중복된 흰색 박스 및 뱃지를 정돈 완료함.
+
+## 자동 저장 / 2026-09-29 13:30:47 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 6
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [css/home-welcome-flow.css](./css/home-welcome-flow.css)
+- [js/home-welcome-flow.js](./js/home-welcome-flow.js)
+- [js/village-landscape.js](./js/village-landscape.js)
+- [tests/verify-lilac-village.cjs](./tests/verify-lilac-village.cjs)
+- [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
+
+</details>

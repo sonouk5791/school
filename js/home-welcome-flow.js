@@ -41,22 +41,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const contour=window.HeroContours?.[id];
   if(svg&&contour){const ns='http://www.w3.org/2000/svg',clip=document.createElementNS(ns,'clipPath'),path=document.createElementNS(ns,'path');clip.id='village-outline-'+id;path.setAttribute('d',contour.path);clip.append(path);svg.querySelector('defs').append(clip);svg.querySelectorAll('image').forEach(img=>img.setAttribute('clip-path',`url(#${clip.id})`));}
   const scene=document.createElement('div');scene.className='village-scene';scene.setAttribute('aria-hidden','true');
-  const roof={kongi:'#e89c36',tori:'#e47b97',nabi:'#8c7eb8',bori:'#48989e'}[id];
-  const houseWall={kongi:'#fffaf0',tori:'#fff8fa',nabi:'#f7f6fc',bori:'#f2faf9'}[id];
-  const blackboards={
-    kongi:'건강한<br>내일!',
-    tori:'오늘도<br>신나게! ^^',
-    nabi:'배우는<br>즐거움! ^^',
-    bori:'좋은 노래<br>좋은 추억 ^^'
-  }[id];
-  const housePropsHtml={
-    kongi:'<div class="house-chalkboard" title="건강한 내일!">'+blackboards.kongi+'</div><span class="village-prop prop-primary" title="축구공">⚽</span><span class="village-prop prop-secondary" title="운동매트와 아령">🧘‍♂️</span>',
-    tori:'<div class="house-chalkboard" title="오늘도 신나게!">'+blackboards.tori+'</div><span class="village-prop prop-primary" title="장난감 블록과 퍼즐">🧩</span><span class="village-prop prop-secondary" title="놀이 벤치">🪑</span>',
-    nabi:'<div class="house-chalkboard" title="배우는 즐거움!">'+blackboards.nabi+'</div><span class="village-prop prop-primary" title="배움 책더미">📚</span><span class="village-prop prop-secondary" title="지구본">🌐</span>',
-    bori:'<div class="house-chalkboard" title="좋은 노래 좋은 추억">'+blackboards.bori+'</div><span class="village-prop prop-primary" title="통기타">🎸</span><span class="village-prop prop-secondary" title="옛 레코드 축음기">📻</span>'
-  }[id];
   scene.classList.add('yard-'+id);
-  scene.innerHTML=`<div class="house-name-sign"><span class="sign-roof-name">${names[id]}집</span><span class="sign-roof-room">${roles[id]}</span></div><span class="village-yard-detail"></span><svg class="village-house-art" viewBox="0 0 300 240" focusable="false"><ellipse cx="150" cy="216" rx="140" ry="22" fill="#d0dfb6" opacity=".8"/><path d="M82 210 Q124 220 167 238" fill="none" stroke="#f7e4bd" stroke-width="22" stroke-linecap="round"/><rect x="66" y="80" width="174" height="127" rx="14" fill="${houseWall}" stroke="#c0b396" stroke-width="3"/><path d="M44 91 L150 18 Q154 16 158 20 L260 91 Z" fill="${roof}" stroke="#735f47" stroke-width="3" stroke-linejoin="round"/><rect x="187" y="30" width="22" height="42" rx="4" fill="${roof}" stroke="#735f47" stroke-width="2"/><path d="M128 207V148a24 24 0 0148 0v59" fill="#b18c64" stroke="#795b39" stroke-width="2"/><circle cx="164" cy="177" r="3.5" fill="#fff5d2"/><rect x="80" y="110" width="36" height="38" rx="8" fill="#e3f3f5" stroke="#ac9a7c" stroke-width="3"/><path d="M98 111v36m-17-18h34" stroke="#ac9a7c" stroke-width="2.5"/><rect x="190" y="110" width="36" height="38" rx="8" fill="#e3f3f5" stroke="#ac9a7c" stroke-width="3"/><path d="M208 111v36m-17-18h34" stroke="#ac9a7c" stroke-width="2.5"/><circle cx="34" cy="148" r="26" fill="#97b67d"/><circle cx="50" cy="162" r="20" fill="#a8c58b"/><path d="M34 196v-34" stroke="#997b53" stroke-width="8" stroke-linecap="round"/><path d="M248 214v-20m18 20v-20m-24 10h30" stroke="#bfa37c" stroke-width="4.5" stroke-linecap="round"/><circle cx="238" cy="214" r="5" fill="#c3a0dc"/><circle cx="266" cy="215" r="5.5" fill="#d9b6ee"/></svg>${housePropsHtml}`;
   const picture=card.querySelector('.home-friend-picture');if(picture)scene.append(picture);
   const copy=document.createElement('div');copy.className='village-copy';const title=card.querySelector('strong');title.textContent=names[id]+'집';
   const description=document.createElement('p');description.className='village-description';description.textContent=descriptions[id];
