@@ -1,0 +1,534 @@
+{
+  "browser": "installed Microsoft Edge, Playwright isolated contexts",
+  "api": "mocked unavailable; no live records or TTS calls",
+  "results": [
+    {
+      "file": "index.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "senior-exercise.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "exercise-20min.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      },
+      "started": true,
+      "paused": true
+    },
+    {
+      "file": "tori-play.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "nabi-learn.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "bori-hobby.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "our-home.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "daycare-class.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "22px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "service-info.html",
+      "width": 1920,
+      "height": 1080,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1920,
+        "viewport": 1920,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "index.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "senior-exercise.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "exercise-20min.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      },
+      "started": true,
+      "paused": true
+    },
+    {
+      "file": "tori-play.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "nabi-learn.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "bori-hobby.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "our-home.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "daycare-class.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "22px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "service-info.html",
+      "width": 1366,
+      "height": 768,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 1366,
+        "viewport": 1366,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "index.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "20px",
+        "brokenImages": [
+          "https://i.ytimg.com/vi/uzc_4nnMIz0/hqdefault.jpg",
+          "https://i.ytimg.com/vi/7x9F-RQwypc/hqdefault.jpg"
+        ],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "senior-exercise.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "exercise-20min.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      },
+      "started": true,
+      "paused": true
+    },
+    {
+      "file": "tori-play.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "nabi-learn.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "bori-hobby.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "our-home.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "daycare-class.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "22px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "service-info.html",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 768,
+        "viewport": 768,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "index.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "20px",
+        "brokenImages": [
+          "https://i.ytimg.com/vi/uzc_4nnMIz0/hqdefault.jpg",
+          "https://i.ytimg.com/vi/7x9F-RQwypc/hqdefault.jpg"
+        ],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "senior-exercise.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "exercise-20min.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      },
+      "started": true,
+      "paused": true
+    },
+    {
+      "file": "tori-play.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "nabi-learn.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "bori-hobby.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "16px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "our-home.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 1
+      }
+    },
+    {
+      "file": "daycare-class.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "22px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "file": "service-info.html",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "bad": [],
+      "metrics": {
+        "scrollWidth": 390,
+        "viewport": 390,
+        "bodyFont": "20px",
+        "brokenImages": [],
+        "visibleSmallButtons": 0
+      }
+    },
+    {
+      "case": "exercise audio 404",
+      "buttonEnabled": false,
+      "notice": "음성을 준비하고 있어요…"
+    },
+    {
+      "case": "exercise audio indefinitely pending after 13s",
+      "buttonEnabled": false,
+      "notice": "신나는 음악을 준비하고 있어요…"
+    }
+  ]
+}

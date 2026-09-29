@@ -1,0 +1,321 @@
+[
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 340973,
+    "sha256": "76fa3a8360a450dcf7f15cafe09284b275ad0801c45dc104835c6811feb3abc5",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "localMatch": false,
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/api/operations?action=status",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 341516,
+    "sha256": "9cc471dcaeebcc59de321e54b957a1cfbe92c037a7a98b9d7f2bac5742056941",
+    "body": "non-json",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/api/operations?action=state",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 341512,
+    "sha256": "c457962ff865f91b4d89a573ea115b9bfd1bd52e8c4a9a745ce1c1ea4e70214b",
+    "body": "non-json",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/api/garden?action=status",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 341500,
+    "sha256": "b82427665dcb6fd0398c704c85802e11a726767c1ab80722a50870d0aeae15ae",
+    "body": "non-json",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/api/tts",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 341032,
+    "sha256": "9c0738a04ade4d053ea4a2f69faff9982b785279c3af5cc2556adcff7fc3011c",
+    "body": "non-json",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/robots.txt",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 341028,
+    "sha256": "78b9b06070f35c1132d5b439334bfcdd0cf0256fc6535834f842297a2145541c",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/sitemap.xml",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 341032,
+    "sha256": "271893dcba3db0f5de941bff67f2ecaf7b88cc2dab0c6a4588dd2d4078da4e5b",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/automation/schema.sql",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 341311,
+    "sha256": "36a8094ef3d8779de74464c720de8c855b0a5555c809a623bc097ecdf5d679a3",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-efnvkwkkz-sonouk5791s-projects.vercel.app",
+    "path": "/scripts/setup-operations-db.cjs",
+    "status": 200,
+    "finalUrl": "https://vercel.com/login",
+    "bytes": 341128,
+    "sha256": "00eeaa7f3837e7bca4038f727be1cbb6f5289e377b9f16d988b8b282e19c178f",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": "default-src 'self' vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: www.google.com www.gstatic.com *.youtube.com *.youtube-nocookie.com *.ytimg.com *.twimg.com cdn.ampproject.org *.googleapis.com *.fides-cdn.ethyca.com *.ethyca.com cdn.ethyca.com cdn.vercel-insights.com va.vercel-scripts.com cdp.vercel.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;child-src *.youtube.com *.youtube-nocookie.com *.stripe.com www.google.com github.com calendly.com *.vusercontent.net *.vercel.run vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;style-src 'self' 'unsafe-inline' *.googleapis.com vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;img-src * blob: data:;media-src 'self' videos.ctfassets.net user-images.githubusercontent.com replicate.delivery *.public.blob.vercel-storage.com *.private.blob.vercel-storage.com blob: data: vercel.com *.vercel.com *.vercel.sh vercel.live *.stripe.com twitter.com *.twitter.com *.google.com *.github.com *.codesandbox.io https://risk.clearbit.com wss://*.vercel.com localhost:* chrome-extension://*;connect-src wss://ws-us3.pusher.com data: * https://*.contentful.com cdp.vercel.com;font-src 'self' *.vercel.com *.gstatic.com vercel.live;frame-ancestors 'none';worker-src 'self' *.vercel.com blob:",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "origin-when-cross-origin",
+      "strict-transport-security": "max-age=31536000; includeSubDomains; preload"
+    },
+    "note": "Protected deployment redirected to Vercel login; not an app success"
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/",
+    "status": 200,
+    "finalUrl": "https://school-tau-pearl.vercel.app/",
+    "bytes": 63402,
+    "sha256": "a3c2b574b5452be3e6f3898757a5403f3cb5b409d66319a2119fb372ef71101c",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    },
+    "localMatch": true
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/api/operations?action=status",
+    "status": 200,
+    "finalUrl": "https://school-tau-pearl.vercel.app/api/operations",
+    "bytes": 104,
+    "sha256": "9eb1a444ba6265996c97935fa09e0dc76a3a307315d6ccf4bcad3e8839b7c2cf",
+    "body": {
+      "configured": false,
+      "authConfigured": false,
+      "schedulerConfigured": false
+    },
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": "nosniff",
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    }
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/api/operations?action=state",
+    "status": 503,
+    "finalUrl": "https://school-tau-pearl.vercel.app/api/operations",
+    "bytes": 97,
+    "sha256": "15afc25dee389e0e3de69297b915a0d8f9f2a9d1466a079137bfe68a5dec6dbb",
+    "body": {
+      "error": "서버 데이터베이스 연결이 필요합니다."
+    },
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": "nosniff",
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    }
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/api/garden?action=status",
+    "status": 200,
+    "finalUrl": "https://school-tau-pearl.vercel.app/api/garden",
+    "bytes": 20,
+    "sha256": "31bac4a3a86fe0ac346b1097a425ff68bdf0b0675cb028fd6b402ba646bc6aad",
+    "body": {
+      "configured": false
+    },
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": "nosniff",
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    }
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/api/tts",
+    "status": 200,
+    "finalUrl": "https://school-tau-pearl.vercel.app/api/tts",
+    "bytes": 328,
+    "sha256": "6b3106bbd0ea9662fc4ac982d5d07e3e695039d2fd78e9753b239596b581ede4",
+    "body": {
+      "configured": true,
+      "provider": "vertex-ai",
+      "connection": "not-tested"
+    },
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": "nosniff",
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    }
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/robots.txt",
+    "status": 404,
+    "finalUrl": "https://school-tau-pearl.vercel.app/robots.txt",
+    "bytes": 79,
+    "sha256": "bccaf939b7d3978a946da7a3f3182a6f811ca420aa11128c70ed6ab6da9df7a0",
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    }
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/sitemap.xml",
+    "status": 404,
+    "finalUrl": "https://school-tau-pearl.vercel.app/sitemap.xml",
+    "bytes": 79,
+    "sha256": "66cad0a1180de4f62fcd4adee15d0b84a37c3e5d64889acac6e4293aa1d3c01f",
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    }
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/automation/schema.sql",
+    "status": 200,
+    "finalUrl": "https://school-tau-pearl.vercel.app/automation/schema.sql",
+    "bytes": 448,
+    "sha256": "1dd4f5ee7b82266318b92f30389b89dc03738d7da7ba33a95cad0be73407e83c",
+    "headers": {
+      "content-type": "application/x-sql",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    }
+  },
+  {
+    "origin": "https://school-tau-pearl.vercel.app",
+    "path": "/scripts/setup-operations-db.cjs",
+    "status": 200,
+    "finalUrl": "https://school-tau-pearl.vercel.app/scripts/setup-operations-db.cjs",
+    "bytes": 627,
+    "sha256": "a5ee7890c05bcf1173811c94bd5e124d6daf1f452c9f450749eda8686dc63c55",
+    "headers": {
+      "content-type": "application/node",
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "x-content-type-options": null,
+      "referrer-policy": null,
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+    }
+  }
+]

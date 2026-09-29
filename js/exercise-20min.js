@@ -71,7 +71,7 @@
     kongi: { emoji: '🐶', name: '콩이', img: 'assets/images/everyday/kongi-active.png', fallback: 'assets/images/friend-kongi.png' },
     tori:  { emoji: '🐰', name: '토리', img: 'assets/images/everyday/tori-active.png',  fallback: 'assets/images/friend-tori.png' },
     nabi:  { emoji: '🐱', name: '나비', img: 'assets/images/everyday/nabi-active.png',  fallback: 'assets/images/friend-nabi.png' },
-    bori:  { emoji: '🐕', name: '보리', img: 'assets/images/everyday/bori-active.png',  fallback: 'assets/images/friend-bori.png' },
+    bori:  { emoji: '🐻', name: '보리', img: 'assets/images/everyday/bori-active.png',  fallback: 'assets/images/friend-bori.png' },
   };
 
   const MOVE_LABELS = {
@@ -177,12 +177,55 @@
   let beatInterval      = null;
   let beatCount         = 0;
 
+  // Media preparation has a deadline; a failed narration must not start a silent class.
+  let ready = false;
+  let starting = false;
+  let failed = false;
+  const LOAD_TIMEOUT = 12000;
+  function mediaReady(media, label) {
+    return new Promise((resolve, reject) => {
+      if (media.readyState >= 2) return resolve();
+      const cleanup = () => {
+        clearTimeout(timer);
+        media.removeEventListener('canplay', success);
+        media.removeEventListener('error', failure);
+      };
+      const success = () => { cleanup(); resolve(); };
+      const failure = () => { cleanup(); reject(Error(label + '을 불러오지 못했어요.')); };
+      const timer = setTimeout(failure, LOAD_TIMEOUT);
+      media.addEventListener('canplay', success, { once: true });
+      media.addEventListener('error', failure, { once: true });
+      media.load();
+    });
+  }
+  function showLoadFailure(message) {
+    failed = true;
+    ready = false;
+    isPlaying = false;
+    isPaused = false;
+    starting = false;
+    if (animFrame) cancelAnimationFrame(animFrame);
+    stopBeatTracker();
+    narrationAudio.pause();
+    bgmAudio?.pause();
+    startOverlay.hidden = false;
+    pauseOverlay.hidden = true;
+    completeOverlay.hidden = true;
+    btnStart.disabled = true;
+    loadStatus.textContent = message + ' 다시 준비하거나 마을로 돌아가세요.';
+    $('loadRecovery').hidden = false;
+  }
+
   // ═══ INIT ═══
   async function init() {
     try {
       loadStatus.textContent = '체조 프로그램을 불러오고 있어요…';
-      const resp = await fetch('assets/exercise-20min/program.json');
+      const resp = await fetch('assets/exercise-20min/program.json', { signal: AbortSignal.timeout(LOAD_TIMEOUT) });
+      if (!resp.ok) throw Error('체조 순서를 불러오지 못했어요.');
       program = await resp.json();
+      if (!Number.isFinite(program.duration) || program.duration <= 0 || !Array.isArray(program.events) || !program.events.length || !Array.isArray(program.chapters)) {
+        throw Error('체조 순서를 확인하지 못했어요.');
+      }
 
       precomputeCountSequences();
 
@@ -193,37 +236,28 @@
       bgmAudio.volume = 0;
       bgmAudio.preload = 'auto';
 
-      await new Promise((resolve) => {
-        if (bgmAudio.readyState >= 2) { resolve(); return; }
-        bgmAudio.addEventListener('canplay', resolve, { once: true });
-        bgmAudio.addEventListener('error', () => {
-          console.warn('BGM load failed, continuing without BGM');
-          resolve();
-        }, { once: true });
-        bgmAudio.load();
-      });
-
-      // 나레이션 로드
-      loadStatus.textContent = '음성을 준비하고 있어요…';
-      await new Promise((resolve) => {
-        if (narrationAudio.readyState >= 2) { resolve(); return; }
-        narrationAudio.addEventListener('canplay', resolve, { once: true });
-        narrationAudio.addEventListener('error', () => {
-          resolve();
-        }, { once: true });
-        narrationAudio.load();
-      });
+      loadStatus.textContent = '음악과 안내 음성을 준비하고 있어요…';
+      const [, musicReady] = await Promise.all([
+        mediaReady(narrationAudio, '안내 음성'),
+        mediaReady(bgmAudio, '배경음악').then(() => true, () => false),
+      ]);
+      if (failed) return;
+      if (!musicReady) {
+        isBgmOn = false;
+        btnBgm.textContent = '음악 연결 안 됨';
+        btnBgm.disabled = true;
+      }
 
       totalTimeLabel.textContent = formatTime(program.duration);
       headerTime.textContent = `00:00 / ${formatTime(program.duration)}`;
       progressBar.max = program.duration;
 
-      loadStatus.textContent = '준비 완료! 시작 버튼을 눌러주세요.';
+      ready = true;
+      loadStatus.textContent = musicReady ? '준비 완료! 시작 버튼을 눌러주세요.' : '배경음악을 불러오지 못했어요. 안내 음성으로 진행해요.';
       btnStart.disabled = false;
       btnStart.textContent = '▶ 20분 체조 시작하기';
     } catch (err) {
-      console.error('Init error:', err);
-      loadStatus.textContent = '준비에 문제가 있어요. 새로고침해주세요.';
+      showLoadFailure(err.name === 'TimeoutError' ? '준비 시간이 길어지고 있어요.' : '체조 자료를 불러오지 못했어요.');
     }
   }
 
@@ -262,7 +296,20 @@
   }
 
   // ═══ START ═══
-  function startExercise() {
+  async function startExercise() {
+    if (!ready || starting || isPlaying) return;
+    starting = true;
+    btnStart.disabled = true;
+    narrationAudio.currentTime = 0;
+    narrationAudio.muted = isMuted;
+    try {
+      await narrationAudio.play();
+    } catch {
+      showLoadFailure('안내 음성을 재생하지 못했어요.');
+      return;
+    }
+    if (failed) return;
+    starting = false;
     startOverlay.hidden = true;
     pauseOverlay.hidden = true;
     completeOverlay.hidden = true;
@@ -274,9 +321,6 @@
     isPaused = false;
 
     // 나레이션 재생
-    narrationAudio.currentTime = 0;
-    narrationAudio.muted = isMuted;
-    narrationAudio.play().catch(() => {});
 
     // BGM 재생
     startBgm();
@@ -387,7 +431,7 @@
       const chIdx = ev.chapter;
       if (chIdx !== currentChapterIdx && chIdx < (program.chapters?.length || 5)) {
         currentChapterIdx = chIdx;
-        const stepName = CHAPTER_STEP_NAMES[chIdx] || program.chapters[chIdx]?.title || '건강체조';
+        const stepName = program.chapters[chIdx]?.title || '건강체조';
         headerStepBadge.textContent = stepName;
       }
     }
@@ -404,6 +448,7 @@
 
   // ═══ PAUSE / RESUME ═══
   function togglePause() {
+    if (!isPlaying) return;
     isPaused = !isPaused;
     if (isPaused) {
       narrationAudio.pause();
@@ -413,7 +458,7 @@
       pauseOverlay.hidden = false;
     } else {
       pauseOverlay.hidden = true;
-      narrationAudio.play().catch(() => {});
+      narrationAudio.play().catch(() => showLoadFailure('안내 음성을 다시 재생하지 못했어요.'));
       if (bgmAudio && isBgmOn) bgmAudio.play().catch(() => {});
       startBeatTracker();
       btnPause.textContent = '⏸ 잠깐 쉬기';
@@ -580,6 +625,12 @@
   btnBgm.addEventListener('click', toggleBgm);
   btnFull.addEventListener('click', toggleFullscreen);
   btnRestart.addEventListener('click', restartExercise);
+  $('btnRetryLoad').addEventListener('click', () => location.reload());
+  narrationAudio.addEventListener('error', () => {
+    if (isPlaying || starting) showLoadFailure('안내 음성 연결이 끊겼어요.');
+  });
+  liveGifImg.addEventListener('error', () => showLoadFailure('동작 그림을 불러오지 못했어요.'));
+  if (liveGifImg.complete && !liveGifImg.naturalWidth) showLoadFailure('동작 그림을 불러오지 못했어요.');
 
   progressBar.addEventListener('input', () => seekTo(Number(progressBar.value)));
 

@@ -289,8 +289,7 @@
         const typecastRes = await fetch('/api/tts/typecast', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'X-Typecast-API-Key': 'tc_681059782dc4759327e3d302'
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             text: text,

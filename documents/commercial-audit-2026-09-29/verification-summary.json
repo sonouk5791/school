@@ -1,0 +1,46 @@
+{
+  "baselineSyntax": {
+    "checked": 141,
+    "passed": 140,
+    "failed": [
+      "js/user-profile.js (not loaded by current HTML)"
+    ]
+  },
+  "domainApiMockTests": {
+    "passed": [
+      "operations-domain",
+      "operations-api",
+      "garden-domain",
+      "garden-api",
+      "bori-media-domain",
+      "bori-media-api",
+      "bori-media-outbox",
+      "vertex-tts",
+      "vertex-oidc",
+      "journal-missing-data"
+    ],
+    "livePostgres": false,
+    "liveGoogle": false
+  },
+  "browserTests": {
+    "passed": [
+      "operations-auth-browser",
+      "exercise-production-readiness"
+    ],
+    "obsoleteSelectorFailure": "senior-record-integrity: .nav-link[data-target=lessons]",
+    "initialDependencyFailure": [
+      "record-integrity",
+      "senior-record-integrity"
+    ]
+  },
+  "securityTests": {
+    "passed": [
+      "commercial-security-source"
+    ],
+    "credentialRevocation": false
+  },
+  "productionBuild": {
+    "passed": true,
+    "manifestHashesUnchanged": true
+  }
+}

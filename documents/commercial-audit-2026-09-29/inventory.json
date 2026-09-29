@@ -1,0 +1,1231 @@
+{
+  "at": "2026-09-29T01:21:50.945Z",
+  "commit": "eaae44dbd1a8c0237252ea03ea810b4a6a113329",
+  "pages": [
+    "index.html",
+    "avatar-3d.html",
+    "senior-exercise.html",
+    "character-house.html",
+    "tori-play.html",
+    "nabi-learn.html",
+    "bori-hobby.html",
+    "daily-course.html",
+    "character-voice-test.html",
+    "daycare-class.html",
+    "bori-memory-theater.html",
+    "bori-song-class.html",
+    "service-info.html",
+    "our-home.html",
+    "exercise-20min.html"
+  ],
+  "counts": {
+    "api": 3,
+    "automation": 14,
+    "js": 106,
+    "css": 59,
+    "scripts": 31,
+    "tests": 368
+  },
+  "pageDetails": [
+    {
+      "file": "index.html",
+      "title": "디지털 AI 학교 - 네 친구와 함께하는 하루",
+      "scripts": [
+        "js/character-voice-system.js?v=20260928-ops",
+        "js/character-rig-data.js?v=20260922",
+        "js/hero-contours.js?v=20260922",
+        "js/hanbok-character.js?v=20260928-active",
+        "js/character-animation.js?v=20260928-active",
+        "js/program-library.js?v=20260928-media2",
+        "js/auto-scheduler.js?v=20260928-ops",
+        "js/auto-scheduler-ui.js?v=20260926",
+        "js/daycare-schedule.js?v=20260928-ops",
+        "js/seasonal-greeting.js?v=20260928",
+        "js/daycare-home-ui.js?v=20260928-media2",
+        "automation/domain.js?v=20260928",
+        "js/operations-store.js?v=20260928",
+        "js/operations-sync.js?v=20260928-media2",
+        "js/village-landscape.js?v=20260928-nature",
+        "js/home-welcome-flow.js?v=20260928-nature",
+        "js/admin-access.js?v=20260928",
+        "automation/media.js?v=20260928-media",
+        "js/bori-media-store.js?v=20260928-media",
+        "js/bori-media-admin.js?v=20260928-media",
+        "js/garden-admin.js",
+        "js/operations-admin.js?v=20260928-garden",
+        "js/korean-visemes.js?v=20260928",
+        "js/everyday-characters.js?v=20260928-active",
+        "js/service-config.js?v=20260928",
+        "js/service-activity.js?v=20260928",
+        "js/service-content.js?v=20260928",
+        "js/characters.js?v=20260921-hd",
+        "js/character-speech-cues.js?v=20260921-reference",
+        "js/character-lipsync.js?v=20260921-hd",
+        "js/voice-scripts.js?v=15",
+        "js/voice.js?v=20260921-reference",
+        "js/karaoke-synth.js?v=15",
+        "js/lesson-data.js?v=17",
+        "js/record-manager.js?v=15",
+        "js/reminiscence-image-manifest.js?v=1",
+        "js/reminiscence-image-policy.js?v=1",
+        "js/lesson-engine.js?v=20260917youtube",
+        "js/app.js?v=20260916welcome",
+        "js/monthly-programs.js?v=15",
+        "js/care-workflow.js?v=20260916",
+        "js/consent-forms.js?v=20260916forms8",
+        "js/consent-rooms.js?v=20260916forms8",
+        "js/friends-and-play.js?v=20260928-video",
+        "js/daily-games.js?v=15",
+        "js/extra-games.js?v=16",
+        "js/word-search.js?v=16",
+        "js/joint-room.js?v=16",
+        "js/karaoke-room.js?v=15",
+        "js/hobby-room.js?v=19",
+        "js/solar-room.js?v=1",
+        "js/story-library.js?v=1",
+        "js/chatgpt-practice.js?v=1",
+        "js/basic-study-rooms.js?v=2",
+        "js/coloring-room.js?v=1",
+        "js/school-content.js?v=2",
+        "js/workflow-automation.js?v=2",
+        "js/warmup-intro.js?v=20260922-simple",
+        "js/weather-service.js?v=1",
+        "js/senior-finish.js?v=20260921exercise",
+        "js/participant-archive-store.js?v=1",
+        "js/participant-archive.js?v=20260916forms8",
+        "js/longtermcare-handoff.js?v=1",
+        "js/morning-program.js?v=20260917",
+        "js/welcome-recordings.js?v=20260917available",
+        "js/welcome-greeting.js?v=20260921-reference",
+        "js/character-wardrobe.js?v=20260921-reference",
+        "js/clothing-activities.js?v=1",
+        "js/character-rooms.js?v=20260917activities",
+        "js/senior-experiences.js?v=20260921exercise",
+        "js/home-care-recommendations.js?v=1",
+        "js/home-care-experience.js?v=1",
+        "js/old-song-player.js?v=20260917youtube",
+        "js/character-audio-player.js?v=20260921-reference",
+        "js/character-voice-recognizer.js?v=20260923-home",
+        "js/animated-character.js?v=20260928-video",
+        "js/kongi-greeting-video.js?v=20260928",
+        "js/character-actions.js?v=20260921-actions",
+        "js/home-character-hero.js?v=20260928-20260923-home",
+        "js/home-accessibility-menu.js?v=20260928-reference2"
+      ],
+      "hasDescription": true,
+      "hasCanonical": false,
+      "hasOg": true
+    },
+    {
+      "file": "avatar-3d.html",
+      "title": "실시간 3D 콩이 아바타 플랫폼 | 디지털 AI학교",
+      "scripts": [
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+        "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js",
+        "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "senior-exercise.html",
+      "title": "콩이의 운동방 · 디지털 AI 학교",
+      "scripts": [
+        "js/character-voice-system.js?v=20260928-ops",
+        "js/character-rig-data.js?v=20260922",
+        "js/hanbok-character.js?v=20260928-active",
+        "js/character-animation.js?v=20260928-active",
+        "js/senior-common-header.js?v=20260928-service",
+        "js/korean-visemes.js?v=20260928",
+        "js/everyday-characters.js?v=20260928-active",
+        "js/service-config.js?v=20260928",
+        "js/service-activity.js?v=20260928",
+        "js/service-content.js?v=20260928",
+        "js/senior-exercise.js?v=20260928-service"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "character-house.html",
+      "title": "내가 꾸미는 AI 캐릭터 집 · 디지털 AI 학교",
+      "scripts": [
+        "js/character-voice-system.js?v=20260922-separated",
+        "js/senior-common-header.js?v=20260923-nav2",
+        "js/house-furnishings.js?v=20260922-easy5",
+        "js/room-decor.js?v=20260922-easy5",
+        "js/character-customizer.js?v=20260922-easy5",
+        "js/character-house.js?v=20260922-easy5"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "tori-play.html",
+      "title": "토리의 놀이방 · 디지털 AI 학교",
+      "scripts": [
+        "js/room-activity-flow.js?v=20260928-service",
+        "js/character-voice-system.js?v=20260928-ops",
+        "js/character-rig-data.js?v=20260922",
+        "js/hanbok-character.js?v=20260928-active",
+        "js/character-animation.js?v=20260928-active",
+        "js/senior-common-header.js?v=20260928-service",
+        "js/korean-visemes.js?v=20260928",
+        "js/everyday-characters.js?v=20260928-active",
+        "js/service-config.js?v=20260928",
+        "js/service-activity.js?v=20260928",
+        "js/service-content.js?v=20260928",
+        "js/activity-bank.js?v=20260928",
+        "js/extended-activities.js?v=20260928-service"
+      ],
+      "hasDescription": true,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "nabi-learn.html",
+      "title": "나비의 학습방 · 디지털 AI 학교",
+      "scripts": [
+        "js/room-activity-flow.js?v=20260928-service",
+        "js/character-voice-system.js?v=20260928-ops",
+        "js/character-rig-data.js?v=20260922",
+        "js/hanbok-character.js?v=20260928-active",
+        "js/character-animation.js?v=20260928-active",
+        "js/senior-common-header.js?v=20260928-service",
+        "js/korean-visemes.js?v=20260928",
+        "js/everyday-characters.js?v=20260928-active",
+        "js/service-config.js?v=20260928",
+        "js/service-activity.js?v=20260928",
+        "js/service-content.js?v=20260928",
+        "js/activity-bank.js?v=20260928",
+        "js/extended-activities.js?v=20260928-service"
+      ],
+      "hasDescription": true,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "bori-hobby.html",
+      "title": "보리의 취미방 · 디지털 AI 학교",
+      "scripts": [
+        "js/room-activity-flow.js?v=20260928-service",
+        "js/character-voice-system.js?v=20260928-ops",
+        "js/character-rig-data.js?v=20260922",
+        "js/hanbok-character.js?v=20260928-active",
+        "js/character-animation.js?v=20260928-active",
+        "js/senior-common-header.js?v=20260928-service",
+        "js/korean-visemes.js?v=20260928",
+        "js/everyday-characters.js?v=20260928-active",
+        "js/service-config.js?v=20260928",
+        "js/service-activity.js?v=20260928",
+        "js/service-content.js?v=20260928",
+        "js/activity-bank.js?v=20260928",
+        "js/extended-activities.js?v=20260928-service"
+      ],
+      "hasDescription": true,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "daily-course.html",
+      "title": "간편 수업 · 20분 · 디지털 AI 학교",
+      "scripts": [
+        "js/senior-common-header.js?v=20260923-nav2",
+        "js/record-manager.js",
+        "js/daily-course.js"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "character-voice-test.html",
+      "title": "캐릭터 음성 테스트 · 선생님 공간",
+      "scripts": [
+        "js/character-voice-system.js?v=20260922-separated",
+        "js/character-voice-test.js"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "daycare-class.html",
+      "title": "주간보호 60분 수업 진행 · 디지털 AI 학교",
+      "scripts": [
+        "js/record-manager.js",
+        "js/daycare-schedule.js",
+        "js/program-library.js",
+        "js/auto-scheduler.js",
+        "js/character-voice-system.js",
+        "automation/domain.js",
+        "js/operations-store.js",
+        "js/operations-sync.js",
+        "js/activity-routes.js?v=20260928-media2",
+        "js/daycare-session.js?v=20260928-frame"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "bori-memory-theater.html",
+      "title": "보리의 추억극장 · 디지털 AI 학교",
+      "scripts": [
+        "automation/domain.js",
+        "automation/media.js",
+        "js/operations-store.js",
+        "js/operations-sync.js",
+        "js/daycare-schedule.js",
+        "js/character-voice-system.js?v=20260928-ops",
+        "js/bori-media-store.js",
+        "js/bori-media-player.js"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "bori-song-class.html",
+      "title": "보리의 옛 노래 교실 · 디지털 AI 학교",
+      "scripts": [
+        "automation/domain.js",
+        "automation/media.js",
+        "js/operations-store.js",
+        "js/operations-sync.js",
+        "js/daycare-schedule.js",
+        "js/character-voice-system.js?v=20260928-ops",
+        "js/bori-media-store.js",
+        "js/bori-media-player.js"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "service-info.html",
+      "title": "서비스 이용 안내 · 디지털 AI 학교",
+      "scripts": [],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "our-home.html",
+      "title": "우리 집 · 디지털 AI 학교",
+      "scripts": [
+        "js/character-voice-system.js",
+        "js/characters.js",
+        "automation/garden.js",
+        "js/our-home.js"
+      ],
+      "hasDescription": false,
+      "hasCanonical": false,
+      "hasOg": false
+    },
+    {
+      "file": "exercise-20min.html",
+      "title": "콩이와 친구들과 함께하는 신나는 20분 건강체조 · 디지털 AI 학교",
+      "scripts": [
+        "js/senior-common-header.js?v=20260928-service",
+        "js/service-config.js?v=20260928",
+        "js/exercise-20min.js?v=20260929c"
+      ],
+      "hasDescription": true,
+      "hasCanonical": false,
+      "hasOg": false
+    }
+  ],
+  "syntax": [
+    {
+      "file": "api/tts.js",
+      "ok": true
+    },
+    {
+      "file": "api/operations.js",
+      "ok": true
+    },
+    {
+      "file": "api/garden.js",
+      "ok": true
+    },
+    {
+      "file": "automation/domain.js",
+      "ok": true
+    },
+    {
+      "file": "automation/scheduler.js",
+      "ok": true
+    },
+    {
+      "file": "automation/retryHandler.js",
+      "ok": true
+    },
+    {
+      "file": "automation/notification.js",
+      "ok": true
+    },
+    {
+      "file": "automation/jobs.js",
+      "ok": true
+    },
+    {
+      "file": "automation/engine.js",
+      "ok": true
+    },
+    {
+      "file": "automation/database.js",
+      "ok": true
+    },
+    {
+      "file": "automation/auth.js",
+      "ok": true
+    },
+    {
+      "file": "automation/reportGenerator.js",
+      "ok": true
+    },
+    {
+      "file": "automation/media.js",
+      "ok": true
+    },
+    {
+      "file": "automation/garden.js",
+      "ok": true
+    },
+    {
+      "file": "js/voice.js",
+      "ok": true
+    },
+    {
+      "file": "js/lesson-data.js",
+      "ok": true
+    },
+    {
+      "file": "js/record-manager.js",
+      "ok": true
+    },
+    {
+      "file": "js/lesson-engine.js",
+      "ok": true
+    },
+    {
+      "file": "js/app.js",
+      "ok": true
+    },
+    {
+      "file": "js/karaoke-synth.js",
+      "ok": true
+    },
+    {
+      "file": "js/care-workflow.js",
+      "ok": true
+    },
+    {
+      "file": "js/user-profile.js",
+      "ok": false,
+      "error": "J:\\sh\\js\\user-profile.js:24\r\n    'consent-guardian': { icon: '?��?�👩‍�?, fullTitle: '보호???�의' },\r\n                                                         ^^\r\n\r\nSyntaxError: Unexpected identifier '보호'\r\n    at wrapSafe (node:internal/modules/cjs/loader:1804:18)\r\n    at checkSyntax (node:internal/main/check_syntax:76:3)\r\n\r\nNode.js v24.18.0\r\n"
+    },
+    {
+      "file": "js/consent-forms.js",
+      "ok": true
+    },
+    {
+      "file": "js/consent-rooms.js",
+      "ok": true
+    },
+    {
+      "file": "js/monthly-programs.js",
+      "ok": true
+    },
+    {
+      "file": "js/voice-scripts.js",
+      "ok": true
+    },
+    {
+      "file": "js/friends-and-play.js",
+      "ok": true
+    },
+    {
+      "file": "js/extra-games.js",
+      "ok": true
+    },
+    {
+      "file": "js/joint-room.js",
+      "ok": true
+    },
+    {
+      "file": "js/daily-games.js",
+      "ok": true
+    },
+    {
+      "file": "js/word-search.js",
+      "ok": true
+    },
+    {
+      "file": "js/karaoke-room.js",
+      "ok": true
+    },
+    {
+      "file": "js/hobby-room.js",
+      "ok": true
+    },
+    {
+      "file": "js/solar-room.js",
+      "ok": true
+    },
+    {
+      "file": "js/story-library.js",
+      "ok": true
+    },
+    {
+      "file": "js/chatgpt-practice.js",
+      "ok": true
+    },
+    {
+      "file": "js/basic-study-rooms.js",
+      "ok": true
+    },
+    {
+      "file": "js/coloring-room.js",
+      "ok": true
+    },
+    {
+      "file": "js/school-shell.js",
+      "ok": true
+    },
+    {
+      "file": "js/school-content.js",
+      "ok": true
+    },
+    {
+      "file": "js/workflow-automation.js",
+      "ok": true
+    },
+    {
+      "file": "js/warmup-intro.js",
+      "ok": true
+    },
+    {
+      "file": "js/weather-service.js",
+      "ok": true
+    },
+    {
+      "file": "js/senior-finish.js",
+      "ok": true
+    },
+    {
+      "file": "js/participant-archive-store.js",
+      "ok": true
+    },
+    {
+      "file": "js/participant-archive.js",
+      "ok": true
+    },
+    {
+      "file": "js/longtermcare-handoff.js",
+      "ok": true
+    },
+    {
+      "file": "js/morning-program.js",
+      "ok": true
+    },
+    {
+      "file": "js/welcome-greeting.js",
+      "ok": true
+    },
+    {
+      "file": "js/welcome-recordings.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-rooms.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-wardrobe.js",
+      "ok": true
+    },
+    {
+      "file": "js/clothing-activities.js",
+      "ok": true
+    },
+    {
+      "file": "js/senior-experiences.js",
+      "ok": true
+    },
+    {
+      "file": "js/home-care-recommendations.js",
+      "ok": true
+    },
+    {
+      "file": "js/home-care-experience.js",
+      "ok": true
+    },
+    {
+      "file": "js/reminiscence-image-policy.js",
+      "ok": true
+    },
+    {
+      "file": "js/reminiscence-image-manifest.js",
+      "ok": true
+    },
+    {
+      "file": "js/old-song-player.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-audio-player.js",
+      "ok": true
+    },
+    {
+      "file": "js/vendor/three.min.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-3d-renderer.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-voice-recognizer.js",
+      "ok": true
+    },
+    {
+      "file": "js/companion-character.js",
+      "ok": true
+    },
+    {
+      "file": "js/animated-character.js",
+      "ok": true
+    },
+    {
+      "file": "js/characters.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-lipsync.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-speech-cues.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-actions.js",
+      "ok": true
+    },
+    {
+      "file": "js/senior-exercise.js",
+      "ok": true
+    },
+    {
+      "file": "js/senior-gymnastics.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-house.js",
+      "ok": true
+    },
+    {
+      "file": "js/house-furnishings.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-customizer.js",
+      "ok": true
+    },
+    {
+      "file": "js/room-decor.js",
+      "ok": true
+    },
+    {
+      "file": "js/home-character-hero.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-voice-system.js",
+      "ok": true
+    },
+    {
+      "file": "js/home-accessibility-menu.js",
+      "ok": true
+    },
+    {
+      "file": "js/room-activity-flow.js",
+      "ok": true
+    },
+    {
+      "file": "js/daily-course.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-voice-test.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-rig-data.js",
+      "ok": true
+    },
+    {
+      "file": "js/character-animation.js",
+      "ok": true
+    },
+    {
+      "file": "js/hero-contours.js",
+      "ok": true
+    },
+    {
+      "file": "js/senior-common-header.js",
+      "ok": true
+    },
+    {
+      "file": "js/chuseok-season.js",
+      "ok": true
+    },
+    {
+      "file": "js/chuseok-bow.js",
+      "ok": true
+    },
+    {
+      "file": "js/chuseok-recommendation.js",
+      "ok": true
+    },
+    {
+      "file": "js/hanbok-character.js",
+      "ok": true
+    },
+    {
+      "file": "js/daycare-schedule.js",
+      "ok": true
+    },
+    {
+      "file": "js/daycare-class.js",
+      "ok": true
+    },
+    {
+      "file": "js/seasonal-greeting.js",
+      "ok": true
+    },
+    {
+      "file": "js/daycare-home-ui.js",
+      "ok": true
+    },
+    {
+      "file": "js/program-library.js",
+      "ok": true
+    },
+    {
+      "file": "js/auto-scheduler.js",
+      "ok": true
+    },
+    {
+      "file": "js/auto-scheduler-ui.js",
+      "ok": true
+    },
+    {
+      "file": "js/operations-store.js",
+      "ok": true
+    },
+    {
+      "file": "js/operations-home.js",
+      "ok": true
+    },
+    {
+      "file": "js/daycare-session.js",
+      "ok": true
+    },
+    {
+      "file": "js/admin-access.js",
+      "ok": true
+    },
+    {
+      "file": "js/operations-admin.js",
+      "ok": true
+    },
+    {
+      "file": "js/activity-bank.js",
+      "ok": true
+    },
+    {
+      "file": "js/extended-activities.js",
+      "ok": true
+    },
+    {
+      "file": "js/operations-sync.js",
+      "ok": true
+    },
+    {
+      "file": "js/korean-visemes.js",
+      "ok": true
+    },
+    {
+      "file": "js/activity-routes.js",
+      "ok": true
+    },
+    {
+      "file": "js/bori-media-store.js",
+      "ok": true
+    },
+    {
+      "file": "js/bori-media-player.js",
+      "ok": true
+    },
+    {
+      "file": "js/bori-media-admin.js",
+      "ok": true
+    },
+    {
+      "file": "js/everyday-characters.js",
+      "ok": true
+    },
+    {
+      "file": "js/kongi-greeting-video.js",
+      "ok": true
+    },
+    {
+      "file": "js/home-welcome-flow.js",
+      "ok": true
+    },
+    {
+      "file": "js/service-config.js",
+      "ok": true
+    },
+    {
+      "file": "js/service-activity.js",
+      "ok": true
+    },
+    {
+      "file": "js/service-content.js",
+      "ok": true
+    },
+    {
+      "file": "js/our-home.js",
+      "ok": true
+    },
+    {
+      "file": "js/garden-admin.js",
+      "ok": true
+    },
+    {
+      "file": "js/village-landscape.js",
+      "ok": true
+    },
+    {
+      "file": "js/exercise-20min.js",
+      "ok": true
+    },
+    {
+      "file": "js/trot-bgm-engine.js",
+      "ok": true
+    },
+    {
+      "file": "scripts/render-warmup.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/render-exercise-20min.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/isolate-3d-characters.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/welcome-recordings.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/build-welcome-recordings.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/character-recordings.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/update-index-meta-footer.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/prepare-hd-inspection.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/inspect-hd-characters.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/build-hd-characters.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/mouth-inspection.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/save-work-report.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/sync-release.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/patch-index-warmup.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/patch-index-house.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/fix-index-html.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/check-production-tts.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/crop-uniform-characters.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/setup-operations-db.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/apply-everyday-presentation.cjs",
+      "ok": true
+    },
+    {
+      "file": "scripts/connect-everyday-scenes.cjs",
+      "ok": true
+    }
+  ],
+  "duplicateGroups": [
+    [
+      "assets/images/warm_jujube_tea.jpg",
+      "assets/images/small_jujube_teacup.jpg"
+    ],
+    [
+      "assets/images/story_courtyard_mealtime.jpg",
+      "assets/images/story_courtyard_vegetables.jpg"
+    ],
+    [
+      "assets/images/ai-assistant-tablet.png",
+      "assets/images/chatgpt_main_interface.png"
+    ],
+    [
+      "assets/images/friend-tori.png",
+      "assets/images/friend-tori-talk.png",
+      "public/characters/tori/mouth/tori_u.png",
+      "public/characters/tori/tori_idle.png",
+      "characters/tori/tori_u.png",
+      "characters/tori/tori_idle.png",
+      "characters/tori/tori_u_stable.png",
+      "characters/tori/actions/tori_idle.png"
+    ],
+    [
+      "assets/images/friend-nabi.png",
+      "assets/images/friend-nabi-talk.png",
+      "public/characters/nabi/mouth/nabi_u.png",
+      "public/characters/nabi/nabi_idle.png",
+      "characters/nabi/nabi_u.png",
+      "characters/nabi/nabi_idle.png",
+      "characters/nabi/nabi_u_stable.png",
+      "characters/nabi/actions/nabi_idle.png"
+    ],
+    [
+      "assets/images/friend-bori.png",
+      "assets/images/friend-bori-talk.png",
+      "public/characters/bori/mouth/bori_u.png",
+      "public/characters/bori/bori_idle.png",
+      "characters/bori/bori_u.png",
+      "characters/bori/bori_idle.png",
+      "characters/bori/bori_u_stable.png",
+      "characters/bori/actions/bori_idle.png"
+    ],
+    [
+      "assets/images/friend-kongi-talk.png",
+      "assets/images/friend-kongi.png",
+      "assets/images/friend-kongi-companion.png",
+      "assets/images/friend-kongi-mouth-closed.png",
+      "assets/images/friend-kongi-blink.png",
+      "public/characters/kongi/mouth/kongi_u.png",
+      "public/characters/kongi/kongi_idle.png",
+      "characters/kongi/kongi_u.png",
+      "characters/kongi/kongi_idle.png",
+      "characters/kongi/kongi_u_stable.png",
+      "characters/kongi/actions/kongi_idle.png"
+    ],
+    [
+      "assets/images/kongi-exercise-guide.png",
+      "assets/images/friends-exercise-guide.png"
+    ],
+    [
+      "assets/images/_archive/backup_friend-kongi.png",
+      "characters/reference/legacy/friend-kongi-mouth-closed.png"
+    ],
+    [
+      "assets/images/bori-home-decorating.png",
+      "assets/senior-exercise/images/scene06_clapping.jpg"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_0_0_tl.png",
+      "assets/exercise-20min/gifs/exercise_knee_lift_tl.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_0_1_tr.png",
+      "assets/exercise-20min/gifs/exercise_knee_lift_tr.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_0_2_br.png",
+      "assets/exercise-20min/gifs/exercise_knee_lift_br.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_0_3_bl.png",
+      "assets/exercise-20min/gifs/exercise_knee_lift_bl.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_1_0_tl.png",
+      "assets/exercise-20min/gifs/exercise_clap_tl.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_1_1_tr.png",
+      "assets/exercise-20min/gifs/exercise_clap_tr.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_1_2_br.png",
+      "assets/exercise-20min/gifs/exercise_clap_br.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_1_3_bl.png",
+      "assets/exercise-20min/gifs/exercise_clap_bl.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_2_0_tl.png",
+      "assets/exercise-20min/gifs/exercise_arms_up_tl.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_2_1_tr.png",
+      "assets/exercise-20min/gifs/exercise_arms_up_tr.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_2_2_br.png",
+      "assets/exercise-20min/gifs/exercise_arms_up_br.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_2_3_bl.png",
+      "assets/exercise-20min/gifs/exercise_arms_up_bl.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_3_0_tl.png",
+      "assets/exercise-20min/gifs/exercise_wave_tl.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_3_1_tr.png",
+      "assets/exercise-20min/gifs/exercise_wave_tr.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_3_2_br.png",
+      "assets/exercise-20min/gifs/exercise_wave_br.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/sheet_3_3_bl.png",
+      "assets/exercise-20min/gifs/exercise_wave_bl.png"
+    ],
+    [
+      "assets/exercise-20min/gifs/exercise_wave.gif",
+      "assets/exercise-20min/exercise_wave.gif"
+    ],
+    [
+      "assets/exercise-20min/gifs/exercise_arms_up.gif",
+      "assets/exercise-20min/exercise_arms_up.gif"
+    ],
+    [
+      "assets/exercise-20min/gifs/exercise_clap.gif",
+      "assets/exercise-20min/exercise_clap.gif"
+    ],
+    [
+      "assets/exercise-20min/gifs/exercise_knee_lift.gif",
+      "assets/exercise-20min/exercise_knee_lift.gif"
+    ],
+    [
+      "public/characters/kongi/mouth/kongi_a.png",
+      "characters/kongi/kongi_a.png",
+      "characters/kongi/kongi_a_stable.png"
+    ],
+    [
+      "public/characters/kongi/mouth/kongi_e.png",
+      "characters/kongi/kongi_e.png",
+      "characters/kongi/kongi_e_stable.png"
+    ],
+    [
+      "public/characters/kongi/mouth/kongi_i.png",
+      "characters/kongi/kongi_i.png",
+      "characters/kongi/kongi_i_stable.png"
+    ],
+    [
+      "public/characters/kongi/mouth/kongi_o.png",
+      "characters/kongi/kongi_o.png",
+      "characters/kongi/kongi_o_stable.png"
+    ],
+    [
+      "public/characters/tori/mouth/tori_a.png",
+      "characters/tori/tori_a.png",
+      "characters/tori/tori_a_stable.png"
+    ],
+    [
+      "public/characters/tori/mouth/tori_e.png",
+      "characters/tori/tori_e.png",
+      "characters/tori/tori_e_stable.png"
+    ],
+    [
+      "public/characters/tori/mouth/tori_i.png",
+      "characters/tori/tori_i.png",
+      "characters/tori/tori_i_stable.png"
+    ],
+    [
+      "public/characters/tori/mouth/tori_o.png",
+      "characters/tori/tori_o.png",
+      "characters/tori/tori_o_stable.png"
+    ],
+    [
+      "public/characters/nabi/mouth/nabi_a.png",
+      "characters/nabi/nabi_a.png",
+      "characters/nabi/nabi_a_stable.png"
+    ],
+    [
+      "public/characters/nabi/mouth/nabi_e.png",
+      "characters/nabi/nabi_e.png",
+      "characters/nabi/nabi_e_stable.png"
+    ],
+    [
+      "public/characters/nabi/mouth/nabi_i.png",
+      "characters/nabi/nabi_i.png",
+      "characters/nabi/nabi_i_stable.png"
+    ],
+    [
+      "public/characters/nabi/mouth/nabi_o.png",
+      "characters/nabi/nabi_o.png",
+      "characters/nabi/nabi_o_stable.png"
+    ],
+    [
+      "public/characters/bori/mouth/bori_a.png",
+      "characters/bori/bori_a.png",
+      "characters/bori/bori_a_stable.png"
+    ],
+    [
+      "public/characters/bori/mouth/bori_e.png",
+      "characters/bori/bori_e.png",
+      "characters/bori/bori_e_stable.png"
+    ],
+    [
+      "public/characters/bori/mouth/bori_i.png",
+      "characters/bori/bori_i.png",
+      "characters/bori/bori_i_stable.png"
+    ],
+    [
+      "public/characters/bori/mouth/bori_o.png",
+      "characters/bori/bori_o.png",
+      "characters/bori/bori_o_stable.png"
+    ],
+    [
+      "characters/reference/legacy/friend-kongi.png",
+      "characters/reference/legacy/friend-kongi-talk.png",
+      "characters/reference/legacy/friend-kongi-companion.png"
+    ],
+    [
+      "characters/reference/legacy/friend-tori.png",
+      "characters/reference/legacy/friend-tori-talk.png"
+    ],
+    [
+      "characters/reference/legacy/friend-nabi.png",
+      "characters/reference/legacy/friend-nabi-talk.png"
+    ],
+    [
+      "characters/reference/legacy/friend-bori.png",
+      "characters/reference/legacy/friend-bori-talk.png"
+    ],
+    [
+      "characters/reference/legacy-lowres-20260921/kongi/kongi_idle.png",
+      "characters/reference/legacy-lowres-20260921/kongi/kongi_u_stable.png",
+      "characters/reference/legacy-lowres-20260921/kongi/kongi_u.png"
+    ],
+    [
+      "characters/reference/legacy-lowres-20260921/tori/tori_idle.png",
+      "characters/reference/legacy-lowres-20260921/tori/tori_u_stable.png",
+      "characters/reference/legacy-lowres-20260921/tori/tori_u.png"
+    ],
+    [
+      "characters/reference/legacy-lowres-20260921/nabi/nabi_idle.png",
+      "characters/reference/legacy-lowres-20260921/nabi/nabi_u_stable.png",
+      "characters/reference/legacy-lowres-20260921/nabi/nabi_u.png"
+    ],
+    [
+      "characters/reference/legacy-lowres-20260921/bori/bori_idle.png",
+      "characters/reference/legacy-lowres-20260921/bori/bori_u_stable.png",
+      "characters/reference/legacy-lowres-20260921/bori/bori_u.png"
+    ]
+  ],
+  "secretCandidates": [
+    {
+      "file": "js/companion-character.js",
+      "line": 293,
+      "value": "REDACTED; validity not tested"
+    },
+    {
+      "file": "server.cjs",
+      "line": 21,
+      "value": "REDACTED; validity not tested"
+    }
+  ],
+  "storageFiles": [
+    "js/voice.js",
+    "js/record-manager.js",
+    "js/lesson-engine.js",
+    "js/app.js",
+    "js/care-workflow.js",
+    "js/user-profile.js",
+    "js/consent-rooms.js",
+    "js/friends-and-play.js",
+    "js/daily-games.js",
+    "js/hobby-room.js",
+    "js/school-shell.js",
+    "js/workflow-automation.js",
+    "js/weather-service.js",
+    "js/participant-archive-store.js",
+    "js/character-wardrobe.js",
+    "js/home-care-experience.js",
+    "js/senior-exercise.js",
+    "js/character-house.js",
+    "js/character-voice-system.js",
+    "js/daily-course.js",
+    "js/senior-common-header.js",
+    "js/daycare-schedule.js",
+    "js/daycare-class.js",
+    "js/program-library.js",
+    "js/auto-scheduler.js",
+    "js/operations-store.js",
+    "js/daycare-session.js",
+    "js/admin-access.js",
+    "js/operations-admin.js",
+    "js/activity-bank.js",
+    "js/extended-activities.js",
+    "js/bori-media-store.js",
+    "js/bori-media-player.js",
+    "js/kongi-greeting-video.js",
+    "js/home-welcome-flow.js",
+    "js/service-activity.js",
+    "js/service-content.js",
+    "js/our-home.js",
+    "js/exercise-20min.js"
+  ],
+  "utf8ReplacementFiles": [
+    "js/user-profile.js"
+  ]
+}

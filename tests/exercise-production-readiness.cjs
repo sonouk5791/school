@@ -1,0 +1,51 @@
+const { chromium } = require('playwright'), assert = require('node:assert/strict');
+const base = process.argv[2] || 'http://127.0.0.1:8085';
+(async () => {
+  const browser = await chromium.launch({channel:'msedge',headless:true});
+  const context = await browser.newContext();
+  await context.route('**/api/**', r => r.fulfill({status:200,contentType:'application/json',body:'{"configured":false}'}));
+  async function page() { const p = await context.newPage(); p.setDefaultTimeout(18000); return p; }
+  try {
+    const normal = await page();
+    await normal.goto(base + '/exercise-20min.html');
+    await normal.waitForFunction(() => !document.getElementById('btnStart').disabled);
+    await normal.locator('#btnPause').click();
+    assert(await normal.locator('#pauseOverlay').isHidden(), 'Pause before start must not start a class');
+    await normal.locator('#btnStart').click();
+    await normal.locator('#startOverlay').waitFor({state:'hidden'});
+    await normal.locator('#progressBar').evaluate(e => {e.value='300';e.dispatchEvent(new Event('input'));});
+    assert.equal(await normal.locator('#headerStepBadge').textContent(), '박수와 팔 운동');
+    await normal.locator('#btnPause').click(); assert(await normal.locator('#pauseOverlay').isVisible());
+    await normal.locator('#btnOverlayResume').click(); assert(await normal.locator('#pauseOverlay').isHidden());
+    await normal.close();
+    const missing = await page();
+    await missing.route('**/class-20min.mp3', r => r.fulfill({status:404,body:''}));
+    await missing.goto(base + '/exercise-20min.html');
+    await missing.locator('#loadRecovery').waitFor({state:'visible'});
+    assert(await missing.locator('#btnStart').isDisabled());
+    assert(!(await missing.locator('#loadStatus').textContent()).includes('준비 완료'));
+    await missing.unroute('**/class-20min.mp3');
+    await missing.locator('#btnRetryLoad').click();
+    await missing.waitForFunction(() => !document.getElementById('btnStart').disabled);
+    await missing.close();
+    const slow = await page();
+    await slow.route('**/class-20min.mp3', () => {});
+    await slow.goto(base + '/exercise-20min.html',{waitUntil:'domcontentloaded'});
+    await slow.locator('#loadRecovery').waitFor({state:'visible'});
+    assert(await slow.locator('#btnStart').isDisabled()); await slow.close();
+    const noMusic = await page();
+    await noMusic.route('**/bgm-trot.mp3', r => r.fulfill({status:404,body:''}));
+    await noMusic.goto(base + '/exercise-20min.html');
+    await noMusic.waitForFunction(() => !document.getElementById('btnStart').disabled);
+    assert((await noMusic.locator('#loadStatus').textContent()).includes('배경음악을 불러오지'));
+    assert(await noMusic.locator('#btnBgm').isDisabled()); await noMusic.close();
+    const denied = await page();
+    await denied.addInitScript(() => {HTMLMediaElement.prototype.play = function () {return Promise.reject(new DOMException('Blocked','NotAllowedError'));};});
+    await denied.goto(base + '/exercise-20min.html');
+    await denied.waitForFunction(() => !document.getElementById('btnStart').disabled);
+    await denied.locator('#btnStart').click();
+    await denied.locator('#loadRecovery').waitFor({state:'visible'});
+    assert(await denied.locator('#completeOverlay').isHidden()); await denied.close();
+    console.log('PASS start/pause/resume, real chapter title, narration 404 and retry, stalled narration deadline, optional music notice, rejected playback recovery. No complete 20-minute motion validation claimed.');
+  } finally {await browser.close();}
+})().catch(e => {console.error(e);process.exitCode=1;});

@@ -18,7 +18,7 @@ if (fs.existsSync(envPath)) {
 
 const scanWelcomeRecordings = require('./scripts/welcome-recordings.cjs');
 const PORT = Number(process.env.PORT) || 8085;
-const TYPECAST_API_KEY = process.env.TYPECAST_API_KEY || 'tc_681059782dc4759327e3d302';
+const TYPECAST_API_KEY = process.env.TYPECAST_API_KEY || '';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -133,7 +133,13 @@ function handleTypecastTTS(req, res) {
 
     const text = payload.text || '';
     const actorId = payload.actor_id || '60a761917fba305a2b1660d3'; // 호빈이
-    const apiKey = req.headers['x-typecast-api-key'] || TYPECAST_API_KEY;
+    const apiKey = TYPECAST_API_KEY;
+
+    if (!apiKey) {
+      res.writeHead(503, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: '음성 서비스 연결 설정이 필요합니다.' }));
+      return;
+    }
 
     if (!text) {
       res.writeHead(400, { 'Content-Type': 'application/json' });

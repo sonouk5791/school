@@ -1,0 +1,51 @@
+[
+  {
+    "path": "/js/companion-character.js",
+    "status": 200,
+    "bytes": 19622,
+    "sameAsLocal": true,
+    "credentialPatternPresent": true
+  },
+  {
+    "path": "/js/user-profile.js",
+    "status": 200,
+    "bytes": 27378,
+    "sameAsLocal": true,
+    "credentialPatternPresent": false
+  },
+  {
+    "path": "/js/exercise-20min.js",
+    "status": 200,
+    "bytes": 22156,
+    "sameAsLocal": true,
+    "credentialPatternPresent": false
+  },
+  {
+    "path": "/assets/exercise-20min/program.json",
+    "status": 200,
+    "bytes": 9578,
+    "sameAsLocal": true,
+    "credentialPatternPresent": false
+  },
+  {
+    "path": "/js/admin-access.js",
+    "status": 200,
+    "bytes": 6077,
+    "sameAsLocal": true,
+    "credentialPatternPresent": false
+  },
+  {
+    "path": "/server.cjs",
+    "status": 404,
+    "bytes": 79,
+    "sameAsLocal": false,
+    "credentialPatternPresent": false
+  },
+  {
+    "path": "/character-voice-test.html",
+    "status": 200,
+    "bytes": 1257,
+    "sameAsLocal": true,
+    "credentialPatternPresent": false
+  }
+]
