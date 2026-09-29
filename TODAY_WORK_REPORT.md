@@ -3046,3 +3046,24 @@
 - [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
 
 </details>
+
+## 자동 저장 / 2026-09-29 12:24:29 — 4대 캐릭터 집 구조 표준화 및 콩이 운동방 대표 YouTube 영상 자동재생 통합
+- **수행 내역**: 모든 캐릭터 집 상단 타이틀/인사 대사/하단 복귀 버튼 통일, 콩이 운동방 대표 YouTube 영상(c8c9zLy8jWM) 16:9 임베드 및 Player API 상태/완료 보상/자동재생 fallback 구축, 3대 추천 운동(5분/10분/20분) 정리 완료
+
+## 자동 저장 / 2026-09-29 12:24:58 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 10
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [bori-hobby.html](./bori-hobby.html)
+- [js/senior-exercise.js](./js/senior-exercise.js)
+- [nabi-learn.html](./nabi-learn.html)
+- [scripts/update-bori-hobby.cjs](./scripts/update-bori-hobby.cjs)
+- [scripts/update-bori-home-btn.cjs](./scripts/update-bori-home-btn.cjs)
+- [senior-exercise.html](./senior-exercise.html)
+- [tests/verify-character-houses-standard.cjs](./tests/verify-character-houses-standard.cjs)
+- [tori-play.html](./tori-play.html)
+- [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
+
+</details>

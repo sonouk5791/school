@@ -800,11 +800,187 @@
     });
   }
 
+    });
+  }
+
+  // --- YouTube Representative Exercise Player Integration ---
+  let ytPlayer = null;
+  let ytPlayerReady = false;
+  let ytStartTime = 0;
+
+  function initYoutubeExercise() {
+    const btnYtStart = $('btnYtStartBig');
+    const btnYtPause = $('btnYtPause');
+    const btnYtComplete = $('btnYtCompleteManual');
+    const btnRetryYt = $('btnRetryYt');
+    const ytStatus = $('ytPlayStatus');
+    const ytFallback = $('ytFallbackCard');
+
+    // 1. YouTube API script inclusion if not loaded
+    if (!window.YT || !window.YT.Player) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    const setupPlayer = () => {
+      try {
+        ytPlayer = new YT.Player('ytPlayerIframe', {
+          events: {
+            onReady: (event) => {
+              ytPlayerReady = true;
+              ytStartTime = Date.now();
+              if (ytStatus) ytStatus.textContent = '운동 영상이 준비되었습니다.';
+              // 자동재생 시도 (브라우저 정책에 따라 음소거 필요할 수 있음)
+              try {
+                event.target.playVideo();
+              } catch (e) {
+                console.log('Autoplay blocked by browser policy:', e);
+              }
+            },
+            onStateChange: (event) => {
+              if (event.data === YT.PlayerState.PLAYING) {
+                if (ytStatus) ytStatus.textContent = '🎵 콩이와 함께 신나게 따라해요!';
+                if (btnYtStart) btnYtStart.textContent = '▶ 계속 따라하기';
+              } else if (event.data === YT.PlayerState.PAUSED) {
+                if (ytStatus) ytStatus.textContent = '⏸ 잠시 멈췄어요.';
+              } else if (event.data === YT.PlayerState.ENDED) {
+                if (ytStatus) ytStatus.textContent = '🌸 운동을 마쳤어요!';
+                awardExerciseCompletion('c8c9zLy8jWM', '콩이 대표 건강체조 영상');
+              }
+            },
+            onError: (event) => {
+              console.warn('YouTube Player Error:', event.data);
+              if (ytFallback) ytFallback.style.display = 'flex';
+              if (ytStatus) ytStatus.textContent = '영상을 불러오지 못했어요.';
+            }
+          }
+        });
+      } catch (e) {
+        console.warn('YT Player setup exception:', e);
+      }
+    };
+
+    if (window.YT && window.YT.Player) {
+      setupPlayer();
+    } else {
+      window.onYouTubeIframeAPIReady = setupPlayer;
+    }
+
+    btnYtStart?.addEventListener('click', () => {
+      if (ytPlayerReady && ytPlayer?.playVideo) {
+        try {
+          ytPlayer.unMute?.();
+          ytPlayer.playVideo();
+        } catch (e) {
+          ytPlayer.playVideo();
+        }
+      } else {
+        const iframe = $('ytPlayerIframe');
+        if (iframe) iframe.src = 'https://www.youtube.com/embed/c8c9zLy8jWM?enablejsapi=1&autoplay=1&playsinline=1&rel=0';
+      }
+    });
+
+    btnYtPause?.addEventListener('click', () => {
+      if (ytPlayerReady && ytPlayer?.pauseVideo) {
+        ytPlayer.pauseVideo();
+      }
+    });
+
+    btnYtComplete?.addEventListener('click', () => {
+      awardExerciseCompletion('c8c9zLy8jWM', '콩이 대표 건강체조 영상');
+    });
+
+    btnRetryYt?.addEventListener('click', () => {
+      if (ytFallback) ytFallback.style.display = 'none';
+      const iframe = $('ytPlayerIframe');
+      if (iframe) iframe.src = 'https://www.youtube.com/embed/c8c9zLy8jWM?enablejsapi=1&autoplay=1&playsinline=1&rel=0';
+      setupPlayer();
+    });
+
+    // Sub-exercise launchers
+    $('btnLaunch5Min')?.addEventListener('click', () => {
+      $('viewYoutubeMain').style.display = 'none';
+      setExerciseState('playing');
+      displayScene(0);
+      play();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    $('btnLaunch10Min')?.addEventListener('click', () => {
+      $('viewYoutubeMain').style.display = 'none';
+      setExerciseState('ready');
+      viewReady.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  function awardExerciseCompletion(contentId, contentTitle) {
+    // 1. Mark completed for today
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      const map = JSON.parse(localStorage.getItem('school_today_completed_chars') || '{}');
+      const list = map[today] || [];
+      if (!list.includes('kongi')) {
+        list.push('kongi');
+        map[today] = list;
+        localStorage.setItem('school_today_completed_chars', JSON.stringify(map));
+      }
+      // Garden water count +1
+      const waterCount = parseInt(localStorage.getItem('school_garden_water_count') || '0', 10);
+      localStorage.setItem('school_garden_water_count', String(waterCount + 1));
+    } catch (e) {
+      console.warn('Storage error:', e);
+    }
+
+    // 2. Record manager entry
+    if (window.RecordManager) {
+      window.RecordManager.saveRecord({
+        lessonId: contentId,
+        lessonTitle: contentTitle,
+        durationText: '약 10분',
+        durationSeconds: 600,
+        mood: '😀 활기차요',
+        moodEmoji: '😀',
+        characterId: 'kongi',
+        participation: '◎ 적극 참여',
+        assistance: '도움 없음',
+        timeSlot: new Date().getHours() < 12 ? '오전' : '오후'
+      });
+    }
+
+    // 3. Show unified completion reward card
+    const youtubeSection = $('viewYoutubeMain');
+    if (youtubeSection) {
+      youtubeSection.innerHTML = `
+        <div class="service-reward-card" style="background:#fff; border:3px solid #86efac; border-radius:24px; padding:32px 20px; text-align:center; box-shadow:0 8px 30px rgba(22,101,52,0.12);">
+          <div class="service-reward-flower" style="font-size:56px;" aria-hidden="true">🌼</div>
+          <div class="service-reward-badge" style="display:inline-block; background:#dcfce7; color:#166534; font-weight:800; font-size:18px; padding:6px 18px; border-radius:20px; margin:12px 0;">
+            🌸 오늘의 꽃 획득! (텃밭 물주기 +1)
+          </div>
+          <h2 style="font-size:28px; font-weight:900; color:#14532d; margin-bottom:8px;">운동을 정말 잘 마치셨어요!</h2>
+          <p style="font-size:19px; color:#166534; line-height:1.6; margin-bottom:20px;">
+            콩이와 함께 가볍게 몸을 움직여 몸과 마음이 한결 가벼워졌습니다.
+          </p>
+          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+            <button type="button" class="service-btn-again" onclick="window.location.reload()" style="min-height:54px; padding:12px 24px; font-size:18px; font-weight:800; background:#f0fdf4; color:#166534; border:2px solid #86efac; border-radius:14px; cursor:pointer;">
+              🔄 한 번 더 하기
+            </button>
+            <a href="index.html" class="service-btn-village" onclick="sessionStorage.setItem('school_home_intro_played','true')" style="min-height:54px; padding:12px 28px; font-size:18px; font-weight:800; background:#166534; color:#fff; border-radius:14px; text-decoration:none; display:inline-flex; align-items:center;">
+              🏡 친구들 마을로 돌아가기
+            </a>
+          </div>
+        </div>
+      `;
+    }
+  }
+
   // TTS Help Button
   const btnTtsHelp = $('btnTtsExerciseHelp');
   if (btnTtsHelp) {
     btnTtsHelp.addEventListener('click', () => {
-      speakText('디지털 에이아이 학교 어르신 체조 교실입니다. 의자에 편안하게 앉으신 뒤 지금 운동 시작하기 버튼을 누르시면 1번 시작 인사부터 10번 마무리까지 천천히 자동으로 진행됩니다.');
+      speakText('콩이의 운동방입니다. 화면 중앙의 재생 버튼을 누르시면 콩이와 함께하는 대표 건강 체조가 시작됩니다.');
     });
   }
 
@@ -831,6 +1007,7 @@
 
   // Init Program
   async function init() {
+    initYoutubeExercise();
     try {
       // Ensure Complete Modal is completely hidden at start
       if (completeModal) {

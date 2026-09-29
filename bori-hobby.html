@@ -138,16 +138,14 @@
 </head>
 <body data-activity-room="bori" data-activity-status="select">
 <header class="bh-header">
-  <a href="index.html" class="bh-back-link">&#127968; 처음으로</a>
-  <div class="bh-location">&#128059; 보리의 취미방</div>
-  <button type="button" class="bh-voice-btn" id="btnBhVoice">&#128266; 보리 설명</button>
+  <a href="index.html" class="bh-back-link">🏡 친구들 마을로 돌아가기</a>
+  <div class="bh-location"><strong>🐻 보리집 · 취미방</strong></div>
+  <button type="button" class="bh-voice-btn" id="btnBhVoice">🔊 보리 안내</button>
 </header>
-<p style="margin:16px;text-align:center"><a href="character-house.html?char=bori" style="display:inline-flex;align-items:center;min-height:56px;padding:12px 22px;border:2px solid #d9ceb9;border-radius:16px;font-size:20px;color:#355832;background:#fffaf0;text-decoration:none">🏡 내 방 꾸미기</a></p>
 <section class="bh-hero">
   <img src="assets/images/everyday/bori-active.png" alt="보리 캐릭터" class="bh-char-img" onerror="this.src='assets/images/friend-bori.png'">
-  <h1>보리의 취미방 &#128059;</h1>
-  <p>노래도 부르고, 옛 추억도 나누고, 색칠도 하고, 수수께끼도 풀어요!</p>
-  <div class="bh-speech">어서오세요! 보리와 함께 편안하고 즐거운 시간 보내요 &#127925;</div>
+  <h1>🐻 보리집 · 취미방</h1>
+  <div class="bh-speech">"오늘은 어떤 취미를 해볼까요?"</div>
 </section>
 <div class="stamp-row">
   <div class="stamp-chip">오늘 도장: <span id="bhStampNum">0</span>개 &#127467;</div>
@@ -268,7 +266,7 @@
     </div>
   </section>
 </main>
-<a href="index.html" class="bh-home-btn">&#127968; 처음 화면으로 돌아가기</a>
+<a href="index.html" class="bh-home-btn" onclick="sessionStorage.setItem('school_home_intro_played','true')">🏡 친구들 마을로 돌아가기</a>
 
 <script>
 (()=>{
