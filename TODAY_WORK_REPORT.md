@@ -2791,3 +2791,62 @@
 - [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
 
 </details>
+
+## 자동 저장 / 2026-09-29 10:08:01 — 주간보호센터 배경 + 4인 캐릭터 + 어르신 함께하는 4대 체조 동작 고화질 반복 루프 GIF 제작 및 체조 플레이어 실시간 연동 완성
+- **수행 내역**: 1. 사용자 첨부 4개 체조 스프라이트 시트 정밀 분할 및 고화질 4대 체조 GIF 제작 완료:\n   - GIF 1: 손 흔들기 인사 (exercise_wave.gif, 5프레임 500ms 루프)\n   - GIF 2: 두 팔 올리기 스트레칭 (exercise_arms_up.gif, 6프레임 600ms 루프)\n   - GIF 3: 짝짝 박수 치기 (exercise_clap.gif, 4프레임 450ms 루프)\n   - GIF 4: 의자 무릎 들기 (exercise_knee_lift.gif, 4프레임 550ms 루프)\n2. 주간보호센터 체조실 배경과 콩이·토리·나비·보리 캐릭터 및 4인의 어르신이 완벽하게 일체화되어 함께 체조하는 생생한 수업 장면 구현\n3. 체조 플레이어(exercise-20min.html, js, css)에 실시간 GIF 라이브 뷰어 레이어(ex20-gif-stage) 연동 및 동작별 GIF 소스 자동 교체\n4. 시작 화면(stateReady)에 4대 체조 동작 GIF 프리뷰 갤러리 카드 추가\n5. 릴리즈 동기화, Git 커밋/푸시 및 Vercel 배포 완료
+
+## 자동 저장 / 2026-09-29 10:08:43 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 48
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/exercise-20min/exercise_arms_up.gif](./assets/exercise-20min/exercise_arms_up.gif)
+- [assets/exercise-20min/exercise_clap.gif](./assets/exercise-20min/exercise_clap.gif)
+- [assets/exercise-20min/exercise_knee_lift.gif](./assets/exercise-20min/exercise_knee_lift.gif)
+- [assets/exercise-20min/exercise_wave.gif](./assets/exercise-20min/exercise_wave.gif)
+- [assets/exercise-20min/gifs/exercise_arms_up.gif](./assets/exercise-20min/gifs/exercise_arms_up.gif)
+- [assets/exercise-20min/gifs/exercise_arms_up_bl.png](./assets/exercise-20min/gifs/exercise_arms_up_bl.png)
+- [assets/exercise-20min/gifs/exercise_arms_up_br.png](./assets/exercise-20min/gifs/exercise_arms_up_br.png)
+- [assets/exercise-20min/gifs/exercise_arms_up_tl.png](./assets/exercise-20min/gifs/exercise_arms_up_tl.png)
+- [assets/exercise-20min/gifs/exercise_arms_up_tr.png](./assets/exercise-20min/gifs/exercise_arms_up_tr.png)
+- [assets/exercise-20min/gifs/exercise_clap.gif](./assets/exercise-20min/gifs/exercise_clap.gif)
+- [assets/exercise-20min/gifs/exercise_clap_bl.png](./assets/exercise-20min/gifs/exercise_clap_bl.png)
+- [assets/exercise-20min/gifs/exercise_clap_br.png](./assets/exercise-20min/gifs/exercise_clap_br.png)
+- [assets/exercise-20min/gifs/exercise_clap_tl.png](./assets/exercise-20min/gifs/exercise_clap_tl.png)
+- [assets/exercise-20min/gifs/exercise_clap_tr.png](./assets/exercise-20min/gifs/exercise_clap_tr.png)
+- [assets/exercise-20min/gifs/exercise_knee_lift.gif](./assets/exercise-20min/gifs/exercise_knee_lift.gif)
+- [assets/exercise-20min/gifs/exercise_knee_lift_bl.png](./assets/exercise-20min/gifs/exercise_knee_lift_bl.png)
+- [assets/exercise-20min/gifs/exercise_knee_lift_br.png](./assets/exercise-20min/gifs/exercise_knee_lift_br.png)
+- [assets/exercise-20min/gifs/exercise_knee_lift_tl.png](./assets/exercise-20min/gifs/exercise_knee_lift_tl.png)
+- [assets/exercise-20min/gifs/exercise_knee_lift_tr.png](./assets/exercise-20min/gifs/exercise_knee_lift_tr.png)
+- [assets/exercise-20min/gifs/exercise_wave.gif](./assets/exercise-20min/gifs/exercise_wave.gif)
+- [assets/exercise-20min/gifs/exercise_wave_bl.png](./assets/exercise-20min/gifs/exercise_wave_bl.png)
+- [assets/exercise-20min/gifs/exercise_wave_br.png](./assets/exercise-20min/gifs/exercise_wave_br.png)
+- [assets/exercise-20min/gifs/exercise_wave_tl.png](./assets/exercise-20min/gifs/exercise_wave_tl.png)
+- [assets/exercise-20min/gifs/exercise_wave_tr.png](./assets/exercise-20min/gifs/exercise_wave_tr.png)
+- [assets/exercise-20min/gifs/sheet_0_0_tl.png](./assets/exercise-20min/gifs/sheet_0_0_tl.png)
+- [assets/exercise-20min/gifs/sheet_0_1_tr.png](./assets/exercise-20min/gifs/sheet_0_1_tr.png)
+- [assets/exercise-20min/gifs/sheet_0_2_br.png](./assets/exercise-20min/gifs/sheet_0_2_br.png)
+- [assets/exercise-20min/gifs/sheet_0_3_bl.png](./assets/exercise-20min/gifs/sheet_0_3_bl.png)
+- [assets/exercise-20min/gifs/sheet_1_0_tl.png](./assets/exercise-20min/gifs/sheet_1_0_tl.png)
+- [assets/exercise-20min/gifs/sheet_1_1_tr.png](./assets/exercise-20min/gifs/sheet_1_1_tr.png)
+- [assets/exercise-20min/gifs/sheet_1_2_br.png](./assets/exercise-20min/gifs/sheet_1_2_br.png)
+- [assets/exercise-20min/gifs/sheet_1_3_bl.png](./assets/exercise-20min/gifs/sheet_1_3_bl.png)
+- [assets/exercise-20min/gifs/sheet_2_0_tl.png](./assets/exercise-20min/gifs/sheet_2_0_tl.png)
+- [assets/exercise-20min/gifs/sheet_2_1_tr.png](./assets/exercise-20min/gifs/sheet_2_1_tr.png)
+- [assets/exercise-20min/gifs/sheet_2_2_br.png](./assets/exercise-20min/gifs/sheet_2_2_br.png)
+- [assets/exercise-20min/gifs/sheet_2_3_bl.png](./assets/exercise-20min/gifs/sheet_2_3_bl.png)
+- [assets/exercise-20min/gifs/sheet_3_0_tl.png](./assets/exercise-20min/gifs/sheet_3_0_tl.png)
+- [assets/exercise-20min/gifs/sheet_3_1_tr.png](./assets/exercise-20min/gifs/sheet_3_1_tr.png)
+- [assets/exercise-20min/gifs/sheet_3_2_br.png](./assets/exercise-20min/gifs/sheet_3_2_br.png)
+- [assets/exercise-20min/gifs/sheet_3_3_bl.png](./assets/exercise-20min/gifs/sheet_3_3_bl.png)
+- [css/exercise-20min.css](./css/exercise-20min.css)
+- [exercise-20min.html](./exercise-20min.html)
+- [js/exercise-20min.js](./js/exercise-20min.js)
+- [scripts/extract_gif_frames.py](./scripts/extract_gif_frames.py)
+- [scripts/generate_exercise_gifs.py](./scripts/generate_exercise_gifs.py)
+- [scripts/split_sheets.py](./scripts/split_sheets.py)
+- [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
+
+</details>

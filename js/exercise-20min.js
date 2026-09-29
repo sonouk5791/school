@@ -30,14 +30,8 @@
   const headerCharLabel = $('headerCharLabel');
   const headerTime      = $('headerTime');
 
-  // Crew stage (4인 캐릭터 전원 무대)
-  const crewStage = $('crewStage');
-  const crewMembers = {
-    kongi: $('crewKongi'),
-    tori:  $('crewTori'),
-    bori:  $('crewBori'),
-    nabi:  $('crewNabi'),
-  };
+  // Live GIF Stage
+  const liveGifImg = $('liveGifImg');
 
   // Count (하단 중앙 1, 2, 3, 4 카운트)
   const countDisplay = $('countDisplay');
@@ -112,6 +106,43 @@
     'clap':          { icon: '👏', label: '박수' },
     'clap-one':      { icon: '✋', label: '인지 박수' },
     'thumbsup':      { icon: '👍', label: '최고!' },
+  };
+
+  const MOVE_GIF_MAP = {
+    // 1. 손 흔들기 / 인사
+    'wave':          'assets/exercise-20min/exercise_wave.gif',
+    'rest':          'assets/exercise-20min/exercise_wave.gif',
+    'thumbsup':      'assets/exercise-20min/exercise_wave.gif',
+    'inhale':        'assets/exercise-20min/exercise_wave.gif',
+    'exhale':        'assets/exercise-20min/exercise_wave.gif',
+
+    // 2. 두 팔 올리기 / 상체 스트레칭
+    'both-up':       'assets/exercise-20min/exercise_arms_up.gif',
+    'arm-right':     'assets/exercise-20min/exercise_arms_up.gif',
+    'arm-left':      'assets/exercise-20min/exercise_arms_up.gif',
+    'shoulder-up':   'assets/exercise-20min/exercise_arms_up.gif',
+    'shoulder-front': 'assets/exercise-20min/exercise_arms_up.gif',
+    'shoulder-back':  'assets/exercise-20min/exercise_arms_up.gif',
+    'neck-right':    'assets/exercise-20min/exercise_arms_up.gif',
+    'neck-left':     'assets/exercise-20min/exercise_arms_up.gif',
+    'arms-forward':  'assets/exercise-20min/exercise_arms_up.gif',
+    'arms-side':     'assets/exercise-20min/exercise_arms_up.gif',
+    'hands-chest':   'assets/exercise-20min/exercise_arms_up.gif',
+
+    // 3. 박수 치기 / 손 운동
+    'clap':          'assets/exercise-20min/exercise_clap.gif',
+    'clap-one':      'assets/exercise-20min/exercise_clap.gif',
+    'hands-open':    'assets/exercise-20min/exercise_clap.gif',
+    'hands-close':   'assets/exercise-20min/exercise_clap.gif',
+    'wrist-left':    'assets/exercise-20min/exercise_clap.gif',
+    'wrist-right':   'assets/exercise-20min/exercise_clap.gif',
+
+    // 4. 무릎 들기 / 하체 운동
+    'knee-right':    'assets/exercise-20min/exercise_knee_lift.gif',
+    'knee-left':     'assets/exercise-20min/exercise_knee_lift.gif',
+    'heel-right':    'assets/exercise-20min/exercise_knee_lift.gif',
+    'heel-left':     'assets/exercise-20min/exercise_knee_lift.gif',
+    'toes':          'assets/exercise-20min/exercise_knee_lift.gif',
   };
 
   const COUNTABLE_MOVES = new Set([
@@ -350,36 +381,27 @@
       const ev = events[currentEventIdx];
       if (!ev) return;
 
-      // Character & Crew Leader Update
+      // Character & Caption
       const charId = ev.character || 'kongi';
       if (charId !== currentCharId) {
         updateActiveCharacter(charId);
       }
       const charData = CHARACTER_MAP[charId] || CHARACTER_MAP.kongi;
-
-      // 4인 캐릭터 크루 무대 리더 상태 및 현재 체조 동작(data-move) 동기화
-      const isAllChapter = currentChapterIdx === 4 || charId === 'all';
-      if (crewStage) {
-        crewStage.setAttribute('data-move', ev.move || 'rest');
-        crewStage.classList.toggle('is-all-active', isAllChapter);
-        Object.entries(crewMembers).forEach(([id, el]) => {
-          if (!el) return;
-          if (isAllChapter) {
-            el.classList.add('is-leader');
-          } else {
-            el.classList.toggle('is-leader', id === charId);
-          }
-        });
-      }
-
-      // Caption
       captionText.textContent = ev.text || '';
       captionCharTag.textContent = `${charData.emoji} ${charData.name}`;
 
-      // Move badge
+      // Move badge & Live GIF Image Update
       const moveData = MOVE_LABELS[ev.move] || { icon: '🧘', label: ev.move || '동작' };
       moveIcon.textContent = moveData.icon;
       moveName.textContent = moveData.label;
+
+      // 현재 동작에 해당하는 고화질 체조 GIF로 부드럽게 교체
+      if (liveGifImg) {
+        const gifSrc = MOVE_GIF_MAP[ev.move] || 'assets/exercise-20min/exercise_wave.gif';
+        if (!liveGifImg.src.endsWith(gifSrc)) {
+          liveGifImg.src = gifSrc;
+        }
+      }
 
       // Count & Rep Progress (하단 중앙 1, 2, 3, 4 카운트 표시)
       if (ev._seqTotal >= 2) {

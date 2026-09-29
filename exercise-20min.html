@@ -31,10 +31,27 @@
           <p class="ex20-ready-sub">🎵 신나는 음악에 맞춰 · 의자에 앉아서 따라해요 · 어르신과 캐릭터가 함께!</p>
         </div>
 
-        <!-- 어르신 체조 미리보기 이미지 -->
-        <div class="ex20-senior-preview">
-          <img src="assets/exercise-20min/seniors-exercise.jpg" alt="어르신들이 의자에 앉아 함께 체조하는 모습" class="ex20-senior-preview-img" loading="lazy">
-          <p class="ex20-senior-preview-text">👴👵 어르신과 캐릭터 친구들이 함께 체조해요!</p>
+        <!-- 4대 체조 동작 GIF 미리보기 갤러리 -->
+        <div class="ex20-gif-gallery">
+          <h2 class="ex20-gallery-title">🌸 오늘 함께하는 4대 체조 동작</h2>
+          <div class="ex20-gallery-grid">
+            <div class="ex20-gallery-item">
+              <img src="assets/exercise-20min/exercise_wave.gif" alt="손 흔들기 체조" class="ex20-gallery-gif">
+              <span class="ex20-gallery-label">1. 손 흔들기 인사</span>
+            </div>
+            <div class="ex20-gallery-item">
+              <img src="assets/exercise-20min/exercise_arms_up.gif" alt="두 팔 올리기 체조" class="ex20-gallery-gif">
+              <span class="ex20-gallery-label">2. 두 팔 올리기 스트레칭</span>
+            </div>
+            <div class="ex20-gallery-item">
+              <img src="assets/exercise-20min/exercise_clap.gif" alt="박수 치기 체조" class="ex20-gallery-gif">
+              <span class="ex20-gallery-label">3. 짝짝 박수 치기</span>
+            </div>
+            <div class="ex20-gallery-item">
+              <img src="assets/exercise-20min/exercise_knee_lift.gif" alt="무릎 들기 체조" class="ex20-gallery-gif">
+              <span class="ex20-gallery-label">4. 의자 무릎 들기</span>
+            </div>
+          </div>
         </div>
 
         <!-- 5파트 안내 카드 -->
@@ -101,48 +118,15 @@
       <!-- 메인 스테이지 -->
       <main class="ex20-stage-area">
         <div class="ex20-stage" id="exerciseStage">
-          <!-- 배경 (의자에 앉아 체조하는 어르신들과 함께하는 밝은 교실 단일 무대) -->
-          <div class="ex20-bg-layer" id="bgLayer"></div>
+          <!-- ═══ 체조 수업 실시간 GIF 라이브 뷰어 (캐릭터+3인 어르신 실제 동작 수행) ═══ -->
+          <div class="ex20-gif-stage" id="gifStage">
+            <img id="liveGifImg" class="ex20-live-gif" src="assets/exercise-20min/exercise_wave.gif" alt="실제 체조 수업 진행">
+          </div>
 
           <!-- 동작 이름 뱃지 (상단 중앙) -->
           <div class="ex20-move-badge" id="moveBadge">
-            <span id="moveIcon">🧘</span>
-            <span id="moveName">준비</span>
-          </div>
-
-          <!-- ═══ 체조 수업 무대 (중앙 콩이 강사 + 토리·나비·보리 보조 강사 + 뒤편 3인 어르신 체조) ═══ -->
-          <div class="ex20-crew-stage" id="crewStage" data-move="wave">
-            <!-- 좌측 보조 강사: 토리 -->
-            <div class="ex20-crew-member ex20-crew-member--tori" id="crewTori" data-char="tori">
-              <div class="ex20-crew-char-wrap">
-                <img class="ex20-crew-img" id="crewImgTori" src="assets/images/everyday/tori-active.png" alt="토리">
-                <span class="ex20-crew-badge">🐰 토리</span>
-              </div>
-            </div>
-
-            <!-- 중앙 메인 체조 강사: 콩이 (가장 크고 또렷하게 시범) -->
-            <div class="ex20-crew-member ex20-crew-member--kongi is-leader" id="crewKongi" data-char="kongi">
-              <div class="ex20-crew-char-wrap">
-                <img class="ex20-crew-img" id="crewImgKongi" src="assets/images/everyday/kongi-active.png" alt="콩이 (체조 강사)">
-                <span class="ex20-crew-badge">🐶 콩이 선생님</span>
-              </div>
-            </div>
-
-            <!-- 우측 보조 강사: 나비 -->
-            <div class="ex20-crew-member ex20-crew-member--nabi" id="crewNabi" data-char="nabi">
-              <div class="ex20-crew-char-wrap">
-                <img class="ex20-crew-img" id="crewImgNabi" src="assets/images/everyday/nabi-active.png" alt="나비">
-                <span class="ex20-crew-badge">🐱 나비</span>
-              </div>
-            </div>
-
-            <!-- 우측 후방 격려: 보리 -->
-            <div class="ex20-crew-member ex20-crew-member--bori" id="crewBori" data-char="bori">
-              <div class="ex20-crew-char-wrap">
-                <img class="ex20-crew-img" id="crewImgBori" src="assets/images/everyday/bori-active.png" alt="보리">
-                <span class="ex20-crew-badge">🐕 보리</span>
-              </div>
-            </div>
+            <span id="moveIcon">👋</span>
+            <span id="moveName">손 흔들기 인사</span>
           </div>
 
           <!-- 화면 하단 중앙 큰 숫자 카운트 (1, 2, 3, 4) -->

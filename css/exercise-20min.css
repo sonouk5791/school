@@ -225,36 +225,78 @@ body {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
 }
 
-.ex20-bg-layer {
-  position: absolute; inset: 0;
-  background-image: url('../assets/exercise-20min/senior-class-live.jpg');
-  background-size: cover;
-  background-position: center 30%;
-  opacity: 1;
-  transition: opacity 0.6s ease;
+/* ══════════════════════════════════════════════════════
+   실시간 체조 GIF 라이브 뷰어 레이어
+   캐릭터와 어르신이 실제로 동일한 체조 동작을 수행하는 고화질 GIF
+   ══════════════════════════════════════════════════════ */
+.ex20-gif-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fbf7ef;
+  z-index: 5;
+  overflow: hidden;
 }
 
-/* 어르신 미리보기 (시작 화면 카드용) */
-.ex20-senior-preview {
-  padding: 16px 20px;
-  text-align: center;
-  border-top: 1.5px solid #ede5d5;
-  background: #fdf9f0;
-}
-.ex20-senior-preview-img {
+.ex20-live-gif {
   width: 100%;
-  max-width: 640px;
-  border-radius: 16px;
-  border: 3px solid #e8dfd0;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  height: 100%;
   object-fit: cover;
-  aspect-ratio: 16/9;
+  object-position: center 35%;
+  transition: opacity 0.35s ease;
 }
-.ex20-senior-preview-text {
-  font-size: 20px;
-  font-weight: 700;
+
+/* ══════════════════════════════════════════════════════
+   시작 화면 4대 체조 동작 GIF 갤러리
+   ══════════════════════════════════════════════════════ */
+.ex20-gif-gallery {
+  padding: 24px 20px;
+  background: #fdfaf4;
+  border-top: 2px solid #ede5d5;
+  text-align: center;
+}
+.ex20-gallery-title {
+  font-size: 22px;
+  font-weight: 800;
   color: var(--ex-primary);
-  margin-top: 12px;
+  margin: 0 0 16px;
+}
+.ex20-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.ex20-gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 16px;
+  border: 2px solid #e8dfd0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ex20-gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(45, 106, 46, 0.15);
+  border-color: var(--ex-primary);
+}
+.ex20-gallery-gif {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.ex20-gallery-label {
+  font-size: 17px;
+  font-weight: 800;
+  color: #2b3b2b;
+  margin-top: 10px;
 }
 
 /* ══════════════════════════════════════════════════════
