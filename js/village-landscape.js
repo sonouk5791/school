@@ -21,14 +21,15 @@ window.VillageLandscape = {
    const center=w*.5,mid=(cards[0].getBoundingClientRect().bottom+cards[2].getBoundingClientRect().top)/2-box.top;
    const routes=[];
    if(mobile){
+    rest.style.left=`${w*.5-66}px`;rest.style.top='10px';
     routes.push({d:`M28 0 C8 ${h*.22} 42 ${h*.35} 26 ${h*.5} S10 ${h*.8} 30 ${h}`,width:24});
     scenes.forEach(s=>{const x=s.left-box.left+s.width*.55,y=s.bottom-box.top-6;routes.push({d:`M26 ${y} C28 ${y-22} ${x-65} ${y+6} ${x} ${y}`,width:19});});
    }else{
     routes.push({d:`M${center-25} ${h+10} C${center+55} ${h*.82} ${center-45} ${mid+70} ${center} ${mid} S${center+28} ${h*.17} ${center-8} -10`,width:31});
     scenes.forEach((s,i)=>{
      const x=s.left-box.left+s.width*.55,y=s.bottom-box.top-8;
-     const bend=i<2?mid:Math.min(h-10,y+35);
-     routes.push({d:`M${center} ${i<2?mid:h-7} C${center+(i%2?55:-65)} ${bend+12} ${x-18} ${bend+18} ${x} ${y}`,width:i%2?25:28});
+     const bend=mid+(i<2?-35:35);
+     routes.push({d:`M${center} ${mid} C${center+(i%2?55:-65)} ${bend+12} ${x-18} ${bend+18} ${x} ${y}`,width:i%2?25:28});
     });
     rest.style.left=`${center-66}px`;rest.style.top=`${mid-48}px`;
    }

@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded',()=>{
  const catalogue=document.getElementById('homeCatalogTools');
  for(const selector of ['.home-one-recommendation','#homeQuickLinks','.home-extra-programs']){const node=hero.querySelector(selector);if(node&&catalogue)catalogue.append(node);}
  const intro=document.createElement('section');intro.id='homeGreeting';intro.className='hw-panel';intro.setAttribute('aria-label','네 친구의 환영 인사');
- intro.innerHTML='<div class="hw-media"><img src="assets/images/home-greeting-poster.png" alt="콩이, 토리, 나비, 보리가 인사하고 있어요"><video id="homeGreetingVideo" autoplay muted playsinline preload="auto" poster="assets/images/home-greeting-poster.png" aria-label="네 친구의 인사 영상" hidden><source src="assets/videos/home-greeting.mp4" type="video/mp4"></video></div><div class="hw-actions"><button type="button" class="hw-primary" id="homeGreetingPlay" hidden>▶ 인사 영상 보기</button><button type="button" id="homeGreetingSound" aria-pressed="false">🔊 인사 소리 듣기</button></div><p class="hw-status" id="homeGreetingStatus" role="status" aria-live="polite">재생 버튼을 누르면 네 친구가 인사해요.</p><div class="hw-actions"><button type="button" id="skipHomeGreeting">바로 친구방 보기</button></div>';
+ intro.innerHTML='<div class="hw-media"><img src="assets/images/home-greeting-poster.png" alt="콩이, 토리, 나비, 보리가 인사하고 있어요"><video id="homeGreetingVideo" autoplay playsinline preload="auto" poster="assets/images/home-greeting-poster.png" aria-label="네 친구의 인사 영상" hidden><source src="assets/videos/home-greeting.mp4" type="video/mp4"></video></div><p class="hw-status" id="homeGreetingStatus" role="status" aria-live="polite"></p><div class="hw-actions"><button type="button" class="hw-primary" id="skipHomeGreeting">🏡 바로 친구들 마을로 가기</button></div>';
  const rooms=document.createElement('section');rooms.id='friendRooms';rooms.className='hw-panel';rooms.hidden=true;rooms.setAttribute('aria-label','친구방 선택');rooms.setAttribute('aria-label','네 친구의 작은 마을');grid.classList.add('friend-village');rooms.append(grid);
  const landscape=document.createElement('div');landscape.className='village-landscape';landscape.setAttribute('aria-hidden','true');landscape.innerHTML='<svg viewBox="0 0 1200 600" preserveAspectRatio="none" focusable="false"><path d="M530 625 C650 520 840 560 900 440 S755 295 600 305 S215 360 205 235 S355 80 530 145 S920 280 1020 95" fill="none" stroke="#ddc69c" stroke-width="58" stroke-linecap="round"/><path d="M530 625 C650 520 840 560 900 440 S755 295 600 305 S215 360 205 235 S355 80 530 145 S920 280 1020 95" fill="none" stroke="#f6e5c7" stroke-width="50" stroke-linecap="round"/><path d="M320 235 Q325 265 400 278 M915 185 Q960 230 955 265 M255 485 Q320 490 370 440 M945 520 Q990 495 1010 470" fill="none" stroke="#f6e5c7" stroke-width="24" stroke-linecap="round"/><ellipse cx="595" cy="313" rx="95" ry="51" fill="#e1e9c8"/><g fill="#c6d8aa"><ellipse cx="55" cy="80" rx="48" ry="33"/><ellipse cx="1120" cy="500" rx="54" ry="37"/><ellipse cx="110" cy="545" rx="60" ry="28"/></g><g fill="#e3ae9c"><circle cx="92" cy="310" r="7"/><circle cx="106" cy="296" r="6"/><circle cx="1110" cy="333" r="7"/><circle cx="1095" cy="350" r="6"/></g><g fill="#fff7d1"><circle cx="70" cy="326" r="6"/><circle cx="115" cy="324" r="6"/><circle cx="1130" cy="355" r="7"/></g></svg><div class="village-rest"><span class="rest-tree"></span><span class="rest-bench"></span><span class="rest-sign">작은 쉼터</span></div>';grid.prepend(landscape);
  const tools=document.createElement('div');tools.className='hw-room-tools';tools.innerHTML='<a href="our-home.html" class="home-living-link">🏡 우리 집</a><a href="our-home.html?neighbors" class="home-living-link">🌿 이웃집 둘러보기</a><button type="button" id="replayHomeGreeting">인사 다시 보기</button><button type="button" data-senior-page="activities">전체 활동</button><details><summary>오늘의 수업</summary><div class="hw-course-links"><a href="daycare-class.html?session=am">오전 수업 · 60분</a><a href="daycare-class.html?session=pm">오후 수업 · 60분</a><a href="daily-course.html">간편 수업 · 20분</a><a href="character-house.html">친구 집 꾸미기</a></div></details>';rooms.append(tools);if(hasVisited()||history.state?.schoolHomeFlow==='rooms')intro.querySelector('video').autoplay=false;hero.append(intro,rooms);
- const video=intro.querySelector('video'),poster=intro.querySelector('img'),play=intro.querySelector('#homeGreetingPlay'),status=intro.querySelector('[role=status]'),sound=intro.querySelector('#homeGreetingSound');
+ const video=intro.querySelector('video'),poster=intro.querySelector('img'),status=intro.querySelector('[role=status]');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');let phase='greeting',transition=0,playRevision=0,loadTimer,muted=true,ownAudio=false,sequence=null;
  const cards=Object.keys(names).map(id=>{const card=grid.querySelector('.home-friend-'+id);card.dataset.room=id;card.setAttribute('aria-label',`${names[id]} ${roles[id]} 들어가기`);card.querySelector(':scope > span')?.remove();
   const role=document.createElement('span');role.className='hw-room-name';role.textContent=roles[id];const line=document.createElement('p');line.className='hw-intro';line.textContent=lines[id];const label=document.createElement('span');label.className='hw-speaking-label';label.setAttribute('aria-hidden','true');const enter=document.createElement('span');enter.className='hw-enter';enter.textContent=`${names[id]} ${roles[id]} 들어가기`;card.append(role,line,label,enter);
@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   const svg=card.querySelector('svg'),d=window.CharacterRigData?.[id],original=svg?.querySelector('image');
   if(original&&d){const ns='http://www.w3.org/2000/svg',defs=svg.querySelector('defs'),mask=document.createElementNS(ns,'mask'),clip=document.createElementNS(ns,'clipPath');mask.id='home-hand-mask-'+id;mask.setAttribute('maskUnits','userSpaceOnUse');mask.setAttribute('x','0');mask.setAttribute('y','0');mask.setAttribute('width','1376');mask.setAttribute('height','768');mask.innerHTML=`<rect width="1376" height="768" fill="white"/><path d="${d.hand}" fill="black"/>`;clip.id='home-hand-clip-'+id;const path=document.createElementNS(ns,'path');path.setAttribute('d',d.hand);clip.append(path);defs.append(mask,clip);const hand=document.createElementNS(ns,'g'),crop=document.createElementNS(ns,'g');hand.dataset.homeWave=id;hand.style.transformOrigin=d.wrist[0]+'px '+d.wrist[1]+'px';crop.setAttribute('clip-path',`url(#${clip.id})`);crop.append(original.cloneNode(true));hand.append(crop);original.setAttribute('mask',`url(#${mask.id})`);svg.append(hand);}
 
+  // Reuse the existing outline to hide only the sheet background, preserving white fur and clothing.
+  const contour=window.HeroContours?.[id];
+  if(svg&&contour){const ns='http://www.w3.org/2000/svg',clip=document.createElementNS(ns,'clipPath'),path=document.createElementNS(ns,'path');clip.id='village-outline-'+id;path.setAttribute('d',contour.path);clip.append(path);svg.querySelector('defs').append(clip);svg.querySelectorAll('image').forEach(img=>img.setAttribute('clip-path',`url(#${clip.id})`));}
   const scene=document.createElement('div');scene.className='village-scene';scene.setAttribute('aria-hidden','true');
   const roof={kongi:'#dba83e',tori:'#da8699',nabi:'#a391c3',bori:'#7caaa9'}[id];
   const icon={kongi:'⚽',tori:'🧩',nabi:'📚',bori:'♫'}[id];
@@ -36,8 +39,8 @@ document.addEventListener('DOMContentLoaded',()=>{
  function remember(value){if(value==='rooms'){try{sessionStorage.setItem('school_home_intro_played','true');}catch{}}try{history.replaceState({...history.state,schoolHomeFlow:value},'');}catch{}}
  function hasVisited(){try{return sessionStorage.getItem('school_home_intro_played')==='true';}catch{return false;}}
  function globalMuted(){try{return localStorage.getItem('digital_school_muted')==='true';}catch{return false;}}
- function syncSound(){video.muted=muted||globalMuted();sound.textContent=video.muted?'🔊 인사 소리 듣기':'🔇 소리 끄기';sound.setAttribute('aria-pressed',String(!video.muted));}
- function stopVideo(){playRevision++;clearTimeout(loadTimer);const wasPlaying=!video.paused;video.pause();if(wasPlaying&&phase==='greeting'&&!video.ended){play.hidden=false;play.textContent='▶ 인사 영상 보기';status.textContent='잠깐 쉬고 있어요. 준비되면 다시 시작해요.';}}
+ function syncSound(){video.muted=muted||globalMuted();}
+ function stopVideo(){playRevision++;clearTimeout(loadTimer);video.pause();}
  function stopIntroductions(){sequence?.abort();sequence=null;window.CharacterVoice?.stop();cards.forEach(c=>{c.classList.remove('is-introducing');c.querySelector('.hw-speaking-label').textContent='';});}
  function wait(ms,signal){return new Promise(resolve=>{if(signal.aborted)return resolve();const finish=()=>{clearTimeout(timer);signal.removeEventListener('abort',finish);resolve();};const timer=setTimeout(finish,ms);signal.addEventListener('abort',finish,{once:true});});}
  async function introduce(){stopIntroductions();const controller=new AbortController();sequence=controller;const signal=controller.signal;
@@ -53,19 +56,41 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(!signal.aborted)subtitle.textContent='산책하듯 둘러보며 가고 싶은 친구 집을 선택해보세요.';
  }
  async function fade(node,from,to){if(reduced.matches)return;try{await node.animate([{opacity:from},{opacity:to}],{duration:400,easing:'ease-in-out'}).finished;}catch{}}
- async function showRooms(animate=true,announce=true){const token=++transition;phase='transitioning';hero.dataset.homePhase=phase;stopVideo();stopIntroductions();if(animate&&!intro.hidden)await fade(intro,1,0);if(token!==transition)return;intro.hidden=true;rooms.hidden=false;phase='rooms';hero.dataset.homePhase=phase;heading.textContent='친구들 마을에 오신 것을 환영해요';subtitle.textContent='산책하듯 천천히 둘러보고, 친구 집에 들러보세요.';remember('rooms');heading.focus({preventScroll:true});if(animate)await fade(rooms,0,1);if(token===transition&&announce&&!document.hidden)introduce();}
+ async function showRooms(animate=true,announce=true){const token=++transition;phase='transitioning';hero.dataset.homePhase=phase;remember('rooms');stopVideo();stopIntroductions();if(animate&&!intro.hidden)await fade(intro,1,0);if(token!==transition)return;intro.hidden=true;rooms.hidden=false;phase='rooms';hero.dataset.homePhase=phase;heading.textContent='오늘은 어떤 친구 집에 가볼까요?';subtitle.textContent='산책하듯 둘러보며 가고 싶은 친구 집을 선택해보세요.';remember('rooms');heading.focus({preventScroll:true});if(animate)await fade(rooms,0,1);if(token===transition&&announce&&!document.hidden)introduce();}
 
- function showGreeting(){++transition;stopIntroductions();stopVideo();phase='greeting';hero.dataset.homePhase=phase;rooms.hidden=true;intro.hidden=false;video.hidden=false;poster.hidden=true;video.currentTime=0;muted=true;syncSound();heading.textContent='안녕하세요. 오늘도 반가워요!';subtitle.textContent='네 친구의 인사를 만나보세요.';play.hidden=true;play.textContent='▶ 인사 영상 보기';remember('greeting');playVideo();}
- function failure(blocked=false){if(phase!=='greeting')return;stopVideo();video.hidden=true;poster.hidden=false;status.textContent=blocked?'재생 버튼을 누르면 인사를 볼 수 있어요.':'인사 영상을 불러오지 못했어요.';play.hidden=false;play.textContent='▶ 인사 영상 보기';}
- async function playVideo(){if(phase!=='greeting')return;stopIntroductions();window.VoiceManager?.stopSpeaking?.();window.CharacterAudioPlayer?.stop();ownAudio=true;window.dispatchEvent(new Event('welcome-audio-start'));ownAudio=false;clearTimeout(loadTimer);const token=++playRevision;syncSound();if(video.error||video.networkState===3)video.load();video.currentTime=0;video.hidden=false;poster.hidden=true;play.hidden=true;status.textContent='인사를 준비하고 있어요.';loadTimer=setTimeout(()=>{if(token===playRevision)failure();},12000);
-  try{await video.play();if(token!==playRevision)return;clearTimeout(loadTimer);status.textContent=video.muted?'네 친구가 인사하고 있어요. 소리를 켜면 처음부터 들을 수 있어요.':'네 친구가 인사하고 있어요.';}catch(error){if(token===playRevision)failure(error.name==='NotAllowedError');}}
- video.loop=false;video.controls=false;video.autoplay=!hasVisited()&&history.state?.schoolHomeFlow!=='rooms';video.defaultMuted=true;video.muted=true;play.onclick=()=>playVideo();
- video.addEventListener('ended',()=>{if(phase==='greeting')showRooms();});video.addEventListener('error',()=>failure());video.querySelector('source').addEventListener('error',()=>failure());
- intro.querySelector('#skipHomeGreeting').onclick=()=>showRooms();tools.querySelector('#replayHomeGreeting').onclick=()=>{showGreeting();sound.focus();};sound.onclick=()=>{if(video.muted){muted=false;if(globalMuted())document.getElementById('btnTtsToggle')?.click();syncSound();playVideo();}else{muted=true;syncSound();}};
- window.addEventListener('storage',syncSound);document.addEventListener('click',()=>queueMicrotask(syncSound));
+ function showGreeting(){++transition;stopIntroductions();stopVideo();phase='greeting';hero.dataset.homePhase=phase;rooms.hidden=true;intro.hidden=false;video.currentTime=0;heading.textContent='안녕하세요. 오늘도 반가워요!';subtitle.textContent='콩이, 토리, 나비, 보리가 기다리고 있어요.';remember('greeting');playVideo();}
+ function failure(blocked=false){if(phase!=='greeting')return;stopVideo();video.hidden=true;poster.hidden=false;status.textContent=blocked?'친구들이 마을에서 기다리고 있어요.':'인사 영상을 불러오지 못했어요.';}
+ async function playVideo(){
+  if(phase!=='greeting'||hero.classList.contains('senior-away'))return;
+  stopIntroductions();window.VoiceManager?.stopSpeaking?.();window.CharacterAudioPlayer?.stop();
+  ownAudio=true;window.dispatchEvent(new Event('welcome-audio-start'));ownAudio=false;
+  clearTimeout(loadTimer);const token=++playRevision;
+  const current=()=>token===playRevision&&phase==='greeting'&&!document.hidden&&!hero.classList.contains('senior-away');
+  // Honor an explicit saved mute choice; otherwise try the MP4's own audio first.
+  muted=globalMuted();video.defaultMuted=muted;syncSound();
+  if(video.error||video.networkState===3)video.load();
+  video.hidden=false;poster.hidden=true;status.textContent='';
+  loadTimer=setTimeout(()=>{if(current())failure();},12000);
+  try{
+   try{await video.play();}
+   catch(error){
+    if(!current())return;
+    muted=true;syncSound();await video.play();
+   }
+   if(!current()){if(phase!=='greeting'||document.hidden)video.pause();return;}
+   clearTimeout(loadTimer);
+  }catch(error){if(current())failure(error.name==='NotAllowedError');}
+ }
+ video.loop=false;video.controls=false;video.autoplay=!hasVisited()&&history.state?.schoolHomeFlow!=='rooms';
+ video.addEventListener('ended',()=>{if(phase==='greeting')showRooms();});
+ video.addEventListener('error',()=>failure());video.querySelector('source').addEventListener('error',()=>failure());
+ intro.querySelector('#skipHomeGreeting').onclick=()=>showRooms();
+ tools.querySelector('#replayHomeGreeting').onclick=()=>{showGreeting();intro.querySelector('#skipHomeGreeting').focus({preventScroll:true});};
+ window.addEventListener('storage',syncSound);
+ document.addEventListener('click',e=>{if(e.target.closest?.('#btnTtsToggle'))queueMicrotask(()=>{muted=globalMuted();syncSound();});});
  window.addEventListener('welcome-audio-start',()=>{if(!ownAudio){stopVideo();stopIntroductions();}});
  window.addEventListener('character-audio-start',stopVideo);
- document.addEventListener('visibilitychange',()=>{if(document.hidden){stopVideo();stopIntroductions();if(phase==='greeting')play.textContent='▶ 처음부터 다시 보기';}});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){stopVideo();stopIntroductions();}else if(phase==='greeting'&&!hero.classList.contains('senior-away'))playVideo();});
  window.addEventListener('pagehide',()=>{stopVideo();stopIntroductions();});
  window.addEventListener('click',e=>{if(e.target.closest?.('#btnTeacherSpace,button[data-senior-page],.brand-logo')){stopVideo();stopIntroductions();}},true);
  // The original single-page navigation owns teacher/catalog screens.

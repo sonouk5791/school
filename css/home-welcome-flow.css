@@ -120,3 +120,24 @@ html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{b
 .high-contrast-mode #friendRooms .friend-village{background:#151515!important;border-color:#fff!important}
 @media(max-width:1000px){.village-rest{transform:scale(.92);transform-origin:center}.village-shrub{width:42px;height:22px}.flowers-north{right:3%;top:2%}}
 @media(max-width:600px){.village-landscape>.village-nature{width:100%;margin:0}.village-landscape>.village-paths{width:100%;margin:0}.village-rest{display:none}.shrub-north{left:2%;top:1%}.shrub-east{right:1%;top:49%}.shrub-west{left:1%;bottom:2%}.flowers-north{right:4%;top:24%}.flowers-south{right:4%;bottom:24%}.village-copy .hw-enter{max-width:320px;margin:auto;width:100%}}
+/* September 29: one clear intro action and houses along a shared walking route. */
+.hw-media{width:min(95%,800px);max-height:none;margin:14px auto}
+.hw-status:empty{display:none}
+#skipHomeGreeting{min-height:64px;font-size:22px;padding:14px 24px}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture{background:transparent;border-radius:0;mix-blend-mode:normal}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introducing .home-friend-picture{transform:none}
+.village-copy .hw-enter{max-width:260px;align-self:flex-start}
+.village-landscape:before{content:"";position:absolute;top:10px;right:12%;width:70px;height:70px;border-radius:50%;background:#fff0bd66;box-shadow:0 0 45px 24px #fff1c533}
+@media(min-width:601px){
+ html[data-home-flow="video"] #friendRooms .friend-village .home-friend-tori{margin-top:42px}
+ html[data-home-flow="video"] #friendRooms .friend-village .home-friend-nabi{margin-bottom:38px}
+}
+@media(min-width:601px) and (max-width:1000px){.hw-media{width:85%}}
+@media(max-width:600px){
+ html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village{padding:114px 12px 32px 36px;gap:44px}
+ .village-rest{display:block;transform:scale(.85);transform-origin:top center}
+ .village-copy .hw-enter{align-self:center;max-width:250px}
+ .hw-room-tools #replayHomeGreeting{width:auto;min-height:56px}
+ .hw-media{width:95%}
+}
+@media(prefers-reduced-motion:reduce){.hw-panel{scroll-behavior:auto}}
