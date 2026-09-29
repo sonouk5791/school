@@ -220,41 +220,153 @@ body {
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #f5efe5;
+  background: #fdfaf4;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
 }
 
 .ex20-bg-layer {
   position: absolute; inset: 0;
-  background-image: url('../assets/exercise-20min/exercise-room-bg.jpg');
+  background-image: url('../assets/exercise-20min/senior-classroom-stage.jpg');
   background-size: cover;
-  background-position: center;
-  opacity: 0.35;
+  background-position: center bottom;
+  opacity: 1;
   transition: opacity 0.6s ease;
 }
 
+/* 어르신 미리보기 (시작 화면 카드용) */
+.ex20-senior-preview {
+  padding: 16px 20px;
+  text-align: center;
+  border-top: 1.5px solid #ede5d5;
+  background: #fdf9f0;
+}
+.ex20-senior-preview-img {
+  width: 100%;
+  max-width: 640px;
+  border-radius: 16px;
+  border: 3px solid #e8dfd0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  object-fit: cover;
+  aspect-ratio: 16/9;
+}
+.ex20-senior-preview-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ex-primary);
+  margin-top: 12px;
+}
 
 /* ══════════════════════════════════════════════════════
-   BODY-PART RIG (캐릭터 관절 분리 애니메이션)
-   
-   캐릭터 이미지를 6개 영역으로 clip-path 분할:
-   - head:  머리 (~30%)
-   - arm-l: 왼팔 (왼쪽 하단)
-   - arm-r: 오른팔 (오른쪽 하단)
-   - body:  몸통 (중앙)
-   - leg-l: 왼다리
-   - leg-r: 오른다리
-   
-   각 영역을 독립적으로 transform 하여 관절 움직임 표현
+   4인 캐릭터 크루 무대 (콩이, 토리, 나비, 보리)
+   화면에 4명의 캐릭터가 모두 함께 등장하여 수업을 진행
    ══════════════════════════════════════════════════════ */
+.ex20-crew-stage {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 0 4%;
+  z-index: 6;
+  pointer-events: none;
+}
 
+.ex20-crew-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: bottom center;
+}
+
+.ex20-crew-char-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.ex20-crew-img {
+  width: 150px;
+  height: 180px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.25));
+  transition: transform 0.4s ease;
+  animation: crewIdleBounce 3s ease-in-out infinite;
+}
+
+/* 캐릭터별 바운스 타이밍 오프셋으로 생동감 부여 */
+.ex20-crew-member--kongi .ex20-crew-img { animation-delay: 0s; }
+.ex20-crew-member--tori  .ex20-crew-img { animation-delay: 0.4s; }
+.ex20-crew-member--bori  .ex20-crew-img { animation-delay: 0.8s; }
+.ex20-crew-member--nabi  .ex20-crew-img { animation-delay: 1.2s; }
+
+@keyframes crewIdleBounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30%      { transform: translateY(-8px) rotate(-1.5deg); }
+  70%      { transform: translateY(-4px) rotate(1.5deg); }
+}
+
+.ex20-crew-badge {
+  margin-top: -6px;
+  padding: 4px 12px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #2b3b2b;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 12px;
+  border: 1.5px solid rgba(45, 106, 46, 0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  white-space: nowrap;
+}
+
+/* 현재 파트의 메인 리더 캐릭터 강조 */
+.ex20-crew-member.is-leader {
+  transform: scale(1.18) translateY(-6px);
+  z-index: 10;
+}
+.ex20-crew-member.is-leader .ex20-crew-badge {
+  background: #2d6a2e;
+  color: #ffffff;
+  border-color: #ffd166;
+  box-shadow: 0 4px 12px rgba(45, 106, 46, 0.4);
+}
+.ex20-crew-member.is-leader .ex20-crew-img {
+  animation: crewLeaderCheer 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 10px 20px rgba(45, 106, 46, 0.45));
+}
+
+@keyframes crewLeaderCheer {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-14px) scale(1.04); }
+}
+
+/* 5부 모두 함께일 때 전체 크루 댄스 */
+.ex20-crew-stage.is-all-active .ex20-crew-img {
+  animation: crewAllDance 1s ease-in-out infinite alternate;
+}
+@keyframes crewAllDance {
+  0%   { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-12px) rotate(3deg); }
+}
+
+/* ══════════════════════════════════════════════════════
+   BODY-PART RIG (중앙 동작 리더 캐릭터 관절 애니메이션)
+   ══════════════════════════════════════════════════════ */
 .ex20-rig {
   position: absolute;
-  bottom: 2%;
+  bottom: 0%;
   left: 50%;
   transform: translateX(-50%);
-  width: 420px;
-  height: 420px;
-  z-index: 5;
+  width: 380px;
+  height: 380px;
+  z-index: 8;
+  display: none; /* 크루 시스템과 통합하여 개별 리더 애니메이션에 연동 */
 }
 
 /* 각 body part는 캐릭터 이미지를 background로 사용하여 clip */
@@ -709,37 +821,52 @@ body {
 
 
 /* ══════════════════════════════════════════
-   큰 숫자 카운트 (48px+, 오른쪽 표시)
+   화면 하단 중앙 큰 숫자 카운트 (1, 2, 3, 4)
+   어르신이 멀리서도 박자를 쉽게 보고 맞출 수 있도록 하단 중앙에 배치
    ══════════════════════════════════════════ */
 
 .ex20-count {
   position: absolute;
-  top: 50%;
-  right: 6%;
-  transform: translateY(-50%);
-  z-index: 20;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.ex20-count__label {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 2px 10px;
+  border-radius: 10px;
+  letter-spacing: 1px;
 }
 
 .ex20-count__num {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   font-size: 56px;
   font-weight: 900;
-  color: #fff;
-  background: rgba(45, 106, 46, 0.85);
+  color: #ffffff;
+  background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
   border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  animation: countPop 0.4s ease-out;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border: 4px solid #ffffff;
+  box-shadow: 0 8px 28px rgba(211, 84, 0, 0.45), 0 0 0 4px rgba(230, 126, 34, 0.3);
+  animation: countPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 @keyframes countPop {
-  0%   { transform: scale(0.5); opacity: 0; }
+  0%   { transform: scale(0.6); opacity: 0; }
   60%  { transform: scale(1.15); }
   100% { transform: scale(1); opacity: 1; }
 }
@@ -747,29 +874,31 @@ body {
 
 /* ══════════════════════════════════════════
    동작 이름 뱃지 (상단 중앙)
+   수업 화면처럼 큼직하고 명확하게 표시
    ══════════════════════════════════════════ */
 
 .ex20-move-badge {
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 22px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
+  gap: 12px;
+  padding: 10px 28px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
   border-radius: 40px;
-  border: 2px solid rgba(45, 106, 46, 0.2);
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--ex-primary);
+  border: 3px solid #2d6a2e;
+  font-size: 26px;
+  font-weight: 900;
+  color: #1b4332;
   z-index: 15;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  transition: all 0.4s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  transition: all 0.35s ease;
+  letter-spacing: -0.5px;
 }
-#moveIcon { font-size: 26px; }
+#moveIcon { font-size: 30px; }
 
 
 /* ══════════════════════════════════════════
@@ -778,18 +907,20 @@ body {
 
 .ex20-rep-progress {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: 14px;
+  right: 16px;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.88);
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 20px;
+  border: 1.5px solid #d5c8b2;
   z-index: 15;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   color: var(--ex-text);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .ex20-rep-progress .rep-dot {

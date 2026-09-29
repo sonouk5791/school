@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fffaf3">
-  <meta name="description" content="콩이와 친구들과 함께하는 20분 건강체조 - 디지털 AI 학교 어르신 의자 체조 수업">
-  <title>콩이와 친구들과 함께하는 20분 건강체조 · 디지털 AI 학교</title>
-  <link rel="stylesheet" href="css/exercise-20min.css?v=20260929">
+  <meta name="description" content="콩이와 친구들과 함께하는 신나는 20분 건강체조 - 디지털 AI 학교 어르신 의자 체조 수업">
+  <title>콩이와 친구들과 함께하는 신나는 20분 건강체조 · 디지털 AI 학교</title>
+  <link rel="stylesheet" href="css/exercise-20min.css?v=20260929b">
   <link rel="stylesheet" href="css/senior-common-header.css?v=20260923-nav2">
   <script defer src="js/senior-common-header.js?v=20260928-service"></script>
   <link rel="stylesheet" href="css/service-platform.css?v=20260928">
@@ -28,7 +28,13 @@
             <img src="assets/images/everyday/bori-active.png" alt="보리" class="ex20-hero-char ex20-hero-char--bori" onerror="this.src='assets/images/friend-bori.png'">
           </div>
           <h1 class="ex20-ready-title">🌸 콩이와 친구들과 함께하는<br>신나는 20분 건강체조</h1>
-          <p class="ex20-ready-sub">🎵 경쾌한 트로트에 맞춰 · 의자에 앉아서 따라해요 · 천천히, 무리하지 마세요</p>
+          <p class="ex20-ready-sub">🎵 신나는 음악에 맞춰 · 의자에 앉아서 따라해요 · 어르신과 캐릭터가 함께!</p>
+        </div>
+
+        <!-- 어르신 체조 미리보기 이미지 -->
+        <div class="ex20-senior-preview">
+          <img src="assets/exercise-20min/seniors-exercise.jpg" alt="어르신들이 의자에 앉아 함께 체조하는 모습" class="ex20-senior-preview-img" loading="lazy">
+          <p class="ex20-senior-preview-text">👴👵 어르신과 캐릭터 친구들이 함께 체조해요!</p>
         </div>
 
         <!-- 5파트 안내 카드 -->
@@ -43,50 +49,36 @@
           <div class="ex20-part-card" data-part="1">
             <span class="ex20-part-icon">🐰</span>
             <div class="ex20-part-info">
-              <strong>2부 · 목·어깨·손·팔 운동</strong>
-              <span>토리 | 약 6분</span>
+              <strong>2부 · 상체 + 손 + 박수 운동</strong>
+              <span>토리 | 약 5분</span>
             </div>
           </div>
           <div class="ex20-part-card" data-part="2">
-            <span class="ex20-part-icon">🐱</span>
+            <span class="ex20-part-icon">🐕</span>
             <div class="ex20-part-info">
-              <strong>3부 · 상체 체조</strong>
-              <span>나비 | 약 3분</span>
+              <strong>3부 · 의자 하체운동</strong>
+              <span>보리 | 약 5분</span>
             </div>
           </div>
           <div class="ex20-part-card" data-part="3">
-            <span class="ex20-part-icon">🐕</span>
+            <span class="ex20-part-icon">🐱</span>
             <div class="ex20-part-info">
-              <strong>4부 · 의자 하체운동</strong>
-              <span>보리 | 약 3분</span>
+              <strong>4부 · 신나는 리듬체조 + 인지박수</strong>
+              <span>나비 | 약 5분</span>
             </div>
           </div>
           <div class="ex20-part-card" data-part="4">
-            <span class="ex20-part-icon">🎵</span>
-            <div class="ex20-part-info">
-              <strong>5부 · 인지박수 율동</strong>
-              <span>나비 | 약 3분</span>
-            </div>
-          </div>
-          <div class="ex20-part-card" data-part="5">
             <span class="ex20-part-icon">🐶🐰🐱🐕</span>
             <div class="ex20-part-info">
-              <strong>6부 · 함께하는 복합 체조</strong>
-              <span>모두 함께 | 약 2분</span>
-            </div>
-          </div>
-          <div class="ex20-part-card" data-part="6">
-            <span class="ex20-part-icon">💛</span>
-            <div class="ex20-part-info">
-              <strong>마무리 · 호흡과 칭찬</strong>
-              <span>보리 | 약 1분</span>
+              <strong>5부 · 마무리 스트레칭 + 호흡</strong>
+              <span>모두 함께 | 약 3분</span>
             </div>
           </div>
         </div>
 
         <!-- 시작 버튼 -->
         <div class="ex20-ready-action">
-          <p id="loadStatus" class="ex20-load-status" role="status">음성을 준비하고 있어요…</p>
+          <p id="loadStatus" class="ex20-load-status" role="status">음악과 음성을 준비하고 있어요…</p>
           <button id="btnStart" class="ex20-btn-start" type="button" disabled>
             ▶ 체조 시작하기
           </button>
@@ -98,7 +90,7 @@
     <!-- ═══ STATE 2: 체조 진행 화면 ═══ -->
     <section id="statePlaying" class="ex20-state ex20-state--playing" style="display:none;" aria-label="체조 진행">
 
-      <!-- 상단 바 (단순화: 파트명 | 시간) -->
+      <!-- 상단 바 -->
       <header class="ex20-player-header">
         <a href="index.html" class="ex20-home-btn" aria-label="홈으로">🏠</a>
         <span id="headerPartLabel" class="ex20-part-label">1부 · 인사와 준비운동</span>
@@ -109,10 +101,51 @@
       <!-- 메인 스테이지 -->
       <main class="ex20-stage-area">
         <div class="ex20-stage" id="exerciseStage">
-          <!-- 배경 -->
+          <!-- 배경 (어르신들과 함께하는 교실 전경) -->
           <div class="ex20-bg-layer" id="bgLayer"></div>
 
-          <!-- ═══ 캐릭터 리그 (body-part 분리 애니메이션) ═══ -->
+          <!-- 동작 이름 뱃지 (상단 중앙) -->
+          <div class="ex20-move-badge" id="moveBadge">
+            <span id="moveIcon">🧘</span>
+            <span id="moveName">준비</span>
+          </div>
+
+          <!-- ═══ 4인 캐릭터 크루 무대 (콩이, 토리, 나비, 보리 전원 등장) ═══ -->
+          <div class="ex20-crew-stage" id="crewStage">
+            <!-- 콩이 -->
+            <div class="ex20-crew-member ex20-crew-member--kongi is-leader" id="crewKongi" data-char="kongi">
+              <div class="ex20-crew-char-wrap">
+                <img class="ex20-crew-img" src="assets/images/everyday/kongi-active.png" alt="콩이">
+                <span class="ex20-crew-badge">🐶 콩이</span>
+              </div>
+            </div>
+
+            <!-- 토리 -->
+            <div class="ex20-crew-member ex20-crew-member--tori" id="crewTori" data-char="tori">
+              <div class="ex20-crew-char-wrap">
+                <img class="ex20-crew-img" src="assets/images/everyday/tori-active.png" alt="토리">
+                <span class="ex20-crew-badge">🐰 토리</span>
+              </div>
+            </div>
+
+            <!-- 보리 -->
+            <div class="ex20-crew-member ex20-crew-member--bori" id="crewBori" data-char="bori">
+              <div class="ex20-crew-char-wrap">
+                <img class="ex20-crew-img" src="assets/images/everyday/bori-active.png" alt="보리">
+                <span class="ex20-crew-badge">🐕 보리</span>
+              </div>
+            </div>
+
+            <!-- 나비 -->
+            <div class="ex20-crew-member ex20-crew-member--nabi" id="crewNabi" data-char="nabi">
+              <div class="ex20-crew-char-wrap">
+                <img class="ex20-crew-img" src="assets/images/everyday/nabi-active.png" alt="나비">
+                <span class="ex20-crew-badge">🐱 나비</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ 메인 리더 캐릭터 리그 (중앙 관절 분리 정밀 애니메이션) ═══ -->
           <div class="ex20-rig" id="charRig" data-move="rest">
             <div class="ex20-rig__head" id="rigHead"></div>
             <div class="ex20-rig__arm-l" id="rigArmL"></div>
@@ -120,19 +153,13 @@
             <div class="ex20-rig__body" id="rigBody"></div>
             <div class="ex20-rig__leg-l" id="rigLegL"></div>
             <div class="ex20-rig__leg-r" id="rigLegR"></div>
-            <!-- 풀 이미지 기저 (리그 안 보일 때 폴백) -->
-            <img id="charImg" class="ex20-rig__full" src="assets/images/everyday/kongi-active.png" alt="콩이">
+            <img id="charImg" class="ex20-rig__full" src="assets/images/everyday/kongi-active.png" alt="체조 리더 캐릭터">
           </div>
 
-          <!-- 큰 숫자 카운트 -->
-          <div class="ex20-count" id="countDisplay" aria-live="polite" hidden>
+          <!-- 화면 하단 중앙 큰 숫자 카운트 (1, 2, 3, 4) -->
+          <div class="ex20-count" id="countDisplay" aria-live="polite">
+            <span class="ex20-count__label">박자</span>
             <span class="ex20-count__num" id="countNum">1</span>
-          </div>
-
-          <!-- 동작 이름 뱃지 (상단 중앙) -->
-          <div class="ex20-move-badge" id="moveBadge">
-            <span id="moveIcon">🧘</span>
-            <span id="moveName">준비</span>
           </div>
 
           <!-- 동작 반복 진행률 -->
@@ -159,7 +186,7 @@
         </div>
       </main>
 
-      <!-- 조작 버튼 바 (수업 중 최소화) -->
+      <!-- 조작 버튼 바 -->
       <nav class="ex20-controls" aria-label="체조 조작">
         <div class="ex20-controls-main">
           <button id="btnPrev" class="ex20-ctrl-btn" type="button" disabled>◀ 이전</button>
@@ -172,7 +199,7 @@
             <button id="btnReplay" class="ex20-ctrl-sub" type="button">🔄 다시</button>
             <button id="btnSlow" class="ex20-ctrl-sub" type="button" aria-pressed="false">🐢 천천히</button>
             <button id="btnMute" class="ex20-ctrl-sub" type="button" aria-pressed="false">🔊 음성</button>
-            <button id="btnBgm" class="ex20-ctrl-sub" type="button" aria-pressed="true">🎵 트로트</button>
+            <button id="btnBgm" class="ex20-ctrl-sub" type="button" aria-pressed="true">🎵 음악 켜짐</button>
             <button id="btnFull" class="ex20-ctrl-sub" type="button">⛶ 큰 화면</button>
           </div>
         </details>
@@ -192,12 +219,12 @@
         <h2 class="ex20-complete-title">오늘도 정말 잘하셨어요!</h2>
         <p class="ex20-complete-desc">
           콩이, 토리, 나비, 보리와 함께<br>
-          20분 건강체조를 모두 끝마치셨습니다.<br><br>
+          신나는 음악에 맞춰 20분 건강체조를 모두 끝마치셨습니다.<br><br>
           몸도 한결 가볍고 마음도 건강해졌어요. 🌸
         </p>
         <div class="ex20-complete-stats">
           <div class="ex20-stat"><span class="ex20-stat-val">20:00</span><span class="ex20-stat-lbl">운동 시간</span></div>
-          <div class="ex20-stat"><span class="ex20-stat-val">8 / 8</span><span class="ex20-stat-lbl">완료 챕터</span></div>
+          <div class="ex20-stat"><span class="ex20-stat-val">30+</span><span class="ex20-stat-lbl">운동 동작</span></div>
           <div class="ex20-stat"><span class="ex20-stat-val">+1</span><span class="ex20-stat-lbl">건강 도장</span></div>
         </div>
         <div class="ex20-complete-heroes">
@@ -221,12 +248,11 @@
 
     <!-- Footer -->
     <footer class="ex20-footer">
-      <p>💡 콩이(🐶), 토리(🐰), 나비(🐱), 보리(🐕) 캐릭터와 어르신이 함께하는 20분 건강체조입니다.</p>
+      <p>💡 콩이(🐶), 토리(🐰), 나비(🐱), 보리(🐕) 캐릭터와 어르신이 함께하는 신나는 20분 건강체조입니다.</p>
       <p><a href="index.html">디지털 AI 학교 처음으로 돌아가기</a></p>
     </footer>
   </div>
 
-  <script src="js/trot-bgm-engine.js?v=20260929"></script>
-  <script src="js/exercise-20min.js?v=20260929"></script>
+  <script src="js/exercise-20min.js?v=20260929b"></script>
 </body>
 </html>

@@ -2737,3 +2737,24 @@
 - [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
 
 </details>
+
+## 자동 저장 / 2026-09-29 09:33:59 — 수업형 20분 건강체조 플레이어 화면 구조 완성 (실내 체조교실 배경, 어르신 함께 체조, 4인 캐릭터 크루, 상단 단계/동작명, 하단 중앙 카운터 및 큰 자막)
+- **수행 내역**: 1. 실내 체조교실 배경 및 의자에 앉아 함께 체조하는 어르신 일러스트(senior-classroom-stage.jpg) 통합 적용\n2. 콩이·토리·보리·나비 4인 캐릭터 크루 무대 전면 배치 및 파트별 리더 하이라이트/응원 리듬 연동\n3. 상단 단계 표시(1부~5부), 상단 중앙 큼직한 동작명 배지, 우측 상단 진행 시간(00:00 / 20:00) 배치\n4. 화면 하단 중앙에 멀리서도 잘 보이는 큰 숫자 카운트(1, 2, 3, 4) 실시간 팝업 인디케이터 적용\n5. 하단 치매 어르신 맞춤형 28px+ 큰 글씨 안내 자막 및 한국어 발음 최적화\n6. 릴리즈 동기화 및 브라우저 실화면 렌더링 검증 완료
+
+## 자동 저장 / 2026-09-29 09:35:54 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 10
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [assets/exercise-20min/audio/bgm-trot.mp3](./assets/exercise-20min/audio/bgm-trot.mp3)
+- [assets/exercise-20min/exercise-room-bg.jpg](./assets/exercise-20min/exercise-room-bg.jpg)
+- [assets/exercise-20min/program.json](./assets/exercise-20min/program.json)
+- [assets/exercise-20min/senior-classroom-stage.jpg](./assets/exercise-20min/senior-classroom-stage.jpg)
+- [assets/exercise-20min/seniors-exercise.jpg](./assets/exercise-20min/seniors-exercise.jpg)
+- [css/exercise-20min.css](./css/exercise-20min.css)
+- [exercise-20min.html](./exercise-20min.html)
+- [js/exercise-20min.js](./js/exercise-20min.js)
+- [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
+
+</details>
