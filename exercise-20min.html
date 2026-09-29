@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#fffaf3">
   <meta name="description" content="콩이와 친구들과 함께하는 20분 건강체조 - 디지털 AI 학교 어르신 의자 체조 수업">
   <title>콩이와 친구들과 함께하는 20분 건강체조 · 디지털 AI 학교</title>
-  <link rel="stylesheet" href="css/exercise-20min.css?v=20260928">
+  <link rel="stylesheet" href="css/exercise-20min.css?v=20260929">
   <link rel="stylesheet" href="css/senior-common-header.css?v=20260923-nav2">
   <script defer src="js/senior-common-header.js?v=20260928-service"></script>
   <link rel="stylesheet" href="css/service-platform.css?v=20260928">
@@ -27,8 +27,8 @@
             <img src="assets/images/everyday/nabi-active.png" alt="나비" class="ex20-hero-char ex20-hero-char--nabi" onerror="this.src='assets/images/friend-nabi.png'">
             <img src="assets/images/everyday/bori-active.png" alt="보리" class="ex20-hero-char ex20-hero-char--bori" onerror="this.src='assets/images/friend-bori.png'">
           </div>
-          <h1 class="ex20-ready-title">🌸 콩이와 친구들과 함께하는<br>20분 건강체조</h1>
-          <p class="ex20-ready-sub">의자에 편안하게 앉아서 따라해요 · 천천히, 무리하지 마세요</p>
+          <h1 class="ex20-ready-title">🌸 콩이와 친구들과 함께하는<br>신나는 20분 건강체조</h1>
+          <p class="ex20-ready-sub">🎵 경쾌한 트로트에 맞춰 · 의자에 앉아서 따라해요 · 천천히, 무리하지 마세요</p>
         </div>
 
         <!-- 5파트 안내 카드 -->
@@ -98,16 +98,12 @@
     <!-- ═══ STATE 2: 체조 진행 화면 ═══ -->
     <section id="statePlaying" class="ex20-state ex20-state--playing" style="display:none;" aria-label="체조 진행">
 
-      <!-- 상단 바 -->
+      <!-- 상단 바 (단순화: 파트명 | 시간) -->
       <header class="ex20-player-header">
         <a href="index.html" class="ex20-home-btn" aria-label="홈으로">🏠</a>
-        <div class="ex20-header-title">
-          <span id="headerPartLabel" class="ex20-part-label">1부 · 인사와 준비운동</span>
-          <span id="headerCharLabel" class="ex20-char-label">🐶 콩이</span>
-        </div>
-        <div class="ex20-header-time">
-          <span id="headerTime" class="ex20-time-display">00:00 / 20:00</span>
-        </div>
+        <span id="headerPartLabel" class="ex20-part-label">1부 · 인사와 준비운동</span>
+        <span id="headerCharLabel" class="ex20-char-label">🐶 콩이</span>
+        <span id="headerTime" class="ex20-time-display">00:00 / 20:00</span>
       </header>
 
       <!-- 메인 스테이지 -->
@@ -116,20 +112,33 @@
           <!-- 배경 -->
           <div class="ex20-bg-layer" id="bgLayer"></div>
 
-          <!-- 캐릭터 영역 -->
-          <div class="ex20-character-area" id="characterArea">
-            <img id="charImg" class="ex20-char-img" src="assets/images/everyday/kongi-active.png" alt="콩이">
+          <!-- ═══ 캐릭터 리그 (body-part 분리 애니메이션) ═══ -->
+          <div class="ex20-rig" id="charRig" data-move="rest">
+            <div class="ex20-rig__head" id="rigHead"></div>
+            <div class="ex20-rig__arm-l" id="rigArmL"></div>
+            <div class="ex20-rig__arm-r" id="rigArmR"></div>
+            <div class="ex20-rig__body" id="rigBody"></div>
+            <div class="ex20-rig__leg-l" id="rigLegL"></div>
+            <div class="ex20-rig__leg-r" id="rigLegR"></div>
+            <!-- 풀 이미지 기저 (리그 안 보일 때 폴백) -->
+            <img id="charImg" class="ex20-rig__full" src="assets/images/everyday/kongi-active.png" alt="콩이">
           </div>
 
-          <!-- 동작 이름 뱃지 -->
+          <!-- 큰 숫자 카운트 -->
+          <div class="ex20-count" id="countDisplay" aria-live="polite" hidden>
+            <span class="ex20-count__num" id="countNum">1</span>
+          </div>
+
+          <!-- 동작 이름 뱃지 (상단 중앙) -->
           <div class="ex20-move-badge" id="moveBadge">
             <span id="moveIcon">🧘</span>
             <span id="moveName">준비</span>
           </div>
 
-          <!-- 챕터 진행 표시 -->
-          <div class="ex20-chapter-badge" id="chapterBadge">
-            1부 · 인사와 준비운동
+          <!-- 동작 반복 진행률 -->
+          <div class="ex20-rep-progress" id="repProgress" hidden>
+            <span id="repDots"></span>
+            <span id="repLabel" class="ex20-rep-label">1 / 3회</span>
           </div>
         </div>
 
@@ -141,9 +150,7 @@
 
         <!-- 타임라인 -->
         <div class="ex20-timeline">
-          <div class="ex20-timeline-chapters" id="timelineChapters">
-            <!-- 동적으로 챕터 세그먼트 생성 -->
-          </div>
+          <div class="ex20-timeline-chapters" id="timelineChapters"></div>
           <input type="range" id="progressBar" class="ex20-progress" min="0" max="1200" value="0" step="0.5" aria-label="체조 진행 바">
           <div class="ex20-time-row">
             <span id="currentTime">00:00</span>
@@ -152,20 +159,23 @@
         </div>
       </main>
 
-      <!-- 조작 버튼 바 -->
+      <!-- 조작 버튼 바 (수업 중 최소화) -->
       <nav class="ex20-controls" aria-label="체조 조작">
         <div class="ex20-controls-main">
           <button id="btnPrev" class="ex20-ctrl-btn" type="button" disabled>◀ 이전</button>
           <button id="btnPause" class="ex20-ctrl-btn ex20-ctrl-btn--primary" type="button">⏸ 잠깐 쉬기</button>
           <button id="btnNext" class="ex20-ctrl-btn" type="button">다음 ▶</button>
         </div>
-        <div class="ex20-controls-sub">
-          <button id="btnReplay" class="ex20-ctrl-sub" type="button">🔄 다시</button>
-          <button id="btnSlow" class="ex20-ctrl-sub" type="button" aria-pressed="false">🐢 천천히</button>
-          <button id="btnMute" class="ex20-ctrl-sub" type="button" aria-pressed="false">🔊 음성</button>
-          <button id="btnBgm" class="ex20-ctrl-sub" type="button" aria-pressed="true">🎵 음악</button>
-          <button id="btnFull" class="ex20-ctrl-sub" type="button">⛶ 큰 화면</button>
-        </div>
+        <details class="ex20-controls-details">
+          <summary class="ex20-controls-toggle">설정 더보기</summary>
+          <div class="ex20-controls-sub">
+            <button id="btnReplay" class="ex20-ctrl-sub" type="button">🔄 다시</button>
+            <button id="btnSlow" class="ex20-ctrl-sub" type="button" aria-pressed="false">🐢 천천히</button>
+            <button id="btnMute" class="ex20-ctrl-sub" type="button" aria-pressed="false">🔊 음성</button>
+            <button id="btnBgm" class="ex20-ctrl-sub" type="button" aria-pressed="true">🎵 트로트</button>
+            <button id="btnFull" class="ex20-ctrl-sub" type="button">⛶ 큰 화면</button>
+          </div>
+        </details>
       </nav>
     </section>
 
@@ -216,6 +226,7 @@
     </footer>
   </div>
 
-  <script src="js/exercise-20min.js?v=20260928"></script>
+  <script src="js/trot-bgm-engine.js?v=20260929"></script>
+  <script src="js/exercise-20min.js?v=20260929"></script>
 </body>
 </html>

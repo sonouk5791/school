@@ -1,6 +1,11 @@
 /* ═══════════════════════════════════════════════════
-   디지털 AI 학교 – 20분 건강체조 플레이어 CSS
-   어르신 친화적: 큰 글씨, 큰 버튼, 편안한 색감
+   디지털 AI 학교 – 20분 건강체조 플레이어 CSS v2
+   체조 시범 영역 대폭 개선:
+   - 캐릭터 1.7~2배 확대
+   - Body-part 리그 (머리/몸/팔/다리 분리 관절 애니메이션)
+   - 큰 숫자 카운트 (48px+)
+   - 상단 정보 단순화
+   - 동작 반복 진행률
    ═══════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
@@ -36,14 +41,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ═══ ROOT ═══ */
 .ex20-root {
   max-width: 1200px;
   margin: 0 auto;
   padding: 12px;
 }
 
-/* ═══ STATE MANAGEMENT ═══ */
 .ex20-state { transition: opacity 0.5s ease; }
 
 /* ═══════════════════════════════
@@ -57,7 +60,6 @@ body {
   overflow: hidden;
 }
 
-/* Hero 영역 */
 .ex20-ready-hero {
   background: linear-gradient(135deg, #fffde8 0%, #e8f5e9 40%, #e3f2fd 100%);
   padding: 40px 24px 32px;
@@ -69,10 +71,8 @@ body {
 .ex20-ready-hero::before {
   content: '';
   position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 200px;
-  height: 200px;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
   background: radial-gradient(circle, rgba(230, 161, 0, 0.12) 0%, transparent 70%);
   border-radius: 50%;
 }
@@ -86,216 +86,127 @@ body {
 }
 
 .ex20-hero-char {
-  width: 90px;
-  height: 90px;
+  width: 90px; height: 90px;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
   transition: transform 0.3s ease;
 }
-
-.ex20-hero-char:hover {
-  transform: scale(1.08) translateY(-4px);
-}
+.ex20-hero-char:hover { transform: scale(1.08) translateY(-4px); }
 
 .ex20-hero-char--kongi { animation: heroBounce 3s ease-in-out infinite 0s; }
-.ex20-hero-char--tori { animation: heroBounce 3s ease-in-out infinite 0.4s; }
-.ex20-hero-char--nabi { animation: heroBounce 3s ease-in-out infinite 0.8s; }
-.ex20-hero-char--bori { animation: heroBounce 3s ease-in-out infinite 1.2s; }
+.ex20-hero-char--tori  { animation: heroBounce 3s ease-in-out infinite 0.4s; }
+.ex20-hero-char--nabi  { animation: heroBounce 3s ease-in-out infinite 0.8s; }
+.ex20-hero-char--bori  { animation: heroBounce 3s ease-in-out infinite 1.2s; }
 
 @keyframes heroBounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50%      { transform: translateY(-8px); }
 }
 
 .ex20-ready-title {
-  font-size: 32px;
-  font-weight: 900;
+  font-size: 32px; font-weight: 900;
   color: var(--ex-primary);
-  line-height: 1.4;
-  margin-bottom: 12px;
+  line-height: 1.4; margin-bottom: 12px;
 }
-
 .ex20-ready-sub {
-  font-size: 20px;
-  color: var(--ex-text-muted);
-  line-height: 1.5;
+  font-size: 20px; color: var(--ex-text-muted); line-height: 1.5;
 }
 
-/* 파트 안내 카드 */
 .ex20-parts-preview {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 10px;
-  padding: 20px 16px;
+  gap: 10px; padding: 20px 16px;
 }
-
 .ex20-part-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: flex; align-items: center; gap: 14px;
   padding: 14px 16px;
   background: #fefbf5;
   border: 1.5px solid #ede5d5;
   border-radius: var(--ex-radius-sm);
   transition: all 0.25s ease;
-  cursor: default;
 }
-
 .ex20-part-card:hover {
   background: #fff8ec;
   border-color: var(--ex-gold);
   transform: translateX(4px);
 }
+.ex20-part-icon { font-size: 28px; flex-shrink: 0; width: 44px; text-align: center; }
+.ex20-part-info { display: flex; flex-direction: column; gap: 2px; }
+.ex20-part-info strong { font-size: 18px; font-weight: 800; color: var(--ex-text); }
+.ex20-part-info span { font-size: 15px; color: var(--ex-text-muted); }
 
-.ex20-part-icon {
-  font-size: 28px;
-  flex-shrink: 0;
-  width: 44px;
-  text-align: center;
-}
-
-.ex20-part-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.ex20-part-info strong {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--ex-text);
-}
-
-.ex20-part-info span {
-  font-size: 15px;
-  color: var(--ex-text-muted);
-}
-
-/* 시작 버튼 */
 .ex20-ready-action {
-  padding: 24px;
-  text-align: center;
+  padding: 24px; text-align: center;
   border-top: 1.5px solid var(--ex-border);
   background: #fffef9;
 }
-
-.ex20-load-status {
-  font-size: 18px;
-  color: var(--ex-text-muted);
-  margin-bottom: 16px;
-  min-height: 28px;
-}
+.ex20-load-status { font-size: 18px; color: var(--ex-text-muted); margin-bottom: 16px; min-height: 28px; }
 
 .ex20-btn-start {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 320px;
-  min-height: 72px;
-  font-size: 28px;
-  font-weight: 900;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 320px; min-height: 72px;
+  font-size: 28px; font-weight: 900;
   color: #fff;
   background: linear-gradient(135deg, #43a047, #2d6a2e);
-  border: none;
-  border-radius: 18px;
+  border: none; border-radius: 18px;
   cursor: pointer;
   box-shadow: 0 6px 24px rgba(45, 106, 46, 0.3);
-  transition: all 0.3s ease;
-  padding: 0 32px;
+  transition: all 0.3s ease; padding: 0 32px;
 }
-
 .ex20-btn-start:hover:not(:disabled) {
   background: linear-gradient(135deg, #4caf50, #388e3c);
   transform: translateY(-2px);
   box-shadow: 0 10px 32px rgba(45, 106, 46, 0.4);
 }
-
-.ex20-btn-start:disabled {
-  background: #c8c0b4;
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-.ex20-btn-start:active:not(:disabled) {
-  transform: translateY(1px);
-}
+.ex20-btn-start:disabled { background: #c8c0b4; box-shadow: none; cursor: not-allowed; }
+.ex20-btn-start:active:not(:disabled) { transform: translateY(1px); }
 
 .ex20-link-home {
-  display: inline-block;
-  margin-top: 16px;
-  font-size: 18px;
-  color: var(--ex-primary);
-  text-decoration: none;
+  display: inline-block; margin-top: 16px;
+  font-size: 18px; color: var(--ex-primary); text-decoration: none;
 }
-
 .ex20-link-home:hover { text-decoration: underline; }
 
-/* ═══════════════════════════════
-   STATE 2: PLAYING (체조 진행)
-   ═══════════════════════════════ */
 
-/* 상단 바 */
+/* ═══════════════════════════════════════════════
+   STATE 2: PLAYING (체조 진행)
+   ═══════════════════════════════════════════════ */
+
+/* ── 상단 바 (단순화) ── */
 .ex20-player-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 18px;
+  gap: 10px;
+  padding: 8px 16px;
   background: var(--ex-surface);
-  border-radius: var(--ex-radius);
-  border: 2px solid var(--ex-border);
-  margin-bottom: 12px;
+  border-radius: 14px;
+  border: 1.5px solid var(--ex-border);
+  margin-bottom: 8px;
   flex-wrap: wrap;
 }
-
 .ex20-home-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 52px;
-  min-height: 52px;
-  font-size: 24px;
-  background: #f5f0e8;
-  border-radius: 14px;
-  text-decoration: none;
-  border: 1.5px solid #e0d8c3;
-  transition: background 0.2s;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 44px; min-height: 44px; font-size: 20px;
+  background: #f5f0e8; border-radius: 10px;
+  text-decoration: none; border: 1px solid #e0d8c3;
 }
-
 .ex20-home-btn:hover { background: #ece5d8; }
 
-.ex20-header-title {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
 .ex20-part-label {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--ex-primary);
+  font-size: 18px; font-weight: 800; color: var(--ex-primary); flex: 1;
 }
-
 .ex20-char-label {
-  font-size: 16px;
-  color: var(--ex-text-muted);
+  font-size: 15px; color: var(--ex-text-muted);
+  padding: 4px 12px; background: #f5f0e8; border-radius: 8px;
 }
-
-.ex20-header-time {
-  background: #f0faf0;
-  padding: 8px 18px;
-  border-radius: 12px;
-  border: 1.5px solid #c6e6c6;
-}
-
 .ex20-time-display {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--ex-primary);
+  font-size: 18px; font-weight: 800; color: var(--ex-primary);
   font-variant-numeric: tabular-nums;
+  padding: 4px 14px;
+  background: #f0faf0; border-radius: 8px; border: 1px solid #c6e6c6;
 }
 
-/* 메인 스테이지 */
+/* ── 메인 스테이지 ── */
 .ex20-stage-area {
   background: var(--ex-surface);
   border-radius: var(--ex-radius);
@@ -312,646 +223,850 @@ body {
   background: #f5efe5;
 }
 
-/* 배경 레이어 */
 .ex20-bg-layer {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-image: url('../assets/exercise-20min/exercise-room-bg.jpg');
   background-size: cover;
   background-position: center;
-  opacity: 0.45;
+  opacity: 0.35;
   transition: opacity 0.6s ease;
 }
 
-/* 캐릭터 영역 */
-.ex20-character-area {
+
+/* ══════════════════════════════════════════════════════
+   BODY-PART RIG (캐릭터 관절 분리 애니메이션)
+   
+   캐릭터 이미지를 6개 영역으로 clip-path 분할:
+   - head:  머리 (~30%)
+   - arm-l: 왼팔 (왼쪽 하단)
+   - arm-r: 오른팔 (오른쪽 하단)
+   - body:  몸통 (중앙)
+   - leg-l: 왼다리
+   - leg-r: 오른다리
+   
+   각 영역을 독립적으로 transform 하여 관절 움직임 표현
+   ══════════════════════════════════════════════════════ */
+
+.ex20-rig {
   position: absolute;
-  bottom: 4%;
+  bottom: 2%;
   left: 50%;
   transform: translateX(-50%);
-  width: 280px;
-  height: 280px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  width: 420px;
+  height: 420px;
   z-index: 5;
 }
 
-.ex20-char-img {
-  max-width: 100%;
-  max-height: 100%;
+/* 각 body part는 캐릭터 이미지를 background로 사용하여 clip */
+.ex20-rig__head,
+.ex20-rig__arm-l,
+.ex20-rig__arm-r,
+.ex20-rig__body,
+.ex20-rig__leg-l,
+.ex20-rig__leg-r {
+  position: absolute;
+  inset: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: transform;
+}
+
+/* 머리 (상단 35%) */
+.ex20-rig__head {
+  clip-path: polygon(20% 0%, 80% 0%, 85% 38%, 15% 38%);
+  transform-origin: 50% 38%;
+  z-index: 6;
+}
+
+/* 왼팔 (왼쪽 부분) */
+.ex20-rig__arm-l {
+  clip-path: polygon(0% 28%, 30% 28%, 32% 68%, 0% 68%);
+  transform-origin: 30% 30%;
+  z-index: 4;
+}
+
+/* 오른팔 (오른쪽 부분) */
+.ex20-rig__arm-r {
+  clip-path: polygon(70% 28%, 100% 28%, 100% 68%, 68% 68%);
+  transform-origin: 70% 30%;
+  z-index: 4;
+}
+
+/* 몸통 (중앙) */
+.ex20-rig__body {
+  clip-path: polygon(28% 34%, 72% 34%, 72% 68%, 28% 68%);
+  transform-origin: 50% 50%;
+  z-index: 5;
+}
+
+/* 왼다리 */
+.ex20-rig__leg-l {
+  clip-path: polygon(22% 64%, 50% 64%, 50% 100%, 22% 100%);
+  transform-origin: 36% 64%;
+  z-index: 3;
+}
+
+/* 오른다리 */
+.ex20-rig__leg-r {
+  clip-path: polygon(50% 64%, 78% 64%, 78% 100%, 50% 100%);
+  transform-origin: 64% 64%;
+  z-index: 3;
+}
+
+/* 풀 이미지 (리그 활성 시 보이지 않음) */
+.ex20-rig__full {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
-  transition: all 0.6s ease;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.18));
+  z-index: 2;
+  transition: opacity 0.4s ease;
 }
 
-/* 동작 애니메이션 */
-.ex20-char-img[data-move="wave"] { animation: charWave 2s ease-in-out infinite; }
-.ex20-char-img[data-move="shoulder-up"] { animation: charShoulderUp 2.5s ease-in-out infinite; }
-.ex20-char-img[data-move="inhale"] { animation: charInhale 3s ease-in-out infinite; }
-.ex20-char-img[data-move="exhale"] { animation: charExhale 3s ease-in-out infinite; }
-.ex20-char-img[data-move="head-right"],
-.ex20-char-img[data-move="head-left"] { animation: charHeadTilt 3s ease-in-out infinite; }
-.ex20-char-img[data-move="shoulder-roll-f"],
-.ex20-char-img[data-move="shoulder-roll-b"] { animation: charShoulderRoll 2.5s ease-in-out infinite; }
-.ex20-char-img[data-move="finger-spread"] { animation: charFingerSpread 2s ease-in-out infinite; }
-.ex20-char-img[data-move="finger-curl"] { animation: charFingerCurl 2s ease-in-out infinite; }
-.ex20-char-img[data-move="wrist-roll"],
-.ex20-char-img[data-move="wrist-roll-r"] { animation: charWristRoll 2.5s linear infinite; }
-.ex20-char-img[data-move="arms-front"] { animation: charArmsFront 3s ease-in-out infinite; }
-.ex20-char-img[data-move="arms-side"] { animation: charArmsSide 3s ease-in-out infinite; }
-.ex20-char-img[data-move="arm-right"],
-.ex20-char-img[data-move="arm-left"] { animation: charArmRaise 3s ease-in-out infinite; }
-.ex20-char-img[data-move="heel-right"],
-.ex20-char-img[data-move="heel-left"] { animation: charHeelLift 2.5s ease-in-out infinite; }
-.ex20-char-img[data-move="toe-up"] { animation: charToeUp 2.5s ease-in-out infinite; }
-.ex20-char-img[data-move="knee-right"],
-.ex20-char-img[data-move="knee-left"] { animation: charKneeLift 3s ease-in-out infinite; }
-.ex20-char-img[data-move="clap"] { animation: charClap 1s ease-in-out infinite; }
-.ex20-char-img[data-move="right-hand"],
-.ex20-char-img[data-move="left-hand"] { animation: charHandWave 1.5s ease-in-out infinite; }
-.ex20-char-img[data-move="hands-up"] { animation: charHandsUp 2.5s ease-in-out infinite; }
-.ex20-char-img[data-move="sway"] { animation: charSway 2s ease-in-out infinite; }
-.ex20-char-img[data-move="pat-shoulder"] { animation: charPatShoulder 2s ease-in-out infinite; }
+/* 리그 활성 → 풀이미지 숨기기 */
+.ex20-rig.rig-active .ex20-rig__full { opacity: 0; }
 
-@keyframes charWave {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-5deg) translateY(-4px); }
-  75% { transform: rotate(5deg) translateY(-4px); }
+/* ─── 관절 애니메이션: 27종 동작 ─── */
+
+/* wave: 인사 (오른팔 흔들기) */
+.ex20-rig[data-move="wave"] .ex20-rig__arm-r {
+  animation: rigWaveArm 1.5s ease-in-out infinite;
+}
+@keyframes rigWaveArm {
+  0%, 100% { transform: rotate(-5deg); }
+  25%      { transform: rotate(-35deg) translateY(-8px); }
+  75%      { transform: rotate(-15deg) translateY(-4px); }
 }
 
-@keyframes charShoulderUp {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+/* rest: 쉬기 (전체 미세 호흡) */
+.ex20-rig[data-move="rest"] .ex20-rig__body {
+  animation: rigRestBreath 4s ease-in-out infinite;
+}
+@keyframes rigRestBreath {
+  0%, 100% { transform: scaleY(1); }
+  50%      { transform: scaleY(1.02); }
 }
 
-@keyframes charInhale {
+/* inhale: 들이마시기 (몸통 확대) */
+.ex20-rig[data-move="inhale"] .ex20-rig__body {
+  animation: rigInhale 3s ease-in-out infinite;
+}
+.ex20-rig[data-move="inhale"] .ex20-rig__arm-l,
+.ex20-rig[data-move="inhale"] .ex20-rig__arm-r {
+  animation: rigInhaleArms 3s ease-in-out infinite;
+}
+@keyframes rigInhale {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+  50%      { transform: scale(1.06) translateY(-4px); }
 }
-
-@keyframes charExhale {
-  0%, 100% { transform: scale(1.04); }
-  50% { transform: scale(0.98); }
-}
-
-@keyframes charHeadTilt {
+@keyframes rigInhaleArms {
   0%, 100% { transform: rotate(0); }
-  50% { transform: rotate(8deg); }
+  50%      { transform: rotate(-8deg) translateY(-6px); }
 }
 
-@keyframes charShoulderRoll {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  25% { transform: translateY(-6px) rotate(2deg); }
-  50% { transform: translateY(-2px) rotate(0); }
-  75% { transform: translateY(-6px) rotate(-2deg); }
+/* exhale: 내쉬기 (몸통 수축) */
+.ex20-rig[data-move="exhale"] .ex20-rig__body {
+  animation: rigExhale 3s ease-in-out infinite;
 }
-
-@keyframes charFingerSpread {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-}
-
-@keyframes charFingerCurl {
+@keyframes rigExhale {
   0%, 100% { transform: scale(1.04); }
-  50% { transform: scale(0.96); }
+  50%      { transform: scale(0.97) translateY(2px); }
 }
 
-@keyframes charWristRoll {
-  0% { transform: rotate(0); }
-  50% { transform: rotate(5deg); }
+/* shoulder-up: 어깨 올리기 (양팔 위로) */
+.ex20-rig[data-move="shoulder-up"] .ex20-rig__arm-l {
+  animation: rigShoulderUpL 2.5s ease-in-out infinite;
+}
+.ex20-rig[data-move="shoulder-up"] .ex20-rig__arm-r {
+  animation: rigShoulderUpR 2.5s ease-in-out infinite;
+}
+.ex20-rig[data-move="shoulder-up"] .ex20-rig__head {
+  animation: rigShoulderHead 2.5s ease-in-out infinite;
+}
+@keyframes rigShoulderUpL {
+  0%, 100% { transform: translateY(0); }
+  35%      { transform: translateY(-18px); }
+  65%      { transform: translateY(-18px); }
+}
+@keyframes rigShoulderUpR {
+  0%, 100% { transform: translateY(0); }
+  35%      { transform: translateY(-18px); }
+  65%      { transform: translateY(-18px); }
+}
+@keyframes rigShoulderHead {
+  0%, 100% { transform: translateY(0); }
+  35%      { transform: translateY(-6px); }
+  65%      { transform: translateY(-6px); }
+}
+
+/* neck-right / neck-left: 고개 돌리기 */
+.ex20-rig[data-move="neck-right"] .ex20-rig__head {
+  animation: rigNeckRight 3s ease-in-out infinite;
+}
+.ex20-rig[data-move="neck-left"] .ex20-rig__head {
+  animation: rigNeckLeft 3s ease-in-out infinite;
+}
+@keyframes rigNeckRight {
+  0%, 100% { transform: rotate(0); }
+  30%      { transform: rotate(12deg) translateX(4px); }
+  70%      { transform: rotate(12deg) translateX(4px); }
+}
+@keyframes rigNeckLeft {
+  0%, 100% { transform: rotate(0); }
+  30%      { transform: rotate(-12deg) translateX(-4px); }
+  70%      { transform: rotate(-12deg) translateX(-4px); }
+}
+
+/* shoulder-front / shoulder-back: 어깨 돌리기 */
+.ex20-rig[data-move="shoulder-front"] .ex20-rig__arm-l,
+.ex20-rig[data-move="shoulder-front"] .ex20-rig__arm-r {
+  animation: rigShoulderRollF 2.5s ease-in-out infinite;
+}
+.ex20-rig[data-move="shoulder-back"] .ex20-rig__arm-l,
+.ex20-rig[data-move="shoulder-back"] .ex20-rig__arm-r {
+  animation: rigShoulderRollB 2.5s ease-in-out infinite;
+}
+@keyframes rigShoulderRollF {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25%      { transform: translateY(-8px) rotate(-5deg); }
+  50%      { transform: translateY(-4px) rotate(0); }
+  75%      { transform: translateY(4px) rotate(5deg); }
+}
+@keyframes rigShoulderRollB {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25%      { transform: translateY(4px) rotate(5deg); }
+  50%      { transform: translateY(-4px) rotate(0); }
+  75%      { transform: translateY(-8px) rotate(-5deg); }
+}
+
+/* hands-open / hands-close: 손가락 펴기/쥐기 (팔 미세 움직임) */
+.ex20-rig[data-move="hands-open"] .ex20-rig__arm-l,
+.ex20-rig[data-move="hands-open"] .ex20-rig__arm-r {
+  animation: rigHandsOpen 2s ease-in-out infinite;
+}
+.ex20-rig[data-move="hands-close"] .ex20-rig__arm-l,
+.ex20-rig[data-move="hands-close"] .ex20-rig__arm-r {
+  animation: rigHandsClose 2s ease-in-out infinite;
+}
+@keyframes rigHandsOpen {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06) translateY(-3px); }
+}
+@keyframes rigHandsClose {
+  0%, 100% { transform: scale(1.03); }
+  50%      { transform: scale(0.97) translateY(2px); }
+}
+
+/* wrist-left / wrist-right: 손목 돌리기 */
+.ex20-rig[data-move="wrist-left"] .ex20-rig__arm-l {
+  animation: rigWristRoll 2s linear infinite;
+}
+.ex20-rig[data-move="wrist-right"] .ex20-rig__arm-r {
+  animation: rigWristRoll 2s linear infinite;
+}
+@keyframes rigWristRoll {
+  0%   { transform: rotate(0); }
+  25%  { transform: rotate(-8deg); }
+  50%  { transform: rotate(0); }
+  75%  { transform: rotate(8deg); }
   100% { transform: rotate(0); }
 }
 
-@keyframes charArmsFront {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-16px); }
+/* arms-forward: 팔 앞으로 (양팔 들어올림) */
+.ex20-rig[data-move="arms-forward"] .ex20-rig__arm-l {
+  animation: rigArmForwardL 3s ease-in-out infinite;
 }
-
-@keyframes charArmsSide {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06) translateY(-6px); }
+.ex20-rig[data-move="arms-forward"] .ex20-rig__arm-r {
+  animation: rigArmForwardR 3s ease-in-out infinite;
 }
-
-@keyframes charArmRaise {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-14px) rotate(-3deg); }
-}
-
-@keyframes charHeelLift {
-  0%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-8px); }
-  60% { transform: translateY(-8px); }
-}
-
-@keyframes charToeUp {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-4px) rotate(-3deg); }
-}
-
-@keyframes charKneeLift {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes charClap {
-  0%, 100% { transform: scale(1); }
-  30% { transform: scale(0.94); }
-  50% { transform: scale(1.06); }
-}
-
-@keyframes charHandWave {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-8deg); }
-  75% { transform: rotate(8deg); }
-}
-
-@keyframes charHandsUp {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-18px); }
-}
-
-@keyframes charSway {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  75% { transform: translateX(8px); }
-}
-
-@keyframes charPatShoulder {
+@keyframes rigArmForwardL {
   0%, 100% { transform: rotate(0) translateY(0); }
-  25% { transform: rotate(-3deg) translateY(-4px); }
-  75% { transform: rotate(3deg) translateY(-4px); }
+  40%      { transform: rotate(-30deg) translateY(-20px); }
+  60%      { transform: rotate(-30deg) translateY(-20px); }
+}
+@keyframes rigArmForwardR {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  40%      { transform: rotate(30deg) translateY(-20px); }
+  60%      { transform: rotate(30deg) translateY(-20px); }
 }
 
-/* 동작 이름 뱃지 */
+/* arms-side: 팔 옆으로 (양팔 넓게) */
+.ex20-rig[data-move="arms-side"] .ex20-rig__arm-l {
+  animation: rigArmSideL 3s ease-in-out infinite;
+}
+.ex20-rig[data-move="arms-side"] .ex20-rig__arm-r {
+  animation: rigArmSideR 3s ease-in-out infinite;
+}
+@keyframes rigArmSideL {
+  0%, 100% { transform: rotate(0) translateX(0); }
+  40%      { transform: rotate(-45deg) translateX(-16px) translateY(-12px); }
+  60%      { transform: rotate(-45deg) translateX(-16px) translateY(-12px); }
+}
+@keyframes rigArmSideR {
+  0%, 100% { transform: rotate(0) translateX(0); }
+  40%      { transform: rotate(45deg) translateX(16px) translateY(-12px); }
+  60%      { transform: rotate(45deg) translateX(16px) translateY(-12px); }
+}
+
+/* hands-chest: 가슴 앞으로 */
+.ex20-rig[data-move="hands-chest"] .ex20-rig__arm-l {
+  animation: rigChestL 3s ease-in-out infinite;
+}
+.ex20-rig[data-move="hands-chest"] .ex20-rig__arm-r {
+  animation: rigChestR 3s ease-in-out infinite;
+}
+@keyframes rigChestL {
+  0%, 100% { transform: rotate(0); }
+  50%      { transform: rotate(15deg) translateX(8px); }
+}
+@keyframes rigChestR {
+  0%, 100% { transform: rotate(0); }
+  50%      { transform: rotate(-15deg) translateX(-8px); }
+}
+
+/* arm-right: 오른팔 올리기 */
+.ex20-rig[data-move="arm-right"] .ex20-rig__arm-r {
+  animation: rigArmRaise 3s ease-in-out infinite;
+}
+/* arm-left: 왼팔 올리기 */
+.ex20-rig[data-move="arm-left"] .ex20-rig__arm-l {
+  animation: rigArmRaiseL 3s ease-in-out infinite;
+}
+@keyframes rigArmRaise {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  40%      { transform: rotate(40deg) translateY(-24px) translateX(8px); }
+  60%      { transform: rotate(40deg) translateY(-24px) translateX(8px); }
+}
+@keyframes rigArmRaiseL {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  40%      { transform: rotate(-40deg) translateY(-24px) translateX(-8px); }
+  60%      { transform: rotate(-40deg) translateY(-24px) translateX(-8px); }
+}
+
+/* both-up: 양손 위로 */
+.ex20-rig[data-move="both-up"] .ex20-rig__arm-l {
+  animation: rigBothUpL 3s ease-in-out infinite;
+}
+.ex20-rig[data-move="both-up"] .ex20-rig__arm-r {
+  animation: rigBothUpR 3s ease-in-out infinite;
+}
+@keyframes rigBothUpL {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  40%      { transform: rotate(-50deg) translateY(-28px); }
+  60%      { transform: rotate(-50deg) translateY(-28px); }
+}
+@keyframes rigBothUpR {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  40%      { transform: rotate(50deg) translateY(-28px); }
+  60%      { transform: rotate(50deg) translateY(-28px); }
+}
+
+/* heel-right / heel-left: 뒤꿈치 들기 */
+.ex20-rig[data-move="heel-right"] .ex20-rig__leg-r {
+  animation: rigHeelLift 2.5s ease-in-out infinite;
+}
+.ex20-rig[data-move="heel-left"] .ex20-rig__leg-l {
+  animation: rigHeelLift 2.5s ease-in-out infinite;
+}
+@keyframes rigHeelLift {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  35%      { transform: translateY(-12px) rotate(-5deg); }
+  65%      { transform: translateY(-12px) rotate(-5deg); }
+}
+
+/* toes: 발끝 들기 */
+.ex20-rig[data-move="toes"] .ex20-rig__leg-l,
+.ex20-rig[data-move="toes"] .ex20-rig__leg-r {
+  animation: rigToeLift 2.5s ease-in-out infinite;
+}
+@keyframes rigToeLift {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-6px) rotate(4deg); }
+}
+
+/* knee-right / knee-left: 무릎 올리기 */
+.ex20-rig[data-move="knee-right"] .ex20-rig__leg-r {
+  animation: rigKneeLift 3s ease-in-out infinite;
+}
+.ex20-rig[data-move="knee-left"] .ex20-rig__leg-l {
+  animation: rigKneeLift 3s ease-in-out infinite;
+}
+@keyframes rigKneeLift {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  30%      { transform: translateY(-20px) rotate(-12deg); }
+  70%      { transform: translateY(-20px) rotate(-12deg); }
+}
+
+/* clap: 박수 (양팔 중앙으로) */
+.ex20-rig[data-move="clap"] .ex20-rig__arm-l {
+  animation: rigClapL 0.8s ease-in-out infinite;
+}
+.ex20-rig[data-move="clap"] .ex20-rig__arm-r {
+  animation: rigClapR 0.8s ease-in-out infinite;
+}
+@keyframes rigClapL {
+  0%, 100% { transform: rotate(0) translateX(0); }
+  40%      { transform: rotate(20deg) translateX(14px); }
+  60%      { transform: rotate(20deg) translateX(14px); }
+}
+@keyframes rigClapR {
+  0%, 100% { transform: rotate(0) translateX(0); }
+  40%      { transform: rotate(-20deg) translateX(-14px); }
+  60%      { transform: rotate(-20deg) translateX(-14px); }
+}
+
+/* clap-one: 한 손 박수 */
+.ex20-rig[data-move="clap-one"] .ex20-rig__arm-r {
+  animation: rigClapOneR 1s ease-in-out infinite;
+}
+@keyframes rigClapOneR {
+  0%, 100% { transform: rotate(0); }
+  30%      { transform: rotate(-25deg) translateX(-10px); }
+  50%      { transform: rotate(-5deg) translateX(-4px); }
+}
+
+/* thumbsup: 엄지 척! */
+.ex20-rig[data-move="thumbsup"] .ex20-rig__arm-r {
+  animation: rigThumbsUp 2s ease-in-out infinite;
+}
+@keyframes rigThumbsUp {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  40%      { transform: rotate(25deg) translateY(-16px); }
+  60%      { transform: rotate(25deg) translateY(-16px); }
+}
+
+
+/* ══════════════════════════════════════════
+   비트 인디케이터 (트로트 쿵짝 리듬 표시)
+   ══════════════════════════════════════════ */
+
+.ex20-beat-indicator {
+  position: absolute;
+  top: 50%;
+  left: 6%;
+  transform: translateY(-50%);
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ex20-beat-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  background: rgba(230, 161, 0, 0.85);
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(230, 161, 0, 0.3);
+  transition: all 0.15s ease;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.ex20-beat-text.ex20-beat-strong {
+  font-size: 28px;
+  background: rgba(220, 50, 50, 0.88);
+  border-color: rgba(255, 200, 200, 0.6);
+  box-shadow: 0 4px 20px rgba(220, 50, 50, 0.4);
+  transform: scale(1.15);
+}
+
+.ex20-beat-text.ex20-beat-weak {
+  font-size: 22px;
+  background: rgba(45, 106, 46, 0.85);
+  border-color: rgba(200, 255, 200, 0.5);
+  box-shadow: 0 4px 16px rgba(45, 106, 46, 0.3);
+}
+
+.ex20-beat-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 3px solid rgba(230, 161, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes beatPulseStrong {
+  0%   { transform: scale(1); opacity: 0.8; border-color: rgba(220, 50, 50, 0.6); }
+  100% { transform: scale(1.6); opacity: 0; border-color: rgba(220, 50, 50, 0); }
+}
+
+@keyframes beatPulseWeak {
+  0%   { transform: scale(1); opacity: 0.5; border-color: rgba(45, 106, 46, 0.4); }
+  100% { transform: scale(1.4); opacity: 0; border-color: rgba(45, 106, 46, 0); }
+}
+
+
+/* ══════════════════════════════════════════
+   큰 숫자 카운트 (48px+, 오른쪽 표시)
+   ══════════════════════════════════════════ */
+
+.ex20-count {
+  position: absolute;
+  top: 50%;
+  right: 6%;
+  transform: translateY(-50%);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.ex20-count__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  font-size: 56px;
+  font-weight: 900;
+  color: #fff;
+  background: rgba(45, 106, 46, 0.85);
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: countPop 0.4s ease-out;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+@keyframes countPop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+/* ══════════════════════════════════════════
+   동작 이름 뱃지 (상단 중앙)
+   ══════════════════════════════════════════ */
+
 .ex20-move-badge {
   position: absolute;
-  top: 16px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 24px;
+  padding: 8px 22px;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(8px);
   border-radius: 40px;
   border: 2px solid rgba(45, 106, 46, 0.2);
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   color: var(--ex-primary);
-  z-index: 10;
+  z-index: 15;
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
   transition: all 0.4s ease;
 }
+#moveIcon { font-size: 26px; }
 
-#moveIcon { font-size: 28px; }
 
-/* 챕터 뱃지 */
-.ex20-chapter-badge {
+/* ══════════════════════════════════════════
+   동작 반복 진행률 (우측 하단)
+   ══════════════════════════════════════════ */
+
+.ex20-rep-progress {
   position: absolute;
-  top: 16px;
-  left: 16px;
-  padding: 8px 16px;
-  background: rgba(45, 106, 46, 0.88);
-  color: #fff;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 20px;
+  z-index: 15;
   font-size: 16px;
   font-weight: 700;
-  border-radius: 10px;
-  z-index: 10;
+  color: var(--ex-text);
 }
 
-/* 자막 영역 */
+.ex20-rep-progress .rep-dot {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #e0d8c3;
+  transition: background 0.3s ease;
+}
+.ex20-rep-progress .rep-dot.done { background: var(--ex-primary); }
+.ex20-rep-progress .rep-dot.active { background: var(--ex-gold); }
+
+.ex20-rep-label {
+  font-size: 15px;
+  color: var(--ex-text-muted);
+}
+
+
+/* ── 자막 영역 ── */
 .ex20-caption-area {
-  padding: 18px 24px;
+  padding: 14px 24px;
   background: #fffef8;
   border-top: 2px solid #f0ead8;
-  min-height: 100px;
+  min-height: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .ex20-caption-char-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 16px;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 700;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 14px; border-radius: 20px;
+  font-size: 15px; font-weight: 700;
   background: var(--ex-primary-light);
   color: var(--ex-primary);
 }
 
 .ex20-caption-text {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   text-align: center;
   color: var(--ex-text);
-  line-height: 1.5;
+  line-height: 1.4;
   transition: opacity 0.3s ease;
 }
 
-/* 타임라인 */
+
+/* ── 타임라인 ── */
 .ex20-timeline {
-  padding: 12px 24px 16px;
+  padding: 10px 24px 12px;
   background: #faf7f0;
 }
 
 .ex20-timeline-chapters {
-  display: flex;
-  height: 6px;
-  border-radius: 3px;
-  overflow: hidden;
-  margin-bottom: 8px;
-  gap: 2px;
+  display: flex; height: 5px; border-radius: 3px;
+  overflow: hidden; margin-bottom: 6px; gap: 2px;
 }
-
 .ex20-timeline-chapters .chapter-seg {
-  flex: 1;
-  background: #e0d8c3;
-  border-radius: 2px;
-  transition: background 0.5s ease;
-  position: relative;
+  flex: 1; background: #e0d8c3; border-radius: 2px;
+  transition: background 0.5s ease; position: relative;
 }
-
-.ex20-timeline-chapters .chapter-seg.active {
-  background: var(--ex-gold);
-}
-
-.ex20-timeline-chapters .chapter-seg.done {
-  background: var(--ex-primary);
-}
+.ex20-timeline-chapters .chapter-seg.active { background: var(--ex-gold); }
+.ex20-timeline-chapters .chapter-seg.done { background: var(--ex-primary); }
 
 .ex20-progress {
-  width: 100%;
-  height: 8px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  cursor: pointer;
-  margin: 4px 0;
+  width: 100%; height: 6px;
+  -webkit-appearance: none; appearance: none;
+  background: transparent; cursor: pointer; margin: 3px 0;
 }
-
 .ex20-progress::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8px;
-  background: #e0d8c3;
-  border-radius: 4px;
+  width: 100%; height: 6px;
+  background: #e0d8c3; border-radius: 3px;
 }
-
 .ex20-progress::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 24px;
-  height: 24px;
+  -webkit-appearance: none; appearance: none;
+  width: 20px; height: 20px;
   background: var(--ex-primary);
-  border: 3px solid #fff;
-  border-radius: 50%;
-  margin-top: -8px;
+  border: 3px solid #fff; border-radius: 50%;
+  margin-top: -7px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
-
 .ex20-progress::-moz-range-track {
-  width: 100%;
-  height: 8px;
-  background: #e0d8c3;
-  border-radius: 4px;
+  width: 100%; height: 6px;
+  background: #e0d8c3; border-radius: 3px;
 }
-
 .ex20-progress::-moz-range-thumb {
-  width: 24px;
-  height: 24px;
+  width: 20px; height: 20px;
   background: var(--ex-primary);
-  border: 3px solid #fff;
-  border-radius: 50%;
+  border: 3px solid #fff; border-radius: 50%;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
-
 .ex20-time-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--ex-text-muted);
-  font-variant-numeric: tabular-nums;
+  display: flex; justify-content: space-between;
+  font-size: 15px; font-weight: 700;
+  color: var(--ex-text-muted); font-variant-numeric: tabular-nums;
 }
 
-/* 조작 버튼 */
+
+/* ── 조작 버튼 ── */
 .ex20-controls {
-  margin-top: 12px;
-  padding: 16px;
+  margin-top: 8px;
+  padding: 12px 16px;
   background: var(--ex-surface);
-  border-radius: var(--ex-radius);
-  border: 2px solid var(--ex-border);
+  border-radius: 14px;
+  border: 1.5px solid var(--ex-border);
 }
 
 .ex20-controls-main {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
 }
 
 .ex20-ctrl-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 130px;
-  min-height: 60px;
-  font-size: 22px;
-  font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 110px; min-height: 52px;
+  font-size: 20px; font-weight: 800;
   border: 2px solid var(--ex-border);
-  border-radius: 16px;
-  background: #faf7f0;
-  color: var(--ex-text);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  padding: 0 20px;
+  border-radius: 14px; background: #faf7f0;
+  color: var(--ex-text); cursor: pointer;
+  transition: all 0.2s ease; padding: 0 18px;
 }
-
-.ex20-ctrl-btn:hover:not(:disabled) {
-  background: #f0ead8;
-  border-color: var(--ex-gold);
-}
-
-.ex20-ctrl-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.ex20-ctrl-btn:hover:not(:disabled) { background: #f0ead8; border-color: var(--ex-gold); }
+.ex20-ctrl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .ex20-ctrl-btn--primary {
   background: linear-gradient(135deg, #43a047, #2d6a2e);
-  color: #fff;
-  border-color: #2d6a2e;
-  min-width: 200px;
+  color: #fff; border-color: #2d6a2e; min-width: 180px;
 }
-
 .ex20-ctrl-btn--primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #4caf50, #388e3c);
-  border-color: #388e3c;
+  background: linear-gradient(135deg, #4caf50, #388e3c); border-color: #388e3c;
+}
+.ex20-ctrl-btn--primary[data-paused="true"] {
+  background: linear-gradient(135deg, #e6a100, #cc8f00); border-color: #cc8f00;
 }
 
-.ex20-ctrl-btn--primary[data-paused="true"] {
-  background: linear-gradient(135deg, #e6a100, #cc8f00);
-  border-color: #cc8f00;
+.ex20-controls-details { margin-top: 8px; }
+.ex20-controls-toggle {
+  font-size: 16px; font-weight: 700;
+  color: var(--ex-text-muted); cursor: pointer;
+  padding: 8px; text-align: center;
 }
 
 .ex20-controls-sub {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
+  display: flex; gap: 6px; justify-content: center;
+  flex-wrap: wrap; margin-top: 8px;
 }
 
 .ex20-ctrl-sub {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  font-size: 17px;
-  font-weight: 700;
-  border: 1.5px solid #ddd5c5;
-  border-radius: 12px;
-  background: #fffef9;
-  color: var(--ex-text);
-  cursor: pointer;
-  padding: 0 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 42px; font-size: 16px; font-weight: 700;
+  border: 1.5px solid #ddd5c5; border-radius: 10px;
+  background: #fffef9; color: var(--ex-text);
+  cursor: pointer; padding: 0 14px;
   transition: all 0.2s ease;
 }
-
 .ex20-ctrl-sub:hover { background: #f5f0e8; }
-
 .ex20-ctrl-sub[aria-pressed="true"] {
   background: var(--ex-primary-light);
   border-color: var(--ex-primary);
   color: var(--ex-primary);
 }
 
+
 /* ═══════════════════════════════
-   STATE 3: COMPLETE (완료)
+   STATE 3: COMPLETE
    ═══════════════════════════════ */
-.ex20-state--complete {
-  display: flex;
-  justify-content: center;
-  padding-top: 20px;
-}
+.ex20-state--complete { display: flex; justify-content: center; padding-top: 20px; }
 
 .ex20-complete-card {
   background: var(--ex-surface);
   border-radius: var(--ex-radius);
   border: 2px solid var(--ex-border);
   box-shadow: var(--ex-shadow-lg);
-  padding: 40px 32px;
-  text-align: center;
-  max-width: 700px;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
+  padding: 40px 32px; text-align: center;
+  max-width: 700px; width: 100%;
+  position: relative; overflow: hidden;
 }
 
 .ex20-complete-celebration {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  padding-top: 10px;
-  pointer-events: none;
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 120px; display: flex;
+  justify-content: space-around; align-items: flex-start;
+  padding-top: 10px; pointer-events: none;
 }
-
-.ex20-confetti {
-  font-size: 28px;
-  animation: confettiFall 3s ease-in-out infinite;
-}
-
-.ex20-confetti:nth-child(1) { animation-delay: 0s; }
+.ex20-confetti { font-size: 28px; animation: confettiFall 3s ease-in-out infinite; }
 .ex20-confetti:nth-child(2) { animation-delay: 0.5s; }
 .ex20-confetti:nth-child(3) { animation-delay: 1s; }
 .ex20-confetti:nth-child(4) { animation-delay: 1.5s; }
-
 @keyframes confettiFall {
   0%, 100% { transform: translateY(0) rotate(0); opacity: 0.7; }
-  50% { transform: translateY(20px) rotate(180deg); opacity: 1; }
+  50%      { transform: translateY(20px) rotate(180deg); opacity: 1; }
 }
 
 .ex20-complete-badge {
-  display: inline-block;
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--ex-gold);
-  background: #fff8e1;
-  border: 2px solid #ffe082;
-  border-radius: 40px;
-  padding: 10px 28px;
-  margin-bottom: 20px;
+  display: inline-block; font-size: 24px; font-weight: 900;
+  color: var(--ex-gold); background: #fff8e1;
+  border: 2px solid #ffe082; border-radius: 40px;
+  padding: 10px 28px; margin-bottom: 20px;
 }
-
-.ex20-complete-title {
-  font-size: 32px;
-  font-weight: 900;
-  color: var(--ex-primary);
-  margin-bottom: 16px;
-}
-
-.ex20-complete-desc {
-  font-size: 20px;
-  color: var(--ex-text);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
+.ex20-complete-title { font-size: 32px; font-weight: 900; color: var(--ex-primary); margin-bottom: 16px; }
+.ex20-complete-desc { font-size: 20px; color: var(--ex-text); line-height: 1.7; margin-bottom: 24px; }
 
 .ex20-complete-stats {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
+  display: flex; justify-content: center; gap: 24px; margin-bottom: 28px; flex-wrap: wrap;
 }
-
 .ex20-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  min-width: 100px;
-  padding: 12px;
-  background: #f9f6f0;
-  border-radius: 14px;
-  border: 1.5px solid #ede5d5;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  min-width: 100px; padding: 12px; background: #f9f6f0;
+  border-radius: 14px; border: 1.5px solid #ede5d5;
 }
-
-.ex20-stat-val {
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--ex-primary);
-}
-
-.ex20-stat-lbl {
-  font-size: 15px;
-  color: var(--ex-text-muted);
-}
+.ex20-stat-val { font-size: 28px; font-weight: 900; color: var(--ex-primary); }
+.ex20-stat-lbl { font-size: 15px; color: var(--ex-text-muted); }
 
 .ex20-complete-heroes {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 28px;
+  display: flex; justify-content: center; gap: 10px; margin-bottom: 28px;
 }
-
 .ex20-end-char {
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
+  width: 70px; height: 70px; object-fit: contain;
   filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1));
   animation: heroBounce 2s ease-in-out infinite;
 }
-
 .ex20-end-char:nth-child(2) { animation-delay: 0.3s; }
 .ex20-end-char:nth-child(3) { animation-delay: 0.6s; }
 .ex20-end-char:nth-child(4) { animation-delay: 0.9s; }
 
 .ex20-complete-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
 }
-
 .ex20-action-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 56px;
-  font-size: 20px;
-  font-weight: 800;
-  border: 2px solid var(--ex-border);
-  border-radius: 14px;
-  padding: 0 24px;
-  cursor: pointer;
-  text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 56px; font-size: 20px; font-weight: 800;
+  border: 2px solid var(--ex-border); border-radius: 14px;
+  padding: 0 24px; cursor: pointer; text-decoration: none;
   transition: all 0.2s ease;
 }
-
 .ex20-action-btn--replay {
-  background: linear-gradient(135deg, #43a047, #2d6a2e);
-  color: #fff;
-  border-color: #2d6a2e;
+  background: linear-gradient(135deg, #43a047, #2d6a2e); color: #fff; border-color: #2d6a2e;
 }
-
-.ex20-action-btn--replay:hover {
-  background: linear-gradient(135deg, #4caf50, #388e3c);
-}
-
-.ex20-action-btn--home {
-  background: #faf7f0;
-  color: var(--ex-text);
-}
-
+.ex20-action-btn--replay:hover { background: linear-gradient(135deg, #4caf50, #388e3c); }
+.ex20-action-btn--home { background: #faf7f0; color: var(--ex-text); }
 .ex20-action-btn--home:hover { background: #f0ead8; }
-
-.ex20-action-btn--alt {
-  background: #f0f4ff;
-  color: var(--ex-blue);
-  border-color: #c4d8f0;
-}
-
+.ex20-action-btn--alt { background: #f0f4ff; color: var(--ex-blue); border-color: #c4d8f0; }
 .ex20-action-btn--alt:hover { background: #e0ecff; }
 
 /* Footer */
 .ex20-footer {
-  text-align: center;
-  padding: 24px 16px;
-  font-size: 15px;
-  color: var(--ex-text-muted);
-  line-height: 1.6;
+  text-align: center; padding: 24px 16px;
+  font-size: 15px; color: var(--ex-text-muted); line-height: 1.6;
 }
-
-.ex20-footer a {
-  color: var(--ex-primary);
-  text-decoration: none;
-}
-
+.ex20-footer a { color: var(--ex-primary); text-decoration: none; }
 .ex20-footer a:hover { text-decoration: underline; }
 
-/* ═══════════════════════════════
-   캐릭터별 색상 테마
-   ═══════════════════════════════ */
+
+/* ── 캐릭터별 색상 테마 ── */
 [data-active-char="kongi"] .ex20-caption-char-tag { background: #fff8e1; color: #b8860b; }
-[data-active-char="tori"] .ex20-caption-char-tag { background: #fce4ec; color: #c2185b; }
-[data-active-char="nabi"] .ex20-caption-char-tag { background: #f3e5f5; color: #7b1fa2; }
-[data-active-char="bori"] .ex20-caption-char-tag { background: #e3f2fd; color: #1565c0; }
+[data-active-char="tori"] .ex20-caption-char-tag  { background: #fce4ec; color: #c2185b; }
+[data-active-char="nabi"] .ex20-caption-char-tag  { background: #f3e5f5; color: #7b1fa2; }
+[data-active-char="bori"] .ex20-caption-char-tag  { background: #e3f2fd; color: #1565c0; }
 
-[data-active-char="kongi"] .ex20-chapter-badge { background: rgba(184, 134, 11, 0.88); }
-[data-active-char="tori"] .ex20-chapter-badge { background: rgba(194, 24, 91, 0.88); }
-[data-active-char="nabi"] .ex20-chapter-badge { background: rgba(123, 31, 162, 0.88); }
-[data-active-char="bori"] .ex20-chapter-badge { background: rgba(21, 101, 192, 0.88); }
+[data-active-char="kongi"] .ex20-char-label { background: #fff8e1; color: #b8860b; }
+[data-active-char="tori"] .ex20-char-label  { background: #fce4ec; color: #c2185b; }
+[data-active-char="nabi"] .ex20-char-label  { background: #f3e5f5; color: #7b1fa2; }
+[data-active-char="bori"] .ex20-char-label  { background: #e3f2fd; color: #1565c0; }
 
-/* ═══════════════════════════════
-   Fullscreen
-   ═══════════════════════════════ */
+
+/* ── Fullscreen ── */
 .ex20-state--playing:fullscreen .ex20-stage-area,
 .ex20-state--playing:-webkit-full-screen .ex20-stage-area {
-  max-width: 100vw;
-  border-radius: 0;
-  border: none;
+  max-width: 100vw; border-radius: 0; border: none;
 }
-
 .ex20-state--playing:fullscreen .ex20-stage,
 .ex20-state--playing:-webkit-full-screen .ex20-stage {
-  height: 60vh;
-  aspect-ratio: auto;
+  height: 65vh; aspect-ratio: auto;
 }
 
-/* ═══════════════════════════════
-   Responsive
-   ═══════════════════════════════ */
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
   .ex20-root { padding: 8px; }
   .ex20-ready-title { font-size: 24px; }
@@ -960,12 +1075,15 @@ body {
   .ex20-parts-preview { grid-template-columns: 1fr; gap: 8px; padding: 12px; }
   .ex20-btn-start { min-width: 260px; font-size: 24px; min-height: 64px; }
   .ex20-caption-text { font-size: 22px; }
-  .ex20-move-badge { font-size: 20px; padding: 8px 18px; }
-  .ex20-character-area { width: 200px; height: 200px; }
-  .ex20-ctrl-btn { min-width: 100px; font-size: 18px; min-height: 52px; }
-  .ex20-ctrl-sub { font-size: 15px; min-height: 42px; }
+  .ex20-move-badge { font-size: 18px; padding: 6px 16px; }
+  .ex20-rig { width: 300px; height: 300px; }
+  .ex20-count__num { width: 72px; height: 72px; font-size: 40px; }
+  .ex20-ctrl-btn { min-width: 90px; font-size: 17px; min-height: 48px; }
+  .ex20-ctrl-sub { font-size: 14px; min-height: 38px; }
   .ex20-complete-title { font-size: 26px; }
   .ex20-complete-card { padding: 28px 16px; }
+  .ex20-beat-text { width: 48px; height: 48px; font-size: 18px; }
+  .ex20-beat-text.ex20-beat-strong { font-size: 22px; }
 }
 
 @media (max-width: 480px) {
@@ -973,5 +1091,9 @@ body {
   .ex20-hero-char { width: 52px; height: 52px; }
   .ex20-ready-title { font-size: 20px; }
   .ex20-caption-text { font-size: 20px; }
-  .ex20-character-area { width: 160px; height: 160px; }
+  .ex20-rig { width: 220px; height: 220px; }
+  .ex20-count__num { width: 56px; height: 56px; font-size: 32px; }
+  .ex20-beat-text { width: 38px; height: 38px; font-size: 14px; }
+  .ex20-beat-text.ex20-beat-strong { font-size: 17px; }
+  .ex20-beat-indicator { left: 3%; }
 }

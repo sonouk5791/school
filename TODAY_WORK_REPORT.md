@@ -2709,3 +2709,31 @@
 - [오늘_작업_일지_2026-09-28.md](./오늘_작업_일지_2026-09-28.md)
 
 </details>
+
+## 자동 저장 / 2026-09-29 08:44:33 — 20분 리듬 건강체조 제작 준비 — 인증 차단으로 미완료
+- **수행 내역**: 요청: 첨부 음악과 공식 4캐릭터·어르신이 함께하는 20분 MP4. 원문 보존, 30구간 1200초 연속 타임라인과 4캐릭터 참조 경로 확인. 다운로드 폴더의 같은 곡명·번호 MP3(파일명 (2) 없음) 52.15초 전체 디코딩 및 제작 폴더 복사 해시 확인. Runway UNAUTHORIZED 재인증 요구로 영상 생성 차단. 음악 박자 분석·음성 합성·동작 클립·완성 MP4는 미완료. 홈페이지·기존 자산·TTS·저장 로직 유지. 관련 파일: [제작 상태](file:///J:/sh/documents/exercise-rhythm-20min/STATUS.md), [타임라인](file:///J:/sh/documents/exercise-rhythm-20min/timeline.json), [요청 원문](file:///J:/sh/documents/exercise-rhythm-20min/REQUEST.md). 일지 및 제작표 릴리즈 동기화 후 인증 해결 대기, GitHub 푸시·Vercel 배포 미실행.
+
+## 자동 저장 / 2026-09-29 08:48:23 — 건강체조 원본 4장·추가 대본 반영 — 영상 생성 요금제 제한
+- **수행 내역**: 사용자 지정 MP3 경로 확인, 콩이·토리·나비·보리 PNG 원본 4장 로컬 제작 폴더 보존 및 해시 검증(각 1254px). 제공 대본 원문 보존, 기존 요청과 문서 내 Vrew·음악 지시 구분, 30구간 한국어 안내 초안 작성(이름·오타·효과 단정 표현 정리). Runway 재인증 해결했으나 무료 요금제로 영상 모델 0개 확인. 완성 MP4·음성·박자 동기화는 미완료, 기존 서비스·자산·TTS 유지, GitHub 푸시·Vercel 배포 미실행. [대본 초안](file:///J:/sh/documents/exercise-rhythm-20min/NARRATION_DRAFT.md), [제작 상태](file:///J:/sh/documents/exercise-rhythm-20min/STATUS.md), [타임라인](file:///J:/sh/documents/exercise-rhythm-20min/timeline.json). 기록·제작표 릴리즈 동기화 진행.
+
+## 자동 저장 / 2026-09-29 09:11:18 — 20분 체조 트로트 BGM 시스템 도입
+- **수행 내역**: 요청: 치매 어르신 20분 체조 영상에 신나는 트로트 노래 BGM 추가. 수행: (1) Web Audio API 기반 트로트 BGM 합성 엔진(trot-bgm-engine.js) 신규 개발 - 뽕짝 리듬 드럼 패턴, 트로트풍 펜타토닉 멜로디, 베이스라인, 패드 코드 실시간 합성. (2) exercise-20min.js v2→v3 업그레이드 - 기존 단순 코드음 BGM을 트로트 엔진으로 교체, 비트 콜백 연동. (3) 비트 인디케이터 UI 추가 - 쿵/짝 시각 표시, 펄스 애니메이션, 캐릭터 리듬 바운스. (4) 8개 챕터별 분위기 자동 변화(BPM, 에너지, 멜로디 스타일). (5) HTML 제목/설명 업데이트, CSS 반응형 비트 인디케이터 추가. 변경 파일: js/trot-bgm-engine.js(신규), js/exercise-20min.js, exercise-20min.html, css/exercise-20min.css. 검증: 브라우저 테스트 - 콘솔 에러 없음, 체조 시작/일시정지/비트 인디케이터 정상 동작 확인.
+
+## 자동 저장 / 2026-09-29 09:11:57 — Git 커밋 변경사항 자동 저장
+- **수행 내역**: 커밋 직전 실제 스테이징된 변경 파일을 자동 기록했습니다.
+- **변경 파일 수**: 11
+<details><summary>변경 파일 목록</summary>
+
+- [TODAY_WORK_REPORT.md](./TODAY_WORK_REPORT.md)
+- [css/exercise-20min.css](./css/exercise-20min.css)
+- [documents/exercise-rhythm-20min/NARRATION_DRAFT.md](./documents/exercise-rhythm-20min/NARRATION_DRAFT.md)
+- [documents/exercise-rhythm-20min/REQUEST.md](./documents/exercise-rhythm-20min/REQUEST.md)
+- [documents/exercise-rhythm-20min/STATUS.md](./documents/exercise-rhythm-20min/STATUS.md)
+- [documents/exercise-rhythm-20min/SUPPLIED_SCRIPT.txt](./documents/exercise-rhythm-20min/SUPPLIED_SCRIPT.txt)
+- [documents/exercise-rhythm-20min/timeline.json](./documents/exercise-rhythm-20min/timeline.json)
+- [exercise-20min.html](./exercise-20min.html)
+- [js/exercise-20min.js](./js/exercise-20min.js)
+- [js/trot-bgm-engine.js](./js/trot-bgm-engine.js)
+- [오늘_작업_일지_2026-09-29.md](./오늘_작업_일지_2026-09-29.md)
+
+</details>
