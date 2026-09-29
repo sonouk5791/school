@@ -1,0 +1,8 @@
+/* Native high-resolution transparent sprites; display below source resolution. */
+.official-character-sprite {width:100%;max-width:360px;height:280px;object-fit:contain;display:block;margin-inline:auto;}
+.animated-character .official-character-sprite {animation:none!important;transform:none!important;}
+.character-audio-speaking {scale:1!important;transform:none!important;animation:none!important;}
+.friend-choice img,.cr-character,.morning-character,.welcome-characters img {object-fit:contain!important;max-width:360px;}
+@media(max-width:540px){.official-character-sprite{height:210px;}}
+
+.welcome-characters figure,.welcome-characters img,.welcome-characters figure:hover img {animation:none!important;transform:none!important;transition:none!important;}

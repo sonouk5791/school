@@ -1,0 +1,95 @@
+/* Scoped homepage layout; existing activities and teacher screens retain their controls. */
+body.character-home .site-header {position:relative;}
+body.character-home .header-container {display:flex;justify-content:space-between;flex-wrap:nowrap;gap:16px;padding:16px 24px;}
+body.character-home .brand-title {font-size:26px;white-space:normal;}
+body.character-home .btn-teacher-space {min-height:56px;font-size:20px;white-space:nowrap;}
+body.character-home .main-wrapper {padding-top:20px;}
+.character-home-hero.hero-classroom {display:block;background:#fffaf0;border:1px solid #eee1ca;border-radius:28px;padding:28px 24px 20px;box-shadow:none;text-align:center;overflow:visible;}
+.character-home-hero[hidden] {display:none!important;}
+.home-welcome h1 {font-size:clamp(32px,3vw,44px);line-height:1.35;color:#493c30;margin:0 0 12px;font-weight:800;}
+body.character-home .home-welcome p {font-size:clamp(20px,1.8vw,24px);line-height:1.6;color:#635446;margin:0;}
+.home-friends-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:1080px;margin:20px auto 24px;background:#fff;border-radius:32px;box-shadow:0 0 24px 8px #ffffffb3;}
+.home-friend {display:flex;flex-direction:column;align-items:center;min-width:0;padding:8px 8px 16px;border:2px solid transparent;border-radius:24px;color:#493c30;text-decoration:none;}
+.home-friend-picture {display:block;width:100%;max-width:180px;aspect-ratio:344 / 576;height:auto;overflow:hidden;isolation:isolate;background:#fff;}
+.home-friend {background:transparent;}
+.home-friend strong {font-size:26px;line-height:1.4;margin-top:4px;}
+.home-friend>span {font-size:22px;line-height:1.5;}
+.home-friend:hover {border-color:#b8955c;background:#fff;}
+.home-friend:focus-visible,.home-start-activity:focus-visible {outline:4px solid #386641;outline-offset:4px;}
+.home-start-activity {display:inline-flex;align-items:center;justify-content:center;gap:24px;min-height:64px;padding:12px 36px;border-radius:18px;background:#356b43;color:#fff;text-decoration:none;font-size:26px;font-weight:800;}
+.home-start-activity:hover {background:#285535;}
+#homeQuickLinks {display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;border-top:1px solid #e6dccb;margin-top:28px;padding-top:22px;text-align:left;}
+body.character-home #homeQuickLinks .main-nav {display:flex;flex-wrap:wrap;justify-content:center;gap:8px;position:static;width:100%;}
+body.character-home #homeQuickLinks .nav-link {min-height:56px;display:inline-flex;align-items:center;font-size:20px;}
+body.character-home #homeQuickLinks .teacher-voice-controls {display:flex;flex-wrap:wrap;gap:8px;}
+body.character-home #homeQuickLinks button,body.character-home #homeQuickLinks summary {font-size:20px;min-height:56px;}
+.home-legacy-greeting {text-align:left;margin-top:20px;}
+.home-legacy-greeting>summary {font-size:20px;cursor:pointer;min-height:56px;padding:14px;}
+@media(max-width:1000px){.home-friends-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:660px;gap:12px;}.home-friend-picture{max-width:160px;}}
+@media(max-width:600px){body.character-home .header-container{padding:12px;gap:8px;}body.character-home .brand-icon{display:none;}body.character-home .brand-title{font-size:22px;}body.character-home .btn-teacher-space{padding:10px;font-size:20px;}body.character-home .main-wrapper{padding:12px 10px 40px;}.character-home-hero.hero-classroom{padding:24px 10px 16px;border-radius:20px;}.home-welcome h1{font-size:32px;}.home-friends-grid{gap:4px;margin:12px auto 20px;}.home-friend{padding:4px 2px 12px;}.home-friend-picture{max-width:140px;}.home-friend strong{font-size:24px;}.home-friend>span{font-size:20px;}.home-start-activity{font-size:22px;padding:12px 18px;gap:12px;width:100%;}}
+@media(prefers-reduced-motion:reduce){.home-friend{transition:none;}}
+
+.home-one-recommendation h2 {font-size:24px;line-height:1.4;margin:0 0 8px;}
+.home-one-recommendation .home-start-activity {margin-top:12px;}
+#homeMoreOptions {width:100%;max-width:680px;text-align:center;}
+#homeMoreOptions>summary {padding:16px;color:#534538;cursor:pointer;font-size:20px;min-height:56px;}
+.home-more-actions {display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:16px 0;}
+.home-more-actions>a {display:inline-flex;align-items:center;justify-content:center;text-decoration:none;}
+body.character-home #homeMoreOptions button {font-size:20px;min-height:56px;}
+body.character-home[data-senior-page="home"] .header-container {flex-wrap:nowrap;justify-content:space-between;}
+body.character-home[data-senior-page="home"] .header-actions {display:flex;width:auto;flex-shrink:0;}
+body.character-home[data-senior-page="home"] .brand-logo {min-width:0;}
+body.character-home[data-senior-page="home"] .brand-title {line-height:1.3;}
+body.character-home[data-senior-page="home"] .site-footer {padding:20px;font-size:20px;}
+body.character-home[data-senior-page="home"] .footer-comfort-message {display:none;}
+body.character-home[data-senior-page="home"] .floating-action-group {display:none;}
+.home-school-info {text-align:center;margin:0 auto 24px;max-width:960px;}
+.home-school-info>summary {font-size:20px;min-height:56px;padding:16px;cursor:pointer;color:#534538;}
+/* Shorten the first screen without changing the character artwork or proportions. */
+body.character-home .character-home-hero .home-friends-grid {--stage-height:280px;padding-top:24px;padding-bottom:20px;}
+@media(max-width:1000px){body.character-home .character-home-hero .home-friends-grid{--stage-height:220px;gap:20px 12px;}}
+@media(max-width:600px){body.character-home .character-home-hero .home-friends-grid{--stage-height:190px;gap:20px 8px;}body.character-home .home-welcome h1{font-size:28px;}body.character-home #homeQuickLinks{margin-top:20px;padding-top:16px;gap:8px;}}
+body.character-home .home-one-recommendation p {font-size:20px;margin:0 0 16px;}
+#homeQuickLinks .care-btn {min-height:56px;font-size:20px;}
+#homeCatalogTools {padding:24px;background:#fffaf0;border-radius:20px;margin:20px 0;}
+#homeCatalogTools h2 {font-size:32px;}
+#homeCatalogTools p {font-size:20px;}
+#homeCatalogTools .main-nav {display:flex;flex-wrap:wrap;position:static;margin:20px 0;}
+#homeCatalogTools .teacher-voice-controls {display:flex;flex-wrap:wrap;gap:12px;}
+.home-course-folder {margin:20px 0;border:2px solid #dfd5c2;border-radius:20px;padding:16px;}
+.home-course-folder>summary {font-size:24px;min-height:56px;padding:12px;cursor:pointer;font-weight:800;}
+/* Older duplicate portals remain available in All activities, never on Home. */
+body[data-senior-page="home"] #seniorActivitiesSection,
+body[data-senior-page="home"] #moreLessonsDrawer,
+body[data-senior-page="home"] #morningLauncher,
+body[data-senior-page="home"] .senior-start {display:none!important;}
+/* A continuous lobby floor keeps every clickable friend in the same scene. */
+.character-home-hero.hero-classroom{background:linear-gradient(135deg,#fffaf1,#f6f5ea);border:0;padding:32px 24px 24px}
+.character-home-hero .home-friends-grid{--stage-height:350px;position:relative;isolation:isolate;max-width:1120px;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px auto 28px;padding:36px 24px 28px;border:1px solid #e4dfcf;border-radius:28px;box-shadow:inset 0 -1px 0 #d8ccb5;overflow:hidden;background:linear-gradient(180deg,#f4f5e9 0%,#faf5e9 52%,#dfd1b7 52%,#eee1ca 53%,#f5ebd9 100%)}
+.character-home-hero .home-friends-grid::before{content:"";position:absolute;z-index:-1;left:7%;top:6%;width:20%;height:34%;border:6px solid #e2dac5;border-radius:42px 42px 4px 4px;background:linear-gradient(90deg,transparent 48%,#e2dac5 48% 52%,transparent 52%),linear-gradient(0deg,transparent 48%,#e2dac5 48% 52%,transparent 52%),linear-gradient(#dfece3,#f2f2de);opacity:.55}
+.character-home-hero .home-friends-grid::after{content:"";position:absolute;z-index:-1;right:6%;top:17%;width:12%;height:27%;border-bottom:22px solid #d8cfb8;border-radius:50% 50% 16px 16px;background:radial-gradient(ellipse at 28% 50%,#c7d5b8 0 23%,transparent 24%),radial-gradient(ellipse at 72% 25%,#c7d5b8 0 23%,transparent 24%),linear-gradient(90deg,transparent 48%,#c5ccb1 48% 52%,transparent 52%);opacity:.55}
+.home-lobby-shelf{position:absolute;z-index:-1;left:43%;top:12%;width:15%;height:18%;border:5px solid #dcd5c3;border-radius:6px;opacity:.4;background:linear-gradient(0deg,transparent 45%,#dcd5c3 46% 53%,transparent 54%),repeating-linear-gradient(90deg,#d1dbc5 0 12%,#ece6d7 12% 18%,#d5cdbf 18% 27%,#ece6d7 27% 34%);pointer-events:none}
+.character-home-hero .home-friend{position:relative;display:grid;grid-template-rows:var(--stage-height) auto auto;justify-items:center;align-content:start;min-width:0;padding:0 2px 4px;gap:0;border:0;border-radius:16px;background:transparent;--friend-color:#ead796}
+.character-home-hero .home-friend-tori{--friend-color:#eac3d0}.character-home-hero .home-friend-nabi{--friend-color:#d4c6e5}.character-home-hero .home-friend-bori{--friend-color:#bfd8e8}
+.character-home-hero .home-friend-picture{align-self:end;width:100%;max-width:210px;height:100%;max-height:var(--stage-height);aspect-ratio:344/576;object-fit:contain;background:transparent;overflow:visible;isolation:auto}
+.character-home-hero .home-friend::before{display:none}
+.character-home-hero .home-friend strong{font-size:26px;line-height:1.45;margin:0;padding:0 12px;border-bottom:4px solid var(--friend-color)}
+.character-home-hero .home-friend>span{font-size:22px;line-height:1.5;margin-top:6px;word-break:keep-all}
+.character-home-hero .home-friend:hover{background:transparent;border-color:transparent}.character-home-hero .home-friend:hover strong{text-decoration:underline;text-underline-offset:6px}
+.character-home-hero .home-friend:focus-visible{outline:3px solid #41634a;outline-offset:3px}
+.hero-ground-shadow{fill:#766445;opacity:.18;filter:blur(5px)}
+/* QA: keep secondary information readable when expanded. */
+.home-school-info{width:100%;box-sizing:border-box;}
+.home-school-info .site-footer p{word-break:keep-all;}
+.home-school-info .site-footer .care-btn{flex:0 0 auto;white-space:normal;word-break:keep-all;}
+/* Short desktop displays still show the daily activity after the four friends. */
+@media(min-width:1001px) and (max-height:900px){
+ body.character-home .character-home-hero.hero-classroom{padding:20px 20px 18px;}
+ body.character-home .home-welcome h1{font-size:32px;margin-bottom:6px;}
+ body.character-home .character-home-hero .home-friends-grid{--stage-height:190px;margin:14px auto;padding:14px 20px;}
+ body.character-home .character-home-hero .home-friend-picture{max-height:190px;}
+ body.character-home .home-one-recommendation .home-start-activity{min-height:56px;margin-top:6px;}
+}
+@media(max-width:1000px){.character-home-hero .home-friends-grid{--stage-height:290px;grid-template-columns:repeat(2,minmax(0,1fr));max-width:720px;padding:24px 28px;gap:28px 24px;background:linear-gradient(180deg,#f3f5e8 0%,#faf5e9 26%,#dfd1b7 26%,#eee1ca 26.5%,#f5ebd9 100%)}.character-home-hero .home-friend-picture{max-width:174px}.character-home-hero .home-friends-grid::before{height:18%;width:27%;top:4%}.character-home-hero .home-friends-grid::after{height:16%;width:16%;top:7%}.home-lobby-shelf{display:none}}
+@media(max-width:600px){.character-home-hero.hero-classroom{padding:24px 10px 20px}.character-home-hero .home-friends-grid{--stage-height:clamp(190px,58vw,260px);gap:24px 8px;padding:24px 8px 20px;border-radius:22px}.character-home-hero .home-friend-picture{max-width:156px}.character-home-hero .home-friend strong{font-size:24px}.character-home-hero .home-friend>span{font-size:20px}.character-home-hero .home-friends-grid::before{border-width:4px}}
+@media(min-width:1001px) and (max-height:800px){body.character-home .character-home-hero .home-friends-grid{--stage-height:160px;padding:10px 20px;margin:10px auto;}body.character-home .character-home-hero .home-friend-picture{max-height:160px;}}

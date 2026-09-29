@@ -1,0 +1,12 @@
+.ltc-handoff { width:min(1040px,95vw); }
+.ltc-entry { display:flex; justify-content:space-between; align-items:center; gap:24px; background:#eef3e8; }
+.ltc-state { padding:16px; border-radius:16px; background:#fff0d9; color:#644422; font-weight:700; }
+.ltc-steps { padding-left:28px; font-size:18px; line-height:1.8; }
+.ltc-handoff .ltc-preview { border:1px solid #dfd4c5; border-radius:20px; padding:20px; margin:24px 0; }
+.ltc-handoff h3 { font-size:24px; overflow-wrap:anywhere; }
+.ltc-handoff textarea { white-space:pre-wrap; overflow-wrap:anywhere; }
+.ltc-handoff .care-actions a { text-align:center; text-decoration:none; }
+.ltc-handoff summary { font-size:20px; padding:16px 0; }
+.ltc-form-entry { padding:16px; margin:16px 0; border-radius:16px; background:#eef3e8; }
+.ltc-handoff #ltcStatus:not(:empty) { padding:16px; background:#eef3e8; border-radius:16px; }
+@media(max-width:700px){.ltc-entry{flex-direction:column;align-items:stretch}.ltc-handoff{padding:18px}.ltc-handoff header{flex-wrap:wrap}.ltc-handoff .ltc-preview{padding:14px}.ltc-handoff .care-actions{flex-direction:column;align-items:stretch}.ltc-handoff select{max-width:100%;font-size:18px}}

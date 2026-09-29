@@ -1,0 +1,12 @@
+/* Static body. No simulated waist projection, pose crossfade, bounce or breathing. */
+.hanbok-character,.hanbok-character [data-part="fixed-body"],.home-friend .rig-breath{animation:none!important;transform:none!important}
+.hanbok-character [data-mouth-shape],.hanbok-eye-patch{display:none}
+.hanbok-character[data-mouth="mouthClosed"] [data-mouth-shape="mouthClosed"],
+.hanbok-character[data-mouth="mouthA"] [data-mouth-shape="mouthA"],
+.hanbok-character[data-mouth="mouthO"] [data-mouth-shape="mouthO"],
+.hanbok-character[data-mouth="mouthE"] [data-mouth-shape="mouthE"],
+.hanbok-character[data-mouth="mouthSmile"] [data-mouth-shape="mouthSmile"],
+.hanbok-character.is-blinking .hanbok-eye-patch{display:block}
+@media(prefers-reduced-motion:reduce){.hanbok-eye-patch{display:none!important}}
+
+.hanbok-character.has-dedicated-motion > :not(.dedicated-motion){visibility:hidden}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주간보호 60분 수업 진행 · 디지털 AI 학교</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext y=%2727%27 font-size=%2728%27%3E%F0%9F%8D%8A%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/daycare-class.css?v=20260928-frame">
+  <link rel="stylesheet" href="css/senior-common-header.css?v=20260923-nav2">
+<link rel="stylesheet" href="css/operations.css?v=20260928">
+</head>
+<body>
+
+  <!-- 상단 안심 헤더 & 편안한 분 단위 타이머 바 -->
+  <header class="daycare-header" role="banner">
+    <div class="daycare-nav-left">
+      <a href="index.html" class="btn-header-home" title="수업을 멈추고 학교 홈으로 돌아가기">
+        🏠 학교 홈
+      </a>
+      <span id="sessionBadge" class="daycare-session-badge badge-am">🌞 오늘 오전 수업</span>
+    </div>
+
+    <!-- 60분 안심 타이머 (Requirement 8) -->
+    <div class="daycare-timer-wrap" role="timer" aria-live="polite">
+      <span aria-hidden="true">⏱️</span>
+      <span id="timerDisplay">오늘 오전 수업 남은 시간 60분</span>
+    </div>
+
+    <!-- 보조 컨트롤 버튼들 -->
+    <div class="daycare-nav-controls">
+      <button type="button" class="btn-ctrl" id="btnVoiceReplay" title="선생님 및 캐릭터 음성 다시 듣기">
+        🔊 다시 듣기
+      </button>
+      <button type="button" class="btn-ctrl btn-ctrl-pause" id="btnClassPause" title="수업 잠시 멈추기 또는 이어하기">
+        ⏸ 잠시 멈추기
+      </button>
+      <button type="button" class="btn-ctrl btn-ctrl-break" id="btnTakeBreak" title="5분간 편안하게 쉬어가기">
+        ☕ 천천히
+      </button>
+    </div>
+  </header>
+
+  <!-- 메인 수업 진행 단계 영역 -->
+  <main class="daycare-main" role="main">
+
+    <!-- Step 1: 출석 및 참여자 확인 (Requirement 19) -->
+    <section class="step-card" id="card_attendance" aria-labelledby="attTitle">
+      <span class="step-indicator">1단계 · 출석 확인</span>
+      <h2 class="step-title" id="attTitle">오늘 수업에 참여하시는 어르신을 확인해주세요</h2>
+      <p class="step-subtext">함께 활동하실 어르신을 선택한 후 [수업 시작하기]를 눌러주세요.</p>
+
+      <div style="display:flex; gap:10px; justify-content:center; width:100%; max-width:800px;">
+        <button type="button" class="btn-secondary-action" id="btnSelectAllAttendance" style="padding:8px 20px; min-height:48px; font-size:20px;">
+          ✓ 전체 선택 / 해제
+        </button>
+      </div>
+
+      <div class="attendance-grid" id="attendanceGrid">
+        <!-- 동적 렌더링 -->
+      </div>
+
+      <button type="button" class="btn-primary-action" id="btnStartClass">
+        🌞 60분 수업 시작하기 ▶
+      </button>
+    </section>
+
+    <!-- Step 2: 오늘의 인사 (Requirement 1, 3, 4, 23) -->
+    <section class="step-card hidden" id="card_greeting" aria-labelledby="greetTitle">
+      <span class="step-indicator">2단계 · 오늘의 인사 (5분)</span>
+      <h2 class="step-title" id="greetTitle">반가운 친구와 다정하게 인사해요</h2>
+      <p class="step-subtext" id="greetingSubInfo">오늘의 프로그램 안내</p>
+
+      <div class="character-guide-box">
+        <img src="assets/images/friend-kongi.png" alt="캐릭터" class="character-guide-img" id="greetingCharImg">
+        <div class="character-speech-bubble" id="greetingText">
+          "안녕하세요. 오늘도 저 콩이와 천천히 몸을 움직여봐요. 힘들면 잠시 쉬어도 괜찮아요."
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary-action" id="btnGreetingNext">
+        첫 번째 활동 · 20분 (2분 휴식 포함) ▶
+      </button>
+    </section>
+
+    <!-- Step 3: 활동 1 - 콩이 운동 / 토리 놀이 (Requirement 1, 11) -->
+    <section class="step-card hidden" id="card_act1" aria-labelledby="act1Title">
+      <span class="step-indicator" id="act1Counter">콩이와 함께하기 1 / 8</span>
+      <h2 class="step-title" id="act1Title">어깨를 천천히 돌려볼까요?</h2>
+      <p class="step-subtext" id="act1Desc">의자에 편안하게 앉아 숨을 고르며 천천히 따라해보세요.</p>
+
+      <div class="character-guide-box">
+        <img src="assets/images/friend-kongi.png" alt="캐릭터" class="character-guide-img" id="act1CharImg">
+      </div>
+
+      <div id="act1Content"></div><div class="activity-nav-bar">
+        <button type="button" class="btn-secondary-action" id="btnAct1Prev">
+          ◀ 이전 동작
+        </button>
+        <button type="button" class="btn-primary-action" id="btnAct1Next" style="max-width:320px;">
+          다음 동작 ▶
+        </button>
+      </div>
+    </section>
+
+    <!-- Step 4: 중간 휴식 (Requirement 24) -->
+    <section class="step-card hidden" id="card_break" aria-labelledby="breakTitle">
+      <span class="step-indicator">중간 휴식 시간</span>
+      <h2 class="step-title" id="breakTitle">잠깐 쉬어갈까요? ☕</h2>
+      <p class="step-subtext">숨을 고르고, 따뜻한 물 한 모금 드시면서 편안하게 쉬세요.</p>
+
+      <div style="font-size: 80px; margin: 16px 0;">🍵</div>
+
+      <div class="activity-nav-bar">
+        <button type="button" class="btn-primary-action" id="btnBreakContinue">
+          충분히 쉬었어요! 다음 활동 계속하기 ▶
+        </button>
+      </div>
+    </section>
+
+    <!-- Step 5: 활동 2 - 나비 인지 / 보리 취미 (Requirement 1, 3, 4) -->
+    <section class="step-card hidden" id="card_act2" aria-labelledby="act2Title">
+      <span class="step-indicator">두 번째 활동 (25분)</span>
+      <h2 class="step-title" id="act2Title">나비와 기억력 퀴즈</h2>
+      <p class="step-subtext" id="act2Desc">"정답을 꼭 맞히지 않아도 괜찮아요. 저와 함께 천천히 생각해봐요."</p>
+
+      <div class="character-guide-box">
+        <img src="assets/images/friend-nabi.png" alt="캐릭터" class="character-guide-img" id="act2CharImg">
+      </div>
+
+      <div style="background:#FAF5EE; border:2px dashed #E0D0BE; border-radius:18px; padding:24px 32px; width:100%; max-width:760px; font-size:26px; line-height:1.6;">
+        🌸 <strong>오늘의 인지·취미 활동 시간</strong><br>
+        화면의 글자와 그림을 보며 천천히 생각을 나누어보세요.<br>
+        사회복지사 선생님의 가이드와 함께 즐겁게 참여하실 수 있습니다.
+      </div>
+
+      <div id="act2Content"></div><button type="button" class="btn-primary-action" id="btnAct2Next">
+        활동 마무리하기 ▶
+      </button>
+    </section>
+
+    <!-- Step 6: 활동 마무리 및 회상 (Requirement 1, 3, 4) -->
+    <section class="step-card hidden" id="card_wrapup" aria-labelledby="wrapupTitle">
+      <span class="step-indicator">마무리 및 회상 (10분)</span>
+      <h2 class="step-title" id="wrapupTitle">오늘 활동 돌아보기</h2>
+      <p class="step-subtext" id="wrapupDesc">편안하게 숨을 고르며 오늘 하루 즐거웠던 기억을 돌아봐요.</p>
+
+      <div style="font-size: 72px; margin: 12px 0;">🌼</div>
+
+      <button type="button" class="btn-primary-action" id="btnWrapupNext">
+        오늘 기분 확인하기 ▶
+      </button>
+    </section>
+
+    <!-- Step 7: 기분 확인 (Requirement 12) -->
+    <section class="step-card hidden" id="card_mood" aria-labelledby="moodTitle">
+      <span class="step-indicator">수업 종료 · 선생님 빠른 평가</span>
+      <h2 class="step-title" id="moodTitle">관찰한 내용을 기록해주세요</h2>
+      <p class="step-subtext">입력하지 않은 항목은 미입력으로 남습니다. 기록 기반 초안은 선생님 확인 후 확정합니다.</p>
+
+      <div class="mood-selection-grid" hidden>
+        <button type="button" class="btn-mood-choice" data-mood="😀 재미있었어요">
+          <span class="emoji">😀</span>
+          <span>재미있었어요</span>
+        </button>
+        <button type="button" class="btn-mood-choice" data-mood="🙂 괜찮았어요">
+          <span class="emoji">🙂</span>
+          <span>괜찮았어요</span>
+        </button>
+        <button type="button" class="btn-mood-choice" data-mood="😐 조금 힘들었어요">
+          <span class="emoji">😐</span>
+          <span>조금 힘들었어요</span>
+        </button>
+        <button type="button" class="btn-mood-choice" data-mood="😟 도움이 필요해요">
+          <span class="emoji">😟</span>
+          <span>도움이 필요해요</span>
+        </button>
+      </div>
+    </section>
+
+    <div id="evaluationFields" class="evaluation-grid"></div><button id="saveAssessment" class="btn-primary-action" type="button">평가 저장 · 일지 초안 만들기</button>
+    <!-- Step 8: 수업 완료 & 자동 저장 (Requirement 13, 14, 26) -->
+    <section class="step-card hidden" id="card_done" aria-labelledby="doneTitle">
+      <div class="stamp-container">
+        <div class="flower-stamp">🌺</div>
+        <h2 class="step-title" id="doneTitle">오늘 수업을 모두 마치셨습니다!</h2>
+        <p class="step-subtext" id="doneSummaryText">오늘 60분 수업 기록이 안전하게 저장되었습니다.</p>
+      </div>
+
+      <div style="background:#F0FDF4; border:2px solid #BBF7D0; border-radius:18px; padding:20px 32px; width:100%; max-width:680px; color:#166534; font-size:24px; font-weight:700;">
+        ✓ 평가와 기록 기반 일지 초안을 저장했어요.<br>선생님 확인 후 확정해주세요.
+      </div>
+
+      <a href="index.html" class="btn-primary-action" style="text-decoration:none; margin-top:12px;">
+        🏠 학교 홈으로 가기
+      </a>
+    </section>
+
+<div id="classControls" class="class-step-controls"><button id="previousPhase">◀ 이전</button><button id="restartPhase">다시하기</button><button id="nextPhase">다음 ▶</button></div>
+  </main>
+
+  <!-- 이어서 하기 안내 대화상자 (Requirement 26) -->
+  <div class="resume-modal hidden" id="resumeModal" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
+    <div class="resume-content">
+      <h3 style="font-size: 28px; font-weight: 900; color: var(--color-orange-main);" id="resumeTitle">
+        진행 중이던 수업이 있습니다
+      </h3>
+      <p id="resumeText" style="font-size: 22px; color: var(--color-text-dark); line-height: 1.5;">
+        이전에 진행하던 수업을 이어서 하시겠습니까?
+      </p>
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:8px;">
+        <button type="button" class="btn-secondary-action" id="btnResumeNo" style="min-height:56px; font-size:22px;">
+          새로 시작하기
+        </button>
+        <button type="button" class="btn-primary-action" id="btnResumeYes" style="max-width:240px; min-height:56px; font-size:22px;">
+          이어서 하기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/record-manager.js"></script>
+  <script src="js/daycare-schedule.js"></script>
+  <script src="js/program-library.js"></script><script src="js/auto-scheduler.js"></script><script src="js/character-voice-system.js"></script><script src="automation/domain.js"></script><script src="js/operations-store.js"></script><script src="js/operations-sync.js"></script><script>document.getElementById("card_mood").append(document.getElementById("evaluationFields"),document.getElementById("saveAssessment"));</script><script src="js/activity-routes.js?v=20260928-media2"></script><script src="js/daycare-session.js?v=20260928-frame"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+/* Everyday clothing shares the existing voice/expression rig; no seasonal decor. */
+html[data-season="everyday"] .hanbok-character {background:transparent;box-shadow:none;}
+html[data-season="everyday"] .room-character-rig {width:190px;height:210px;max-width:100%;animation:none;}
+html[data-season="everyday"] .se-ready-avatar-wrap {width:190px;height:210px;}
+html[data-season="everyday"] :is(.tp-hero,.nl-hero,.bh-hero,.se-ready-card) {background:#fffaf2;border-color:#eadfcf;word-break:keep-all;}
+html[data-season="everyday"] .home-lobby-shelf {display:none;}
+.everyday-companions {display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin:12px auto;}
+.everyday-companions figure {margin:0;text-align:center;}
+.everyday-companions img {display:block;width:62px;height:78px;object-fit:contain;}
+.everyday-companions figcaption {font-size:20px;color:#51483e;}
+.everyday-guide {display:flex;align-items:center;justify-content:center;gap:8px;}
+.everyday-guide .character-parts-rig {width:64px;height:80px;flex-shrink:0;}
+.se-ready-title,.se-ready-desc {word-break:keep-all;overflow-wrap:break-word;}
+html[data-season="everyday"] body.common-contrast :is(.tp-hero,.nl-hero,.bh-hero,.se-ready-card) {background:#151515!important;color:#fff!important;}
+body.common-contrast .everyday-companions figcaption {color:#fff;}
+@media(max-width:480px){.everyday-companions{gap:8px}.everyday-companions img{width:48px;height:62px}}

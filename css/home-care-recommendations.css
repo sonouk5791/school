@@ -1,0 +1,17 @@
+#homeCareRecommendations{width:min(1000px,calc(100vw - 24px));}
+#homeCareRecommendations .care-choices{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0;}
+#homeCareRecommendations legend{font-size:24px;font-weight:700;margin-bottom:12px;}
+#homeCareRecommendations .care-choices label,#homeCareRecommendations .care-check{display:flex;align-items:center;gap:12px;min-height:64px;padding:12px;font-size:20px;box-sizing:border-box;}
+#homeCareRecommendations input[type=checkbox]{width:24px;height:24px;flex-shrink:0;}
+#homeCareRecommendations :is(input,select){font-size:20px;}
+#homeCareRecommendations :is(input[type=search],select){min-height:60px;max-width:100%;}
+#homeCareRecommendations .hc-results{padding:0;list-style-position:inside;}
+#homeCareRecommendations .hc-results li{display:flex;align-items:center;gap:20px;margin:16px 0;}
+#homeCareRecommendations .hc-results img{width:90px;height:110px;object-fit:contain;}
+#homeCareRecommendations .hc-results h2{font-size:24px;}
+#homeCareRecommendations .hc-manual{max-height:45vh;overflow:auto;}
+#homeCareRecommendations .hc-manual [hidden]{display:none!important;}
+#hcLessonNote{display:flex;align-items:center;gap:12px;padding:12px 24px;background:#fff8ef;}
+#hcLessonNote img{width:70px;height:80px;object-fit:contain;}
+#hcLessonNote p{font-size:20px;margin:0;}
+@media(max-width:540px){#homeCareRecommendations .hc-results li{align-items:flex-start;gap:10px;}#homeCareRecommendations .hc-results img{width:60px;height:80px;}#homeCareRecommendations .care-actions button{width:100%;}#hcLessonNote{padding:8px;}#hcLessonNote p{font-size:18px;}}

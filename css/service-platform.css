@@ -1,0 +1,104 @@
+.service-location{display:flex;gap:16px;flex-wrap:wrap;align-items:center;padding:12px 20px;font-size:20px;background:#fffaf0;color:#453e32;word-break:keep-all}
+.service-location[hidden]{display:none}
+.service-location a,.service-result a,.service-preparation button{display:inline-flex;align-items:center;justify-content:center;min-height:64px;padding:12px 22px;border:2px solid #829568;border-radius:16px;background:#fffaf0;color:#315a3c;text-decoration:none;font:inherit;font-size:20px}
+.service-preparation{max-width:760px;margin:24px auto;padding:28px;background:#fffaf0;border:2px solid #d9d2ba;border-radius:24px;text-align:center;word-break:keep-all}
+.service-preparation[hidden]{display:none!important}.service-preparation h2{font-size:28px}.service-preparation p,.service-result p{font-size:20px;line-height:1.6}.service-preparation button{margin:8px;cursor:pointer}
+.service-activity-card{display:flex!important;flex-direction:column;gap:8px;align-items:center;justify-content:center;min-height:200px!important;white-space:normal!important;word-break:keep-all}
+.service-activity-card img{width:64px;height:76px;object-fit:contain}.service-activity-card strong{font-size:24px}.service-activity-card span{font-size:20px;line-height:1.45}.service-activity-card .service-start{padding:10px 20px;border-radius:12px;background:#edf2dc;color:#315a3c}
+.service-result{margin:16px auto;padding:20px;max-width:680px;background:#f7f5e9;border-radius:24px;color:#453e32;border:2px solid #d9d2ba}
+.service-recommend{font-size:20px;color:#315a3c}
+.service-result p{word-break:keep-all}
+.service-location a:focus-visible,.service-preparation button:focus-visible{outline:4px solid #315a3c;outline-offset:3px}
+body[data-activity-status="preparing"] .extended-activities,body[data-activity-status="preparing"] .room-selection-extras{display:none!important}
+.service-guided{font-size:20px;max-width:900px;margin:20px auto;padding:16px}.service-guided button,.service-guided summary{font:inherit;min-height:64px;padding:12px;margin:8px;border:2px solid #c9c2a9;border-radius:16px;background:#fffaf0;cursor:pointer}
+.service-guided-running .tp-hero,.service-guided-running .nl-hero,.service-guided-running .bh-hero,.service-guided-running .tp-game-menu,.service-guided-running .nl-menu,.service-guided-running .bh-menu,.service-guided-running #viewReady,.service-guided-running .room-selection-extras,.service-guided-running .extended-activities{display:none!important}
+body[data-activity-status="playing"] .service-guided,body[data-activity-status="completed"] .service-guided,body[data-activity-status="preparing"] .service-guided,body[data-exercise-status="playing"] .service-guided{display:none}
+
+/* ── Unified Activity Completion Reward Card ── */
+.service-reward-card {
+  text-align: center;
+  padding: 24px 20px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid #b7d5a5;
+  box-shadow: 0 6px 20px rgba(50, 90, 40, 0.08);
+}
+.service-reward-flower {
+  font-size: 68px;
+  margin-bottom: 8px;
+  animation: reward-bounce 1s ease-in-out infinite alternate;
+}
+@keyframes reward-bounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.08); }
+}
+.service-reward-badge {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1.5px solid #f59e0b;
+  border-radius: 14px;
+  padding: 6px 18px;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.service-reward-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #1e3a1f;
+  margin-bottom: 8px;
+}
+.service-reward-desc {
+  font-size: 20px;
+  color: #4a4235;
+  margin-bottom: 6px;
+}
+.service-reward-meta {
+  font-size: 18px;
+  color: #6b6355;
+  margin-bottom: 20px;
+}
+.service-reward-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.service-btn-again {
+  min-height: 64px;
+  padding: 12px 24px;
+  font-size: 20px;
+  font-weight: 800;
+  border-radius: 16px;
+  border: 2px solid #829568;
+  background: #f4f8ec;
+  color: #2b542c;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+.service-btn-again:hover {
+  background: #e2edd5;
+  transform: translateY(-2px);
+}
+.service-btn-village {
+  min-height: 64px;
+  padding: 12px 26px;
+  font-size: 21px;
+  font-weight: 900;
+  border-radius: 16px;
+  background: #2d5a27;
+  color: #ffffff !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #1e3f1a;
+  box-shadow: 0 4px 14px rgba(45, 90, 39, 0.3);
+  transition: all 0.2s ease;
+}
+.service-btn-village:hover {
+  background: #22471e;
+  transform: translateY(-2px);
+}

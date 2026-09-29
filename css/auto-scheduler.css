@@ -1,0 +1,405 @@
+/* ==========================================================================
+   디지털 AI 학교 - 자동 프로그램 편성 시스템 스타일
+   (Automatic Program Scheduling & Library Stylesheet)
+   ========================================================================== */
+
+.auto-scheduler-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #4A3525;
+}
+
+/* 상단 서브 내비게이션 바 */
+.auto-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: #F4EBE1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #E0D4C5;
+}
+
+.auto-subnav-btn {
+  background: #FFFFFF;
+  border: 1px solid #D4C3B3;
+  color: #5C3D2E;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auto-subnav-btn:hover {
+  background: #FFF8E7;
+  border-color: #E65100;
+}
+
+.auto-subnav-btn.active {
+  background: #E65100;
+  color: #FFFFFF;
+  border-color: #BF360C;
+  box-shadow: 0 2px 6px rgba(230, 81, 0, 0.3);
+}
+
+/* 작업 액션 툴바 */
+.auto-action-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #FFFDF9;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid #EADBCC;
+}
+
+.auto-toolbar-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #4A3525;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auto-toolbar-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-auto-action {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #D4C3B3;
+  background: #FFFFFF;
+  color: #4A3525;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.btn-auto-action:hover {
+  background: #F5EFEB;
+}
+
+.btn-auto-primary {
+  background: #E65100;
+  color: #FFFFFF;
+  border-color: #BF360C;
+}
+
+.btn-auto-primary:hover {
+  background: #D84315;
+}
+
+.btn-auto-confirm {
+  background: #2E7D32;
+  color: #FFFFFF;
+  border-color: #1B5E20;
+}
+
+.btn-auto-confirm:hover {
+  background: #1B5E20;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   1. 주간 / 일간 카드 리스트 뷰
+   ══════════════════════════════════════════════════════════════════════════ */
+.weekly-schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.daily-schedule-card {
+  background: #FFFFFF;
+  border: 2px solid #EADBCC;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(92, 61, 46, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.daily-schedule-card.is-offday {
+  background: #F9F6F0;
+  opacity: 0.75;
+  border-style: dashed;
+}
+
+.daily-schedule-card.is-event {
+  border-color: #FF9800;
+  background: #FFFDF5;
+}
+
+.card-date-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #F0E6DA;
+  padding-bottom: 8px;
+}
+
+.card-date-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #4A3525;
+}
+
+.status-badge {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-badge.confirmed {
+  background: #E8F5E9;
+  color: #2E7D32;
+  border: 1px solid #A5D6A7;
+}
+
+.status-badge.draft {
+  background: #FFF3E0;
+  color: #E65100;
+  border: 1px solid #FFCC80;
+}
+
+.status-badge.offday {
+  background: #ECEFF1;
+  color: #546E7A;
+}
+
+.session-block {
+  background: #FAF6F0;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #EADBCC;
+}
+
+.session-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.session-tag {
+  font-size: 13px;
+  font-weight: 800;
+  color: #E65100;
+}
+
+.session-status {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid #D4C3B3;
+  color: #6D4C41;
+}
+
+.session-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #332014;
+  margin-bottom: 4px;
+}
+
+.session-meta-pill {
+  display: inline-block;
+  font-size: 12px;
+  background: #FFFFFF;
+  color: #5C3D2E;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 4px;
+  border: 1px solid #E0D4C5;
+}
+
+.fallback-warning {
+  font-size: 12px;
+  color: #D32F2F;
+  background: #FFEBEE;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   2. 월간 캘린더 뷰 (Requirement 9)
+   ══════════════════════════════════════════════════════════════════════════ */
+.calendar-view-wrap {
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #EADBCC;
+  overflow: hidden;
+  padding: 16px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calendar-nav-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #4A3525;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 8px 0;
+  background: #F4EBE1;
+  color: #5C3D2E;
+  border-radius: 6px;
+}
+
+.calendar-weekday.sun { color: #D32F2F; }
+.calendar-weekday.sat { color: #1976D2; }
+
+.calendar-cell {
+  min-height: 120px;
+  background: #FFFFFF;
+  border: 1px solid #EADBCC;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.calendar-cell:hover {
+  background: #FFF8E7;
+  border-color: #E65100;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.calendar-cell.other-month {
+  background: #FAF8F5;
+  opacity: 0.45;
+}
+
+.calendar-cell.is-today {
+  border: 2px solid #E65100;
+  background: #FFFDF7;
+}
+
+.cell-date-num {
+  font-size: 14px;
+  font-weight: 800;
+  color: #4A3525;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cell-prog-badge {
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+}
+
+.cell-prog-am { background: #FFF3E0; color: #E65100; border-left: 3px solid #E65100; }
+.cell-prog-pm { background: #E8F5E9; color: #2E7D32; border-left: 3px solid #2E7D32; }
+.cell-prog-event { background: #EDE7F6; color: #512DA8; border-left: 3px solid #512DA8; }
+.cell-prog-off { background: #ECEFF1; color: #78909C; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   3. 프로그램 라이브러리 테이블 (Requirement 4)
+   ══════════════════════════════════════════════════════════════════════════ */
+.library-table-container {
+  overflow-x: auto;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #EADBCC;
+}
+
+.library-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.library-table th {
+  background: #F4EBE1;
+  padding: 12px 10px;
+  color: #4A3525;
+  font-weight: 800;
+  border-bottom: 2px solid #D4C3B3;
+  text-align: left;
+}
+
+.library-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #F0E6DA;
+  color: #3E2723;
+}
+
+.library-table tr:hover {
+  background: #FFFDF7;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   4. A4 출력 스타일시트 (Requirement 38)
+   ══════════════════════════════════════════════════════════════════════ */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 12mm 10mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #a4PrintContainer, #a4PrintContainer * {
+    visibility: visible;
+  }
+
+  #a4PrintContainer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #FFFFFF;
+    color: #000000;
+    font-size: 11pt;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

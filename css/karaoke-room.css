@@ -1,0 +1,450 @@
+/* ==========================================================================
+   신나는 노래방 (Dedicated Senior Karaoke Room) Styles
+   ========================================================================== */
+
+.karaoke-room-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 24px 0;
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFF3E0 100%);
+  border: 2px solid #FFE0B2;
+}
+
+.karaoke-room-entry h2 {
+  font-size: 26px;
+  color: #B45309;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.karaoke-room-entry p {
+  font-size: 19px;
+  color: #5D4037;
+  margin: 0;
+}
+
+/* Modal Dialog */
+.karaoke-room {
+  width: min(1060px, 96vw);
+  max-width: 96vw;
+  max-height: 94dvh;
+  border: 3px solid #E2D9C8;
+  border-radius: 28px;
+  padding: 24px 28px;
+  background: #FFFDF9;
+  color: #2D241E;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.karaoke-room::backdrop {
+  background: rgba(30, 20, 15, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.karaoke-room-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid #F0E6D8;
+  margin-bottom: 20px;
+}
+
+.karaoke-room-header h2 {
+  font-size: 32px;
+  color: #9A3412;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.karaoke-room-header .room-sub {
+  font-size: 19px;
+  color: #78350F;
+  margin-top: 4px;
+}
+
+/* Song Selection Carousel / Tabs */
+.karaoke-song-selector {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  scrollbar-width: thin;
+}
+
+.karaoke-song-chip {
+  flex: 0 0 auto;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  background: #FFFFFF;
+  border: 2px solid #E5D5C5;
+  border-radius: 16px;
+  font-size: 21px;
+  font-weight: 700;
+  color: #4A3B32;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.karaoke-song-chip:hover {
+  border-color: #F97316;
+  background: #FFF7ED;
+  transform: translateY(-2px);
+}
+
+.karaoke-song-chip.active {
+  background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%);
+  color: #FFFFFF;
+  border-color: #C2410C;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+}
+
+/* Karaoke Main Stage */
+.karaoke-dedicated-stage {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 24px;
+  padding: 24px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.karaoke-dedicated-stage .karaoke-theme-badge {
+  background: rgba(0, 0, 0, 0.7);
+  color: #FED7AA;
+  border: 1px solid rgba(254, 215, 170, 0.4);
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 19px;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  text-align: center;
+}
+
+/* Big Lyrics Display Screen */
+.karaoke-room-screen {
+  width: 100%;
+  max-width: 920px;
+  background: rgba(15, 12, 10, 0.82);
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+}
+
+.karaoke-screen-song-title {
+  font-size: 24px;
+  color: #FDE047;
+  font-weight: 800;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.karaoke-lyrics-flow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px 10px;
+  min-height: 90px;
+}
+
+.karaoke-lyrics-flow .k-syllable {
+  font-size: 32px;
+  font-weight: 800;
+  color: #D1D5DB;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.15s ease-out;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+}
+
+.karaoke-lyrics-flow .k-syllable.active {
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #FF4500, #FF8C00);
+  transform: scale(1.22);
+  box-shadow: 0 0 20px #FFA500;
+  text-shadow: 0 0 10px #FFFFFF, 0 0 20px #FF4500;
+  z-index: 2;
+}
+
+.karaoke-lyrics-flow .k-syllable.sung {
+  color: #FDE047;
+}
+
+/* Central Mascot & Singing Actions */
+.karaoke-center-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.karaoke-mascot-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid #FDE047;
+  object-fit: cover;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
+  background: #FFF;
+}
+
+.karaoke-mascot-avatar.dancing {
+  animation: puppyDance 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes puppyDance {
+  0% { transform: scale(1) rotate(-6deg) translateY(0); }
+  100% { transform: scale(1.1) rotate(6deg) translateY(-8px); }
+}
+
+.karaoke-play-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-karaoke-action {
+  font: inherit;
+  font-size: 22px;
+  font-weight: 800;
+  padding: 14px 28px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #FFFFFF;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.btn-karaoke-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.4);
+}
+
+.btn-karaoke-action.play {
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+}
+
+.btn-karaoke-action.sing-ai {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+}
+
+.btn-karaoke-action.stop {
+  background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);
+}
+
+/* Instrument & Cheer Bar */
+.karaoke-cheer-toolbar {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-karaoke-cheer {
+  font: inherit;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 12px 22px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #E2D9C8;
+  border-radius: 16px;
+  color: #2D241E;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-karaoke-cheer:hover,
+.btn-karaoke-cheer:focus-visible {
+  background: #FFF7ED;
+  border-color: #F97316;
+  transform: scale(1.05);
+}
+
+.btn-karaoke-cheer .cheer-icon {
+  font-size: 26px;
+}
+
+/* Floating emojis */
+.floating-cheer-emoji {
+  position: absolute;
+  bottom: 80px;
+  font-size: 42px;
+  animation: floatUpFade 1.6s forwards ease-out;
+  pointer-events: none;
+  z-index: 20;
+}
+
+@keyframes floatUpFade {
+  0% { opacity: 1; transform: translateY(0) scale(0.6); }
+  50% { opacity: 1; transform: translateY(-70px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-140px) scale(1.4); }
+}
+
+/* Score / Cheer Banner */
+.karaoke-score-banner {
+  margin-top: 12px;
+}
+
+.karaoke-perfect-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  border: 2px solid #F59E0B;
+  color: #92400E;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 22px;
+  font-weight: 800;
+  animation: bounceIn 0.5s ease-out;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  70% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* TJ Karaoke YouTube Section */
+.karaoke-tj-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px dashed #E2D9C8;
+}
+
+.karaoke-tj-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.karaoke-tj-header h3 {
+  font-size: 24px;
+  color: #B45309;
+  margin: 0 0 6px 0;
+}
+
+.karaoke-tj-header p {
+  font-size: 18px;
+  color: #5D4037;
+  margin: 0;
+}
+
+.btn-tj-channel {
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 19px;
+  padding: 12px 20px;
+}
+
+.karaoke-tj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.tj-song-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: #FFFFFF;
+  border: 2px solid #E5D5C5;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #2D241E;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.tj-song-card:hover,
+.tj-song-card:focus-visible {
+  border-color: #EA580C;
+  background: #FFF7ED;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.15);
+}
+
+.tj-song-icon {
+  font-size: 28px;
+}
+
+.tj-song-info strong {
+  display: block;
+  font-size: 20px;
+  color: #1F2937;
+  margin-bottom: 2px;
+}
+
+.tj-song-info span {
+  font-size: 16px;
+  color: #6B7280;
+}
+
+.tj-link-tag {
+  margin-top: auto;
+  font-size: 15px;
+  font-weight: 700;
+  color: #EA580C;
+}
+
+@media (max-width: 650px) {
+  .karaoke-room-entry,
+  .karaoke-room-header,
+  .karaoke-tj-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .karaoke-room {
+    padding: 16px;
+  }
+  .karaoke-room-header h2 {
+    font-size: 26px;
+  }
+  .karaoke-lyrics-flow .k-syllable {
+    font-size: 26px;
+  }
+  .karaoke-tj-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

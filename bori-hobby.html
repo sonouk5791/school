@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ko" data-season="everyday">
+<head>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext y=%2727%27 font-size=%2728%27%3E%F0%9F%8D%8A%3C/text%3E%3C/svg%3E">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>보리의 취미방 · 디지털 AI 학교</title>
+  <meta name="description" content="치매·인지저하 어르신을 위한 보리의 취미방 — 노래 따라 부르기, 옛날 이야기, 색칠 그림, 수수께끼">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;background:linear-gradient(160deg,#eff6ff 0%,#dbeafe 40%,#bfdbfe 100%);min-height:100vh;color:#1e3a5f}
+    .bh-header{background:rgba(255,255,255,0.93);backdrop-filter:blur(12px);border-bottom:3px solid #93c5fd;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100}
+    .bh-back-link{font-size:20px;font-weight:800;color:#1d4ed8;text-decoration:none;min-height:48px;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:12px;background:#eff6ff;border:2px solid #93c5fd;transition:background .2s}
+    .bh-back-link:hover{background:#dbeafe}
+    .bh-location{font-size:18px;font-weight:800;color:#1d4ed8;background:#dbeafe;padding:8px 16px;border-radius:12px;border:1px solid #93c5fd}
+    .bh-voice-btn{min-height:48px;padding:8px 16px;font-size:16px;font-weight:800;background:#eff6ff;color:#1d4ed8;border:2px solid #93c5fd;border-radius:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+    .bh-hero{text-align:center;padding:40px 20px 20px}
+    .bh-char-img{width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(29,78,216,.25));animation:bori-float 3.2s ease-in-out infinite}
+    @keyframes bori-float{0%,100%{transform:translateY(0) rotate(1deg)}50%{transform:translateY(-12px) rotate(-1deg)}}
+    .bh-hero h1{font-size:clamp(26px,5vw,42px);font-weight:900;color:#1e40af;margin:14px 0 8px}
+    .bh-hero p{font-size:19px;color:#2563eb;line-height:1.5}
+    .bh-speech{display:inline-block;background:#fff;border:2px solid #93c5fd;border-radius:20px;padding:14px 24px;margin-top:16px;font-size:19px;color:#1e40af;font-weight:700;max-width:500px;box-shadow:0 4px 16px rgba(29,78,216,.12)}
+    .stamp-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 16px}
+    .stamp-chip{background:#fff;border:2px solid #93c5fd;border-radius:20px;padding:6px 16px;font-size:16px;font-weight:700;color:#1e40af}
+    .bh-menu{max-width:900px;margin:0 auto;padding:10px 20px 16px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .bh-tab{min-height:54px;padding:12px 22px;font-size:17px;font-weight:800;border-radius:16px;border:3px solid #93c5fd;cursor:pointer;background:#fff;color:#2563eb;font-family:inherit;transition:all .2s;flex:1;min-width:140px;text-align:center}
+    .bh-tab.active{background:linear-gradient(135deg,#2563eb,#60a5fa);color:#fff;border-color:#1d4ed8;box-shadow:0 4px 14px rgba(37,99,235,.35)}
+    .bh-tab:hover:not(.active){background:#dbeafe}
+    .bh-area{max-width:900px;margin:0 auto 60px;padding:0 20px}
+    .hobby-panel{display:none}.hobby-panel.active{display:block}
+    .hobby-card{background:#fff;border-radius:28px;padding:36px 28px;border:2px solid #93c5fd;box-shadow:0 8px 32px rgba(37,99,235,.1)}
+    .hobby-card-title{font-size:26px;font-weight:900;color:#1e40af;text-align:center;margin-bottom:8px}
+    .hobby-card-sub{font-size:17px;color:#3b82f6;text-align:center;margin-bottom:28px}
+    /* 노래 */
+    .song-list{display:flex;flex-direction:column;gap:14px}
+    .song-item{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:3px solid #93c5fd;border-radius:20px;padding:20px 24px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all .25s}
+    .song-item:hover,.song-item.active-song{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#2563eb;transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,99,235,.18)}
+    .song-icon{font-size:40px;flex-shrink:0}.song-info{flex:1}
+    .song-title{font-size:22px;font-weight:900;color:#1e40af}
+    .song-desc{font-size:15px;color:#3b82f6;margin-top:4px}
+    .song-play-btn{min-height:48px;padding:10px 20px;font-size:17px;font-weight:800;background:#2563eb;color:#fff;border:none;border-radius:14px;cursor:pointer;font-family:inherit;flex-shrink:0;transition:all .2s}
+    .song-play-btn:hover{background:#1d4ed8;transform:scale(1.05)}
+    .lyrics-area{margin-top:24px;background:#f0f9ff;border:2px solid #bae6fd;border-radius:20px;padding:24px 28px;display:none}
+    .lyrics-area.active{display:block}
+    .lyrics-title{font-size:20px;font-weight:900;color:#0369a1;margin-bottom:16px;text-align:center}
+    .lyrics-line{font-size:24px;font-weight:700;color:#1e40af;line-height:2.2;text-align:center}
+    .hl{color:#dc2626;font-weight:900;background:#fef9c3;border-radius:6px;padding:0 4px}
+    .lyrics-controls{display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+    .btn-lyric{min-height:52px;padding:12px 24px;font-size:18px;font-weight:800;border-radius:14px;border:none;cursor:pointer;font-family:inherit;transition:all .2s}
+    .btn-lyric.play{background:#2563eb;color:#fff}.btn-lyric.stop{background:#6b7280;color:#fff}
+    .btn-lyric.repeat{background:#eff6ff;color:#2563eb;border:2px solid #93c5fd}
+    /* 이야기 */
+    .story-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+    .story-card{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:3px solid #93c5fd;border-radius:22px;padding:24px 20px;cursor:pointer;text-align:center;transition:all .25s}
+    .story-card:hover{transform:translateY(-4px);border-color:#2563eb;box-shadow:0 10px 24px rgba(37,99,235,.18)}
+    .story-emoji{font-size:52px;display:block;margin-bottom:12px}
+    .story-card-title{font-size:20px;font-weight:900;color:#1e40af}
+    .story-card-desc{font-size:15px;color:#3b82f6;margin-top:6px}
+    .story-content-box{display:none;margin-top:24px;background:#fff;border:2px solid #93c5fd;border-radius:20px;padding:30px 28px}
+    .story-content-box.active{display:block}
+    .story-content-title{font-size:24px;font-weight:900;color:#1e40af;margin-bottom:18px}
+    .story-content-text{font-size:20px;color:#334155;line-height:1.9;margin-bottom:16px}
+    .story-question{background:#fefce8;border:2px solid #fde047;border-radius:16px;padding:18px 20px;margin-top:16px}
+    .story-question p{font-size:20px;font-weight:800;color:#854d0e;margin-bottom:14px}
+    .story-answer-btns{display:flex;gap:10px;flex-wrap:wrap}
+    .story-answer-btn{min-height:52px;padding:12px 20px;font-size:18px;font-weight:800;background:#fff;color:#1e40af;border:2px solid #93c5fd;border-radius:14px;cursor:pointer;font-family:inherit;flex:1;min-width:120px;transition:all .2s}
+    .story-answer-btn:hover{background:#dbeafe}
+    .story-answer-btn.correct{background:#dcfce7;border-color:#16a34a;color:#15803d}
+    .story-answer-btn.wrong{background:#fee2e2;border-color:#dc2626;color:#dc2626}
+    .story-back-btn{margin-top:20px;min-height:48px;padding:10px 22px;font-size:17px;font-weight:800;background:#eff6ff;color:#2563eb;border:2px solid #93c5fd;border-radius:14px;cursor:pointer;font-family:inherit}
+    /* 색칠 */
+    .coloring-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+    .coloring-thumb{border:4px solid #93c5fd;border-radius:18px;padding:16px;text-align:center;cursor:pointer;transition:all .25s;background:#fff}
+    .coloring-thumb:hover{border-color:#2563eb;background:#eff6ff;transform:translateY(-3px);box-shadow:0 8px 20px rgba(37,99,235,.18)}
+    .coloring-thumb-emoji{font-size:56px;display:block;margin-bottom:8px}
+    .coloring-thumb-label{font-size:18px;font-weight:800;color:#1e40af}
+    .coloring-workspace{display:none;gap:20px;flex-wrap:wrap}
+    .coloring-workspace.active{display:flex}
+    .color-palette-panel{background:#f0f9ff;border:2px solid #bae6fd;border-radius:18px;padding:18px;min-width:200px;flex-shrink:0}
+    .palette-title{font-size:16px;font-weight:800;color:#0369a1;margin-bottom:12px}
+    .palette-colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+    .palette-color{width:100%;aspect-ratio:1;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.18);cursor:pointer;transition:transform .15s}
+    .palette-color:hover,.palette-color.sel{transform:scale(1.18)}
+    .palette-color.sel{border-color:#1e3a5f;box-shadow:0 0 0 3px #60a5fa}
+    .brush-size-row{display:flex;gap:8px;margin-bottom:16px}
+    .brush-btn{flex:1;padding:8px;font-size:14px;font-weight:700;background:#fff;border:2px solid #93c5fd;border-radius:10px;cursor:pointer;font-family:inherit;text-align:center;transition:all .15s}
+    .brush-btn.active{background:#2563eb;color:#fff;border-color:#1d4ed8}
+    .canvas-actions{display:flex;flex-direction:column;gap:8px}
+    .cav-btn{min-height:44px;padding:8px 14px;font-size:15px;font-weight:800;border-radius:12px;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
+    .cav-btn:hover{filter:brightness(1.06);transform:scale(1.03)}
+    .btn-undo{background:#e5e7eb;color:#374151}.btn-clear{background:#fee2e2;color:#dc2626}
+    .btn-save-col{background:#22c55e;color:#fff}.btn-back-col{background:#eff6ff;color:#2563eb;border:2px solid #93c5fd !important}
+    .coloring-canvas-wrap{flex:1;min-width:280px}
+    .coloring-canvas{width:100%;border:3px solid #bae6fd;border-radius:16px;background:#fff;cursor:crosshair;touch-action:none;display:block}
+    /* 수수께끼 */
+    .riddle-area{display:flex;flex-direction:column;gap:20px;align-items:center}
+    .riddle-card-inner{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:3px solid #93c5fd;border-radius:24px;padding:36px 28px;text-align:center;max-width:620px;width:100%;box-shadow:0 8px 24px rgba(37,99,235,.1)}
+    .riddle-number{font-size:16px;font-weight:700;color:#3b82f6;margin-bottom:12px}
+    .riddle-question{font-size:clamp(22px,4vw,30px);font-weight:900;color:#1e40af;line-height:1.5;margin-bottom:24px}
+    .riddle-hint-btn{min-height:48px;padding:10px 24px;font-size:17px;font-weight:800;background:#fef9c3;color:#854d0e;border:2px solid #fde047;border-radius:14px;cursor:pointer;font-family:inherit;margin-bottom:16px}
+    .riddle-hint-text{display:none;background:#fefce8;border:2px solid #fde047;border-radius:14px;padding:14px 18px;font-size:18px;color:#713f12;font-weight:700;margin-bottom:16px}
+    .riddle-answer-reveal{min-height:52px;padding:12px 30px;font-size:20px;font-weight:900;background:#2563eb;color:#fff;border:none;border-radius:16px;cursor:pointer;font-family:inherit;transition:all .2s}
+    .riddle-answer-reveal:hover{background:#1d4ed8;transform:scale(1.04)}
+    .riddle-answer-box{display:none;background:#dcfce7;border:3px solid #16a34a;border-radius:18px;padding:20px 24px;font-size:22px;font-weight:900;color:#15803d;margin-top:12px}
+    .riddle-nav{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+    .riddle-nav-btn{min-height:56px;padding:14px 28px;font-size:19px;font-weight:800;border-radius:16px;border:none;cursor:pointer;font-family:inherit;transition:all .2s}
+    .btn-prev-riddle{background:#e5e7eb;color:#374151}.btn-next-riddle{background:#2563eb;color:#fff}
+    .btn-prev-riddle:hover,.btn-next-riddle:hover{filter:brightness(1.1);transform:scale(1.04)}
+    .riddle-progress{font-size:17px;font-weight:700;color:#3b82f6;text-align:center}
+    /* 공통 */
+    @keyframes pop-in{0%{transform:scale(.85);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+    .feedback-banner{text-align:center;padding:18px 24px;border-radius:18px;font-size:22px;font-weight:800;margin-top:12px;display:none}
+    .feedback-banner.good{background:#dcfce7;color:#15803d;border:2px solid #86efac}
+    .feedback-banner.retry{background:#fff7ed;color:#c2410c;border:2px solid #fed7aa}
+    .feedback-banner.visible{display:block;animation:pop-in .3s}
+    .completion-banner{display:none;text-align:center;background:linear-gradient(135deg,#eff6ff,#dbeafe);border:3px solid #2563eb;border-radius:24px;padding:32px 24px;margin-top:24px}
+    .completion-banner.visible{display:block;animation:pop-in .5s}
+    .completion-banner .big-emoji{font-size:64px;display:block;margin-bottom:10px}
+    .completion-banner h2{font-size:28px;font-weight:900;color:#1e40af;margin-bottom:8px}
+    .completion-banner p{font-size:20px;color:#2563eb}
+    .btn-retry{margin-top:20px;min-height:52px;padding:12px 28px;font-size:19px;font-weight:800;background:#2563eb;color:#fff;border:none;border-radius:16px;cursor:pointer;font-family:inherit}
+    .btn-retry:hover{background:#1d4ed8}
+    .bh-home-btn{display:block;text-align:center;margin:30px auto 20px;max-width:300px;min-height:56px;padding:14px 28px;font-size:20px;font-weight:900;color:#1d4ed8;background:#fff;border:3px solid #93c5fd;border-radius:18px;text-decoration:none;transition:all .2s}
+    .bh-home-btn:hover{background:#dbeafe}
+    @media(max-width:600px){.hobby-card{padding:22px 16px}.song-item{flex-direction:column;text-align:center}.song-play-btn{width:100%}.coloring-workspace{flex-direction:column}.color-palette-panel{min-width:unset;width:100%}}
+  </style>
+<link rel="stylesheet" href="css/room-activity-flow.css?v=20260923-qa6">
+<script src="js/room-activity-flow.js?v=20260928-service"></script>
+<script src="js/character-voice-system.js?v=20260928-ops"></script>
+<link rel="stylesheet" href="css/character-animation.css?v=20260922"><script defer src="js/character-rig-data.js?v=20260922"></script><script defer src="js/hanbok-character.js?v=20260928-active"></script><script defer src="js/character-animation.js?v=20260928-active"></script>
+<link rel="stylesheet" href="css/senior-common-header.css?v=20260923-nav2"><script defer src="js/senior-common-header.js?v=20260928-service"></script><link rel="stylesheet" href="css/character-expressions.css?v=20260928-active"><link rel="stylesheet" href="css/extended-activities.css?v=20260928">
+<script src="js/korean-visemes.js?v=20260928"></script>
+<link rel="stylesheet" href="css/everyday-characters.css?v=20260928-active"><script defer src="js/everyday-characters.js?v=20260928-active"></script>
+<link rel="stylesheet" href="css/service-platform.css?v=20260928"><script src="js/service-config.js?v=20260928"></script><script src="js/service-activity.js?v=20260928"></script>
+<script src="js/service-content.js?v=20260928"></script>
+</head>
+<body data-activity-room="bori" data-activity-status="select">
+<header class="bh-header">
+  <a href="index.html" class="bh-back-link">🏡 친구들 마을로 돌아가기</a>
+  <div class="bh-location"><strong>🐻 보리집 · 취미방</strong></div>
+  <button type="button" class="bh-voice-btn" id="btnBhVoice">🔊 보리 안내</button>
+</header>
+<section class="bh-hero">
+  <img src="assets/images/everyday/bori-active.png" alt="보리 캐릭터" class="bh-char-img" onerror="this.src='assets/images/friend-bori.png'">
+  <h1>🐻 보리집 · 취미방</h1>
+  <div class="bh-speech">"오늘은 어떤 취미를 해볼까요?"</div>
+</section>
+<div class="stamp-row">
+  <div class="stamp-chip">오늘 도장: <span id="bhStampNum">0</span>개 &#127467;</div>
+</div>
+<section class="media-entries" aria-label="보리의 새로운 활동"><a class="media-entry" href="bori-memory-theater.html">📺 추억극장<span>옛날 드라마와 추억 영상을 함께 봐요</span></a><a class="media-entry" href="bori-song-class.html">🎤 옛 노래 교실<span>추억의 노래를 함께 따라 불러요</span></a></section>
+<nav class="bh-menu" aria-label="취미 선택">
+  <button type="button" class="bh-tab active" data-tab="song">&#127908; 노래 부르기</button>
+  <button type="button" class="bh-tab" data-tab="story">&#128214; 옛날 이야기</button>
+  <button type="button" class="bh-tab" data-tab="color">&#127912; 색칠 그림</button>
+  <button type="button" class="bh-tab" data-tab="riddle">&#129513; 수수께끼</button>
+</nav>
+<main class="bh-area">
+  <section class="hobby-panel active" id="panelSong">
+    <div class="hobby-card">
+      <h2 class="hobby-card-title">&#127908; 노래 따라 부르기</h2>
+      <p class="hobby-card-sub">좋아하는 노래를 골라 보리와 함께 흥겹게 불러보아요!</p>
+      <div class="song-list" id="songList"></div>
+      <div class="lyrics-area" id="lyricsArea">
+        <div class="lyrics-title" id="lyricsTitle">&#127925; 노래 가사</div>
+        <div class="lyrics-line" id="lyricsLine"></div>
+        <div class="lyrics-controls">
+          <button type="button" class="btn-lyric play" id="btnLyricsPlay">&#9654; 부르기 시작</button>
+          <button type="button" class="btn-lyric stop" id="btnLyricsStop">&#9632; 그만하기</button>
+          <button type="button" class="btn-lyric repeat" id="btnLyricsRepeat">&#128257; 처음부터</button>
+        </div>
+      </div>
+      <div class="completion-banner" id="songCompletion">
+        <span class="big-emoji">&#127881;</span>
+        <h2>노래 완창! 정말 잘 하셨어요!</h2>
+        <p>보리도 같이 노래해서 너무 즐거웠어요 &#128059;</p>
+        <button type="button" class="btn-retry" id="btnSongRetry">다른 노래 부르기</button>
+      </div>
+    </div>
+  </section>
+  <section class="hobby-panel" id="panelStory">
+    <div class="hobby-card">
+      <h2 class="hobby-card-title">&#128214; 옛날 이야기 &amp; 추억 나누기</h2>
+      <p class="hobby-card-sub">고향의 정겨운 이야기를 떠올리며 보리와 이야기해요</p>
+      <div class="story-grid" id="storyGrid"></div>
+      <div class="story-content-box" id="storyContentBox">
+        <h3 class="story-content-title" id="storyContentTitle"></h3>
+        <div class="story-content-text" id="storyContentText"></div>
+        <div class="story-question">
+          <p id="storyQuestionText"></p>
+          <div class="story-answer-btns" id="storyAnswerBtns"></div>
+        </div>
+        <div class="feedback-banner" id="storyFeedback"></div>
+        <button type="button" class="story-back-btn" id="btnStoryBack">&#9664; 이야기 목록으로</button>
+      </div>
+      <div class="completion-banner" id="storyCompletion">
+        <span class="big-emoji">&#127800;</span>
+        <h2>이야기를 잘 기억하셨어요!</h2>
+        <p>소중한 추억을 나눠주셔서 감사해요 &#128153;</p>
+        <button type="button" class="btn-retry" id="btnStoryRetry">다른 이야기 보기</button>
+      </div>
+    </div>
+  </section>
+  <section class="hobby-panel" id="panelColor">
+    <div class="hobby-card">
+      <h2 class="hobby-card-title">&#127912; 색칠 그림</h2>
+      <p class="hobby-card-sub">마음에 드는 그림을 골라 예쁘게 색칠해 보아요!</p>
+      <div class="coloring-gallery" id="coloringGallery"></div>
+      <div class="coloring-workspace" id="coloringWorkspace">
+        <div class="color-palette-panel">
+          <div class="palette-title">&#127912; 색깔 고르기</div>
+          <div class="palette-colors" id="paletteColors"></div>
+          <div class="palette-title" style="margin-top:4px">붓 굵기</div>
+          <div class="brush-size-row">
+            <button type="button" class="brush-btn active" data-size="8">가는</button>
+            <button type="button" class="brush-btn" data-size="16">보통</button>
+            <button type="button" class="brush-btn" data-size="28">굵은</button>
+          </div>
+          <p id="colorSaveStatus" role="status"></p><div class="canvas-actions">
+            <button type="button" class="cav-btn btn-undo" id="btnColorUndo">&#8617; 되돌리기</button>
+            <button type="button" class="cav-btn btn-clear" id="btnColorClear">&#128465; 지우기</button>
+            <button type="button" class="cav-btn btn-save-col" id="btnColorSave">&#128190; 저장하기</button>
+            <button type="button" class="cav-btn btn-back-col" id="btnColorBack">&#9664; 그림 목록</button>
+          </div>
+        </div>
+        <div class="coloring-canvas-wrap">
+          <canvas class="coloring-canvas" id="coloringCanvas" width="600" height="420"></canvas>
+        </div>
+      </div>
+      <div class="completion-banner" id="colorCompletion">
+        <span class="big-emoji">&#128444;</span>
+        <h2>멋진 작품이 완성됐어요!</h2>
+        <p>보리도 갤러리에 걸고 싶어요 &#128059;&#128153;</p>
+        <button type="button" class="btn-retry" id="btnColorRetry">다른 그림 색칠하기</button>
+      </div>
+    </div>
+  </section>
+  <section class="hobby-panel" id="panelRiddle">
+    <div class="hobby-card">
+      <h2 class="hobby-card-title">&#129513; 보리의 수수께끼</h2>
+      <p class="hobby-card-sub">재미있는 수수께끼를 풀어보아요! 힌트도 있어요 &#128516;</p>
+      <div class="riddle-area">
+        <div class="riddle-card-inner">
+          <div class="riddle-number" id="riddleNumber">1 / 10</div>
+          <div class="riddle-question" id="riddleQuestion"></div>
+          <button type="button" class="riddle-hint-btn" id="btnRiddleHint">&#128161; 힌트 보기</button>
+          <div class="riddle-hint-text" id="riddleHintText"></div>
+          <button type="button" class="riddle-answer-reveal" id="btnRiddleAnswer">&#127919; 정답 보기</button>
+          <div class="riddle-answer-box" id="riddleAnswerBox"></div>
+        </div>
+        <div class="feedback-banner" id="riddleFeedback"></div>
+        <div class="riddle-nav">
+          <button type="button" class="riddle-nav-btn btn-prev-riddle" id="btnRiddlePrev">&#9664; 이전</button>
+          <button type="button" class="riddle-nav-btn btn-next-riddle" id="btnRiddleNext">다음 &#9654;</button>
+        </div>
+        <div class="riddle-progress" id="riddleProgress"></div>
+      </div>
+      <div class="completion-banner" id="riddleCompletion">
+        <span class="big-emoji">&#127942;</span>
+        <h2>수수께끼 모두 풀었어요!</h2>
+        <p>정말 똑똑하세요! 보리가 깜짝 놀랐어요 &#128059;</p>
+        <button type="button" class="btn-retry" id="btnRiddleRetry">수수께끼 다시 풀기</button>
+      </div>
+    </div>
+  </section>
+</main>
+<a href="index.html" class="bh-home-btn" onclick="sessionStorage.setItem('school_home_intro_played','true')">🏡 친구들 마을로 돌아가기</a>
+
+<script>
+(()=>{
+'use strict';
+const RATE=0.82;
+function speak(t,cb){window.replayRoomVoice=()=>speak(t);if(window.RoomActivity?.activityStatus==='select')return;return speakAsCharacter('bori',t).then(r=>{if(r.status!=='cancelled')cb?.();});}
+speechSynthesis.getVoices();
+const SK='gomi_hobby_stamps';
+let st=JSON.parse(localStorage.getItem(SK)||localStorage.getItem('bori_hobby_stamps')||'{"c":0,"d":""}');
+const td=new Date().toLocaleDateString('ko-KR');
+if(st.d!==td)st={c:0,d:td};
+function saveSt(){localStorage.setItem(SK,JSON.stringify(st));}
+function addStamp(){st.c++;saveSt();document.getElementById('bhStampNum').textContent=st.c;speak('도장을 받으셨어요! 오늘 '+st.c+'개 모으셨어요!');}
+document.getElementById('bhStampNum').textContent=st.c;
+const PANELS={song:'panelSong',story:'panelStory',color:'panelColor',riddle:'panelRiddle'};
+document.querySelectorAll('.bh-tab').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.bh-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.hobby-panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(PANELS[b.dataset.tab]).classList.add('active');});});
+document.getElementById('btnBhVoice').addEventListener('click',()=>speak('안녕하세요! 저는 보리예요. 노래도 부르고, 옛날 이야기도 나누고, 색칠도 하고, 수수께끼도 함께 풀어보아요!'));
+function showFeedback(el,msg,type){el.textContent=msg;el.className='feedback-banner '+type+' visible';roomActivityDelay(()=>el.classList.remove('visible'),3500);}
+// 노래
+const SONGS=[
+  {title:'\uACE0\uD5A5\uC758 \uBD04',icon:'\uD83C\uDF38',desc:'\uC774\uC6D0\uC218 \uC791\uC0AC \u00B7 \uD64D\uB09C\uD30C \uC791\uACE1',lyrics:['\uB098\uC758 \uC0B4\uB358 \uACE0\uD5A5\uC740 \uAF43\uD53C\uB294 \uC0B0\uACE8','\uBCF5\uC22D\uC544\uAF43 \uC0B4\uAD6C\uAF43 \uC544\uAE30\uC9C4\uB2EC\uB798','\uC6B8\uADEF\uBD88\uADEF \uAF43\uB300\uAD81 \uCC28\uB9AC\uC778 \uB3D9\uB124','\uADF8 \uC18D\uC5D0\uC11C \uB180\uB358 \uB54C\uAC00 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4','\uAF43\uB3D9\uB124 \uC0C8\uB3D9\uB124 \uB098\uC758 \uC606\uACE0\uD5A5','\uD30C\uB780 \uB4E4 \uB0A8\uCABD\uC5D0\uC11C \uBC14\uB78C\uC774 \uBD88\uBA74','\uB0B3\uAC00\uC5D0 \uC218\uC591\uBC84\uB4E4 \uCD94\uCDB0\uB294 \uB3D9\uB124','\uADF8 \uC18D\uC5D0\uC11C \uB180\uB358 \uB54C\uAC00 \uADF8\uB9BD\uC2B5\uB2C8\uB2E4']},
+  {title:'\uC544\uB9AC\uB791',icon:'\uD83C\uDFD4\uFE0F',desc:'\uC6B0\uB9AC\uB098\uB77C \uB300\uD45C \uBBFC\uC694',lyrics:['\uC544\uB9AC\uB791 \uC544\uB9AC\uB791 \uC544\uB77C\uB9AC\uC694','\uC544\uB9AC\uB791 \uACE0\uAC1C\uB85C \uB118\uC5B4\uAC04\uB2E4','\uB098\uB97C \uBC84\uB9AC\uACE0 \uAC00\uC2DC\uB294 \uB2D8\uC740','\uC2ED \uB9AC\uB3C4 \uBABB \uAC00\uC11C \uBC1C\uBCD1\uB09C\uB2E4','\uCCAD\uCC9C \uD558\uB298\uC5D0 \uC794\uBCC4\uB3C4 \uB9CE\uACE0','\uC6B0\uB9AC\uB124 \uAC00\uC2B4\uC5D0\uC11C \uC218\uC2EC\uB3C4 \uB9CE\uB2E4','\uC544\uB9AC\uB791 \uC544\uB9AC\uB791 \uC544\uB77C\uB9AC\uC694','\uC544\uB9AC\uB791 \uACE0\uAC1C\uB85C \uB118\uC5B4\uAC04\uB2E4']},
+  {title:'\uC624\uBE60 \uC0DD\uAC01',icon:'\uD83C\uDF19',desc:'\uCD5C\uC21C\uC560 \uC791\uC0AC \u00B7 \uBC15\uD0DC\uC900 \uC791\uACE1',lyrics:['\uB728\uBD81 \uB728\uBD81 \uB728\uBD81\uC0C8 \uB17C\uC5D0\uC11C \uC6B8\uACE0','\uBC44\uAF39 \uBC44\uAF39 \uBC44\uAF39\uC0C8 \uC219\uC5D0\uC11C \uC6B8 \uB54C','\uC6B0\uB9AC \uC624\uBE60 \uB9D0 \uD0C0\uACE0 \uC11C\uC6B8 \uAC00\uC2DC\uBA74','\uBE44\uB2E8 \uAD6C\uB450 \uC0AC\uAC00\uC9C0\uACE0 \uC624\uC2E0\uB2E4\uB354\uB2C8','\uAE30\uB7AD \uAE30\uB7AD \uAE30\uB7EC\uAE30 \uBD81\uC5D0\uC11C \uC624\uACE0','\uADC0\uB124\uB974\uB974 \uADC0\uB104\uB77C\uBBF8 \uC2AC\uD53C \uC6B8\uAC74\uB9CC','\uC11C\uC6B8 \uAC00\uC2E0 \uC624\uBE60\uB294 \uC18C\uC2DD\uB3C4 \uC5C6\uACE0','\uB098\uBB47\uC78E\uB9CC \uC6B0\uC218\uC218 \uB5A8\uC5B4\uC9D1\uB2C8\uB2E4']},
+  {title:'\uC5B4\uBA38\uB2C8\uC758 \uB9C8\uC74C',icon:'\uD83D\uDC99',desc:'\uC591\uC8FC\uB3D9 \uC791\uC0AC \u00B7 \uC774\uD761\uB82C \uC791\uACE1',lyrics:['\uB099\uC2E4 \uC81C \uAD34\uB85C\uC6C0 \uB2E4 \uC78A\uC73C\uC2DC\uACE0','\uAE30\uB97C \uC81C \uBC24\uB099\uC73C\uB85C \uC560\uC4F0\uB294 \uB9C8\uC74C','\uC9C4\uC790\uB9AC \uB9C8\uB978\uC790\uB9AC \uAC08\uC544 \uB220\uC2DC\uBA70','\uC190\uBC1C\uC774 \uB2E4 \uB2EB\uB3C4\uB85D \uACE0\uC0DD\uD558\uC2DC\uB124','\uD558\uB298 \uC544\uB798 \uADF8 \uBB34\uC5C7\uC774 \uB113\uB2E4 \uD558\uB9AC\uC694','\uC5B4\uBA38\uB2D8\uC758 \uD76C\uC0DD\uC740 \uAC00\uC774\uC5C6\uC5B4\uB77C']},
+  {title:'\uBD04\uB0A0\uC740 \uAC04\uB2E4',icon:'\uD83C\uDF3F',desc:'\uC190\uB85C\uC6D0 \uC791\uC0AC \u00B7 \uBC15\uC2DC\uCDA4 \uC791\uACE1',lyrics:['\uC5F0\uBD84\uD64D \uCE58\uB9C8\uAC00 \uBD04\uBC14\uB78C\uC5D0 \uD718\uB0A0\uB9AC\uB354\uB77C','\uC624\uB298\uB3C4 \uC637\uACE0\uB984 \uC528\uC5B4\uAC00\uBA70 \uACE0\uAC1C\uAE38 \uB118\uC5B4','\uC544 \uC544 \uBD04\uB0A0\uC740 \uAC04\uB2E4','\uBCF5\uC22D\uC544\uAF43 \uB5A8\uC5B4\uC9C0\uB294 \uACF3\uC5D0','\uC5F0\uBD84\uD64D \uCE58\uB9C8\uAC00 \uBD04\uBC14\uB78C\uC5D0 \uD718\uB0A0\uB9AC\uB354\uB77C']},
+  {title:'\uC12C\uC9D1 \uC544\uAE30',icon:'\uD83C\uDF0A',desc:'\uD55C\uC778\uD604 \uC791\uC0AC \u00B7 \uC774\uD761\uB82C \uC791\uACE1',lyrics:['\uC5C4\uB9C8\uAC00 \uC12C \uADF8\uB298\uC5D0 \uAD74 \uB530\uB7EC \uAC00\uBA74','\uC544\uAE30\uAC00 \uD63C\uC790 \uB0A8\uC544 \uC9D1\uC744 \uBCF4\uB2E4\uAC00','\uBC14\uB2E4\uAC00 \uBD88\uB7EC\uC8FC\uB294 \uC790\uC7A5 \uB178\uB798\uC5D0','\uD314 \uBCA0\uACE0 \uC2A4\uB974\uB974\uB974 \uC798\uC774 \uB4ED\uB2C8\uB2E4','\uC544\uAE30\uB294 \uC78A\uC744 \uC790\uACE0 \uC544\uAE30\uB294 \uC790\uACE0','\uBB3C\uC0C8\uB294 \uB0A0\uC544\uC640\uC11C \uC544\uAE30\uB97C \uBCF4\uACE0','\uD574\uB2D8\uB3C4 \uC544\uAE30 \uC5BC\uAD74 \uC5B4\uB8E8\uB9CC\uC9C0\uBA70','\uB108\uBB34\uB098 \uADC0\uC5EC\uC6CC\uC11C \uC0B4\uBA70\uC2DC \uC6C3\uC870']}
+];
+let curSong=null,lyIdx=0,lyTimer=null,singing=false;
+function renderSongs(){document.getElementById('songList').innerHTML=SONGS.map((s,i)=>`<div class="song-item" id="si${i}" data-i="${i}"><span class="song-icon">${s.icon}</span><div class="song-info"><div class="song-title">${s.title}</div><div class="song-desc">${s.desc}</div></div><button type="button" class="song-play-btn" data-i="${i}">🎤 부르기</button></div>`).join('');document.querySelectorAll('.song-play-btn').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openSong(+b.dataset.i);}));}
+function openSong(i){curSong=SONGS[i];lyIdx=0;singing=false;clearInterval(lyTimer);document.querySelectorAll('.song-item').forEach(x=>x.classList.remove('active-song'));document.getElementById('si'+i).classList.add('active-song');document.getElementById('lyricsTitle').textContent='🎥 '+curSong.title;document.getElementById('lyricsLine').textContent=curSong.lyrics[0];document.getElementById('lyricsArea').classList.add('active');document.getElementById('songCompletion').classList.remove('visible');speak(curSong.title+'를 부르겠습니다. 시작 버튼을 눌러주세요!');}
+function showLine(i){const l=curSong.lyrics[i];document.getElementById('lyricsLine').innerHTML='<span class="hl">'+l+'</span>';speak(l);}
+document.getElementById('btnLyricsPlay').addEventListener('click',()=>{if(!curSong||singing)return;singing=true;showLine(lyIdx);const generation=window.RoomActivity.generation;lyTimer=setInterval(()=>{if(generation!==window.RoomActivity.generation){clearInterval(lyTimer);singing=false;return;}lyIdx++;if(lyIdx>=curSong.lyrics.length){clearInterval(lyTimer);singing=false;document.getElementById('songCompletion').classList.add('visible');addStamp();return;}showLine(lyIdx);},3800);});
+document.getElementById('btnLyricsStop').addEventListener('click',()=>{clearInterval(lyTimer);singing=false;speechSynthesis.cancel();});
+document.getElementById('btnLyricsRepeat').addEventListener('click',()=>{clearInterval(lyTimer);singing=false;lyIdx=0;if(curSong)showLine(0);});
+document.getElementById('btnSongRetry').addEventListener('click',()=>{document.getElementById('songCompletion').classList.remove('visible');document.getElementById('lyricsArea').classList.remove('active');curSong=null;});
+renderSongs();
+// 이야기
+const STORIES=[
+  {e:'\uD83C\uDF3E',t:'추석과 송편',tx:'추석이면 온 가족이 모여 송편을 빚었어요. 쑥 송편, 깨 송편, 콩 송편... 가마솥에 솔잎 깔고 쪄내는 송편 냄새가 집 안 가득 퍼졌답니다. 둥근 보름달 아래 가족이 둘러앉아 나눠 먹던 그 시절이 눈에 선해요.',q:'추석에 함께 빚던 떡은?',o:['송편','떡볶이','식혜','부침개'],a:0},
+  {e:'\uD83C\uDFDE\uFE0F',t:'여름 냇가 물놀이',tx:'무더운 여름이면 동네 아이들이 냇가로 달려갔어요. 차가운 물에 발을 담그고, 물고기도 잡으려 하고, 물장구도 치며 온종일 놀았답니다. 해가 지도록 집에 들어가기 싫었던 그 여름이 그립습니다.',q:'여름에 아이들이 시원하게 놀던 곳은?',o:['냇가','도서관','백화점','지하철역'],a:0},
+  {e:'\uD83C\uDF86',t:'설날 세배와 세뱃돈',tx:'설날 아침 새 한복을 입고 세배를 드리면 세뱃돈을 주셨어요. 따뜻한 떡국 한 그릇을 비우면 한 살을 더 먹고, 온 가족이 윷놀이와 연날리기를 즐겼답니다.',q:'설날 아침에 먹는 음식은?',o:['떡국','비빔밥','냉면','된장찌개'],a:0},
+  {e:'\uD83C\uDF38',t:'봄 소풍과 도시락',tx:'봄이면 선생님과 소풍을 갔어요. 어머니가 주신 김밥과 삶은 달걀, 사이다... 친구들과 도시락을 나눠 먹는 그 맛은 세상에서 제일 맛있었지요. 벚꽃 잎이 휘날리는 언덕에서 뛰놀던 봄날이 그립습니다.',q:'봄 소풍에서 친구들과 나눠 먹던 것은?',o:['김밥 도시락','피자','햄버거','스파게티'],a:0},
+  {e:'\u2744\uFE0F',t:'겨울 고구마와 눈사람',tx:'겨울이면 연탄불이 집을 따뜻하게 해주었어요. 화롯가에서 고구마를 구워 먹고, 눈이 내리면 마당에서 눈사람을 만들며 눈싸움도 했답니다. 콧물이 흘러도 너무 행복했던 겨울 추억이 새록새록해요.',q:'겨울에 화로 옆에서 구워 먹던 것은?',o:['고구마','수박','딸기','포도'],a:0},
+  {e:'\uD83D\uDC04',t:'장터와 엿장수',tx:'오일장이 서는 날이면 온 동네가 북적였어요. 엿장수 아저씨가 가위를 찰각찰각 치며 달콤한 엿을 팔고, 풍물패 소리에 발이 절로 움직였지요. 고소하고 시끌벅적한 장터 풍경이 그립습니다.',q:'오일장에서 가위를 치며 달콤한 것을 팔던 사람은?',o:['엿장수','이발사','선생님','의사'],a:0}
+];
+let curSt=null;
+function renderStories(){document.getElementById('storyGrid').innerHTML=STORIES.map((s,i)=>`<div class="story-card" data-i="${i}"><span class="story-emoji">${s.e}</span><div class="story-card-title">${s.t}</div><div class="story-card-desc">눌러서 이야기 보기</div></div>`).join('');document.querySelectorAll('.story-card').forEach(c=>c.addEventListener('click',()=>openStory(+c.dataset.i)));}
+function openStory(i){curSt=STORIES[i];document.getElementById('storyGrid').style.display='none';document.getElementById('storyCompletion').classList.remove('visible');document.getElementById('storyContentBox').classList.add('active');document.getElementById('storyContentTitle').textContent=curSt.e+' '+curSt.t;document.getElementById('storyContentText').textContent=curSt.tx;document.getElementById('storyQuestionText').textContent='❓ '+curSt.q;const ab=document.getElementById('storyAnswerBtns');ab.innerHTML=curSt.o.map((op,j)=>`<button type="button" class="story-answer-btn" data-j="${j}">${op}</button>`).join('');document.querySelectorAll('.story-answer-btn').forEach(b=>b.addEventListener('click',()=>{const ch=+b.dataset.j;document.querySelectorAll('.story-answer-btn').forEach(x=>{x.disabled=true;if(+x.dataset.j===curSt.a)x.classList.add('correct');if(+x.dataset.j===ch&&ch!==curSt.a)x.classList.add('wrong');});const fb=document.getElementById('storyFeedback');if(ch===curSt.a){showFeedback(fb,'✅ 정답이에요! 훌륭하세요!','good');speak('정답이에요! 훌륭하세요!');roomActivityDelay(()=>{document.getElementById('storyCompletion').classList.add('visible');addStamp();},1500);}else{showFeedback(fb,'🤔 아쉬워요. 정답은 '+curSt.o[curSt.a]+'이에요!','retry');speak('아쉬워요. 정답은 '+curSt.o[curSt.a]+'이에요.');roomActivityDelay(()=>{document.querySelectorAll('.story-answer-btn').forEach(x=>{x.disabled=false;x.classList.remove('correct','wrong');});},1500);}}));document.getElementById('storyFeedback').className='feedback-banner';speak(curSt.tx);}
+document.getElementById('btnStoryBack').addEventListener('click',()=>{document.getElementById('storyContentBox').classList.remove('active');document.getElementById('storyGrid').style.display='grid';document.getElementById('storyFeedback').className='feedback-banner';speechSynthesis.cancel();});
+document.getElementById('btnStoryRetry').addEventListener('click',()=>{document.getElementById('storyCompletion').classList.remove('visible');document.getElementById('storyContentBox').classList.remove('active');document.getElementById('storyGrid').style.display='grid';speechSynthesis.cancel();});
+renderStories();
+// 색칠
+const TEMPLATES=[{l:'해바라기',e:'🌻'},{l:'나비',e:'🦋'},{l:'고향 집',e:'🏡'},{l:'봄꽃',e:'🌸'},{l:'물고기',e:'🐟'},{l:'별 하늘',e:'🌟'}];
+const COLORS=['#ef4444','#f97316','#eab308','#22c55e','#3b82f6','#8b5cf6','#ec4899','#6b7280','#a78bfa','#34d399','#fbbf24','#ffffff'];
+let blankCanvasData=null;let cv=null,cx=null,drawing=false,cc='#ef4444',bs=8,undo=[],ctpl=null;
+function renderGallery(){document.getElementById('coloringGallery').innerHTML=TEMPLATES.map((t,i)=>`<div class="coloring-thumb" data-i="${i}"><span class="coloring-thumb-emoji">${t.e}</span><div class="coloring-thumb-label">${t.l}</div></div>`).join('');document.querySelectorAll('.coloring-thumb').forEach(el=>el.addEventListener('click',()=>openColor(+el.dataset.i)));}
+function openColor(i){ctpl=TEMPLATES[i];document.getElementById('coloringGallery').style.display='none';document.getElementById('coloringWorkspace').classList.add('active');document.getElementById('colorCompletion').classList.remove('visible');cv=document.getElementById('coloringCanvas');cx=cv.getContext('2d');undo=[];const wp=cv.parentElement;const w=Math.min(wp.clientWidth||600,600);cv.width=w;cv.height=Math.round(w*0.7);drawTpl();blankCanvasData=cv.toDataURL();document.getElementById('paletteColors').innerHTML=COLORS.map((c,j)=>`<div class="palette-color${j===0?' sel':''}" data-c="${c}" style="background:${c}"></div>`).join('');document.querySelectorAll('.palette-color').forEach(el=>el.addEventListener('click',()=>{cc=el.dataset.c;document.querySelectorAll('.palette-color').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}));document.querySelectorAll('.brush-btn').forEach(b=>b.addEventListener('click',()=>{bs=+b.dataset.size;document.querySelectorAll('.brush-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));['mousedown','touchstart'].forEach(ev=>cv.addEventListener(ev,sd,{passive:false}));['mousemove','touchmove'].forEach(ev=>cv.addEventListener(ev,dd,{passive:false}));['mouseup','touchend','mouseleave'].forEach(ev=>cv.addEventListener(ev,ed));speak(ctpl.l+' 그림이에요. 예쁘게 색칠해 보세요!');}
+function drawTpl(){if(!cx||!ctpl)return;cx.clearRect(0,0,cv.width,cv.height);cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.font=Math.round(cv.height*0.55)+'px serif';cx.textAlign='center';cx.textBaseline='middle';cx.globalAlpha=0.18;cx.fillText(ctpl.e,cv.width/2,cv.height/2);cx.globalAlpha=1;cx.font='bold 20px sans-serif';cx.fillStyle='#3b82f6';cx.fillText(ctpl.l+' — 자유롭게 색칠하세요!',cv.width/2,24);}
+function gp(e){const r=cv.getBoundingClientRect();if(e.touches)return{x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top};return{x:e.clientX-r.left,y:e.clientY-r.top};}
+function sd(e){e.preventDefault();drawing=true;undo.push(cx.getImageData(0,0,cv.width,cv.height));const{x,y}=gp(e);cx.beginPath();cx.moveTo(x,y);cx.strokeStyle=cc;cx.lineWidth=bs;cx.lineCap='round';cx.lineJoin='round';}
+function dd(e){if(!drawing)return;e.preventDefault();const{x,y}=gp(e);cx.lineTo(x,y);cx.stroke();}
+function ed(){drawing=false;if(cx)cx.beginPath();}
+document.getElementById('btnColorUndo').addEventListener('click',()=>{if(!cx||!undo.length)return;cx.putImageData(undo.pop(),0,0);});
+document.getElementById('btnColorClear').addEventListener('click',()=>{if(!cx)return;undo.push(cx.getImageData(0,0,cv.width,cv.height));drawTpl();});
+document.getElementById('btnColorSave').addEventListener('click',()=>{if(!cv)return;if(cv.toDataURL()===blankCanvasData){document.getElementById('colorSaveStatus').textContent='색을 칠한 뒤 저장해요.';return;}document.getElementById('colorSaveStatus').textContent='';const a=document.createElement('a');a.download='보리취미방_'+ctpl.l+'_'+Date.now()+'.png';a.href=cv.toDataURL();a.click();document.getElementById('colorCompletion').classList.add('visible');addStamp();speak('그림을 저장했어요! 정말 예쁜 작품이에요!');});
+document.getElementById('btnColorBack').addEventListener('click',()=>{document.getElementById('coloringWorkspace').classList.remove('active');document.getElementById('coloringGallery').style.display='grid';document.getElementById('colorCompletion').classList.remove('visible');speechSynthesis.cancel();});
+document.getElementById('btnColorRetry').addEventListener('click',()=>{document.getElementById('colorCompletion').classList.remove('visible');document.getElementById('coloringWorkspace').classList.remove('active');document.getElementById('coloringGallery').style.display='grid';});
+renderGallery();
+// 수수께끼
+const RIDDLES=[
+  {q:'먹을수록 자꾸 배가 고픈 것은 무엇일까요?',h:'눈으로 즐기는 것이에요',a:'구경 (볼수록 더 보고 싶어집니다)'},
+  {q:'네 발로 왔다가 두 발로 가는 것은 무엇일까요?',h:'어릴 때는 기어다녔어요',a:'사람 — 아기 때 기고, 어른이 되어 두 발로 걸어요'},
+  {q:'빨간 집 안에 하얀 집, 하얀 집 안에 까만 것이 있어요. 이것은 무엇일까요?',h:'여름에 먹는 시원한 과일이에요',a:'수박 — 초록빛→하얀 물부분→빨간 과육→검은 씨'},
+  {q:'아침에는 네 발, 낮에는 두 발, 저녁에는 세 발인 것은 무엇일까요?',h:'그리스 신화에도 나오는 수수께끼예요',a:'사람 — 아기 때 기고, 어른은 두 발, 노인은 지팡이를 짚어요'},
+  {q:'세상에서 가장 빠른 것은 무엇일까요?',h:'눈 깜짝할 사이에 지나가요',a:'빛 또는 생각'},
+  {q:'아무리 먹어도 배부르지 않은 것은 무엇일까요?',h:'눈으로 즐기는 것이에요',a:'구경 또는 풍경'},
+  {q:'입이 있어도 말을 못 하고 손이 있어도 일을 못 하는 것은 무엇일까요?',h:'벽에 걸거나 책상 위에 놓는 것이에요',a:'그림 속 사람 (또는 인형)'},
+  {q:'온 세상을 돌아다녀도 자기 집을 떠나지 않는 것은 무엇일까요?',h:'혼자서도 집을 가지고 다녀요',a:'달팽이 또는 거북이 — 집을 등에 이고 다녀요'},
+  {q:'봄에는 꽃이 피고, 가을에는 단풍이 들지요. 변하지 않는 것은 무엇일까요?',h:'계절이 바뀌어도 항상 그 자리에 있어요',a:'나무 (줄기 또는 뿌리)'},
+  {q:'두드릴수록 더 소리가 나는 것은 무엇일까요?',h:'장단을 맞출 때 사용해요',a:'북 또는 장구'}
+];
+let ri=0,rs=0;const riddleSeen=new Set();
+function renderRiddle(){document.getElementById('btnRiddleAnswer').disabled=riddleSeen.has(ri);const r=RIDDLES[ri];document.getElementById('riddleNumber').textContent=(ri+1)+' / '+RIDDLES.length;document.getElementById('riddleQuestion').textContent=r.q;document.getElementById('riddleHintText').style.display='none';document.getElementById('riddleHintText').textContent='💡 힌트: '+r.h;document.getElementById('riddleAnswerBox').style.display=riddleSeen.has(ri)?'block':'none';document.getElementById('riddleAnswerBox').textContent='✅ 정답: '+r.a;document.getElementById('riddleFeedback').className='feedback-banner';document.getElementById('riddleProgress').textContent='확인한 수수께끼: '+rs+'개';speak('수수께끼예요. '+r.q);}
+document.getElementById('btnRiddleHint').addEventListener('click',()=>{const h=document.getElementById('riddleHintText');h.style.display=h.style.display==='block'?'none':'block';speak('힌트! '+RIDDLES[ri].h);});
+document.getElementById('btnRiddleAnswer').addEventListener('click',()=>{if(riddleSeen.has(ri))return;riddleSeen.add(ri);document.getElementById('btnRiddleAnswer').disabled=true;document.getElementById('riddleAnswerBox').style.display='block';rs=riddleSeen.size;document.getElementById('riddleProgress').textContent='확인한 수수께끼: '+rs+'개';showFeedback(document.getElementById('riddleFeedback'),'🎉 정말 잘 하셨어요!','good');speak('정답은 '+RIDDLES[ri].a+' 이었어요! 잘 하셨어요!');if(rs>=RIDDLES.length)roomActivityDelay(()=>{document.getElementById('riddleCompletion').classList.add('visible');addStamp();},1600);});
+document.getElementById('btnRiddlePrev').addEventListener('click',()=>{if(ri>0){ri--;renderRiddle();}});
+document.getElementById('btnRiddleNext').addEventListener('click',()=>{if(ri<RIDDLES.length-1){ri++;renderRiddle();}else{showFeedback(document.getElementById('riddleFeedback'),'아직 보지 않은 정답을 확인해요.','retry');}});
+document.getElementById('btnRiddleRetry').addEventListener('click',()=>{ri=0;rs=0;riddleSeen.clear();document.getElementById('riddleCompletion').classList.remove('visible');renderRiddle();});
+renderRiddle();
+
+// Reset only the current view; keep question banks, assets and stored stamps intact.
+window.startHobbyActivity=function(key){
+ const completion=document.getElementById(PANELS[key]).querySelector('.completion-banner');completion.classList.remove('visible');
+ if(key==='song'){clearInterval(lyTimer);singing=false;lyIdx=0;curSong=null;document.getElementById('lyricsArea').classList.remove('active');}
+ if(key==='story'){document.getElementById('storyContentBox').classList.remove('active');document.getElementById('storyGrid').style.display='grid';}
+ if(key==='color'){document.getElementById('coloringWorkspace').classList.remove('active');document.getElementById('coloringGallery').style.display='grid';document.getElementById('colorSaveStatus').textContent='';}
+ if(key==='riddle'){ri=0;rs=0;riddleSeen.clear();renderRiddle();}
+};
+window.addEventListener('load',()=>roomActivityDelay(()=>speak('보리의 취미방에 오신 것을 환영해요! 노래도 부르고, 옛날 이야기도 하고, 색칠도 하고, 수수께끼도 풀어보아요!'),600));
+})();
+</script>
+<script src="js/activity-bank.js?v=20260928"></script><script src="js/extended-activities.js?v=20260928-service"></script>
+<link rel="stylesheet" href="css/bori-media.css?v=20260928-media">
+<script>document.addEventListener('DOMContentLoaded',()=>{const activity=new URLSearchParams(location.search).get('activity');if(['story','color'].includes(activity))document.querySelector('[data-tab="'+activity+'"]').click();});</script>
+</body>
+</html>

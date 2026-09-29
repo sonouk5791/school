@@ -1,0 +1,18 @@
+{
+  "name": "digital-ai-school",
+  "version": "1.0.0",
+  "description": "디지털 AI 학교 - Vercel & GitHub 배포 프로젝트",
+  "scripts": {
+    "deploy": "bash deploy.sh",
+    "deploy:prod": "bash deploy.sh prod",
+    "deploy:preview": "bash deploy.sh preview",
+    "deploy:all": "bash deploy.sh all"
+  },
+  "keywords": [
+    "vercel",
+    "ai-school",
+    "deploy"
+  ],
+  "author": "",
+  "license": "ISC"
+}

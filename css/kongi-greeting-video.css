@@ -1,0 +1,15 @@
+.kongi-greeting-video{width:min(100%,640px);min-width:0;margin:auto;color:#493c30;word-break:keep-all;text-align:center}
+.kgv-stage{position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;border-radius:22px;background:#f8dfaa;border:1px solid #ead2a2}
+.kgv-stage img,.kgv-stage video{display:block;width:100%;height:100%;object-fit:contain;position:absolute;inset:0;animation:none!important;transform:none!important}
+.kgv-stage [hidden]{display:none!important}
+.kgv-touch{position:absolute;inset:0;border:0;background:transparent;cursor:pointer;width:100%;height:100%;border-radius:22px}
+.kgv-touch:focus-visible{outline:4px solid #216442;outline-offset:-5px}
+.kgv-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.kgv-actions button{min-height:56px;padding:12px 20px;border:2px solid #d7c6aa;border-radius:16px;background:#fff9ed;color:#493c30;font-family:inherit;font-weight:700;font-size:22px;line-height:1.4;cursor:pointer;word-break:keep-all}
+.kgv-actions .kgv-play{background:#356b43;color:white;border-color:#356b43}
+.kgv-line,.kgv-status{font-size:20px;line-height:1.6;margin:12px 0}
+.kgv-status{color:#675748}
+.hero-robot-wrapper:has([data-kongi-greeting]){width:100%;min-width:0}
+.hero-robot-wrapper:has([data-kongi-greeting])::before,.hero-robot-wrapper:has([data-kongi-greeting])::after{display:none}
+.hero-robot-wrapper [hidden]{display:none!important}
+@media(max-width:600px){.kgv-actions{flex-direction:column}.kgv-actions button{width:100%}.kgv-stage{border-radius:16px}}

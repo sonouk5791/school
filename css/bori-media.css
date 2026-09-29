@@ -1,0 +1,327 @@
+:root {
+  --media-ink: #352d24;
+  --media-border: #d9cdb9;
+  --media-blue: #eaf2fb;
+}
+* {
+  box-sizing: border-box;
+}
+body.bori-media-page {
+  margin: 0;
+  background: #fffaf0;
+  color: var(--media-ink);
+  font-family: system-ui, "Malgun Gothic", sans-serif;
+  font-size: 22px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+.bori-media-page header,
+.media-shell {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+.bori-media-page header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.bori-media-page a {
+  color: #234e7e;
+}
+.media-nav a,
+.media-actions a,
+.bori-media-page .media-panel a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 64px;
+  padding: 12px;
+}
+.bori-media-page h1 {
+  text-align: center;
+  font-size: 36px;
+}
+.media-subtitle {
+  text-align: center;
+}
+.media-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.media-card,
+.media-panel {
+  background: #fff;
+  border: 2px solid var(--media-border);
+  border-radius: 24px;
+  padding: 24px;
+}
+.media-card {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.media-card img {
+  width: 100px;
+  height: 80px;
+  object-fit: contain;
+}
+.bori-media-page button,
+.media-entry {
+  min-height: 80px;
+  font-size: 24px;
+  border: 2px solid var(--media-border);
+  border-radius: 18px;
+  background: #fff;
+  padding: 16px 24px;
+  color: var(--media-ink);
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1.5;
+  word-break: keep-all;
+  text-decoration: none;
+}
+.media-entry {
+  display: block;
+  text-align: center;
+  background: var(--media-blue);
+}
+.media-entry span {
+  display: block;
+}
+.media-entries {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+.bh-menu .bh-tab {
+  min-height: 80px;
+  font-size: 24px;
+}
+.media-visual:has(iframe) {
+  min-height: 200px;
+}
+body[data-activity-status="playing"] .media-entries,
+body[data-activity-status="completed"] .media-entries {
+  display: none;
+}
+.bori-media-page button:focus-visible,
+.bori-media-page a:focus-visible {
+  outline: 4px solid #355f92;
+  outline-offset: 4px;
+}
+.media-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 18px 0;
+}
+.media-actions button {
+  min-height: 64px;
+}
+.media-visual {
+  aspect-ratio: 16/9;
+  background: #f0eee8;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.media-visual video,
+.media-visual iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: 0;
+}
+.media-visual audio {
+  width: 90%;
+}
+.media-message {
+  padding: 20px;
+  border-radius: 16px;
+  background: #fff1d5;
+}
+.media-loading:before {
+  content: "◌";
+  display: inline-block;
+  margin-right: 12px;
+  animation: media-spin 2s linear infinite;
+}
+@keyframes media-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.media-guide {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin: 20px 0;
+}
+.media-guide img {
+  width: 130px;
+  height: 180px;
+  object-fit: contain;
+}
+.media-guide p {
+  background: var(--media-blue);
+  border-radius: 20px;
+  padding: 20px;
+  flex: 1;
+}
+.media-lyrics {
+  white-space: pre-line;
+  text-align: center;
+  font-size: clamp(32px, 3.2vw, 44px);
+  line-height: 1.5;
+  min-height: 3em;
+  padding: 20px;
+  background: #fff;
+  border-radius: 18px;
+}
+.media-shell progress {
+  width: 100%;
+  height: 24px;
+}
+.media-shell input,
+.media-shell select,
+.media-shell textarea {
+  font: inherit;
+  max-width: 100%;
+  min-height: 56px;
+}
+.media-shell label {
+  display: block;
+  margin: 12px 0;
+}
+.media-shell input[type="checkbox"] {
+  width: 28px;
+  height: 28px;
+  min-height: 0;
+  vertical-align: middle;
+  margin-right: 14px;
+}
+.media-shell fieldset {
+  border: 2px solid var(--media-border);
+  border-radius: 20px;
+}
+.media-focus .media-nav,
+.media-focus .media-page-title,
+.media-focus .media-subtitle {
+  display: none;
+}
+.media-focus .media-shell {
+  max-width: 1500px;
+}
+.media-shell [hidden] {
+  display: none !important;
+}
+.media-admin-cue {
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr auto;
+  gap: 8px;
+  margin: 10px 0;
+}
+.media-admin-list article {
+  display: block;
+}
+.media-admin-list img {
+  max-width: 120px;
+  max-height: 90px;
+  object-fit: contain;
+}
+.media-admin-record textarea {
+  width: 100%;
+}
+.media-form select,
+.media-form input:not([type="checkbox"]),
+.media-form textarea {
+  width: 100%;
+}
+.media-admin-cue button {
+  padding: 8px;
+}
+.media-shell:fullscreen {
+  background: #fffaf0;
+  overflow: auto;
+  padding: 24px;
+  width: 100%;
+  max-width: none;
+}
+@media (max-width: 700px) {
+  .media-cards,
+  .media-entries {
+    grid-template-columns: 1fr;
+  }
+  .media-guide img {
+    width: 90px;
+    height: 130px;
+  }
+  .media-shell {
+    padding: 12px;
+  }
+  .media-panel {
+    padding: 16px;
+  }
+  .media-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .media-actions button {
+    padding: 10px;
+    font-size: 22px;
+  }
+  .media-admin-cue {
+    grid-template-columns: 1fr 1fr;
+  }
+  .media-admin-cue textarea {
+    grid-column: 1/-1;
+  }
+  .bori-media-page h1 {
+    font-size: 30px;
+  }
+  .media-card {
+    padding: 18px;
+    flex-wrap: wrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .media-loading:before {
+    animation: none;
+  }
+}
+.bori-media-page.media-large {
+  font-size: 26px;
+}
+.bori-media-page.media-large button {
+  font-size: 28px;
+}
+.bori-media-page.media-large .media-lyrics {
+  font-size: 44px;
+}
+.bori-media-page.media-high-contrast,
+.media-high-contrast .media-shell:fullscreen {
+  background: #151515;
+  color: #fff;
+}
+.media-high-contrast button,
+.media-high-contrast .media-card,
+.media-high-contrast .media-panel,
+.media-high-contrast .media-message,
+.media-high-contrast .media-guide p,
+.media-high-contrast .media-lyrics {
+  background: #222;
+  color: #fff;
+  border-color: #fff;
+}
+.media-high-contrast a {
+  color: #fff !important;
+}

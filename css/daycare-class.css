@@ -1,0 +1,485 @@
+/* ==========================================================================
+   디지털 AI 학교 - 주간보호센터 60분 수업 진행 화면 스타일
+   (Daycare 60-Minute Class Runner Stylesheet)
+   ========================================================================== */
+
+:root {
+  --color-orange-main: #E65100;
+  --color-orange-soft: #FF9800;
+  --color-orange-light: #FFF3E0;
+  --color-green-main: #2E7D32;
+  --color-green-soft: #4CAF50;
+  --color-green-light: #E8F5E9;
+  --color-blue-main: #1565C0;
+  --color-blue-light: #E3F2FD;
+  --bg-cream: #FCF8F2;
+  --bg-white: #FFFFFF;
+  --color-text-dark: #2B231D;
+  --color-text-muted: #6B5B52;
+  --border-soft: #E8DDD1;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --shadow-card: 0 8px 24px rgba(60, 40, 20, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+  background-color: var(--bg-cream);
+  color: var(--color-text-dark);
+  line-height: 1.5;
+  font-size: 22px;
+  word-break: keep-all;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 상단 헤더 & 타이머 바 */
+.daycare-header {
+  background: var(--bg-white);
+  border-bottom: 2px solid var(--border-soft);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.daycare-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-header-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #F5EFEB;
+  color: var(--color-text-dark);
+  border: 2px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.daycare-session-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.badge-am {
+  background: #FFF3E0;
+  color: #E65100;
+  border: 2px solid #FFE0B2;
+}
+
+.badge-pm {
+  background: #E8F5E9;
+  color: #2E7D32;
+  border: 2px solid #C8E6C9;
+}
+
+/* 60분 안심 타이머 (초 카운트다운 배제, 분 단위 표시) */
+.daycare-timer-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FDF4E6;
+  border: 2px solid #F5DEB3;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #8D5400;
+}
+
+.daycare-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-ctrl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  min-height: 56px;
+  font-size: 22px;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 2px solid var(--border-soft);
+  background: var(--bg-white);
+  color: var(--color-text-dark);
+  transition: all 0.2s ease;
+}
+
+.btn-ctrl:hover {
+  background: #F5EFEB;
+}
+
+.btn-ctrl-pause {
+  background: #FFF8E1;
+  border-color: #FFE082;
+  color: #F57F17;
+}
+
+.btn-ctrl-break {
+  background: #E8F5E9;
+  border-color: #C8E6C9;
+  color: #2E7D32;
+}
+
+/* 메인 수업 영역 */
+.daycare-main {
+  flex: 1;
+  max-width: 1080px;
+  width: 100%;
+  margin: 20px auto 40px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-card {
+  background: var(--bg-white);
+  border: 3px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+.step-card.hidden {
+  display: none !important;
+}
+
+.step-indicator {
+  display: inline-block;
+  background: #FFF1E6;
+  color: var(--color-orange-main);
+  padding: 6px 20px;
+  border-radius: 30px;
+  font-size: 24px;
+  font-weight: 800;
+  border: 2px solid #FFE0B2;
+}
+
+.step-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--color-text-dark);
+  line-height: 1.4;
+}
+
+.step-subtext {
+  font-size: 24px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* 출석 체크 박스 그리드 */
+.attendance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 16px 0;
+}
+
+.attendance-item {
+  background: #FAF6F0;
+  border: 3px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.attendance-item:hover {
+  background: #FFF3E0;
+  border-color: #FFB74D;
+}
+
+.attendance-item input[type="checkbox"] {
+  width: 32px;
+  height: 32px;
+  accent-color: var(--color-orange-main);
+  cursor: pointer;
+}
+
+.attendance-name {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.attendance-meta {
+  font-size: 20px;
+  color: var(--color-text-muted);
+}
+
+/* 캐릭터 인사 및 가이드 영역 */
+.character-guide-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.character-guide-img {
+  width: 240px;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+}
+
+.character-speech-bubble {
+  background: #FFF9E6;
+  border: 3px solid #FFE082;
+  border-radius: 24px;
+  padding: 24px 32px;
+  max-width: 760px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #4E342E;
+  position: relative;
+  line-height: 1.5;
+}
+
+/* 어르신 전용 큰 액션 버튼 (70~90px) */
+.btn-primary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 540px;
+  min-height: 76px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #FF9800 0%, #E65100 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 40px;
+  font-size: 28px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(230, 81, 0, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(230, 81, 0, 0.45);
+}
+
+.btn-primary-action:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  min-height: 64px;
+  background: #FFFFFF;
+  color: var(--color-text-dark);
+  border: 3px solid var(--border-soft);
+  border-radius: 36px;
+  font-size: 24px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btn-secondary-action:hover {
+  background: #F5EFEB;
+}
+
+/* 활동 제어 바 (이전 / 다음) */
+.activity-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+/* 기분 선택 버튼 그리드 (Requirement 12) */
+.mood-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px 0;
+}
+
+.btn-mood-choice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 80px;
+  padding: 16px 24px;
+  background: #FFFFFF;
+  border: 3px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--color-text-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-mood-choice:hover {
+  border-color: var(--color-orange-main);
+  background: #FFF3E0;
+  transform: translateY(-2px);
+}
+
+.btn-mood-choice span.emoji {
+  font-size: 38px;
+}
+
+/* 완료 도장 & 축하 카드 */
+.stamp-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.flower-stamp {
+  font-size: 96px;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 대화상자 / 모달 */
+.resume-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 200;
+}
+
+.resume-content {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 3px solid var(--border-soft);
+  padding: 36px 32px;
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 인라인 활동 iframe 래퍼 */
+#act1Content,
+#act2Content {
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+}
+
+.activity-frame-wrap {
+  width: 100%;
+  min-height: 520px;
+  border: 2px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #FFFFFF;
+  margin: 12px 0;
+}
+
+.activity-frame {
+  display: block;
+  width: 100%;
+  height: 560px;
+  border: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 태블릿 (1024×768 / 768×1024) 및 모바일 반응형 (Requirement 31) */
+@media (max-width: 1024px) {
+  body {
+    font-size: 22px;
+  }
+  .daycare-header {
+    padding: 12px 16px;
+  }
+  .step-card {
+    padding: 28px 20px;
+  }
+  .step-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .daycare-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .daycare-nav-controls {
+    justify-content: center;
+  }
+  .btn-primary-action {
+    min-height: 72px;
+    font-size: 26px;
+  }
+}

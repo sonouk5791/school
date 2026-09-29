@@ -1,0 +1,24 @@
+.character-parts-rig{display:block;isolation:isolate;background:white;overflow:hidden;flex-shrink:0}
+.character-parts-rig .rig-breath{animation:character-breath var(--breath,5s) ease-in-out infinite;transform-box:view-box}
+.character-parts-rig [data-part="rightArm"],.character-parts-rig [data-part="rightHand"]{transform-box:view-box}
+.character-parts-rig[data-state="waving"] [data-part="rightArm"],.character-parts-rig[data-state="exercising"] [data-part="rightArm"]{animation:character-wave 1.8s ease-in-out 1}
+.character-parts-rig[data-state="waving"] [data-part="rightHand"],.character-parts-rig[data-state="exercising"] [data-part="rightHand"]{animation:character-hand 1.8s ease-in-out 1}
+.character-parts-rig[data-state="talking"][data-character="nabi"] [data-part="rightArm"]{transform:rotate(-2deg)}
+.character-parts-rig[data-state="selected"] .rig-breath{transform:translateY(-2px);animation:none}
+.rig-eyelids,.rig-mouth,.rig-mouth-a,.rig-mouth-o,.rig-mouth-closed{opacity:0}
+.is-blinking .rig-eyelids{opacity:1}
+[data-mouth="closed"] .rig-mouth,[data-mouth="a"] .rig-mouth,[data-mouth="o"] .rig-mouth{opacity:1}
+[data-mouth="closed"] .rig-mouth-closed,[data-mouth="a"] .rig-mouth-a,[data-mouth="o"] .rig-mouth-o{opacity:1}
+.room-character-rig{width:clamp(160px,24vw,220px);height:auto;aspect-ratio:344/576;max-width:100%;margin:0 auto;border-radius:24px}
+@keyframes character-breath{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes character-wave{0%,100%{transform:rotate(0)}30%,70%{transform:rotate(var(--wave-angle))}50%{transform:rotate(0)}}
+@keyframes character-hand{0%,100%{transform:rotate(0)}35%,75%{transform:rotate(3deg)}55%{transform:rotate(-2deg)}}
+.character-motion-reduced .character-parts-rig *{animation:none!important;transform:none!important}
+.character-motion-reduced .rig-mouth,.character-motion-reduced .rig-eyelids{display:none}
+@media(prefers-reduced-motion:reduce){.character-parts-rig *{animation:none!important;transform:none!important}.rig-mouth,.rig-eyelids{display:none}}
+/* Global senior-theme transitions must not blend two eye/mouth drawings. */
+.character-parts-rig,.character-parts-rig *{transition:none!important}
+.character-parts-rig[data-character="kongi"][data-state="exercising"]{--wave-angle:9deg}
+.character-parts-rig[data-character="tori"][data-state="exercising"] [data-part="rightHand"]{animation:character-hand 1.8s ease-in-out 1}
+.character-parts-rig[data-character="nabi"][data-state="exercising"]{--wave-angle:-3deg}
+.character-parts-rig[data-character="bori"] [data-part="rightArm"],.character-parts-rig[data-character="bori"] [data-part="rightHand"]{animation-duration:2.4s}
