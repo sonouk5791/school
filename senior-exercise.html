@@ -92,59 +92,13 @@
       </div>
     </section>
 
-    <!-- [다른 활동] 3대 운동 선택 카드 영역 -->
-    <section class="se-other-exercises-section" aria-label="다른 운동 선택" style="max-width: 900px; margin: 0 auto 40px; padding: 0 16px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="font-size: 22px; font-weight: 800; color: #1e4519;">🏃 다른 운동도 해볼까요?</h3>
-        <span style="font-size: 16px; color: #555;">(최대 3개 추천)</span>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
-        <!-- 1. 5분 쉬운 체조 -->
-        <article class="se-other-card" style="background: #ffffff; border: 2px solid #b7deb0; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
-          <div>
-            <span style="background: #e8f5e9; color: #2e6628; padding: 4px 10px; border-radius: 10px; font-size: 14px; font-weight: 700;">🌸 5분 쉬운 체조</span>
-            <h4 style="font-size: 20px; font-weight: 800; color: #1e4519; margin: 10px 0 6px;">가볍게 몸 풀기</h4>
-            <p style="font-size: 16px; color: #435b3e; line-height: 1.5;">목과 어깨, 손목을 부드럽게 풀어주는 가벼운 준비 운동입니다.</p>
-          </div>
-          <button type="button" id="btnLaunch5Min" style="margin-top: 14px; min-height: 50px; font-size: 17px; font-weight: 800; background: #2e6628; color: #fff; border: none; border-radius: 12px; cursor: pointer;">
-            5분 체조 시작 ▶
-          </button>
-        </article>
-
-        <!-- 2. 10분 음악체조 -->
-        <article class="se-other-card" style="background: #ffffff; border: 2px solid #b7deb0; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
-          <div>
-            <span style="background: #e8f5e9; color: #2e6628; padding: 4px 10px; border-radius: 10px; font-size: 14px; font-weight: 700;">🎵 10분 음악체조</span>
-            <h4 style="font-size: 20px; font-weight: 800; color: #1e4519; margin: 10px 0 6px;">10단계 AI 의자체조</h4>
-            <p style="font-size: 16px; color: #435b3e; line-height: 1.5;">박수치기, 무릎 올리기 등 10개 연속 동작을 애니메이션과 함께 따라해요.</p>
-          </div>
-          <button type="button" id="btnLaunch10Min" class="se-btn-start-10min" style="margin-top: 14px; min-height: 50px; font-size: 17px; font-weight: 800; background: #2e6628; color: #fff; border: none; border-radius: 12px; cursor: pointer;">
-            10분 체조 시작 ▶
-          </button>
-          <button id="btnStart" type="button" style="display:none;" aria-hidden="true">체조 시작</button>
-        </article>
-
-        <!-- 3. 20분 건강체조 -->
-        <article class="se-other-card" style="background: #ffffff; border: 2px solid #b7deb0; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
-          <div>
-            <span style="background: #e8f5e9; color: #2e6628; padding: 4px 10px; border-radius: 10px; font-size: 14px; font-weight: 700;">🏃 20분 건강체조</span>
-            <h4 style="font-size: 20px; font-weight: 800; color: #1e4519; margin: 10px 0 6px;">전신 활력 체조</h4>
-            <p style="font-size: 16px; color: #435b3e; line-height: 1.5;">네 친구 모두와 함께 충분히 몸을 움직이는 전신 건강 체조입니다.</p>
-          </div>
-          <a href="exercise-20min.html" style="margin-top: 14px; min-height: 50px; font-size: 17px; font-weight: 800; background: #2e6628; color: #fff; border: none; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
-            20분 체조 시작 ▶
-          </a>
-        </article>
-      </div>
-
-      <!-- 마을로 돌아가기 큰 버튼 -->
-      <div style="margin-top: 28px; text-align: center;">
-        <a href="index.html" class="service-btn-village" style="display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 12px 32px; font-size: 20px; font-weight: 900; background: #fdf6ec; color: #8c4a00; border: 2px solid #ffd8a8; border-radius: 16px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
-          🏡 친구들 마을로 돌아가기
-        </a>
-      </div>
-    </section>
+    <!-- 마을로 돌아가기 큰 버튼 -->
+    <div style="margin: 0 auto 36px; max-width: 900px; text-align: center; padding: 0 16px;">
+      <a href="index.html" class="service-btn-village" onclick="sessionStorage.setItem('school_home_intro_played','true')" style="display: inline-flex; align-items: center; justify-content: center; min-height: 58px; padding: 14px 36px; font-size: 20px; font-weight: 900; background: #fdf6ec; color: #8c4a00; border: 2px solid #ffd8a8; border-radius: 16px; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
+        🏡 친구들 마을로 돌아가기
+      </a>
+      <button id="btnStart" type="button" style="display:none;" aria-hidden="true">체조 시작</button>
+    </div>
 
     <!-- [상태 1] 10단계 연속 체조 준비 화면 (10분 음악체조 선택 시 진입) -->
     <section id="viewReady" class="se-state-section se-ready-section" style="display: none;" aria-label="10단계 체조 시작 안내">

@@ -47,7 +47,7 @@ console.log('✅ 부정적 표현 배제 및 긍정 격려 원칙 검증 완료'
 // 5. senior-exercise.html 콩이 운동 선택지 검증
 const exercisePath = path.join(__dirname, '../senior-exercise.html');
 const exerciseContent = fs.readFileSync(exercisePath, 'utf8');
-assert.ok(exerciseContent.includes('btnStart') && exerciseContent.includes('exercise-20min.html'), '콩이 운동 선택지 확인');
+assert.ok(exerciseContent.includes('c8c9zLy8jWM') || exerciseContent.includes('btnStart'), '콩이 운동 대표 영상/선택지 확인');
 console.log('✅ 콩이 운동 미션 선택지 검증 완료');
 
 console.log('🎉 캐릭터 선택형 게임 수업 시스템 통합 검증이 완벽하게 통과되었습니다!');

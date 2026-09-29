@@ -12,9 +12,6 @@ function runTest() {
   assert(kongiHtml.includes('오늘도 함께 몸을 움직여볼까요?'), '콩이 인사 대사 일치');
   assert(kongiHtml.includes('https://www.youtube.com/embed/c8c9zLy8jWM'), '콩이 대표 YouTube 임베드 URL 일치');
   assert(kongiHtml.includes('c8c9zLy8jWM'), 'YouTube 영상 ID c8c9zLy8jWM 일치');
-  assert(kongiHtml.includes('🌸 5분 쉬운 체조'), '5분 쉬운 체조 옵션 존재');
-  assert(kongiHtml.includes('🎵 10분 음악체조'), '10분 음악체조 옵션 존재');
-  assert(kongiHtml.includes('🏃 20분 건강체조'), '20분 건강체조 옵션 존재');
   assert(kongiHtml.includes('ytFallbackCard'), '영상 로드 실패 fallback 카드 존재');
   assert(kongiHtml.includes('🏡 친구들 마을로 돌아가기'), '마을로 돌아가기 버튼 일치');
 
