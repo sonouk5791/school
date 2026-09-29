@@ -145,3 +145,110 @@ html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introd
  .hw-media{width:95%}
 }
 @media(prefers-reduced-motion:reduce){.hw-panel{scroll-behavior:auto}}
+
+/* ── Character Choice Game Flow Styles (Daily Rec & Activity Board) ── */
+.hw-daily-rec-banner {
+  max-width: 860px;
+  margin: 12px auto 16px;
+  padding: 14px 22px;
+  background: #fffdf2;
+  border: 2px solid #e2cf94;
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(168, 142, 70, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 20px;
+  color: #3b3024;
+  line-height: 1.4;
+  text-align: center;
+}
+.hw-daily-rec-badge {
+  background: #fef08a;
+  color: #854d0e;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid #facc15;
+  font-size: 18px;
+}
+.hw-daily-rec-name {
+  font-size: 22px;
+  font-weight: 900;
+  color: #27492c;
+}
+.hw-daily-rec-line {
+  font-style: italic;
+  color: #4a3e31;
+}
+.hw-daily-rec-note {
+  font-size: 17px;
+  color: #6b5e4f;
+  background: #f1f5e8;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.hw-today-board {
+  max-width: 900px;
+  margin: 20px auto 10px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  border: 2px solid #cfdcc0;
+  border-radius: 24px;
+  box-shadow: 0 6px 18px rgba(78, 99, 60, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.hw-today-board-title {
+  font-size: 21px;
+  font-weight: 900;
+  color: #2b4c2b;
+}
+.hw-today-board-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.hw-today-chip {
+  min-height: 48px;
+  padding: 8px 18px;
+  border-radius: 14px;
+  background: #f4f6ee;
+  border: 2px solid #d4dec4;
+  color: #555044;
+  font-size: 19px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.hw-today-chip.is-done {
+  background: #e8f5e9;
+  border-color: #81c784;
+  color: #1b5e20;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+.village-completed-badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 4;
+  font-size: 32px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+  animation: badge-pop 0.6s ease-out;
+}
+@keyframes badge-pop {
+  0% { transform: scale(0.6) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+

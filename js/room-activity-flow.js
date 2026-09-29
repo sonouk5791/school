@@ -4,9 +4,9 @@ window.roomActivityDelay=(callback,ms)=>{const token=window.RoomActivity.generat
 document.addEventListener('DOMContentLoaded',()=>{
  const s=window.RoomActivity;
  const configs={
-  tori:{menu:'.tp-game-menu',tab:'[data-game]',panel:'.game-panel',hero:'.tp-hero',name:'🐰 토리',greeting:'오늘은 뭐하고 놀까요?',labels:{match:'같은 그림 찾기',color:'색깔 놀이',season:'계절 놀이',animal:'동물 맞히기'},starts:{match:'startMatchGame',color:'startColorGame',season:'startSeasonGame',animal:'startAnimalGame'}},
-  nabi:{menu:'.nl-menu',tab:'[data-learn]',panel:'.learn-panel',hero:'.nl-hero',name:'🐱 나비',greeting:'천천히 같이 생각해볼까요?',labels:{today:'날짜',season:'계절',number:'숫자',proverb:'속담'},starts:{today:'startDayLearn',season:'startSeasonLearn',proverb:'startProvLearn',number:'startNumLearn'}},
-  bori:{menu:'.bh-menu',tab:'[data-tab]',panel:'.hobby-panel',hero:'.bh-hero',name:'🐻 보리',greeting:'오늘은 무엇을 하며 즐겨볼까요?',labels:{song:'음악',story:'추억 이야기',color:'색칠',riddle:'수수께끼'},starts:{}}
+  tori:{menu:'.tp-game-menu',tab:'[data-game]',panel:'.game-panel',hero:'.tp-hero',name:'🐰 토리',greeting:'오늘은 어떤 놀이를 해볼까요?',labels:{match:'같은 그림 찾기',color:'색깔 놀이',season:'계절 놀이',animal:'동물 맞히기'},starts:{match:'startMatchGame',color:'startColorGame',season:'startSeasonGame',animal:'startAnimalGame'}},
+  nabi:{menu:'.nl-menu',tab:'[data-learn]',panel:'.learn-panel',hero:'.nl-hero',name:'🐱 나비',greeting:'천천히 함께 생각해봐요.',labels:{today:'날짜',season:'계절',number:'숫자',proverb:'속담'},starts:{today:'startDayLearn',season:'startSeasonLearn',proverb:'startProvLearn',number:'startNumLearn'}},
+  bori:{menu:'.bh-menu',tab:'[data-tab]',panel:'.hobby-panel',hero:'.bh-hero',name:'🐻 보리',greeting:'노래도 듣고 추억 이야기도 해봐요.',labels:{song:'음악',story:'추억 이야기',color:'색칠',riddle:'수수께끼'},starts:{}}
  };
  const id=document.body.dataset.activityRoom,c=configs[id];if(!c)return;
  const meta=window.SchoolServiceConfig?.[id],embedded=window!==parent;
@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
  const key=t=>t.dataset.game||t.dataset.learn||t.dataset.tab;
  Object.entries(c.labels).forEach(([value,label])=>{const tab=tabs.find(t=>key(t)===value);tab.textContent=label;menu.append(tab);if(meta){const info=meta.activities[value];tab.classList.add('service-activity-card');tab.replaceChildren();const img=document.createElement('img');img.src=meta.image;img.alt='';img.loading='lazy';img.onerror=()=>img.hidden=true;const title=document.createElement('strong');title.textContent=label;const description=document.createElement('span');description.textContent=info[1];const time=document.createElement('span');time.textContent=info[2]+' · 쉬움';const start=document.createElement('span');start.className='service-start';start.textContent='준비하기';tab.append(img,title,description,time,start);if(value===Object.keys(c.labels)[new Date().getDay()%Object.keys(c.labels).length]){const badge=document.createElement('span');badge.className='service-recommend';badge.textContent='오늘의 추천';tab.prepend(badge);}}});
- // Secondary destinations stay available without competing with four choices.
  const extras=document.createElement('details');extras.className='room-selection-extras';extras.innerHTML='<summary>내 방과 활동 기록</summary>';
  menu.after(extras);
  document.querySelectorAll(`${c.menu}>a,.stamp-row`).forEach(node=>extras.append(node));
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded',()=>{
    toolbar.querySelector('h2').tabIndex=-1;toolbar.querySelector('h2').focus();window.scrollTo(0,0);
  }
  tabs.forEach(tab=>tab.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();begin(key(tab));},true));
- // Restart buttons inside a problem also invalidate callbacks from the old round.
  Object.values(c.starts).forEach(name=>{const original=window[name];window[name]=(...args)=>{s.generation++;return original(...args);};});
  panels.forEach(panel=>{
    const done=panel.querySelector('.stamp-area,.completion-banner');if(!done)return;
@@ -53,7 +51,22 @@ document.addEventListener('DOMContentLoaded',()=>{
    if(retry){retry.textContent='다시 하기';retry.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();begin(s.selectedActivity,true);},true);}
    done.querySelectorAll('a[href="index.html"]').forEach(a=>a.hidden=true);
    const other=document.createElement('button');other.type='button';other.textContent='다른 활동 고르기';other.className='room-other-activity';other.onclick=back;done.append(other);
-   new MutationObserver(()=>{if(panel!==panelFor(s.selectedActivity||'')||s.activityStatus==='select')return;const complete=done.classList.contains('show')||done.classList.contains('visible');const status=complete?'completed':'playing';if(s.activityStatus!==status){s.activityStatus=status;paint();if(complete){window.ServiceActivity?.complete(done);s.generation++;done.tabIndex=-1;done.focus();done.scrollIntoView({block:'start'});}}}).observe(done,{attributes:true,attributeFilter:['class']});
+   new MutationObserver(()=>{
+     if(panel!==panelFor(s.selectedActivity||'')||s.activityStatus==='select')return;
+     const complete=done.classList.contains('show')||done.classList.contains('visible');
+     const status=complete?'completed':'playing';
+     if(s.activityStatus!==status){
+       s.activityStatus=status;
+       paint();
+       if(complete){
+         window.ServiceActivity?.complete(done);
+         s.generation++;
+         done.tabIndex=-1;
+         done.focus();
+         done.scrollIntoView({block:'start'});
+       }
+     }
+   }).observe(done,{attributes:true,attributeFilter:['class']});
  });
  window.addEventListener('pagehide',()=>{stop();s.generation++;});
  paint();
