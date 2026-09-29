@@ -49,147 +49,125 @@ html[data-home-flow="video"] .character-home-hero #friendRooms .friend-village {
   isolation: isolate;
   width: 100%;
   aspect-ratio: 16 / 9;
-  max-height: calc(100vh - 140px);
-  margin: 10px auto 16px;
-  background: url("../assets/images/lilac-village-illustration.jpg") center center / cover no-repeat;
-  border: 4px solid #a8c48e;
-  border-radius: 36px;
-  box-shadow: 0 20px 45px rgba(45, 65, 30, 0.3), inset 0 2px 6px rgba(255, 255, 255, 0.6);
+  max-height: calc(100vh - 110px);
+  margin: 6px auto;
+  background: url("../assets/images/lilac-village-illustration.jpg") center center / contain no-repeat;
+  border: 4px solid #9bbd7e;
+  border-radius: 32px;
+  box-shadow: 0 16px 40px rgba(35, 55, 25, 0.28);
   overflow: hidden;
   padding: 0;
   display: block;
 }
 
-/* Background Canvas Overlay */
-.village-art-canvas {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Central Lilac Shelter Clickable Hotspot */
-.village-rest {
-  position: absolute;
-  top: 52%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 22%;
-  height: 24%;
-  z-index: 5;
-  cursor: pointer;
-  pointer-events: auto;
-  border-radius: 50%;
-}
-
-/* 4 Character House Absolute Positioning (16:9 Grid Coordinates) */
+/* 4 Character House Transparent Interactive Hotspots (16:9 Pinpoint Coordinates) */
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend {
   position: absolute;
   z-index: 4;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  text-align: center;
   border: none;
   background: transparent!important;
   box-shadow: none;
   padding: 0;
   margin: 0;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  width: 23%;
-  height: 42%;
+  border-radius: 28px;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend:hover {
-  transform: translateY(-4px) scale(1.03);
+  background: rgba(255, 255, 255, 0.18)!important;
+  box-shadow: 0 0 20px rgba(255, 245, 180, 0.4);
+}
+html[data-home-flow="video"] #friendRooms .friend-village .home-friend.is-introducing {
+  box-shadow: 0 0 0 4px #55a84e, 0 0 25px rgba(85, 168, 78, 0.6);
+  background: rgba(255, 255, 255, 0.25)!important;
 }
 
-/* Kongi (Top-Left) */
+/* Kongi (Top-Left: Exercise House & Button) */
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend-kongi {
-  left: 17%;
+  left: 14%;
   top: 8%;
+  width: 25%;
+  height: 38%;
 }
 
-/* Tori (Top-Right) */
+/* Tori (Top-Right: Play House & Button) */
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend-tori {
-  right: 17%;
+  right: 14%;
   top: 8%;
+  width: 25%;
+  height: 38%;
 }
 
-/* Nabi (Bottom-Left) */
+/* Nabi (Bottom-Left: Study House & Button) */
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend-nabi {
-  left: 17%;
-  bottom: 4%;
+  left: 14%;
+  bottom: 6%;
+  width: 25%;
+  height: 38%;
 }
 
-/* Bori (Bottom-Right) */
+/* Bori (Bottom-Right: Hobby House & Button) */
 html[data-home-flow="video"] #friendRooms .friend-village .home-friend-bori {
-  right: 17%;
-  bottom: 4%;
+  right: 14%;
+  bottom: 6%;
+  width: 25%;
+  height: 38%;
 }
 
-/* Character Sprite Container */
-.village-scene {
-  position: relative;
-  width: 100%;
-  height: 52%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+/* Transparent Overlay Button inside hotspot */
+.village-copy,
+.village-scene,
+.village-message,
+.hw-speaking-label {
+  display: none!important;
 }
-html[data-home-flow="video"] #friendRooms .friend-village .home-friend-picture {
+
+.village-copy .hw-enter,
+.home-friend .hw-enter {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.22));
-  background: transparent;
-  border-radius: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
-/* Copy & Buttons inside House */
-.village-copy {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 2px;
-  padding: 0;
+/* Central Lilac Shelter Hotspot */
+.village-rest {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24%;
+  height: 28%;
+  z-index: 5;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 50%;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
-html[data-home-flow="video"] #friendRooms .village-copy strong,
-.village-copy .hw-room-name,
-.village-description {
-  display: none; /* Already gorgeously illustrated in the 16:9 artwork */
+.village-rest:hover {
+  background: rgba(220, 190, 250, 0.22);
+  box-shadow: 0 0 25px rgba(180, 130, 230, 0.5);
 }
 
-.friend-village .village-message {
-  display: none;
+/* Vegetable Garden Hotspot */
+.village-garden-hotspot {
+  position: absolute;
+  left: 1%;
+  bottom: 8%;
+  width: 13%;
+  height: 24%;
+  z-index: 5;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 24px;
+}
+.village-garden-hotspot:hover {
+  background: rgba(140, 200, 100, 0.22);
+  box-shadow: 0 0 20px rgba(120, 180, 80, 0.4);
 }
 
-/* Character Entrance Buttons */
-.village-copy .hw-enter {
-  min-height: 44px;
-  padding: 6px 18px;
-  border-radius: 20px;
-  font-size: 19px!important;
-  font-weight: 900;
-  color: #ffffff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  max-width: 90%;
-  white-space: nowrap;
-  letter-spacing: -0.3px;
-  margin-top: 4px;
-  transition: transform 0.15s ease, filter 0.15s ease;
-}
-.village-copy .hw-enter:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
-}
 
 /* Color Coding matching illustration */
 .btn-kongi {

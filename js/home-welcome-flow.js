@@ -31,22 +31,9 @@ document.addEventListener('DOMContentLoaded',()=>{
  rooms.append(tools);if(hasVisited()||history.state?.schoolHomeFlow==='rooms')intro.querySelector('video').autoplay=false;hero.append(intro,rooms);
  const video=intro.querySelector('video'),poster=intro.querySelector('img'),status=intro.querySelector('[role=status]');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');let phase='greeting',transition=0,playRevision=0,loadTimer,muted=true,ownAudio=false,sequence=null,userPaused=false;
- const cards=Object.keys(names).map(id=>{const card=grid.querySelector('.home-friend-'+id);card.dataset.room=id;card.setAttribute('aria-label',`${names[id]}집 ${roles[id]} 들어가기`);card.querySelector(':scope > span')?.remove();
-  const role=document.createElement('span');role.className='hw-room-name';role.textContent=roles[id];const line=document.createElement('p');line.className='hw-intro';line.textContent=lines[id];const label=document.createElement('span');label.className='hw-speaking-label';label.setAttribute('aria-hidden','true');const enter=document.createElement('span');enter.className='hw-enter btn-'+id;enter.innerHTML=`${names[id]}집 들어가기 <span class="enter-arrow">›</span>`;card.append(role,line,label,enter);
-  // Reuse the original sheet and existing hand coordinates; never move the full PNG.
-  const svg=card.querySelector('svg'),d=window.CharacterRigData?.[id],original=svg?.querySelector('image');
-  if(original&&d){const ns='http://www.w3.org/2000/svg',defs=svg.querySelector('defs'),mask=document.createElementNS(ns,'mask'),clip=document.createElementNS(ns,'clipPath');mask.id='home-hand-mask-'+id;mask.setAttribute('maskUnits','userSpaceOnUse');mask.setAttribute('x','0');mask.setAttribute('y','0');mask.setAttribute('width','1376');mask.setAttribute('height','768');mask.innerHTML=`<rect width="1376" height="768" fill="white"/><path d="${d.hand}" fill="black"/>`;clip.id='home-hand-clip-'+id;const path=document.createElementNS(ns,'path');path.setAttribute('d',d.hand);clip.append(path);defs.append(mask,clip);const hand=document.createElementNS(ns,'g'),crop=document.createElementNS(ns,'g');hand.dataset.homeWave=id;hand.style.transformOrigin=d.wrist[0]+'px '+d.wrist[1]+'px';crop.setAttribute('clip-path',`url(#${clip.id})`);crop.append(original.cloneNode(true));hand.append(crop);original.setAttribute('mask',`url(#${mask.id})`);svg.append(hand);}
-
-  // Reuse the existing outline to hide only the sheet background, preserving white fur and clothing.
-  const contour=window.HeroContours?.[id];
-  if(svg&&contour){const ns='http://www.w3.org/2000/svg',clip=document.createElementNS(ns,'clipPath'),path=document.createElementNS(ns,'path');clip.id='village-outline-'+id;path.setAttribute('d',contour.path);clip.append(path);svg.querySelector('defs').append(clip);svg.querySelectorAll('image').forEach(img=>img.setAttribute('clip-path',`url(#${clip.id})`));}
-  const scene=document.createElement('div');scene.className='village-scene';scene.setAttribute('aria-hidden','true');
-  scene.classList.add('yard-'+id);
-  const picture=card.querySelector('.home-friend-picture');if(picture)scene.append(picture);
-  const copy=document.createElement('div');copy.className='village-copy';const title=card.querySelector('strong');title.textContent=names[id]+'집';
-  const description=document.createElement('p');description.className='village-description';description.textContent=descriptions[id];
-  enter.setAttribute('aria-label',names[id]+'집 · '+roles[id]+' 들어가기');
-  const message=document.createElement('div');message.className='village-message';message.append(description,line);copy.append(title,role,message,enter);card.replaceChildren(scene,copy,label);
+ const cards=Object.keys(names).map(id=>{const card=grid.querySelector('.home-friend-'+id);card.dataset.room=id;card.setAttribute('aria-label',`${names[id]}집 ${roles[id]} 들어가기`);card.replaceChildren();
+  const enterBtn=document.createElement('span');enterBtn.className='hw-enter btn-'+id;enterBtn.setAttribute('title',`${names[id]}집 들어가기`);
+  card.appendChild(enterBtn);
   card.addEventListener('click',()=>{remember('rooms');stopIntroductions();stopVideo();});return card;});
  window.VillageLandscape?.mount(grid);
  window.VillageRPG?.init(grid);
