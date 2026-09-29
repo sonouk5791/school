@@ -33,7 +33,8 @@ document.addEventListener('DOMContentLoaded',()=>{
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');let phase='greeting',transition=0,playRevision=0,loadTimer,muted=true,ownAudio=false,sequence=null,userPaused=false;
  const cards=Object.keys(names).map(id=>{const card=grid.querySelector('.home-friend-'+id);card.dataset.room=id;card.setAttribute('aria-label',`${names[id]}집 ${roles[id]} 들어가기`);card.replaceChildren();
   const enterBtn=document.createElement('span');enterBtn.className='hw-enter btn-'+id;enterBtn.setAttribute('title',`${names[id]}집 들어가기`);
-  card.appendChild(enterBtn);
+  const speakLbl=document.createElement('span');speakLbl.className='hw-speaking-label';speakLbl.setAttribute('aria-live','polite');
+  card.append(enterBtn,speakLbl);
   card.addEventListener('click',()=>{remember('rooms');stopIntroductions();stopVideo();});return card;});
  window.VillageLandscape?.mount(grid);
  window.VillageRPG?.init(grid);
@@ -43,17 +44,17 @@ document.addEventListener('DOMContentLoaded',()=>{
  function syncSound(){video.muted=muted||globalMuted();syncControls();}
  function syncControls(){const pause=intro.querySelector('#homeGreetingPause'),audio=intro.querySelector('#homeGreetingAudioToggle');pause.disabled=audio.disabled=video.hidden;pause.textContent=video.paused?'영상 이어 보기':'영상 잠시 멈추기';audio.textContent=video.muted?'영상 소리 켜기':'영상 소리 끄기';audio.setAttribute('aria-pressed',String(!video.muted));}
  function stopVideo(){playRevision++;clearTimeout(loadTimer);video.pause();}
- function stopIntroductions(){sequence?.abort();sequence=null;window.CharacterVoice?.stop();cards.forEach(c=>{c.classList.remove('is-introducing');c.querySelector('.hw-speaking-label').textContent='';});}
+ function stopIntroductions(){sequence?.abort();sequence=null;window.CharacterVoice?.stop();cards.forEach(c=>{c.classList.remove('is-introducing');const l=c.querySelector('.hw-speaking-label');if(l)l.textContent='';});}
  function wait(ms,signal){return new Promise(resolve=>{if(signal.aborted)return resolve();const finish=()=>{clearTimeout(timer);signal.removeEventListener('abort',finish);resolve();};const timer=setTimeout(finish,ms);signal.addEventListener('abort',finish,{once:true});});}
  async function introduce(){stopIntroductions();const controller=new AbortController();sequence=controller;const signal=controller.signal;
-  for(const card of cards){if(signal.aborted||phase!=='rooms'||document.hidden)return;const id=card.dataset.room;card.classList.add('is-introducing');card.querySelector('.hw-speaking-label').textContent='지금 소개하고 있어요';const start=performance.now();
+  for(const card of cards){if(signal.aborted||phase!=='rooms'||document.hidden)return;const id=card.dataset.room;card.classList.add('is-introducing');const l=card.querySelector('.hw-speaking-label');if(l)l.textContent='지금 소개하고 있어요';const start=performance.now();
    if(!muted&&!globalMuted()&&window.speakAsCharacter&&window.CharacterVoice?.getState().configured){
     const speech=Promise.resolve().then(()=>{if(signal.aborted)return;return window.speakAsCharacter(id,lines[id]);}).catch(()=>null);
     // A stalled provider must not trap the UI. Cancel the prior voice before advancing.
     await Promise.race([speech,wait(12000,signal)]);if(signal.aborted)return;window.CharacterVoice?.stop();
    }
    if(signal.aborted)return;await wait(Math.max(0,3800-(performance.now()-start)),signal);if(signal.aborted)return;
-   card.classList.remove('is-introducing');card.querySelector('.hw-speaking-label').textContent='';
+   card.classList.remove('is-introducing');const lEnd=card.querySelector('.hw-speaking-label');if(lEnd)lEnd.textContent='';
   }
   if(!signal.aborted)subtitle.textContent='가고 싶은 친구 집을 눌러보세요.';
  }
