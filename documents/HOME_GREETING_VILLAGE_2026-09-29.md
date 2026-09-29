@@ -39,4 +39,9 @@
 Android와 Safari 실기기는 이번 환경에서 검증하지 못했습니다. 모바일 결과는 데스크톱 브라우저의 화면 크기 검증입니다. 헤드리스 브라우저의 미디어 상태/디코딩 검증이며 실제 스피커 청음은 하지 않았습니다. 첫 방문 음성 자동재생 허용 여부는 브라우저 정책에 따릅니다. 기관 DB 준비는 이번 UI 작업 범위가 아닙니다.
 
 ## 배포
-검증된 변경을 기존 school-release 저장소 및 운영 Vercel school 프로젝트로 반영합니다. 최종 배포 상태는 작업 일지와 대화 보고에 기록합니다.
+- 소스 커밋 `1dd73f5`를 GitHub origin/main에 푸시했습니다.
+- 기존 Vercel school 프로젝트 배포 `dpl_GDxwVVYCP6YRp7LJ1qNEptvY46GR`: READY.
+- 운영 주소: https://school-tau-pearl.vercel.app/
+- 배포 주소: https://school-ofjqx9sv4-sonouk5791s-projects.vercel.app/
+- 운영 브라우저 검증 PASS: HTTP 200, 새 자산 버전, 영상 시간 증가, 불필요 재생 버튼 없음, 64px 이동 버튼, 즉시 pause/마을 표시, 원본 외곽선 4개/집 연결 4개, 새로고침 세션 유지, JS 오류/가로 넘침 없음.
+- 최종 결과 문서와 일지는 추가 커밋으로 저장합니다. Markdown/테스트는 공개 배포 제외 대상이며 검증된 운영 코드와 자산은 변경하지 않습니다.
