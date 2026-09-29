@@ -227,9 +227,9 @@ body {
 
 .ex20-bg-layer {
   position: absolute; inset: 0;
-  background-image: url('../assets/exercise-20min/senior-classroom-stage.jpg');
+  background-image: url('../assets/exercise-20min/senior-class-live.jpg');
   background-size: cover;
-  background-position: center bottom;
+  background-position: center 30%;
   opacity: 1;
   transition: opacity 0.6s ease;
 }
@@ -258,19 +258,20 @@ body {
 }
 
 /* ══════════════════════════════════════════════════════
-   4인 캐릭터 크루 무대 (콩이, 토리, 나비, 보리)
-   화면에 4명의 캐릭터가 모두 함께 등장하여 수업을 진행
+   실제 체조 수업 무대 (중앙 콩이 강사 + 토리·나비·보리 보조 강사 + 3인 어르신)
+   화면 전체가 하나의 활기찬 운동 수업 현장으로 구성
    ══════════════════════════════════════════════════════ */
 .ex20-crew-stage {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 48%;
+  height: 52%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: flex-end;
-  padding: 0 4%;
+  gap: 3.5%;
+  padding: 0 2%;
   z-index: 6;
   pointer-events: none;
 }
@@ -280,7 +281,7 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
-  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   transform-origin: bottom center;
 }
 
@@ -291,82 +292,191 @@ body {
   position: relative;
 }
 
-.ex20-crew-img {
-  width: 150px;
-  height: 180px;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.25));
-  transition: transform 0.4s ease;
-  animation: crewIdleBounce 3s ease-in-out infinite;
+/* 콩이: 중앙 메인 체조 강사 (가장 크고 또렷함) */
+.ex20-crew-member--kongi {
+  order: 2;
+  z-index: 10;
+  margin-bottom: 4px;
+}
+.ex20-crew-member--kongi .ex20-crew-img {
+  width: 230px;
+  height: 270px;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,0.32));
 }
 
-/* 캐릭터별 바운스 타이밍 오프셋으로 생동감 부여 */
-.ex20-crew-member--kongi .ex20-crew-img { animation-delay: 0s; }
-.ex20-crew-member--tori  .ex20-crew-img { animation-delay: 0.4s; }
-.ex20-crew-member--bori  .ex20-crew-img { animation-delay: 0.8s; }
-.ex20-crew-member--nabi  .ex20-crew-img { animation-delay: 1.2s; }
+/* 토리: 좌측 보조 강사 */
+.ex20-crew-member--tori {
+  order: 1;
+  z-index: 8;
+  margin-bottom: 2px;
+}
+.ex20-crew-member--tori .ex20-crew-img {
+  width: 175px;
+  height: 205px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.25));
+}
 
-@keyframes crewIdleBounce {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  30%      { transform: translateY(-8px) rotate(-1.5deg); }
-  70%      { transform: translateY(-4px) rotate(1.5deg); }
+/* 나비: 우측 보조 강사 */
+.ex20-crew-member--nabi {
+  order: 3;
+  z-index: 8;
+  margin-bottom: 2px;
+}
+.ex20-crew-member--nabi .ex20-crew-img {
+  width: 175px;
+  height: 205px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.25));
+}
+
+/* 보리: 우측 후방 응원 */
+.ex20-crew-member--bori {
+  order: 4;
+  z-index: 7;
+  transform: translateY(8px) scale(0.92);
+}
+.ex20-crew-member--bori .ex20-crew-img {
+  width: 165px;
+  height: 195px;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.22));
+}
+
+.ex20-crew-img {
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  transform-origin: bottom center;
 }
 
 .ex20-crew-badge {
-  margin-top: -6px;
-  padding: 4px 12px;
-  font-size: 15px;
+  margin-top: -8px;
+  padding: 5px 14px;
+  font-size: 16px;
   font-weight: 800;
   color: #2b3b2b;
-  background: rgba(255, 255, 255, 0.94);
-  border-radius: 12px;
-  border: 1.5px solid rgba(45, 106, 46, 0.3);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  border: 2px solid rgba(45, 106, 46, 0.35);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
   white-space: nowrap;
 }
 
-/* 현재 파트의 메인 리더 캐릭터 강조 */
-.ex20-crew-member.is-leader {
-  transform: scale(1.18) translateY(-6px);
-  z-index: 10;
-}
 .ex20-crew-member.is-leader .ex20-crew-badge {
   background: #2d6a2e;
   color: #ffffff;
   border-color: #ffd166;
-  box-shadow: 0 4px 12px rgba(45, 106, 46, 0.4);
-}
-.ex20-crew-member.is-leader .ex20-crew-img {
-  animation: crewLeaderCheer 1.2s ease-in-out infinite;
-  filter: drop-shadow(0 10px 20px rgba(45, 106, 46, 0.45));
-}
-
-@keyframes crewLeaderCheer {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50%      { transform: translateY(-14px) scale(1.04); }
-}
-
-/* 5부 모두 함께일 때 전체 크루 댄스 */
-.ex20-crew-stage.is-all-active .ex20-crew-img {
-  animation: crewAllDance 1s ease-in-out infinite alternate;
-}
-@keyframes crewAllDance {
-  0%   { transform: translateY(0) rotate(-3deg); }
-  100% { transform: translateY(-12px) rotate(3deg); }
+  box-shadow: 0 4px 14px rgba(45, 106, 46, 0.45);
 }
 
 /* ══════════════════════════════════════════════════════
-   BODY-PART RIG (중앙 동작 리더 캐릭터 관절 애니메이션)
+   동작별 실제 체조 수행 모션 키프레임 애니메이션 (data-move)
+   캐릭터와 어르신이 실제로 운동을 수행하는 생생한 움직임
    ══════════════════════════════════════════════════════ */
-.ex20-rig {
-  position: absolute;
-  bottom: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 380px;
-  height: 380px;
-  z-index: 8;
-  display: none; /* 크루 시스템과 통합하여 개별 리더 애니메이션에 연동 */
+
+/* 1. 두 팔 올리기 / 팔 위로 (both-up, arm-right, arm-left) */
+.ex20-crew-stage[data-move="both-up"] .ex20-crew-img,
+.ex20-crew-stage[data-move="arm-right"] .ex20-crew-img,
+.ex20-crew-stage[data-move="arm-left"] .ex20-crew-img {
+  animation: exerciseArmsUp 1.8s ease-in-out infinite alternate;
+}
+@keyframes exerciseArmsUp {
+  0%   { transform: translateY(0) scaleY(1); }
+  50%  { transform: translateY(-24px) scaleY(1.08) scaleX(0.96); }
+  100% { transform: translateY(-30px) scaleY(1.12) scaleX(0.94); }
+}
+
+/* 2. 손뼉 치기 / 인지 박수 (clap, clap-one) */
+.ex20-crew-stage[data-move="clap"] .ex20-crew-img,
+.ex20-crew-stage[data-move="clap-one"] .ex20-crew-img {
+  animation: exerciseClapHands 0.75s ease-in-out infinite;
+}
+@keyframes exerciseClapHands {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50%      { transform: scale(1.08, 0.94) translateY(-14px); }
+}
+
+/* 3. 어깨 올리기 / 으쓱으쓱 (shoulder-up, shoulder-front, shoulder-back) */
+.ex20-crew-stage[data-move="shoulder-up"] .ex20-crew-img,
+.ex20-crew-stage[data-move="shoulder-front"] .ex20-crew-img,
+.ex20-crew-stage[data-move="shoulder-back"] .ex20-crew-img {
+  animation: exerciseShoulder 1.4s ease-in-out infinite alternate;
+}
+@keyframes exerciseShoulder {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-16px) scaleY(1.06); }
+  100% { transform: translateY(-4px) scaleY(0.98); }
+}
+
+/* 4. 팔 앞으로 / 옆으로 (arms-forward, arms-side, hands-chest) */
+.ex20-crew-stage[data-move="arms-forward"] .ex20-crew-img,
+.ex20-crew-stage[data-move="arms-side"] .ex20-crew-img,
+.ex20-crew-stage[data-move="hands-chest"] .ex20-crew-img {
+  animation: exerciseArmsSide 2s ease-in-out infinite alternate;
+}
+@keyframes exerciseArmsSide {
+  0%   { transform: scale(1) translateX(0); }
+  50%  { transform: scale(1.05, 1.02) translateY(-10px) translateX(-6px); }
+  100% { transform: scale(1.05, 1.02) translateY(-10px) translateX(6px); }
+}
+
+/* 5. 손목 돌리기 / 손 펴기 (wrist-left, wrist-right, hands-open, hands-close) */
+.ex20-crew-stage[data-move="wrist-left"] .ex20-crew-img,
+.ex20-crew-stage[data-move="wrist-right"] .ex20-crew-img,
+.ex20-crew-stage[data-move="hands-open"] .ex20-crew-img,
+.ex20-crew-stage[data-move="hands-close"] .ex20-crew-img {
+  animation: exerciseWristShake 1s ease-in-out infinite;
+}
+@keyframes exerciseWristShake {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25%      { transform: rotate(-5deg) translateY(-8px); }
+  75%      { transform: rotate(5deg) translateY(-8px); }
+}
+
+/* 6. 무릎 들기 / 발끝 운동 (knee-right, knee-left, heel-right, heel-left, toes) */
+.ex20-crew-stage[data-move="knee-right"] .ex20-crew-img,
+.ex20-crew-stage[data-move="knee-left"] .ex20-crew-img,
+.ex20-crew-stage[data-move="heel-right"] .ex20-crew-img,
+.ex20-crew-stage[data-move="heel-left"] .ex20-crew-img,
+.ex20-crew-stage[data-move="toes"] .ex20-crew-img {
+  animation: exerciseKneeLift 1.2s ease-in-out infinite alternate;
+}
+@keyframes exerciseKneeLift {
+  0%   { transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-18px) rotate(-3deg); }
+  100% { transform: translateY(-18px) rotate(3deg); }
+}
+
+/* 7. 목 운동 (neck-right, neck-left) */
+.ex20-crew-stage[data-move="neck-right"] .ex20-crew-img,
+.ex20-crew-stage[data-move="neck-left"] .ex20-crew-img {
+  animation: exerciseNeck 2.2s ease-in-out infinite alternate;
+}
+@keyframes exerciseNeck {
+  0%   { transform: rotate(-6deg); }
+  100% { transform: rotate(6deg); }
+}
+
+/* 8. 심호흡 및 마무리 (inhale, exhale, rest, wave, thumbsup) */
+.ex20-crew-stage[data-move="inhale"] .ex20-crew-img {
+  animation: exerciseInhale 3s ease-in-out infinite alternate;
+}
+@keyframes exerciseInhale {
+  0%   { transform: scale(0.96) translateY(0); }
+  100% { transform: scale(1.08) translateY(-14px); }
+}
+.ex20-crew-stage[data-move="exhale"] .ex20-crew-img {
+  animation: exerciseExhale 3s ease-in-out infinite alternate;
+}
+@keyframes exerciseExhale {
+  0%   { transform: scale(1.08) translateY(-14px); }
+  100% { transform: scale(0.96) translateY(0); }
+}
+.ex20-crew-stage[data-move="wave"] .ex20-crew-img,
+.ex20-crew-stage[data-move="thumbsup"] .ex20-crew-img,
+.ex20-crew-stage[data-move="rest"] .ex20-crew-img {
+  animation: exerciseWaveFriendly 2s ease-in-out infinite alternate;
+}
+@keyframes exerciseWaveFriendly {
+  0%   { transform: translateY(0) rotate(-2deg); }
+  100% { transform: translateY(-10px) rotate(2deg); }
 }
 
 /* 각 body part는 캐릭터 이미지를 background로 사용하여 clip */

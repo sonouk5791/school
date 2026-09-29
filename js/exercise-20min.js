@@ -357,9 +357,10 @@
       }
       const charData = CHARACTER_MAP[charId] || CHARACTER_MAP.kongi;
 
-      // 4인 캐릭터 크루 무대 리더 상태 갱신
+      // 4인 캐릭터 크루 무대 리더 상태 및 현재 체조 동작(data-move) 동기화
       const isAllChapter = currentChapterIdx === 4 || charId === 'all';
       if (crewStage) {
+        crewStage.setAttribute('data-move', ev.move || 'rest');
         crewStage.classList.toggle('is-all-active', isAllChapter);
         Object.entries(crewMembers).forEach(([id, el]) => {
           if (!el) return;
