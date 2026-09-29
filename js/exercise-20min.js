@@ -39,16 +39,6 @@
     nabi:  $('crewNabi'),
   };
 
-  // Rig
-  const charRig  = $('charRig');
-  const charImg  = $('charImg');
-  const rigHead  = $('rigHead');
-  const rigArmL  = $('rigArmL');
-  const rigArmR  = $('rigArmR');
-  const rigBody  = $('rigBody');
-  const rigLegL  = $('rigLegL');
-  const rigLegR  = $('rigLegR');
-
   // Count (하단 중앙 1, 2, 3, 4 카운트)
   const countDisplay = $('countDisplay');
   const countNum     = $('countNum');
@@ -156,13 +146,6 @@
   const BPM = 120;   // 첨부 음악의 추정 BPM
   let beatInterval = null;
   let beatCount    = 0;
-
-  // Beat indicator elements
-  const beatIndicator = document.createElement('div');
-  beatIndicator.id = 'beatIndicator';
-  beatIndicator.className = 'ex20-beat-indicator';
-  beatIndicator.setAttribute('aria-hidden', 'true');
-  beatIndicator.innerHTML = '<span class="ex20-beat-text" id="beatText">🎵</span><span class="ex20-beat-pulse" id="beatPulse"></span>';
 
   // ═══ INIT ═══
   async function init() {
@@ -276,26 +259,10 @@
     stateComplete.style.display = state === 'complete' ? '' : 'none';
   }
 
-  // ═══ RIG ═══
-  function setRigCharacter(charId) {
-    const charData = CHARACTER_MAP[charId] || CHARACTER_MAP.kongi;
-    const imgUrl = charData.img;
-
-    [rigHead, rigArmL, rigArmR, rigBody, rigLegL, rigLegR].forEach(el => {
-      el.style.backgroundImage = `url('${imgUrl}')`;
-    });
-
-    charImg.src = imgUrl;
-    charImg.onerror = () => {
-      charImg.src = charData.fallback;
-      const fallbackUrl = charData.fallback;
-      [rigHead, rigArmL, rigArmR, rigBody, rigLegL, rigLegR].forEach(el => {
-        el.style.backgroundImage = `url('${fallbackUrl}')`;
-      });
-    };
-    charImg.alt = charData.name;
-    charRig.classList.add('rig-active');
+  // ═══ CHARACTER UPDATE ═══
+  function updateActiveCharacter(charId) {
     currentCharId = charId;
+    statePlaying.setAttribute('data-active-char', charId);
   }
 
   // ═══ START ═══
@@ -306,12 +273,6 @@
     currentChapterIdx = -1;
     isPlaying = true;
     isPaused = false;
-
-    // 비트 인디케이터를 스테이지에 추가
-    const stage = $('exerciseStage');
-    if (stage && !stage.querySelector('#beatIndicator')) {
-      stage.appendChild(beatIndicator);
-    }
 
     // 나레이션
     narrationAudio.currentTime = 0;
@@ -392,10 +353,9 @@
       // Character & Crew Leader Update
       const charId = ev.character || 'kongi';
       if (charId !== currentCharId) {
-        setRigCharacter(charId);
+        updateActiveCharacter(charId);
       }
       const charData = CHARACTER_MAP[charId] || CHARACTER_MAP.kongi;
-      statePlaying.setAttribute('data-active-char', charId);
 
       // 4인 캐릭터 크루 무대 리더 상태 갱신
       const isAllChapter = currentChapterIdx === 4 || charId === 'all';
@@ -410,9 +370,6 @@
           }
         });
       }
-
-      // Rig animation
-      charRig.setAttribute('data-move', ev.move || 'rest');
 
       // Caption
       captionText.textContent = ev.text || '';
@@ -567,23 +524,8 @@
   }
 
   function onBeat(beatIdx, isStrong) {
-    const pulse = document.getElementById('beatPulse');
-    const text = document.getElementById('beatText');
-    if (!pulse || !text) return;
-
     const beatInBar = beatIdx % 4; // 0, 1, 2, 3 -> 박자 1, 2, 3, 4
     const beatNumber = beatInBar + 1;
-
-    if (beatInBar === 0) {
-      text.textContent = '쿵';
-      text.className = 'ex20-beat-text ex20-beat-strong';
-    } else if (beatInBar === 2) {
-      text.textContent = '짝';
-      text.className = 'ex20-beat-text ex20-beat-weak';
-    } else {
-      text.textContent = '🎵';
-      text.className = 'ex20-beat-text';
-    }
 
     // 하단 중앙 큰 카운터(1, 2, 3, 4) 실시간 반응
     const ev = program && program.events ? program.events[currentEventIdx] : null;
@@ -594,10 +536,6 @@
       countNum.style.animation = 'countPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
     }
 
-    pulse.style.animation = 'none';
-    pulse.offsetHeight;
-    pulse.style.animation = isStrong ? 'beatPulseStrong 0.3s ease-out' : 'beatPulseWeak 0.25s ease-out';
-
     // 4인 캐릭터 크루 리듬 바운스
     if (crewStage && isStrong) {
       const activeImgs = crewStage.querySelectorAll('.ex20-crew-img');
@@ -606,16 +544,6 @@
         setTimeout(() => {
           img.style.transform = '';
         }, 180);
-      });
-    }
-
-    // 캐릭터 리듬 바운스
-    if (charRig && isStrong) {
-      charRig.style.transition = 'none';
-      charRig.style.transform = 'translateX(-50%) translateY(-3px)';
-      requestAnimationFrame(() => {
-        charRig.style.transition = 'transform 0.2s ease';
-        charRig.style.transform = 'translateX(-50%) translateY(0)';
       });
     }
   }
@@ -662,7 +590,6 @@
       stopBgm();
       stopBeatTracker();
     }
-    beatIndicator.style.display = isBgmOn ? '' : 'none';
   }
   function toggleSlow() {
     isSlowMode = !isSlowMode;

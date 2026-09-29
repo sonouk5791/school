@@ -751,73 +751,7 @@ body {
 }
 
 
-/* ══════════════════════════════════════════
-   비트 인디케이터 (트로트 쿵짝 리듬 표시)
-   ══════════════════════════════════════════ */
 
-.ex20-beat-indicator {
-  position: absolute;
-  top: 50%;
-  left: 6%;
-  transform: translateY(-50%);
-  z-index: 20;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.ex20-beat-text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  font-size: 24px;
-  font-weight: 900;
-  color: #fff;
-  background: rgba(230, 161, 0, 0.85);
-  border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 4px 16px rgba(230, 161, 0, 0.3);
-  transition: all 0.15s ease;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-.ex20-beat-text.ex20-beat-strong {
-  font-size: 28px;
-  background: rgba(220, 50, 50, 0.88);
-  border-color: rgba(255, 200, 200, 0.6);
-  box-shadow: 0 4px 20px rgba(220, 50, 50, 0.4);
-  transform: scale(1.15);
-}
-
-.ex20-beat-text.ex20-beat-weak {
-  font-size: 22px;
-  background: rgba(45, 106, 46, 0.85);
-  border-color: rgba(200, 255, 200, 0.5);
-  box-shadow: 0 4px 16px rgba(45, 106, 46, 0.3);
-}
-
-.ex20-beat-pulse {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 3px solid rgba(230, 161, 0, 0.4);
-  opacity: 0;
-  pointer-events: none;
-}
-
-@keyframes beatPulseStrong {
-  0%   { transform: scale(1); opacity: 0.8; border-color: rgba(220, 50, 50, 0.6); }
-  100% { transform: scale(1.6); opacity: 0; border-color: rgba(220, 50, 50, 0); }
-}
-
-@keyframes beatPulseWeak {
-  0%   { transform: scale(1); opacity: 0.5; border-color: rgba(45, 106, 46, 0.4); }
-  100% { transform: scale(1.4); opacity: 0; border-color: rgba(45, 106, 46, 0); }
-}
 
 
 /* ══════════════════════════════════════════
