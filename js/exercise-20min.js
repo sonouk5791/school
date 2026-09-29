@@ -1,61 +1,58 @@
 /**
- * 디지털 AI 학교 – 20분 건강체조 플레이어 v4 (exercise-20min.js)
+ * 디지털 AI 학교 – 20분 건강체조 단일 TV 화면 플레이어 JS v5
  * 
- * v4 주요 개선:
- * - 첨부 음악(bgm-trot.mp3) 루프 재생 + 체조 동작 동기화
- * - 어르신 일러스트 레이어 표시
- * - 30개 운동 구간 자동 진행
- * - 비트 인디케이터 (쿵짝 시각 표시)
- * - 음악-동작 박자 동기화
- * - 챕터별 분위기 변화
- * - 캐릭터별 리드 타이밍 차이
- * - 음악 fade in/out 전환
- * - 음성 나레이션 + 음악 볼륨 자동 밸런스
+ * 핵심 구조:
+ * - 20분 전체가 단 하나의 메인 체조 무대 화면 안에서 끊김 없이 연속 재생
+ * - 1부~5부는 내부 진행 데이터로만 사용 (화면 분할 및 카드형 뷰 노출 제거)
+ * - 상단: 현재 단계 배지 + 현재 동작명(크게) + 20분 전체 시간(누적 진행)
+ * - 중앙: 주간보호센터 체조실 배경 + 4인 캐릭터(콩이·토리·나비·보리)와 어르신들이 함께 체조하는 고화질 GIF 뷰어
+ * - 하단: 큰 숫자 카운트(1,2,3,4) + 짧고 큰 한 줄 자막 + 20분 전체 진행바
  */
 (() => {
   'use strict';
 
   const $ = id => document.getElementById(id);
 
-  // ═══ DOM ═══
-  const stateReady    = $('stateReady');
-  const statePlaying  = $('statePlaying');
-  const stateComplete = $('stateComplete');
+  // ═══ DOM Elements ═══
+  const tvScreen         = $('tvScreen');
+  const tvStage          = $('tvStage');
 
-  const loadStatus = $('loadStatus');
-  const btnStart   = $('btnStart');
+  // Overlays
+  const startOverlay     = $('startOverlay');
+  const pauseOverlay     = $('pauseOverlay');
+  const completeOverlay  = $('completeOverlay');
 
-  // Header
-  const headerPartLabel = $('headerPartLabel');
-  const headerCharLabel = $('headerCharLabel');
-  const headerTime      = $('headerTime');
+  const loadStatus       = $('loadStatus');
+  const btnStart         = $('btnStart');
+  const btnOverlayResume = $('btnOverlayResume');
+  const btnRestart       = $('btnRestart');
 
-  // Live GIF Stage
-  const liveGifImg = $('liveGifImg');
+  // Header Elements
+  const headerStepBadge  = $('headerStepBadge');
+  const headerCharBadge  = $('headerCharBadge');
+  const moveBadge        = $('moveBadge');
+  const moveIcon         = $('moveIcon');
+  const moveName         = $('moveName');
+  const headerTime       = $('headerTime');
 
-  // Count (하단 중앙 1, 2, 3, 4 카운트)
-  const countDisplay = $('countDisplay');
-  const countNum     = $('countNum');
+  // Stage & Live GIF
+  const liveGifImg       = $('liveGifImg');
 
-  // Move badge
-  const moveBadge = $('moveBadge');
-  const moveIcon  = $('moveIcon');
-  const moveName  = $('moveName');
-
-  // Rep progress
-  const repProgress = $('repProgress');
-  const repDots     = $('repDots');
-  const repLabel    = $('repLabel');
+  // Counter & Rep
+  const countDisplay     = $('countDisplay');
+  const countNum         = $('countNum');
+  const repProgress      = $('repProgress');
+  const repDots          = $('repDots');
+  const repLabel         = $('repLabel');
 
   // Caption
-  const captionCharTag = $('captionCharTag');
-  const captionText    = $('captionText');
+  const captionCharTag   = $('captionCharTag');
+  const captionText      = $('captionText');
 
   // Timeline
   const progressBar      = $('progressBar');
   const currentTimeLabel = $('currentTime');
   const totalTimeLabel   = $('totalTime');
-  const timelineChapters = $('timelineChapters');
 
   // Controls
   const btnPause  = $('btnPause');
@@ -66,7 +63,6 @@
   const btnMute   = $('btnMute');
   const btnBgm    = $('btnBgm');
   const btnFull   = $('btnFull');
-  const btnRestart = $('btnRestart');
 
   const narrationAudio = $('narrationAudio');
 
@@ -79,71 +75,79 @@
   };
 
   const MOVE_LABELS = {
-    'wave':          { icon: '👋', label: '인사' },
-    'rest':          { icon: '🧘', label: '쉬기' },
-    'inhale':        { icon: '🫁', label: '심호흡' },
-    'exhale':        { icon: '💨', label: '내쉬기' },
-    'shoulder-up':   { icon: '💪', label: '어깨 올리기' },
-    'neck-right':    { icon: '➡️', label: '고개 좌우' },
-    'neck-left':     { icon: '⬅️', label: '고개 왼쪽' },
-    'shoulder-front': { icon: '🔄', label: '어깨 앞으로' },
-    'shoulder-back':  { icon: '🔄', label: '어깨 뒤로' },
-    'hands-open':    { icon: '🖐', label: '손 펴기/쥐기' },
-    'hands-close':   { icon: '✊', label: '손 쥐기' },
-    'wrist-left':    { icon: '🔄', label: '손목 돌리기' },
-    'wrist-right':   { icon: '🔄', label: '손목 흔들기' },
-    'arms-forward':  { icon: '🙌', label: '팔 앞으로' },
-    'arms-side':     { icon: '🤗', label: '팔 옆으로' },
-    'hands-chest':   { icon: '🤲', label: '가슴 앞으로' },
-    'arm-right':     { icon: '💪', label: '오른팔 올리기' },
-    'arm-left':      { icon: '💪', label: '왼팔 올리기' },
-    'both-up':       { icon: '🙌', label: '양팔 위로' },
-    'heel-right':    { icon: '🦶', label: '발뒤꿈치 들기' },
-    'heel-left':     { icon: '🦶', label: '왼발 들기' },
-    'toes':          { icon: '🦶', label: '발끝 운동' },
-    'knee-right':    { icon: '🦵', label: '무릎 올리기' },
-    'knee-left':     { icon: '🦵', label: '왼쪽 무릎' },
-    'clap':          { icon: '👏', label: '박수' },
-    'clap-one':      { icon: '✋', label: '인지 박수' },
-    'thumbsup':      { icon: '👍', label: '최고!' },
+    'wave':           { icon: '👋', label: '손 흔들기 인사' },
+    'rest':           { icon: '🧘', label: '편안히 쉬기' },
+    'inhale':         { icon: '🫁', label: '숨 들이마시기' },
+    'exhale':         { icon: '💨', label: '숨 내쉬기' },
+    'shoulder-up':    { icon: '💪', label: '어깨 올리기' },
+    'neck-right':     { icon: '➡️', label: '목 좌우 돌리기' },
+    'neck-left':      { icon: '⬅️', label: '목 왼쪽 돌리기' },
+    'shoulder-front': { icon: '🔄', label: '어깨 앞으로 돌리기' },
+    'shoulder-back':  { icon: '🔄', label: '어깨 뒤로 돌리기' },
+    'hands-open':     { icon: '🖐', label: '손가락 펴기' },
+    'hands-close':    { icon: '✊', label: '주먹 쥐기' },
+    'wrist-left':     { icon: '🔄', label: '손목 돌리기' },
+    'wrist-right':    { icon: '🔄', label: '손목 흔들기' },
+    'arms-forward':   { icon: '🙌', label: '팔 앞으로 뻗기' },
+    'arms-side':      { icon: '🤗', label: '팔 옆으로 펴기' },
+    'hands-chest':    { icon: '🤲', label: '가슴 모으기' },
+    'arm-right':      { icon: '💪', label: '오른팔 들어올리기' },
+    'arm-left':       { icon: '💪', label: '왼팔 들어올리기' },
+    'both-up':        { icon: '🙌', label: '두 팔 올리기' },
+    'heel-right':     { icon: '🦶', label: '발뒤꿈치 들기' },
+    'heel-left':      { icon: '🦶', label: '왼쪽 발뒤꿈치 들기' },
+    'toes':           { icon: '🦶', label: '발끝 톡톡 운동' },
+    'knee-right':     { icon: '🦵', label: '의자 무릎 들기' },
+    'knee-left':      { icon: '🦵', label: '왼쪽 무릎 들기' },
+    'clap':           { icon: '👏', label: '짝짝 손뼉 치기' },
+    'clap-one':       { icon: '✋', label: '신나는 인지 박수' },
+    'thumbsup':       { icon: '👍', label: '모두 함께 최고!' },
   };
 
   const MOVE_GIF_MAP = {
-    // 1. 손 흔들기 / 인사
-    'wave':          'assets/exercise-20min/exercise_wave.gif',
-    'rest':          'assets/exercise-20min/exercise_wave.gif',
-    'thumbsup':      'assets/exercise-20min/exercise_wave.gif',
-    'inhale':        'assets/exercise-20min/exercise_wave.gif',
-    'exhale':        'assets/exercise-20min/exercise_wave.gif',
+    // 1. 손 흔들기 / 인사 / 호흡 / 마무리
+    'wave':           'assets/exercise-20min/exercise_wave.gif',
+    'rest':           'assets/exercise-20min/exercise_wave.gif',
+    'thumbsup':       'assets/exercise-20min/exercise_wave.gif',
+    'inhale':         'assets/exercise-20min/exercise_wave.gif',
+    'exhale':         'assets/exercise-20min/exercise_wave.gif',
 
     // 2. 두 팔 올리기 / 상체 스트레칭
-    'both-up':       'assets/exercise-20min/exercise_arms_up.gif',
-    'arm-right':     'assets/exercise-20min/exercise_arms_up.gif',
-    'arm-left':      'assets/exercise-20min/exercise_arms_up.gif',
-    'shoulder-up':   'assets/exercise-20min/exercise_arms_up.gif',
+    'both-up':        'assets/exercise-20min/exercise_arms_up.gif',
+    'arm-right':      'assets/exercise-20min/exercise_arms_up.gif',
+    'arm-left':       'assets/exercise-20min/exercise_arms_up.gif',
+    'shoulder-up':    'assets/exercise-20min/exercise_arms_up.gif',
     'shoulder-front': 'assets/exercise-20min/exercise_arms_up.gif',
     'shoulder-back':  'assets/exercise-20min/exercise_arms_up.gif',
-    'neck-right':    'assets/exercise-20min/exercise_arms_up.gif',
-    'neck-left':     'assets/exercise-20min/exercise_arms_up.gif',
-    'arms-forward':  'assets/exercise-20min/exercise_arms_up.gif',
-    'arms-side':     'assets/exercise-20min/exercise_arms_up.gif',
-    'hands-chest':   'assets/exercise-20min/exercise_arms_up.gif',
+    'neck-right':     'assets/exercise-20min/exercise_arms_up.gif',
+    'neck-left':      'assets/exercise-20min/exercise_arms_up.gif',
+    'arms-forward':   'assets/exercise-20min/exercise_arms_up.gif',
+    'arms-side':      'assets/exercise-20min/exercise_arms_up.gif',
+    'hands-chest':    'assets/exercise-20min/exercise_arms_up.gif',
 
-    // 3. 박수 치기 / 손 운동
-    'clap':          'assets/exercise-20min/exercise_clap.gif',
-    'clap-one':      'assets/exercise-20min/exercise_clap.gif',
-    'hands-open':    'assets/exercise-20min/exercise_clap.gif',
-    'hands-close':   'assets/exercise-20min/exercise_clap.gif',
-    'wrist-left':    'assets/exercise-20min/exercise_clap.gif',
-    'wrist-right':   'assets/exercise-20min/exercise_clap.gif',
+    // 3. 박수 치기 / 손 운동 / 인지박수
+    'clap':           'assets/exercise-20min/exercise_clap.gif',
+    'clap-one':       'assets/exercise-20min/exercise_clap.gif',
+    'hands-open':     'assets/exercise-20min/exercise_clap.gif',
+    'hands-close':    'assets/exercise-20min/exercise_clap.gif',
+    'wrist-left':     'assets/exercise-20min/exercise_clap.gif',
+    'wrist-right':    'assets/exercise-20min/exercise_clap.gif',
 
-    // 4. 무릎 들기 / 하체 운동
-    'knee-right':    'assets/exercise-20min/exercise_knee_lift.gif',
-    'knee-left':     'assets/exercise-20min/exercise_knee_lift.gif',
-    'heel-right':    'assets/exercise-20min/exercise_knee_lift.gif',
-    'heel-left':     'assets/exercise-20min/exercise_knee_lift.gif',
-    'toes':          'assets/exercise-20min/exercise_knee_lift.gif',
+    // 4. 무릎 들기 / 하체 의자 운동
+    'knee-right':     'assets/exercise-20min/exercise_knee_lift.gif',
+    'knee-left':      'assets/exercise-20min/exercise_knee_lift.gif',
+    'heel-right':     'assets/exercise-20min/exercise_knee_lift.gif',
+    'heel-left':      'assets/exercise-20min/exercise_knee_lift.gif',
+    'toes':           'assets/exercise-20min/exercise_knee_lift.gif',
   };
+
+  const CHAPTER_STEP_NAMES = [
+    '준비운동',
+    '상체 스트레칭',
+    '의자 하체운동',
+    '신나는 박수체조',
+    '마무리 호흡'
+  ];
 
   const COUNTABLE_MOVES = new Set([
     'shoulder-up', 'neck-right', 'neck-left', 'shoulder-front', 'shoulder-back',
@@ -154,29 +158,24 @@
   ]);
 
   // ═══ STATE ═══
-  let program      = null;
-  let isPlaying     = false;
-  let isPaused      = false;
-  let isMuted       = false;
-  let isBgmOn       = true;
-  let isSlowMode    = false;
-  let currentTime   = 0;
-  let currentEventIdx = -1;
+  let program           = null;
+  let isPlaying         = false;
+  let isPaused          = false;
+  let isMuted           = false;
+  let isBgmOn           = true;
+  let isSlowMode        = false;
+  let currentTime       = 0;
+  let currentEventIdx   = -1;
   let currentChapterIdx = -1;
-  let currentCharId = 'kongi';
-  let animFrame     = null;
-  let lastTick      = 0;
+  let currentCharId     = 'kongi';
+  let animFrame         = null;
+  let lastTick          = 0;
 
-  // BGM (첨부 음악 파일)
-  let bgmAudio      = null;
-  let bgmVolume     = 0.3;   // 기본 BGM 볼륨
-  let bgmFadeTarget = 0.3;
-  let bgmLoopCount  = 0;
-
-  // Beat tracking
-  const BPM = 120;   // 첨부 음악의 추정 BPM
-  let beatInterval = null;
-  let beatCount    = 0;
+  // BGM Audio
+  let bgmAudio          = null;
+  const BPM             = 120;
+  let beatInterval      = null;
+  let beatCount         = 0;
 
   // ═══ INIT ═══
   async function init() {
@@ -185,10 +184,9 @@
       const resp = await fetch('assets/exercise-20min/program.json');
       program = await resp.json();
 
-      buildChapterTimeline();
       precomputeCountSequences();
 
-      // BGM 음악 로드
+      // BGM 로드
       loadStatus.textContent = '신나는 음악을 준비하고 있어요…';
       bgmAudio = new Audio(program.musicFile || 'assets/exercise-20min/audio/bgm-trot.mp3');
       bgmAudio.loop = true;
@@ -205,27 +203,27 @@
         bgmAudio.load();
       });
 
-      // 나레이션 오디오 로드
+      // 나레이션 로드
       loadStatus.textContent = '음성을 준비하고 있어요…';
-      await new Promise((resolve, reject) => {
+      await new Promise((resolve) => {
         if (narrationAudio.readyState >= 2) { resolve(); return; }
         narrationAudio.addEventListener('canplay', resolve, { once: true });
         narrationAudio.addEventListener('error', () => {
-          loadStatus.textContent = '음성 파일을 불러올 수 없지만 음악으로 진행합니다.';
           resolve();
         }, { once: true });
         narrationAudio.load();
       });
 
       totalTimeLabel.textContent = formatTime(program.duration);
+      headerTime.textContent = `00:00 / ${formatTime(program.duration)}`;
       progressBar.max = program.duration;
 
       loadStatus.textContent = '준비 완료! 시작 버튼을 눌러주세요.';
       btnStart.disabled = false;
-      btnStart.textContent = '▶ 체조 시작하기';
+      btnStart.textContent = '▶ 20분 체조 시작하기';
     } catch (err) {
       console.error('Init error:', err);
-      loadStatus.textContent = '준비에 문제가 있어요. 페이지를 새로고침해주세요.';
+      loadStatus.textContent = '준비에 문제가 있어요. 새로고침해주세요.';
     }
   }
 
@@ -257,60 +255,30 @@
     }
   }
 
-  // ═══ CHAPTER TIMELINE ═══
-  function buildChapterTimeline() {
-    if (!program || !program.chapters) return;
-    timelineChapters.innerHTML = '';
-    program.chapters.forEach((ch, i) => {
-      const seg = document.createElement('div');
-      seg.className = 'chapter-seg';
-      seg.title = ch.title;
-      seg.style.flex = ch.duration;
-      seg.dataset.idx = i;
-      timelineChapters.appendChild(seg);
-    });
-  }
-
-  function updateChapterHighlight(chIdx) {
-    timelineChapters.querySelectorAll('.chapter-seg').forEach((seg, i) => {
-      seg.classList.toggle('done', i < chIdx);
-      seg.classList.toggle('active', i === chIdx);
-    });
-  }
-
   function formatTime(secs) {
     const m = Math.floor(secs / 60);
     const s = Math.floor(secs % 60);
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
 
-  function showState(state) {
-    stateReady.style.display    = state === 'ready'    ? '' : 'none';
-    statePlaying.style.display  = state === 'playing'  ? '' : 'none';
-    stateComplete.style.display = state === 'complete' ? '' : 'none';
-  }
-
-  // ═══ CHARACTER UPDATE ═══
-  function updateActiveCharacter(charId) {
-    currentCharId = charId;
-    statePlaying.setAttribute('data-active-char', charId);
-  }
-
   // ═══ START ═══
   function startExercise() {
-    showState('playing');
+    startOverlay.hidden = true;
+    pauseOverlay.hidden = true;
+    completeOverlay.hidden = true;
+
     currentTime = 0;
     currentEventIdx = -1;
     currentChapterIdx = -1;
     isPlaying = true;
     isPaused = false;
 
-    // 나레이션
+    // 나레이션 재생
     narrationAudio.currentTime = 0;
     narrationAudio.muted = isMuted;
     narrationAudio.play().catch(() => {});
 
-    // BGM 시작
+    // BGM 재생
     startBgm();
     startBeatTracker();
 
@@ -345,25 +313,17 @@
     if (drift > 1.5) narrationAudio.currentTime = currentTime;
   }
 
-  // ═══ BGM 볼륨 자동 밸런스 ═══
-  // 음성 나레이션이 나올 때 BGM을 낮추고, 동작만 진행할 때 BGM 올림
   function updateBgmBalance() {
     if (!bgmAudio || !isBgmOn) return;
-    const ev = program.events[currentEventIdx];
-    if (!ev) return;
-
-    // 마무리 챕터에서는 BGM 낮춤
-    const isEnding = currentChapterIdx >= program.chapters.length - 2;
-    const targetVol = isEnding ? 0.12 : 0.3;
-
-    // 부드러운 볼륨 전환
+    const isEnding = currentChapterIdx >= (program?.chapters?.length || 5) - 2;
+    const targetVol = isEnding ? 0.15 : 0.32;
     const diff = targetVol - bgmAudio.volume;
     if (Math.abs(diff) > 0.005) {
       bgmAudio.volume = Math.max(0, Math.min(1, bgmAudio.volume + diff * 0.02));
     }
   }
 
-  // ═══ UPDATE EVENT ═══
+  // ═══ UPDATE EVENT (한 화면 안에서 동작/자막/GIF/카운트만 자연스럽게 변경) ═══
   function updateEvent() {
     if (!program || !program.events) return;
     const events = program.events;
@@ -381,21 +341,21 @@
       const ev = events[currentEventIdx];
       if (!ev) return;
 
-      // Character & Caption
+      // 1. 캐릭터 & 자막 변경
       const charId = ev.character || 'kongi';
-      if (charId !== currentCharId) {
-        updateActiveCharacter(charId);
-      }
+      currentCharId = charId;
       const charData = CHARACTER_MAP[charId] || CHARACTER_MAP.kongi;
-      captionText.textContent = ev.text || '';
+      
+      headerCharBadge.textContent = `${charData.emoji} ${charData.name}`;
       captionCharTag.textContent = `${charData.emoji} ${charData.name}`;
+      captionText.textContent = ev.text || '';
 
-      // Move badge & Live GIF Image Update
-      const moveData = MOVE_LABELS[ev.move] || { icon: '🧘', label: ev.move || '동작' };
+      // 2. 상단 현재 동작명 텍스트 및 아이콘 갱신
+      const moveData = MOVE_LABELS[ev.move] || { icon: '🧘', label: ev.move || '건강체조' };
       moveIcon.textContent = moveData.icon;
       moveName.textContent = moveData.label;
 
-      // 현재 동작에 해당하는 고화질 체조 GIF로 부드럽게 교체
+      // 3. 중앙 고화질 체조 GIF 자동 전환 (캐릭터+어르신 함께 동작)
       if (liveGifImg) {
         const gifSrc = MOVE_GIF_MAP[ev.move] || 'assets/exercise-20min/exercise_wave.gif';
         if (!liveGifImg.src.endsWith(gifSrc)) {
@@ -403,15 +363,12 @@
         }
       }
 
-      // Count & Rep Progress (하단 중앙 1, 2, 3, 4 카운트 표시)
+      // 4. 큰 숫자 카운트 및 반복 갱신
       if (ev._seqTotal >= 2) {
         const pos = ev._seqPos + 1;
         const total = ev._seqTotal;
         countNum.textContent = pos;
         countDisplay.hidden = false;
-        countNum.style.animation = 'none';
-        countNum.offsetHeight;
-        countNum.style.animation = '';
 
         let dotsHtml = '';
         for (let d = 0; d < total; d++) {
@@ -422,21 +379,16 @@
         repLabel.textContent = `${pos} / ${total}회`;
         repProgress.hidden = false;
       } else {
-        // 기본 4박자 모드 유지
         countDisplay.hidden = false;
         repProgress.hidden = true;
       }
 
-      // Chapter
+      // 5. 상단 현재 단계 (1부/2부 화면 전환이 아닌 '준비운동' 등 텍스트 배지만 부드럽게 갱신)
       const chIdx = ev.chapter;
-      if (chIdx !== currentChapterIdx && chIdx < program.chapters.length) {
+      if (chIdx !== currentChapterIdx && chIdx < (program.chapters?.length || 5)) {
         currentChapterIdx = chIdx;
-        const ch = program.chapters[chIdx];
-        const chCharData = CHARACTER_MAP[ch.character] || CHARACTER_MAP.kongi;
-        const partNum = ch.part || (chIdx + 1);
-        headerPartLabel.textContent = `${partNum}부 · ${ch.title}`;
-        headerCharLabel.textContent = `${chCharData.emoji} ${chCharData.name}`;
-        updateChapterHighlight(chIdx);
+        const stepName = CHAPTER_STEP_NAMES[chIdx] || program.chapters[chIdx]?.title || '건강체조';
+        headerStepBadge.textContent = stepName;
       }
     }
   }
@@ -447,7 +399,7 @@
     currentTimeLabel.textContent = formatTime(currentTime);
     headerTime.textContent = `${formatTime(currentTime)} / ${formatTime(program.duration)}`;
     btnPrev.disabled = currentChapterIdx <= 0;
-    btnNext.disabled = currentChapterIdx >= program.chapters.length - 1;
+    btnNext.disabled = currentChapterIdx >= (program.chapters?.length || 5) - 1;
   }
 
   // ═══ PAUSE / RESUME ═══
@@ -458,20 +410,20 @@
       if (bgmAudio) bgmAudio.pause();
       stopBeatTracker();
       btnPause.textContent = '▶ 계속하기';
-      btnPause.setAttribute('data-paused', 'true');
+      pauseOverlay.hidden = false;
     } else {
+      pauseOverlay.hidden = true;
       narrationAudio.play().catch(() => {});
       if (bgmAudio && isBgmOn) bgmAudio.play().catch(() => {});
       startBeatTracker();
       btnPause.textContent = '⏸ 잠깐 쉬기';
-      btnPause.setAttribute('data-paused', 'false');
       lastTick = performance.now();
     }
   }
 
   // ═══ NAVIGATION ═══
   function goToChapter(chIdx) {
-    if (!program || chIdx < 0 || chIdx >= program.chapters.length) return;
+    if (!program || !program.chapters || chIdx < 0 || chIdx >= program.chapters.length) return;
     currentTime = program.chapters[chIdx].start;
     narrationAudio.currentTime = currentTime;
     currentEventIdx = -1;
@@ -481,11 +433,11 @@
     updateUI();
   }
   function prevChapter() { if (currentChapterIdx > 0) goToChapter(currentChapterIdx - 1); }
-  function nextChapter() { if (currentChapterIdx < program.chapters.length - 1) goToChapter(currentChapterIdx + 1); }
+  function nextChapter() { if (program && currentChapterIdx < program.chapters.length - 1) goToChapter(currentChapterIdx + 1); }
   function replayChapter() { if (currentChapterIdx >= 0) goToChapter(currentChapterIdx); }
 
   function seekTo(time) {
-    currentTime = Math.max(0, Math.min(time, program.duration));
+    currentTime = Math.max(0, Math.min(time, program?.duration || 1200));
     narrationAudio.currentTime = currentTime;
     currentEventIdx = -1;
     currentChapterIdx = -1;
@@ -494,21 +446,18 @@
     updateUI();
   }
 
-  // ═══ BGM (첨부 음악 루프 재생) ═══
+  // ═══ BGM ═══
   function startBgm() {
     if (!isBgmOn || !bgmAudio) return;
     bgmAudio.currentTime = 0;
     bgmAudio.volume = 0;
     bgmAudio.play().catch(() => {});
-    // Fade in
-    fadeBgm(0.3, 2000);
+    fadeBgm(0.3, 1500);
   }
 
   function stopBgm() {
     if (!bgmAudio) return;
-    fadeBgm(0, 500, () => {
-      bgmAudio.pause();
-    });
+    fadeBgm(0, 400, () => bgmAudio.pause());
   }
 
   function fadeBgm(targetVol, durationMs, callback) {
@@ -534,7 +483,7 @@
     const beatMs = 60000 / BPM;
     beatInterval = setInterval(() => {
       if (!isPlaying || isPaused) return;
-      onBeat(beatCount, beatCount % 4 === 0);
+      onBeat(beatCount);
       beatCount++;
     }, beatMs);
   }
@@ -546,39 +495,30 @@
     }
   }
 
-  function onBeat(beatIdx, isStrong) {
-    const beatInBar = beatIdx % 4; // 0, 1, 2, 3 -> 박자 1, 2, 3, 4
+  function onBeat(beatIdx) {
+    const beatInBar = beatIdx % 4;
     const beatNumber = beatInBar + 1;
 
-    // 하단 중앙 큰 카운터(1, 2, 3, 4) 실시간 반응
     const ev = program && program.events ? program.events[currentEventIdx] : null;
     if (countNum && (!ev || ev._seqTotal < 2)) {
       countNum.textContent = beatNumber;
       countNum.style.animation = 'none';
       countNum.offsetHeight;
-      countNum.style.animation = 'countPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-    }
-
-    // 4인 캐릭터 크루 리듬 바운스
-    if (crewStage && isStrong) {
-      const activeImgs = crewStage.querySelectorAll('.ex20-crew-img');
-      activeImgs.forEach((img, idx) => {
-        img.style.transform = idx % 2 === 0 ? 'translateY(-6px) rotate(1deg)' : 'translateY(-6px) rotate(-1deg)';
-        setTimeout(() => {
-          img.style.transform = '';
-        }, 180);
-      });
+      countNum.style.animation = 'countPop 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
     }
   }
 
   // ═══ COMPLETE ═══
   function completeExercise() {
-    isPlaying = false; isPaused = false;
+    isPlaying = false;
+    isPaused = false;
     if (animFrame) cancelAnimationFrame(animFrame);
     narrationAudio.pause();
     stopBeatTracker();
     stopBgm();
-    showState('complete');
+
+    completeOverlay.hidden = false;
+
     try {
       const key = 'exercise20min_completions';
       const arr = JSON.parse(localStorage.getItem(key) || '[]');
@@ -588,10 +528,8 @@
   }
 
   function restartExercise() {
-    currentTime = 0; currentEventIdx = -1; currentChapterIdx = -1;
-    showState('ready');
-    btnStart.disabled = false;
-    loadStatus.textContent = '준비 완료! 시작 버튼을 눌러주세요.';
+    completeOverlay.hidden = true;
+    startExercise();
   }
 
   // ═══ TOGGLES ═══
@@ -622,7 +560,7 @@
     if (bgmAudio) bgmAudio.playbackRate = isSlowMode ? 0.85 : 1;
   }
   function toggleFullscreen() {
-    const el = statePlaying;
+    const el = tvScreen || document.documentElement;
     if (!document.fullscreenElement) {
       (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
     } else {
@@ -632,6 +570,7 @@
 
   // ═══ EVENTS ═══
   btnStart.addEventListener('click', startExercise);
+  btnOverlayResume.addEventListener('click', togglePause);
   btnPause.addEventListener('click', togglePause);
   btnPrev.addEventListener('click', prevChapter);
   btnNext.addEventListener('click', nextChapter);
@@ -655,10 +594,7 @@
     }
   });
 
-  narrationAudio.addEventListener('ended', () => {});
-
-  // ═══ INIT ═══
-  setRigCharacter('kongi');
+  // ═══ RUN ═══
   init();
 
 })();
