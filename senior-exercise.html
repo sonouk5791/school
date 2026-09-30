@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#fff9ed">
   <title>콩이의 운동방 · 디지털 AI 학교</title>
   <link rel="stylesheet" href="css/senior-exercise.css?v=20260923-follow4">
+  <link rel="stylesheet" href="css/kongi-3min.css">
 <script src="js/character-voice-system.js?v=20260928-ops"></script>
 <link rel="stylesheet" href="css/character-animation.css?v=20260922"><script defer src="js/character-rig-data.js?v=20260922"></script><script defer src="js/hanbok-character.js?v=20260928-active"></script><script defer src="js/character-animation.js?v=20260928-active"></script>
 <link rel="stylesheet" href="css/senior-common-header.css?v=20260923-nav2"><script defer src="js/senior-common-header.js?v=20260928-service"></script><link rel="stylesheet" href="css/character-expressions.css?v=20260928-active"><script src="js/korean-visemes.js?v=20260928"></script>
@@ -44,38 +45,87 @@
       <p style="font-size: 19px; color: #435b3e; font-weight: 600;">의자에 편안하게 앉아서 콩이와 함께 천천히 따라해요.</p>
     </section>
 
-    <!-- [대표 활동] 콩이 3D 의자 체조 애니메이션 플레이어 섹션 -->
-    <section id="viewExerciseMain" class="se-youtube-section" aria-label="오늘의 대표 의자 체조" style="max-width: 960px; margin: 0 auto 32px; padding: 0 16px;">
-      <div style="background: #ffffff; border: 3px solid #b7deb0; border-radius: 28px; padding: 22px; box-shadow: 0 8px 28px rgba(46,102,40,0.12);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
-          <span style="background: #2e6628; color: white; padding: 8px 18px; border-radius: 20px; font-weight: 800; font-size: 19px;">
-            🌟 콩이와 함께하는 앉아서 체조
+    <!-- [대표 활동] 콩이 3분 건강 의자 체조 영상 플레이어 (음성 안내 싱크 + 오디오 덕킹 BGM) -->
+    <section id="viewExerciseMain" class="se-youtube-section" aria-label="오늘의 3분 의자 체조" style="max-width: 960px; margin: 0 auto 32px; padding: 0 16px;">
+      <div class="k3-card">
+        <!-- 상단 상태 표시 바 -->
+        <div class="k3-header-row">
+          <span class="k3-badge-main">
+            🐶 콩이의 3분 건강 의자 체조
           </span>
-          <span id="chairPlayStatus" style="font-size: 18px; color: #1b5e20; font-weight: 700;">
+          <span id="kongiStatusLead" class="k3-status-lead">
             🌸 콩이 동작을 보며 천천히 따라해보세요
           </span>
         </div>
 
-        <!-- 16:9 Aspect Ratio Animated Exercise Stage -->
-        <div class="se-chair-wrapper" id="chairExerciseWrapper" style="position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #fdfaf5; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 2px solid #e0d5c1;">
-          <img id="chairExerciseImg" src="assets/images/chair-exercise/kongi-chair-exercise.gif" alt="콩이와 함께하는 앉아서 하는 체조 4단계 반복 애니메이션" style="width: 100%; height: 100%; object-fit: contain; display: block;">
-          
-          <!-- Step Sequence Overlay Pills -->
-          <div style="position: absolute; bottom: 12px; left: 12px; right: 12px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; pointer-events: none;">
-            <span style="background: rgba(255,255,255,0.92); color: #2e6628; font-size: 15px; font-weight: 800; padding: 5px 12px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #86efac;">1. 손인사 👋</span>
-            <span style="background: rgba(255,255,255,0.92); color: #2e6628; font-size: 15px; font-weight: 800; padding: 5px 12px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #86efac;">2. 양팔 올리기 🙆</span>
-            <span style="background: rgba(255,255,255,0.92); color: #2e6628; font-size: 15px; font-weight: 800; padding: 5px 12px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #86efac;">3. 무릎 톡톡 👏</span>
-            <span style="background: rgba(255,255,255,0.92); color: #2e6628; font-size: 15px; font-weight: 800; padding: 5px 12px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #86efac;">4. 마무리 인사 🌸</span>
+        <!-- 16:9 반응형 비디오 무대 -->
+        <div class="k3-video-wrapper" id="kongiVideoWrapper">
+          <video id="kongiExerciseVideo" class="k3-video" playsinline preload="metadata" poster="assets/videos/kongi-3min-poster.jpg" src="assets/videos/kongi-3min-exercise-master.mp4?v=20260930-sync">
+            <source src="assets/videos/kongi-3min-exercise-master.mp4?v=20260930-sync" type="video/mp4">
+            브라우저가 비디오 재생을 지원하지 않습니다.
+          </video>
+
+          <!-- 동작 단계 뱃지 (좌상단) -->
+          <div id="kongiCurrentStageBadge" class="k3-video-stage-badge">
+            1단계 · 👋 시작 인사
+          </div>
+
+          <!-- 일시정지 시 화면 중앙 재생 오버레이 -->
+          <div id="kongiVideoOverlayPlay" class="k3-video-overlay-play">
+            <div class="k3-overlay-circle">▶</div>
+            <div class="k3-overlay-label">화면을 눌러 체조 시작하기</div>
           </div>
         </div>
 
-        <!-- 큰 운동 조작 버튼 바 -->
-        <div style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center;">
-          <button type="button" id="btnChairPlayToggle" class="se-btn-huge-start" style="flex: 2; min-width: 220px; min-height: 62px; font-size: 22px; font-weight: 900; background: linear-gradient(135deg, #2e6628, #43a047); color: #fff; border-radius: 18px; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(46,102,40,0.3);">
-            ▶ 체조 따라하기
+        <!-- 동작별 바로가기 칩 목록 (어르신 맞춤형 원클릭 이동) -->
+        <div class="k3-chips-scroll" id="kongiStageChips" aria-label="체조 동작 순서">
+          <!-- kongi-3min-exercise.js에 의해 동적 렌더링 -->
+        </div>
+
+        <!-- 대형 실시간 안내 자막 카드 -->
+        <div class="k3-caption-card" aria-live="polite">
+          <div class="k3-caption-header">
+            <span class="k3-caption-speaker">🐶 콩이 음성 안내</span>
+          </div>
+          <p id="kongiCaptionText" class="k3-caption-text">
+            "안녕하세요. 콩이예요. 오늘도 저와 함께 천천히 체조해 볼까요?"
+          </p>
+        </div>
+
+        <!-- 체조 타임라인 진행 바 -->
+        <div class="k3-timeline-row">
+          <input type="range" id="kongiProgressSlider" class="k3-progress-slider" min="0" max="180" value="0" step="0.5" aria-label="3분 체조 진행 바">
+          <span id="kongiTimeIndicator" class="k3-time-text">0:00 / 3:00</span>
+        </div>
+
+        <!-- 어르신용 대형 메인 조작 버튼 -->
+        <div class="k3-controls-grid">
+          <button type="button" id="btnKongiPlayToggle" class="k3-btn-main" aria-label="체조 시작 및 일시정지">
+            <span>▶</span>
+            <span>3분 체조 시작하기</span>
           </button>
-          <button type="button" id="btnChairComplete" style="flex: 1.5; min-width: 180px; min-height: 62px; font-size: 20px; font-weight: 800; background: #fff3e0; color: #e65100; border: 2px solid #ffcc80; border-radius: 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(230,81,0,0.15);">
-            🌸 오늘 체조 마쳤어요!
+          <button type="button" id="btnKongiComplete" class="k3-btn-complete" aria-label="오늘 체조 마쳤어요">
+            <span>🌸</span>
+            <span>오늘 체조 마쳤어요!</span>
+          </button>
+        </div>
+
+        <!-- 보조 조작 버튼 바 (글자 크기, 다시보기, 건너뛰기, 소리) -->
+        <div class="k3-sub-controls">
+          <button type="button" id="btnKongiBack10" class="k3-btn-sub" title="10초 뒤로">
+            ⏪ 10초 뒤로
+          </button>
+          <button type="button" id="btnKongiReplay" class="k3-btn-sub" title="처음부터 다시">
+            🔄 처음부터 다시
+          </button>
+          <button type="button" id="btnKongiFwd10" class="k3-btn-sub" title="10초 앞으로">
+            ⏩ 10초 앞으로
+          </button>
+          <button type="button" id="btnKongiTextSize" class="k3-btn-sub" title="자막 글자 크기 변경">
+            🔠 글자 크게
+          </button>
+          <button type="button" id="btnKongiMute" class="k3-btn-sub" title="음소거 토글">
+            🔊 소리 켜짐
           </button>
         </div>
       </div>
@@ -233,5 +283,6 @@
   </div>
 
   <script src="js/senior-exercise.js?v=20260928-service"></script>
+  <script src="js/kongi-3min-exercise.js"></script>
 </body>
 </html>
