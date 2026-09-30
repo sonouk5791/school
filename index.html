@@ -306,7 +306,7 @@
             <p>의자에 편안히 앉아 어깨와 다리를 부드럽게 펴주는 활력 체조</p>
           </div>
         </div>
-        <button class="btn-schedule-start" data-view-target="exercise-garden">
+        <button class="btn-schedule-start" data-view-target="exercise-select">
           <span>시작하기</span>
           <span>▶</span>
         </button>
@@ -365,41 +365,163 @@
   <!-- ==========================================================================
        4. 세부 활동 1: 운동정원 (Exercise Garden)
        ========================================================================== -->
+  <!-- ==========================================================================
+       4. 콩이 건강체조 1: 코스 선택 화면 (오늘 어떤 운동을 해볼까요?)
+       ========================================================================== -->
+  <main id="view-exercise-select" class="mg-view">
+    <div class="activity-top-nav" style="margin-bottom: 24px;">
+      <button class="btn-back-garden" data-view-target="senior-main">◀ 메인 화면</button>
+      <span style="font-size: 18px; font-weight: 800; color: #C0582D; background: #FFF3EB; padding: 6px 18px; border-radius: var(--radius-pill);">
+        🐶 콩이와 함께하는 의자 건강체조
+      </span>
+    </div>
+
+    <div class="exercise-select-hero">
+      <h2 class="exercise-select-title">오늘 어떤 운동을 해볼까요?</h2>
+      <p class="exercise-select-subtitle">의자에 편안하게 앉아서 콩이와 함께 천천히 따라해요.</p>
+    </div>
+
+    <!-- 3가지 길이의 대형 터치 코스 카드 (5분 / 10분 / 20분) -->
+    <div class="exercise-course-grid">
+      <!-- 1. 5분 가볍게 -->
+      <div class="exercise-course-card card-5min" onclick="startExerciseCourse(5)">
+        <span class="course-time-badge">⏱ 5분 코스 · 가벼운 몸풀기</span>
+        <div class="course-kongi-avatar">
+          <img src="assets/images/chair-exercise/kongi-chair-1-wave.jpg" alt="5분 가볍게 콩이">
+        </div>
+        <h3 class="course-title">5분 가볍게</h3>
+        <p class="course-desc">
+          인사 ➔ 호흡 ➔ 목·어깨 ➔ 팔 ➔ 다리 ➔ 정리운동<br>
+          <strong style="color: #C0582D;">가벼운 관절 풀기와 기분 전환에 좋아요</strong>
+        </p>
+        <button class="btn-start-course">시작하기 ▶</button>
+      </div>
+
+      <!-- 2. 10분 건강체조 -->
+      <div class="exercise-course-card card-10min" onclick="startExerciseCourse(10)">
+        <span class="course-time-badge">⏱ 10분 코스 · 활력 맞춤</span>
+        <div class="course-kongi-avatar">
+          <img src="assets/images/chair-exercise/kongi-chair-exercise.gif" alt="10분 건강체조 콩이">
+        </div>
+        <h3 class="course-title">10분 건강체조</h3>
+        <p class="course-desc">
+          준비운동 2분 ➔ 상체 3분 ➔ 하체 3분 ➔ 리듬 1분 ➔ 정리 1분<br>
+          <strong style="color: #386641;">상하체 균형을 맞춰주는 표준 체조</strong>
+        </p>
+        <button class="btn-start-course" style="background: var(--garden-secondary);">시작하기 ▶</button>
+      </div>
+
+      <!-- 3. 20분 함께 운동 -->
+      <div class="exercise-course-card card-20min" onclick="startExerciseCourse(20)">
+        <span class="course-time-badge">⏱ 20분 코스 · 전신 활력</span>
+        <div class="course-kongi-avatar">
+          <img src="assets/images/friend-kongi.png" alt="20분 함께 운동 콩이">
+        </div>
+        <h3 class="course-title">20분 함께 운동</h3>
+        <p class="course-desc">
+          1단계 준비 ➔ 2단계 상체 ➔ 3단계 하체 ➔ 4단계 리듬 ➔ 5단계 정리<br>
+          <strong style="color: #1F4226;">온몸의 혈액순환과 활력을 높이는 정규 코스</strong>
+        </p>
+        <button class="btn-start-course" style="background: var(--garden-primary);">시작하기 ▶</button>
+      </div>
+    </div>
+
+    <!-- 하단 안전 원칙 안내 문구 -->
+    <div class="exercise-safety-notice" style="max-width: 900px; margin: 0 auto;">
+      <span>⚠️</span>
+      <span>몸이 불편하거나 통증이 있으면 잠시 쉬어 주세요. (의자에 편안히 앉아서 무리하지 마세요)</span>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       4. 콩이 건강체조 2: 전체화면 플레이어 무대 (Seated Chair Exercise Player)
+       ========================================================================== -->
   <main id="view-exercise-garden" class="mg-view">
-    <div class="activity-arena">
-      <div class="activity-top-nav">
-        <button class="btn-back-garden" data-view-target="senior-main">◀ 메인 화면</button>
-        <h2 style="font-size: 28px; font-weight: 800; color: var(--garden-primary);">콩이와 함께 운동해요</h2>
-        <span style="font-size: 16px; font-weight: 700; color: var(--text-secondary);">담당: 콩이</span>
+    <div class="exercise-player-container">
+      <!-- 상단 네비게이션 및 실시간 타이머/진행 바 -->
+      <div class="exercise-player-top">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <button class="btn-back-garden" onclick="switchView('exercise-select')">◀ 코스 선택</button>
+          <span class="player-course-tag" id="currentCourseTag">⏱ 5분 가볍게</span>
+          <span style="font-size: 16px; font-weight: 700; color: var(--text-secondary);" id="currentStepNameLead">1단계: 콩이 인사</span>
+        </div>
+        <div class="player-timer-large" id="exerciseTimerDisplay">
+          남은 시간: 05:00
+        </div>
       </div>
 
-      <!-- 운동 시간 선택 (복지사 설정 가능) -->
-      <div class="exercise-duration-select">
-        <span style="font-size: 16px; font-weight: 700; align-self: center; margin-right: 8px;">운동 시간:</span>
-        <button class="btn-duration active" id="btnDuration5" onclick="setExerciseDuration(5)">5분</button>
-        <button class="btn-duration" id="btnDuration10" onclick="setExerciseDuration(10)">10분</button>
-        <button class="btn-duration" id="btnDuration20" onclick="setExerciseDuration(20)">20분</button>
+      <!-- 상단 단계별 프로그레스 트랙 -->
+      <div class="exercise-step-track">
+        <div class="exercise-step-fill" id="exerciseStepProgress"></div>
       </div>
 
-      <!-- 운동 영상 / 체조 모션 박스 -->
-      <div class="exercise-video-box">
-        <div class="exercise-timer-badge" id="exerciseTimerDisplay">남은 시간: 05:00</div>
-        <img src="assets/images/friend-kongi.png" alt="콩이 체조 모션" class="exercise-character-anim">
-        <p style="font-size: 24px; font-weight: 800; color: white;">양팔을 천천히 위로 쭉 올려보세요!</p>
-        <p style="font-size: 16px; color: #E2ECE5; margin-top: 6px;">콩이의 동작에 맞춰 천천히 호흡합니다.</p>
+      <!-- 밝고 따뜻한 주간보호센터 운동실 무대 (화면 중앙에 콩이 크게 배치) -->
+      <div class="exercise-stage">
+        <!-- 운동실 창문 및 채광 인테리어 연출 -->
+        <div class="stage-gym-wall">
+          <div class="stage-window"></div>
+          <div style="text-align: center; color: #8F8474; font-size: 15px; font-weight: 700; margin-top: 10px;">
+            🌸 기억정원 건강 운동실 · 의자 체조
+          </div>
+          <div class="stage-window"></div>
+        </div>
+
+        <!-- 좌 / 우 방향 가이드 뱃지 (좌우 동작을 분명하게 안내) -->
+        <div class="stage-direction-badge" id="exerciseDirectionBadge">
+          <span id="directionIcon">↔</span>
+          <span id="directionText">양쪽 함께 천천히</span>
+        </div>
+
+        <!-- 의자에 앉아 운동하는 콩이 캐릭터 (외형 유지: 안경, 체크조끼, 흰셔츠, 파란바지, 파란운동화) -->
+        <div class="stage-seated-kongi-wrap" id="kongiCharacterStage">
+          <!-- 원목 의자 그래픽 -->
+          <div class="stage-wooden-chair"></div>
+          <!-- 콩이 이미지 (느린 호흡 / 체조 애니메이션) -->
+          <img src="assets/images/chair-exercise/kongi-chair-exercise.gif" 
+               alt="의자에 앉아 체조하는 콩이" 
+               class="stage-kongi-character motion-breathing" 
+               id="kongiExerciseAnimImg">
+        </div>
+
+        <!-- 실제 비디오 모드 (토글 가능) -->
+        <video id="exerciseVideoElement" class="exercise-video-embed" playsinline loop>
+          <source src="assets/videos/friends-exercise-20min.mp4" type="video/mp4">
+        </video>
+
+        <!-- 화면 우측 하단: 가이드 모드 전환 버튼 -->
+        <div class="stage-mode-toggle">
+          <button class="btn-mode-pill active" id="btnModeAnim" onclick="setExerciseViewMode('anim')">콩이 가이드</button>
+          <button class="btn-mode-pill" id="btnModeVideo" onclick="setExerciseViewMode('video')">실제 영상</button>
+        </div>
       </div>
 
-      <!-- 단 3개의 큰 컨트롤 버튼 -->
-      <div class="exercise-controls-3">
-        <button class="btn-act-control secondary" onclick="resetExercise()">
-          <span>🔄 처음부터</span>
+      <!-- 크고 선명한 동작 안내 대형 캡션 패널 -->
+      <div class="exercise-caption-panel">
+        <span class="caption-step-badge" id="captionStepBadge">0:00 ~ 0:20 · 콩이 인사</span>
+        <h3 class="caption-primary-text" id="captionPrimaryText">"안녕하세요! 콩이와 함께 가볍게 몸을 움직여 볼까요?"</h3>
+        <p class="caption-secondary-text" id="captionSecondaryText">의자에 등을 바르게 펴고 편안하게 앉아주세요.</p>
+      </div>
+
+      <!-- 단 3개의 큰 컨트롤 버튼 (요구사항 필수) -->
+      <div class="exercise-controls-bottom">
+        <button class="btn-ctrl-lg sec" onclick="resetCurrentExercise()">
+          <span>🔄</span>
+          <span>처음부터</span>
         </button>
-        <button class="btn-act-control primary" id="btnExercisePause" onclick="toggleExercisePause()">
-          <span>⏸ 잠시 쉬기</span>
+        <button class="btn-ctrl-lg pri" id="btnExercisePauseLarge" onclick="toggleExercisePause()">
+          <span id="pauseIcon">⏸</span>
+          <span id="pauseText">잠시 쉬기</span>
         </button>
-        <button class="btn-act-control secondary" onclick="completeActivity('콩이와 의자 체조', 'exercise')">
-          <span>⏩ 다음 운동</span>
+        <button class="btn-ctrl-lg sec" onclick="nextExerciseStep()">
+          <span>⏩</span>
+          <span>다음 운동</span>
         </button>
+      </div>
+
+      <!-- 화면 하단 안전 안내 문구 (요구사항) -->
+      <div class="exercise-safety-notice">
+        <span>⚠️</span>
+        <span>몸이 불편하거나 통증이 있으면 잠시 쉬어 주세요.</span>
       </div>
     </div>
   </main>

@@ -1582,3 +1582,498 @@ body {
   .gateway-title { font-size: 40px; }
   .btn-gateway-senior { font-size: 24px; padding: 22px 24px; }
 }
+
+/* ==========================================================================
+   콩이 건강체조 프로그램 (Kongi Seated Chair Exercise Program)
+   밝고 따뜻한 주간보호센터 운동실 스타일 & 시니어 친화적 대형 인터페이스
+   ========================================================================== */
+
+/* 1. 운동 코스 선택 화면 (Course Selection Screen) */
+.exercise-select-hero {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.exercise-select-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--garden-primary);
+  letter-spacing: -0.8px;
+  margin-bottom: 8px;
+}
+
+.exercise-select-subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.exercise-course-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto 36px;
+  width: 100%;
+}
+
+.exercise-course-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 32px 24px;
+  border: 3px solid transparent;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-bounce);
+}
+
+.exercise-course-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-hover);
+  border-color: #E78C69;
+}
+
+.exercise-course-card.card-5min {
+  border-top: 8px solid #E78C69;
+}
+
+.exercise-course-card.card-10min {
+  border-top: 8px solid #588157;
+}
+
+.exercise-course-card.card-20min {
+  border-top: 8px solid #386641;
+}
+
+.course-time-badge {
+  padding: 6px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.card-5min .course-time-badge {
+  background: #FDEEE7;
+  color: #C0582D;
+}
+
+.card-10min .course-time-badge {
+  background: #EAF3EC;
+  color: #386641;
+}
+
+.card-20min .course-time-badge {
+  background: #E4ECE6;
+  color: #1F4226;
+}
+
+.course-kongi-avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #FFF9F4;
+  border: 3px solid #F5E5D8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.course-kongi-avatar img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+
+.course-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.course-desc {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.btn-start-course {
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  border: none;
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  background: var(--garden-primary);
+  box-shadow: 0 6px 18px rgba(56, 102, 65, 0.25);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.exercise-course-card:hover .btn-start-course {
+  background: linear-gradient(135deg, #E78C69 0%, #D06F48 100%);
+  transform: translateY(-2px);
+}
+
+/* 2. 콩이 건강체조 전체화면 플레이어 무대 (Player Stage) */
+.exercise-player-container {
+  background: white;
+  border-radius: var(--radius-xl);
+  border: 1.5px solid rgba(88, 129, 87, 0.2);
+  box-shadow: var(--shadow-hover);
+  padding: 24px 32px 28px;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 상단 코스 상태 및 진행바 */
+.exercise-player-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid #F0ECE4;
+}
+
+.player-course-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFF3EB;
+  border: 1.5px solid #E78C69;
+  color: #C0582D;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.player-timer-large {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--garden-primary);
+  font-variant-numeric: tabular-nums;
+  background: var(--garden-tint);
+  padding: 4px 18px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--garden-secondary);
+}
+
+/* 단계 진행도 표시 막대 */
+.exercise-step-track {
+  width: 100%;
+  height: 8px;
+  background: #EFE9DE;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.exercise-step-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #588157 0%, #E78C69 100%);
+  border-radius: var(--radius-pill);
+  transition: width 0.4s ease;
+}
+
+/* 밝고 따뜻한 주간보호센터 운동실 무대 (Daycare Gym Stage) */
+.exercise-stage {
+  width: 100%;
+  height: 480px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, #FBF8F2 0%, #F1ECE0 65%, #E5DFC8 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 2px solid #E2DBCB;
+}
+
+/* 운동실 창문 및 햇살 연출 */
+.stage-gym-wall {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  right: 30px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.stage-window {
+  width: 90px;
+  height: 120px;
+  background: linear-gradient(180deg, #E6F3EA 0%, #CFE6D6 100%);
+  border: 4px solid #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.stage-window::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: white;
+}
+
+.stage-window::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: white;
+}
+
+/* 방향 가이드 뱃지 (좌 / 우) */
+.stage-direction-badge {
+  position: absolute;
+  top: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 2px solid #E78C69;
+  border-radius: var(--radius-pill);
+  padding: 8px 24px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #C0582D;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 의자에 앉아 운동하는 콩이 캐릭터 영역 */
+.stage-seated-kongi-wrap {
+  width: 340px;
+  height: 380px;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* 원목 의자 그래픽 */
+.stage-wooden-chair {
+  position: absolute;
+  bottom: 25px;
+  width: 170px;
+  height: 190px;
+  background: #A66E40;
+  border-radius: 16px 16px 6px 6px;
+  border: 4px solid #825026;
+  z-index: 1;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.stage-wooden-chair::before {
+  content: "";
+  position: absolute;
+  bottom: -25px;
+  left: 12px;
+  width: 14px;
+  height: 30px;
+  background: #6B3F1B;
+  box-shadow: 130px 0 0 #6B3F1B;
+}
+
+/* 콩이 캐릭터 이미지 */
+.stage-kongi-character {
+  width: 300px;
+  height: 340px;
+  object-fit: contain;
+  position: relative;
+  z-index: 3;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.16));
+  transition: transform 0.6s ease-in-out;
+}
+
+/* 시니어 맞춤 느린 호흡/체조 애니메이션 (좌우 반동/팔 올리기) */
+.motion-breathing {
+  animation: kongiBreathing 4.5s infinite ease-in-out;
+}
+
+@keyframes kongiBreathing {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-16px) scale(1.03); }
+}
+
+.motion-left-right {
+  animation: kongiLeftRight 5s infinite ease-in-out;
+}
+
+@keyframes kongiLeftRight {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-18px) rotate(-3deg); }
+  75% { transform: translateX(18px) rotate(3deg); }
+}
+
+.motion-arms-up {
+  animation: kongiArmsUp 4s infinite ease-in-out;
+}
+
+@keyframes kongiArmsUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-24px); }
+}
+
+/* 실제 영상 모드 컨테이너 (비디오 탭 전환 가능) */
+.exercise-video-embed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 8;
+  display: none;
+}
+
+.exercise-video-embed.active {
+  display: block;
+}
+
+/* 뷰 모드 전환 토글 (애니메이션 가이드 vs 실제 비디오) */
+.stage-mode-toggle {
+  position: absolute;
+  bottom: 16px;
+  right: 18px;
+  z-index: 15;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1.5px solid #CBD5E1;
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  display: flex;
+}
+
+.btn-mode-pill {
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.btn-mode-pill.active {
+  background: var(--garden-primary);
+  color: white;
+}
+
+/* 동작 안내 대형 캡션 (Central Action Caption) */
+.exercise-caption-panel {
+  margin-top: 18px;
+  text-align: center;
+  background: #FAF7F2;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid #E5DDCF;
+  padding: 18px 24px;
+}
+
+.caption-step-badge {
+  font-size: 15px;
+  font-weight: 800;
+  color: #C0582D;
+  background: #FDEEE7;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.caption-primary-text {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+.caption-secondary-text {
+  font-size: 18px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* 단 3개의 큰 컨트롤 버튼 영역 */
+.exercise-controls-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.btn-ctrl-lg {
+  border: none;
+  border-radius: var(--radius-xl);
+  padding: 22px 20px;
+  font-size: 23px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all var(--transition-bounce);
+  box-shadow: var(--shadow-card);
+}
+
+.btn-ctrl-lg.sec {
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 2px solid #D5CEBE;
+}
+
+.btn-ctrl-lg.pri {
+  background: linear-gradient(135deg, #447E4F 0%, #2A5833 100%);
+  color: white;
+  box-shadow: 0 12px 28px rgba(42, 88, 51, 0.32);
+}
+
+.btn-ctrl-lg:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* 화면 하단 안전 안내 문구 (Safety Notice) */
+.exercise-safety-notice {
+  margin-top: 20px;
+  text-align: center;
+  padding: 12px 20px;
+  background: #FFFBEB;
+  border: 1.5px solid #FDE68A;
+  border-radius: var(--radius-md);
+  color: #92400E;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
