@@ -436,93 +436,97 @@
   <!-- ==========================================================================
        4. 콩이 건강체조 2: 전체화면 플레이어 무대 (Seated Chair Exercise Player)
        ========================================================================== -->
-  <main id="view-exercise-garden" class="mg-view">
-    <div class="exercise-player-container">
-      <!-- 상단 네비게이션 및 실시간 타이머/진행 바 -->
-      <div class="exercise-player-top">
-        <div style="display: flex; align-items: center; gap: 14px;">
+  <!-- ==========================================================================
+       4. 콩이 건강체조 2: 16:9 시네마틱 플레이어 무대 (Seated Chair Exercise 16:9 Cinema)
+       ========================================================================== -->
+  <main id="view-exercise-garden" class="mg-view" style="padding: 10px 16px; justify-content: center; align-items: center;">
+    <div class="exercise-cinema-frame">
+      <!-- 1. 16:9 상단 안전 헤더 바 -->
+      <header class="cinema-header-bar">
+        <div class="cinema-header-left">
           <button class="btn-back-garden" onclick="switchView('exercise-select')">◀ 코스 선택</button>
-          <span class="player-course-tag" id="currentCourseTag">⏱ 5분 가볍게</span>
-          <span style="font-size: 16px; font-weight: 700; color: var(--text-secondary);" id="currentStepNameLead">1단계: 콩이 인사</span>
+          <span class="cinema-course-pill" id="currentCourseTag">⏱ 5분 가볍게</span>
+          <span class="cinema-step-title" id="currentStepNameLead">1단계: 콩이 인사</span>
         </div>
-        <div class="player-timer-large" id="exerciseTimerDisplay">
+        <div class="cinema-timer-badge" id="exerciseTimerDisplay">
           남은 시간: 05:00
         </div>
+      </header>
+
+      <!-- 2. 진행 바 -->
+      <div class="cinema-progress-line">
+        <div class="cinema-progress-fill" id="exerciseStepProgress"></div>
       </div>
 
-      <!-- 상단 단계별 프로그레스 트랙 -->
-      <div class="exercise-step-track">
-        <div class="exercise-step-fill" id="exerciseStepProgress"></div>
-      </div>
-
-      <!-- 밝고 따뜻한 주간보호센터 운동실 무대 (화면 중앙에 콩이 크게 배치) -->
-      <div class="exercise-stage">
-        <!-- 운동실 창문 및 채광 인테리어 연출 -->
-        <div class="stage-gym-wall">
-          <div class="stage-window"></div>
-          <div style="text-align: center; color: #8F8474; font-size: 15px; font-weight: 700; margin-top: 10px;">
+      <!-- 3. 16:9 중앙 대형 무대 (비율 유지 & 콩이 대폭 확대) -->
+      <div class="cinema-stage-area">
+        <!-- 배경 운동실 창문 -->
+        <div class="cinema-gym-bg">
+          <div class="cinema-window"></div>
+          <div style="text-align: center; color: #8F8474; font-size: 14px; font-weight: 700; margin-top: 6px;">
             🌸 기억정원 건강 운동실 · 의자 체조
           </div>
-          <div class="stage-window"></div>
+          <div class="cinema-window"></div>
         </div>
 
-        <!-- 좌 / 우 방향 가이드 뱃지 (좌우 동작을 분명하게 안내) -->
-        <div class="stage-direction-badge" id="exerciseDirectionBadge">
+        <!-- 상단 방향 가이드 뱃지 -->
+        <div class="cinema-direction-badge" id="exerciseDirectionBadge">
           <span id="directionIcon">↔</span>
           <span id="directionText">양쪽 함께 천천히</span>
         </div>
 
-        <!-- 의자에 앉아 운동하는 콩이 캐릭터 (외형 유지: 안경, 체크조끼, 흰셔츠, 파란바지, 파란운동화) -->
+        <!-- 중앙 콩이 대형 캐릭터 및 의자 (화면의 90% 높이 차지) -->
         <div class="stage-seated-kongi-wrap" id="kongiCharacterStage">
-          <!-- 원목 의자 그래픽 -->
           <div class="stage-wooden-chair"></div>
-          <!-- 콩이 이미지 (느린 호흡 / 체조 애니메이션) -->
           <img src="assets/images/chair-exercise/kongi-chair-exercise.gif" 
                alt="의자에 앉아 체조하는 콩이" 
                class="stage-kongi-character motion-breathing" 
                id="kongiExerciseAnimImg">
         </div>
 
-        <!-- 실제 비디오 모드 (토글 가능) -->
+        <!-- 실제 비디오 엘리먼트 -->
         <video id="exerciseVideoElement" class="exercise-video-embed" playsinline loop>
           <source src="assets/videos/friends-exercise-20min.mp4" type="video/mp4">
         </video>
 
-        <!-- 화면 우측 하단: 가이드 모드 전환 버튼 -->
-        <div class="stage-mode-toggle">
-          <button class="btn-mode-pill active" id="btnModeAnim" onclick="setExerciseViewMode('anim')">콩이 가이드</button>
-          <button class="btn-mode-pill" id="btnModeVideo" onclick="setExerciseViewMode('video')">실제 영상</button>
+        <!-- 중앙 하단 플로팅 자막 캡션 바 (콩이 발치 오버레이) -->
+        <div class="cinema-floating-caption">
+          <span class="caption-action-badge" id="captionStepBadge">동작 1/6</span>
+          <div class="caption-action-text" id="captionPrimaryText">"안녕하세요! 콩이와 함께 가볍게 몸을 움직여 볼까요?"</div>
+          <div class="caption-action-sub" id="captionSecondaryText">의자에 편안히 앉아 바른 자세로 준비합니다.</div>
         </div>
       </div>
 
-      <!-- 크고 선명한 동작 안내 대형 캡션 패널 -->
-      <div class="exercise-caption-panel">
-        <span class="caption-step-badge" id="captionStepBadge">0:00 ~ 0:20 · 콩이 인사</span>
-        <h3 class="caption-primary-text" id="captionPrimaryText">"안녕하세요! 콩이와 함께 가볍게 몸을 움직여 볼까요?"</h3>
-        <p class="caption-secondary-text" id="captionSecondaryText">의자에 등을 바르게 펴고 편안하게 앉아주세요.</p>
-      </div>
+      <!-- 4. 16:9 하단 컨트롤 바 (이전 / 일시정지 / 다음 + 모드전환 + 안전문구) -->
+      <footer class="cinema-bottom-bar">
+        <!-- 안전 안내 문구 태그 -->
+        <div class="cinema-safety-tag">
+          <span>⚠️</span>
+          <span>몸이 불편하거나 통증이 있으면 잠시 쉬어 주세요.</span>
+        </div>
 
-      <!-- 단 3개의 큰 컨트롤 버튼 (요구사항 필수) -->
-      <div class="exercise-controls-bottom">
-        <button class="btn-ctrl-lg sec" onclick="resetCurrentExercise()">
-          <span>🔄</span>
-          <span>처음부터</span>
-        </button>
-        <button class="btn-ctrl-lg pri" id="btnExercisePauseLarge" onclick="toggleExercisePause()">
-          <span id="pauseIcon">⏸</span>
-          <span id="pauseText">잠시 쉬기</span>
-        </button>
-        <button class="btn-ctrl-lg sec" onclick="nextExerciseStep()">
-          <span>⏩</span>
-          <span>다음 운동</span>
-        </button>
-      </div>
+        <!-- 이전 / 일시정지 / 다음 3대 메인 버튼 -->
+        <div class="cinema-controls-center">
+          <button class="btn-cinema-ctrl sec" onclick="prevExerciseStep()">
+            <span>◀</span>
+            <span>이전</span>
+          </button>
+          <button class="btn-cinema-ctrl pri" id="btnExercisePauseLarge" onclick="toggleExercisePause()">
+            <span id="pauseIcon">⏸</span>
+            <span id="pauseText">일시정지</span>
+          </button>
+          <button class="btn-cinema-ctrl sec" onclick="nextExerciseStep()">
+            <span>다음</span>
+            <span>▶</span>
+          </button>
+        </div>
 
-      <!-- 화면 하단 안전 안내 문구 (요구사항) -->
-      <div class="exercise-safety-notice">
-        <span>⚠️</span>
-        <span>몸이 불편하거나 통증이 있으면 잠시 쉬어 주세요.</span>
-      </div>
+        <!-- 콩이 가이드 / 실제 영상 모드 전환 버튼 -->
+        <div class="cinema-mode-toggle">
+          <button class="btn-mode-pill active" id="btnModeAnim" onclick="setExerciseViewMode('anim')">콩이 가이드</button>
+          <button class="btn-mode-pill" id="btnModeVideo" onclick="setExerciseViewMode('video')">실제 영상</button>
+        </div>
+      </footer>
     </div>
   </main>
 

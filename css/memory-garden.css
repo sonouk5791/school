@@ -1727,221 +1727,293 @@ body {
   transform: translateY(-2px);
 }
 
-/* 2. 콩이 건강체조 전체화면 플레이어 무대 (Player Stage) */
-.exercise-player-container {
-  background: white;
-  border-radius: var(--radius-xl);
-  border: 1.5px solid rgba(88, 129, 87, 0.2);
-  box-shadow: var(--shadow-hover);
-  padding: 24px 32px 28px;
-  max-width: 1180px;
+/* 2. 콩이 건강체조 16:9 통합 시네마틱 플레이어 (16:9 Cinematic Exercise Player) */
+.exercise-cinema-frame {
+  width: 100%;
+  max-width: 1360px;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100vh - 120px);
   margin: 0 auto;
-  width: 100%;
-}
-
-/* 상단 코스 상태 및 진행바 */
-.exercise-player-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-  padding-bottom: 16px;
-  border-bottom: 1.5px solid #F0ECE4;
-}
-
-.player-course-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #FFF3EB;
-  border: 1.5px solid #E78C69;
-  color: #C0582D;
-  padding: 6px 16px;
-  border-radius: var(--radius-pill);
-  font-size: 16px;
-  font-weight: 800;
-}
-
-.player-timer-large {
-  font-size: 32px;
-  font-weight: 900;
-  color: var(--garden-primary);
-  font-variant-numeric: tabular-nums;
-  background: var(--garden-tint);
-  padding: 4px 18px;
-  border-radius: var(--radius-pill);
-  border: 1.5px solid var(--garden-secondary);
-}
-
-/* 단계 진행도 표시 막대 */
-.exercise-step-track {
-  width: 100%;
-  height: 8px;
-  background: #EFE9DE;
-  border-radius: var(--radius-pill);
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.exercise-step-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #588157 0%, #E78C69 100%);
-  border-radius: var(--radius-pill);
-  transition: width 0.4s ease;
-}
-
-/* 밝고 따뜻한 주간보호센터 운동실 무대 (Daycare Gym Stage) */
-.exercise-stage {
-  width: 100%;
-  height: 480px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, #FBF8F2 0%, #F1ECE0 65%, #E5DFC8 100%);
+  background: #FFFFFF;
+  border-radius: var(--radius-xl);
+  border: 2px solid rgba(88, 129, 87, 0.25);
+  box-shadow: 0 20px 60px rgba(33, 41, 34, 0.16);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.06);
-  border: 2px solid #E2DBCB;
 }
 
-/* 운동실 창문 및 햇살 연출 */
-.stage-gym-wall {
+/* 16:9 상단 안전 헤더 바 */
+.cinema-header-bar {
+  flex-shrink: 0;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1.5px solid #EAE5D9;
+  z-index: 25;
+}
+
+.cinema-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cinema-course-pill {
+  background: #FFF3EB;
+  border: 1.5px solid #E78C69;
+  color: #C0582D;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.cinema-step-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.cinema-timer-badge {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--garden-primary);
+  font-variant-numeric: tabular-nums;
+  background: var(--garden-tint);
+  padding: 4px 16px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--garden-secondary);
+}
+
+/* 상단 프로그레스 트랙 */
+.cinema-progress-line {
+  flex-shrink: 0;
+  width: 100%;
+  height: 6px;
+  background: #EFE9DE;
+  position: relative;
+  z-index: 24;
+}
+
+.cinema-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #588157 0%, #E78C69 100%);
+  transition: width 0.3s linear;
+}
+
+/* 16:9 중앙 콩이 대형 무대 (비율 중심 확장) */
+.cinema-stage-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #FAF7F0 0%, #F1ECE0 65%, #E5DFC8 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* 운동실 창문 및 채광 인테리어 (배경) */
+.cinema-gym-bg {
   position: absolute;
-  top: 20px;
-  left: 30px;
-  right: 30px;
+  top: 16px;
+  left: 24px;
+  right: 24px;
   display: flex;
   justify-content: space-between;
   pointer-events: none;
+  z-index: 2;
 }
 
-.stage-window {
-  width: 90px;
-  height: 120px;
+.cinema-window {
+  width: 80px;
+  height: 100px;
   background: linear-gradient(180deg, #E6F3EA 0%, #CFE6D6 100%);
-  border: 4px solid #FFFFFF;
+  border: 3.5px solid #FFFFFF;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   position: relative;
 }
 
-.stage-window::before {
+.cinema-window::before {
   content: "";
   position: absolute;
   top: 50%;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 2.5px;
   background: white;
 }
 
-.stage-window::after {
+.cinema-window::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 3px;
+  width: 2.5px;
   background: white;
 }
 
-/* 방향 가이드 뱃지 (좌 / 우) */
-.stage-direction-badge {
+/* 좌/우 방향 가이드 배지 (상단 중앙) */
+.cinema-direction-badge {
   position: absolute;
-  top: 24px;
+  top: 14px;
   background: rgba(255, 255, 255, 0.94);
   border: 2px solid #E78C69;
   border-radius: var(--radius-pill);
-  padding: 8px 24px;
-  font-size: 20px;
+  padding: 6px 20px;
+  font-size: 18px;
   font-weight: 800;
   color: #C0582D;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  transition: all 0.3s ease;
 }
 
-/* 의자에 앉아 운동하는 콩이 캐릭터 영역 */
+/* 콩이 캐릭터 대형 래퍼 (스테이지의 85% 이상 차지) */
 .stage-seated-kongi-wrap {
-  width: 340px;
-  height: 380px;
+  width: 500px;
+  max-width: 90%;
+  height: 94%;
   position: relative;
-  z-index: 5;
+  z-index: 6;
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
-/* 원목 의자 그래픽 */
+/* 원목 의자 */
 .stage-wooden-chair {
   position: absolute;
-  bottom: 25px;
-  width: 170px;
-  height: 190px;
+  bottom: 12px;
+  width: 240px;
+  height: 260px;
   background: #A66E40;
-  border-radius: 16px 16px 6px 6px;
-  border: 4px solid #825026;
+  border-radius: 20px 20px 8px 8px;
+  border: 5px solid #7E4B22;
   z-index: 1;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
 }
 
 .stage-wooden-chair::before {
   content: "";
   position: absolute;
-  bottom: -25px;
-  left: 12px;
-  width: 14px;
-  height: 30px;
-  background: #6B3F1B;
-  box-shadow: 130px 0 0 #6B3F1B;
+  bottom: -22px;
+  left: 14px;
+  width: 18px;
+  height: 26px;
+  background: #643A18;
+  box-shadow: 194px 0 0 #643A18;
 }
 
-/* 콩이 캐릭터 이미지 */
+/* 콩이 캐릭터 이미지 (대형 고화질 렌더링) */
 .stage-kongi-character {
-  width: 300px;
-  height: 340px;
+  width: 440px;
+  max-width: 100%;
+  height: 92%;
   object-fit: contain;
   position: relative;
-  z-index: 3;
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.16));
-  transition: transform 0.6s ease-in-out;
+  z-index: 4;
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.2));
+  transition: transform 0.4s ease-in-out;
 }
 
-/* 시니어 맞춤 느린 호흡/체조 애니메이션 (좌우 반동/팔 올리기) */
+/* 3~8초 단위 부드러운 체조 모션 키프레임들 */
 .motion-breathing {
-  animation: kongiBreathing 4.5s infinite ease-in-out;
+  animation: kongiBreathing 4s infinite ease-in-out;
 }
 
 @keyframes kongiBreathing {
   0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-16px) scale(1.03); }
+  50% { transform: translateY(-16px) scale(1.02); }
 }
 
 .motion-left-right {
-  animation: kongiLeftRight 5s infinite ease-in-out;
+  animation: kongiLeftRight 4.5s infinite ease-in-out;
 }
 
 @keyframes kongiLeftRight {
   0%, 100% { transform: translateX(0) rotate(0deg); }
-  25% { transform: translateX(-18px) rotate(-3deg); }
-  75% { transform: translateX(18px) rotate(3deg); }
+  25% { transform: translateX(-24px) rotate(-3deg); }
+  75% { transform: translateX(24px) rotate(3deg); }
 }
 
 .motion-arms-up {
-  animation: kongiArmsUp 4s infinite ease-in-out;
+  animation: kongiArmsUp 3.8s infinite ease-in-out;
 }
 
 @keyframes kongiArmsUp {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-24px); }
+  50% { transform: translateY(-28px); }
 }
 
-/* 실제 영상 모드 컨테이너 (비디오 탭 전환 가능) */
+.motion-leg-lift {
+  animation: kongiLegLift 3.5s infinite ease-in-out;
+}
+
+@keyframes kongiLegLift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px) rotate(2deg); }
+}
+
+/* 중앙 플로팅 자막 캡션 바 (콩이 발치 오버레이) */
+.cinema-floating-caption {
+  position: absolute;
+  bottom: 14px;
+  left: 24px;
+  right: 24px;
+  background: rgba(33, 41, 34, 0.88);
+  backdrop-filter: blur(10px);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  z-index: 15;
+  transition: opacity 0.3s ease;
+}
+
+.caption-action-badge {
+  background: #E78C69;
+  color: white;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.caption-action-text {
+  font-size: 22px;
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1.3;
+  flex: 1;
+  text-align: left;
+}
+
+.caption-action-sub {
+  font-size: 15px;
+  color: #D1E0D5;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 실제 비디오 모드 */
 .exercise-video-embed {
   width: 100%;
   height: 100%;
@@ -1949,7 +2021,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 8;
+  z-index: 12;
   display: none;
 }
 
@@ -1957,123 +2029,75 @@ body {
   display: block;
 }
 
-/* 뷰 모드 전환 토글 (애니메이션 가이드 vs 실제 비디오) */
-.stage-mode-toggle {
-  position: absolute;
-  bottom: 16px;
-  right: 18px;
-  z-index: 15;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1.5px solid #CBD5E1;
-  border-radius: var(--radius-pill);
-  padding: 4px;
+/* 16:9 하단 컨트롤 바 (이전 / 일시정지 / 다음 + 모드전환 + 안전문구) */
+.cinema-bottom-bar {
+  flex-shrink: 0;
+  height: 72px;
+  background: #FFFFFF;
+  padding: 0 20px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1.5px solid #EAE5D9;
+  z-index: 25;
 }
 
-.btn-mode-pill {
+.cinema-controls-center {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.btn-cinema-ctrl {
   border: none;
-  background: transparent;
-  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  cursor: pointer;
-}
-
-.btn-mode-pill.active {
-  background: var(--garden-primary);
-  color: white;
-}
-
-/* 동작 안내 대형 캡션 (Central Action Caption) */
-.exercise-caption-panel {
-  margin-top: 18px;
-  text-align: center;
-  background: #FAF7F2;
-  border-radius: var(--radius-lg);
-  border: 1.5px solid #E5DDCF;
-  padding: 18px 24px;
-}
-
-.caption-step-badge {
-  font-size: 15px;
-  font-weight: 800;
-  color: #C0582D;
-  background: #FDEEE7;
-  padding: 4px 14px;
-  border-radius: var(--radius-pill);
-  display: inline-block;
-  margin-bottom: 6px;
-}
-
-.caption-primary-text {
-  font-size: 26px;
-  font-weight: 900;
-  color: var(--text-primary);
-  line-height: 1.35;
-  margin-bottom: 4px;
-}
-
-.caption-secondary-text {
-  font-size: 18px;
-  color: var(--text-secondary);
-  font-weight: 600;
-}
-
-/* 단 3개의 큰 컨트롤 버튼 영역 */
-.exercise-controls-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1.6fr 1fr;
-  gap: 18px;
-  margin-top: 22px;
-}
-
-.btn-ctrl-lg {
-  border: none;
-  border-radius: var(--radius-xl);
-  padding: 22px 20px;
-  font-size: 23px;
+  padding: 12px 28px;
+  font-size: 19px;
   font-weight: 800;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  transition: all var(--transition-bounce);
-  box-shadow: var(--shadow-card);
+  gap: 8px;
+  transition: all var(--transition-fast);
 }
 
-.btn-ctrl-lg.sec {
+.btn-cinema-ctrl.sec {
   background: var(--bg-subtle);
   color: var(--text-secondary);
-  border: 2px solid #D5CEBE;
+  border: 1.5px solid #D5CEBE;
 }
 
-.btn-ctrl-lg.pri {
+.btn-cinema-ctrl.pri {
   background: linear-gradient(135deg, #447E4F 0%, #2A5833 100%);
   color: white;
-  box-shadow: 0 12px 28px rgba(42, 88, 51, 0.32);
+  padding: 14px 38px;
+  font-size: 21px;
+  box-shadow: 0 6px 16px rgba(42, 88, 51, 0.3);
 }
 
-.btn-ctrl-lg:hover {
-  transform: translateY(-3px) scale(1.02);
+.btn-cinema-ctrl:hover {
+  transform: translateY(-2px);
 }
 
-/* 화면 하단 안전 안내 문구 (Safety Notice) */
-.exercise-safety-notice {
-  margin-top: 20px;
-  text-align: center;
-  padding: 12px 20px;
-  background: #FFFBEB;
-  border: 1.5px solid #FDE68A;
-  border-radius: var(--radius-md);
-  color: #92400E;
-  font-size: 16px;
-  font-weight: 800;
+.cinema-safety-tag {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #92400E;
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
 }
+
+.cinema-mode-toggle {
+  background: var(--bg-subtle);
+  border: 1.5px solid #CBD5E1;
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  display: flex;
+}
+
 

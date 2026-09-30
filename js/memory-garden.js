@@ -189,7 +189,11 @@ function switchView(viewName) {
   if (viewName === 'exercise-select') {
     stopExerciseTimer();
     speakVoicePrompt('오늘 어떤 운동을 해볼까요? 5분, 10분, 20분 코스 중에서 선택해 보세요.');
-  } else if (viewName !== 'exercise-garden') {
+  } else if (viewName === 'exercise-garden') {
+    if (!MemoryGarden.exerciseTimer) {
+      startExerciseCourse(MemoryGarden.activeExerciseCourse || 5);
+    }
+  } else {
     stopExerciseTimer();
   }
 
@@ -350,204 +354,66 @@ function closeModal(modalId) {
 }
 
 /* ==========================================================================
-   Activity 1: 콩이 건강체조 프로그램 (Kongi Seated Chair Exercise Program)
-   5분, 10분, 20분 맞춤 타임라인 엔진 및 실시간 가이드
+   Activity 1: 콩이 건강체조 16:9 다이내믹 플레이어 엔진 (Kongi 16:9 Engine)
+   각 동작이 3~8초 간격으로 살아 움직이듯 부드럽게 자동 전환
    ========================================================================== */
 
-// 체조 코스별 세부 타임라인 데이터
+// 3~8초 단위의 생생한 동작 타임라인 데이터
 MemoryGarden.exerciseCourses = {
   5: {
     title: '5분 가볍게',
     totalSeconds: 300,
-    steps: [
-      {
-        start: 0,
-        end: 20,
-        timeLabel: '0:00 ~ 0:20',
-        title: '콩이 인사',
-        primaryText: '"안녕하세요! 콩이와 함께 가볍게 몸을 움직여 볼까요?"',
-        secondaryText: '의자에 등을 편안하게 대고 바른 자세로 준비합니다.',
-        direction: '양쪽 함께 천천히',
-        motion: 'motion-breathing',
-        voiceText: '안녕하세요. 콩이와 함께 가볍게 몸을 움직여 볼까요?'
-      },
-      {
-        start: 20,
-        end: 60,
-        timeLabel: '0:20 ~ 1:00',
-        title: '천천히 호흡하기',
-        primaryText: '팔을 옆에서 위로 올리며 숨을 깊게 들이마시고, 천천히 내립니다.',
-        secondaryText: '팔을 천천히 내리면서 후- 하고 숨을 내쉬어 보세요.',
-        direction: '양팔 위로 ➔ 천천히 내리기',
-        motion: 'motion-arms-up',
-        voiceText: '팔을 옆에서 위로 천천히 올리며 숨을 들이마시고, 천천히 내립니다.'
-      },
-      {
-        start: 60,
-        end: 120,
-        timeLabel: '1:00 ~ 2:00',
-        title: '목과 어깨 운동',
-        primaryText: '고개를 좌우로 천천히 돌리고, 어깨를 으쓱 올렸다가 내려놓으세요.',
-        secondaryText: '어깨를 뒤로 천천히 둥글게 돌려줍니다.',
-        direction: '왼쪽 ◀ ▶ 오른쪽',
-        motion: 'motion-left-right',
-        voiceText: '고개를 좌우로 천천히 움직이고, 어깨를 부드럽게 돌려줍니다.'
-      },
-      {
-        start: 120,
-        end: 180,
-        timeLabel: '2:00 ~ 3:00',
-        title: '팔 운동',
-        primaryText: '팔을 앞으로 쭉 뻗고, 양팔을 넓게 벌려 가슴을 활짝 펴보세요.',
-        secondaryText: '마지막으로 팔을 위로 높이 올려 시원하게 펴줍니다.',
-        direction: '앞으로 ➔ 옆으로 ➔ 위로',
-        motion: 'motion-arms-up',
-        voiceText: '팔을 앞으로 뻗고, 양팔을 넓게 벌려 가슴을 펴보세요.'
-      },
-      {
-        start: 180,
-        end: 240,
-        timeLabel: '3:00 ~ 4:00',
-        title: '다리 운동',
-        primaryText: '의자에 앉은 상태로 무릎을 번갈아 들고, 발목을 움직여 주세요.',
-        secondaryText: '발끝을 몸쪽으로 살짝 당겨 종아리를 이완합니다.',
-        direction: '왼발 ◀ ▶ 오른발',
-        motion: 'motion-left-right',
-        voiceText: '의자에 앉아서 무릎을 번갈아 가볍게 들고, 발목을 움직여 봅니다.'
-      },
-      {
-        start: 240,
-        end: 300,
-        timeLabel: '4:00 ~ 5:00',
-        title: '정리운동',
-        primaryText: '천천히 팔을 올리며 깊은 호흡을 하고, 가볍게 손을 흔들어주세요.',
-        secondaryText: '"오늘도 정말 잘하셨어요!"',
-        direction: '깊은 심호흡',
-        motion: 'motion-breathing',
-        voiceText: '오늘도 정말 잘하셨어요. 참 잘하셨습니다.'
-      }
+    actions: [
+      { start: 0, end: 6, stage: '1단계: 콩이 인사', label: '동작 1/20', primary: '"안녕하세요! 콩이와 함께 가볍게 몸을 움직여 볼까요?"', secondary: '의자에 등을 편안히 기대고 바른 자세로 앉아주세요.', dir: '양쪽 함께 천천히', motion: 'motion-breathing', voice: '안녕하세요. 콩이와 함께 가볍게 몸을 움직여 볼까요?' },
+      { start: 6, end: 12, stage: '1단계: 콩이 인사', label: '동작 2/20', primary: '손을 가볍게 무릎 위에 올리고 편안하게 호흡합니다.', secondary: '무리하지 않고 내 몸에 맞춰 천천히 따라합니다.', dir: '바른 자세', motion: 'motion-breathing' },
+      { start: 12, end: 20, stage: '1단계: 콩이 인사', label: '동작 3/20', primary: '콩이가 손을 반갑게 흔들어요. 기분 좋게 시작해 볼까요?', secondary: '오늘도 건강하고 활기찬 하루를 만듭니다.', dir: '손 흔들기 👏', motion: 'motion-left-right', voice: '오늘도 건강하게 시작해 볼까요?' },
+      
+      { start: 20, end: 28, stage: '2단계: 천천히 호흡하기', label: '동작 4/20', primary: '양팔을 옆에서 천천히 위로 올려보세요.', secondary: '가슴을 활짝 펴면서 천천히 올립니다.', dir: '양팔 위로 ⇪', motion: 'motion-arms-up', voice: '양팔을 옆에서 천천히 위로 올려보세요.' },
+      { start: 28, end: 36, stage: '2단계: 천천히 호흡하기', label: '동작 5/20', primary: '코로 맑은 공기를 깊~게 들이마십니다.', secondary: '배가 볼록해지도록 깊은 숨을 쉽니다.', dir: '숨 들이마시기 ⇪', motion: 'motion-arms-up' },
+      { start: 36, end: 48, stage: '2단계: 천천히 호흡하기', label: '동작 6/20', primary: '입으로 후- 내쉬며 팔을 천천히 내립니다.', secondary: '몸의 긴장이 사르르 풀리도록 부드럽게 내립니다.', dir: '숨 내쉬기 ⇩', motion: 'motion-breathing', voice: '천천히 숨을 내쉬며 팔을 내립니다.' },
+      { start: 48, end: 60, stage: '2단계: 천천히 호흡하기', label: '동작 7/20', primary: '한 번 더 깊게 들이마시고... 천천히 내쉽니다.', secondary: '마음까지 차분하고 편안해집니다.', dir: '심호흡 ↔', motion: 'motion-arms-up' },
+
+      { start: 60, end: 75, stage: '3단계: 목과 어깨 운동', label: '동작 8/20', primary: '고개를 왼쪽으로 천천히 돌려보세요.', secondary: '목 옆선이 시원하게 늘어납니다.', dir: '◀ 왼쪽 천천히', motion: 'motion-left-right', voice: '고개를 왼쪽으로 천천히 돌려보세요.' },
+      { start: 75, end: 90, stage: '3단계: 목과 어깨 운동', label: '동작 9/20', primary: '이번엔 오른쪽으로 천천히 돌려보세요.', secondary: '무리하게 꺾지 않고 편안한 곳까지만 돌립니다.', dir: '오른쪽 천천히 ▶', motion: 'motion-left-right', voice: '이번엔 오른쪽으로 천천히 돌려봅니다.' },
+      { start: 90, end: 105, stage: '3단계: 목과 어깨 운동', label: '동작 10/20', primary: '어깨를 귀 가까이 으쓱~ 올려보세요!', secondary: '어깨에 힘을 주며 천천히 올립니다.', dir: '어깨 으쓱 ⇪', motion: 'motion-arms-up', voice: '어깨를 으쓱 올려보세요.' },
+      { start: 105, end: 120, stage: '3단계: 목과 어깨 운동', label: '동작 11/20', primary: '툭- 내려놓고, 어깨를 뒤로 천천히 돌려줍니다.', secondary: '어깨 뭉친 곳이 시원하게 풀립니다.', dir: '어깨 돌리기 ↻', motion: 'motion-left-right', voice: '어깨를 뒤로 부드럽게 돌려줍니다.' },
+
+      { start: 120, end: 140, stage: '4단계: 팔 운동', label: '동작 12/20', primary: '두 팔을 앞으로 시원하게 쭉 뻗어보세요.', secondary: '손가락 끝까지 활짝 펴며 뻗습니다.', dir: '앞으로 뻗기 ➔', motion: 'motion-arms-up', voice: '두 팔을 앞으로 시원하게 쭉 뻗어보세요.' },
+      { start: 140, end: 160, stage: '4단계: 팔 운동', label: '동작 13/20', primary: '양팔을 넓게 벌려 가슴을 활짝 펴주세요.', secondary: '가슴 속까지 시원하게 열립니다.', dir: '가슴 활짝 ↔', motion: 'motion-breathing', voice: '양팔을 넓게 벌려 가슴을 펴보세요.' },
+      { start: 160, end: 180, stage: '4단계: 팔 운동', label: '동작 14/20', primary: '두 팔을 머리 위로 높이 올려 스트레칭합니다.', secondary: '시원하게 기지개를 켜듯 쭉 뻗어보세요.', dir: '양팔 만세 ⇪', motion: 'motion-arms-up', voice: '팔을 위로 올려 시원하게 펴줍니다.' },
+
+      { start: 180, end: 200, stage: '5단계: 다리 운동', label: '동작 15/20', primary: '의자에 앉은 상태로 왼쪽 무릎을 가볍게 들어 올립니다.', secondary: '허벅지에 기분 좋은 힘이 들어갑니다.', dir: '◀ 왼쪽 무릎 들기', motion: 'motion-leg-lift', voice: '왼쪽 무릎을 가볍게 들어 올려봅니다.' },
+      { start: 200, end: 220, stage: '5단계: 다리 운동', label: '동작 16/20', primary: '이번엔 오른쪽 무릎을 가볍게 들어 올립니다.', secondary: '양쪽 다리를 번갈아 천천히 움직입니다.', dir: '오른쪽 무릎 들기 ▶', motion: 'motion-leg-lift', voice: '오른쪽 무릎도 천천히 들어 올려보세요.' },
+      { start: 220, end: 240, stage: '5단계: 다리 운동', label: '동작 17/20', primary: '발목을 까닥까닥 움직이고 발끝을 당겨줍니다.', secondary: '종아리와 발목이 부드럽고 가벼워집니다.', dir: '발목 까닥까닥 ↔', motion: 'motion-left-right', voice: '발목을 까닥까닥 움직여 보세요.' },
+
+      { start: 240, end: 260, stage: '6단계: 정리운동', label: '동작 18/20', primary: '천천히 팔을 올리며 온몸의 힘을 편안히 뺍니다.', secondary: '온몸의 순환을 느끼며 깊게 호흡합니다.', dir: '온몸 이완', motion: 'motion-breathing', voice: '팔을 천천히 올리며 온몸의 힘을 뺍니다.' },
+      { start: 260, end: 280, stage: '6단계: 정리운동', label: '동작 19/20', primary: '깊게 숨을 들이마시고... 편안하게 내쉽니다.', secondary: '몸과 마음이 한결 가볍고 상쾌해졌어요.', dir: '깊은 숨', motion: 'motion-breathing' },
+      { start: 280, end: 300, stage: '6단계: 정리운동', label: '동작 20/20', primary: '손을 흔들며 마무리합니다. 오늘도 참 잘하셨어요!', secondary: '"콩이와 함께한 오늘, 몸도 마음도 튼튼해졌어요."', dir: '손 흔들며 마무리 👏', motion: 'motion-breathing', voice: '오늘도 정말 잘하셨어요. 참 잘하셨습니다.' }
     ]
   },
   10: {
     title: '10분 건강체조',
     totalSeconds: 600,
-    steps: [
-      {
-        start: 0,
-        end: 120,
-        timeLabel: '0:00 ~ 2:00',
-        title: '준비운동 (2분)',
-        primaryText: '깊은 호흡을 하며 목과 어깨, 손목을 부드럽게 풀어줍니다.',
-        secondaryText: '몸의 긴장을 풀고 천천히 숨을 쉽니다.',
-        direction: '양쪽 함께 천천히',
-        motion: 'motion-breathing',
-        voiceText: '준비운동입니다. 호흡과 목, 어깨를 부드럽게 풀어주세요.'
-      },
-      {
-        start: 120,
-        end: 300,
-        timeLabel: '2:00 ~ 5:00',
-        title: '상체운동 (3분)',
-        primaryText: '팔을 앞으로, 옆으로, 위로 뻗고 팔꿈치와 손가락을 쥐었다 펴보세요.',
-        secondaryText: '손가락을 잼잼 쥐었다 펴며 혈액순환을 돕습니다.',
-        direction: '앞으로 ➔ 옆으로 ➔ 위로',
-        motion: 'motion-arms-up',
-        voiceText: '상체운동입니다. 팔을 뻗고 팔꿈치와 손가락을 천천히 쥐었다 펴보세요.'
-      },
-      {
-        start: 300,
-        end: 480,
-        timeLabel: '5:00 ~ 8:00',
-        title: '하체운동 (3분)',
-        primaryText: '무릎을 들고 다리를 펴며, 발목을 돌리고 발끝을 올려줍니다.',
-        secondaryText: '의자에 앉아 편안한 높이까지만 들어 올립니다.',
-        direction: '왼쪽 ◀ ▶ 오른쪽',
-        motion: 'motion-left-right',
-        voiceText: '하체운동입니다. 무릎을 들고 발목을 천천히 돌려주세요.'
-      },
-      {
-        start: 480,
-        end: 540,
-        timeLabel: '8:00 ~ 9:00',
-        title: '리듬운동 (1분)',
-        primaryText: '음악에 맞춰 오른손 ➔ 왼손, 오른발 ➔ 왼발 천천히 움직여요.',
-        secondaryText: '경쾌한 박자에 맞춰 즐겁게 움직입니다.',
-        direction: '오른쪽 ➔ 왼쪽 리듬',
-        motion: 'motion-left-right',
-        voiceText: '음악에 맞추어 오른손, 왼손, 오른발, 왼발을 천천히 움직여 봅니다.'
-      },
-      {
-        start: 540,
-        end: 600,
-        timeLabel: '9:00 ~ 10:00',
-        title: '정리운동 (1분)',
-        primaryText: '깊은 호흡과 함께 전신 스트레칭으로 마무리합니다.',
-        secondaryText: '"오늘도 콩이와 함께 건강해졌어요!"',
-        direction: '깊은 호흡과 이완',
-        motion: 'motion-breathing',
-        voiceText: '수고하셨습니다. 깊은 호흡과 함께 몸을 편안하게 정리합니다.'
-      }
+    actions: [
+      { start: 0, end: 60, stage: '준비운동 (2분)', label: '호흡 풀기', primary: '의자에 앉아 깊은 호흡으로 몸과 마음을 이완합니다.', secondary: '코로 들이마시고 입으로 천천히 내쉽니다.', dir: '깊은 호흡', motion: 'motion-breathing', voice: '준비운동입니다. 호흡을 천천히 가다듬어 보세요.' },
+      { start: 60, end: 120, stage: '준비운동 (2분)', label: '목·어깨·손목', primary: '목을 좌우로, 손목을 부드럽게 돌려줍니다.', secondary: '관절을 부드럽게 깨워줍니다.', dir: '관절 이완 ↔', motion: 'motion-left-right' },
+      { start: 120, end: 210, stage: '상체운동 (3분)', label: '팔 앞·옆·위', primary: '팔을 앞으로 뻗고, 양옆으로 벌리고, 위로 올려줍니다.', secondary: '가슴과 등을 활짝 펴주세요.', dir: '앞 ➔ 옆 ➔ 위', motion: 'motion-arms-up', voice: '상체운동입니다. 팔을 시원하게 뻗어보세요.' },
+      { start: 210, end: 300, stage: '상체운동 (3분)', label: '팔꿈치 & 손가락', primary: '팔꿈치를 굽혔다 펴며 손가락을 쥐었다 펴보세요.', secondary: '손가락을 잼잼 움직여 두뇌와 순환을 자극합니다.', dir: '손가락 잼잼 ✊', motion: 'motion-breathing' },
+      { start: 300, end: 390, stage: '하체운동 (3분)', label: '무릎 들기', primary: '의자에 앉아 무릎을 번갈아 들어 올립니다.', secondary: '허벅지와 아랫배에 힘을 줍니다.', dir: '무릎 번갈아 ⇪', motion: 'motion-leg-lift', voice: '하체운동입니다. 무릎을 천천히 들어 올려보세요.' },
+      { start: 390, end: 480, stage: '하체운동 (3분)', label: '다리 펴기 & 발목', primary: '다리를 앞으로 펴고 발목을 둥글게 돌려줍니다.', secondary: '발끝을 몸쪽으로 당겨 종아리를 늘려줍니다.', dir: '발목 돌리기 ↻', motion: 'motion-left-right' },
+      { start: 480, end: 540, stage: '리듬운동 (1분)', label: '교대 리듬', primary: '음악에 맞춰 오른손 ➔ 왼손, 오른발 ➔ 왼발 움직여요.', secondary: '경쾌한 리듬에 맞춰 즐겁게 박수칩니다.', dir: '오른쪽 ➔ 왼쪽 리듬 🎵', motion: 'motion-left-right', voice: '음악에 맞추어 오른손, 왼손, 발을 천천히 움직입니다.' },
+      { start: 540, end: 600, stage: '정리운동 (1분)', label: '전신 이완', primary: '깊은 호흡과 함께 전신 스트레칭으로 마무리합니다.', secondary: '"오늘도 콩이와 함께 10분 건강체조 성공!"', dir: '심호흡과 마무리 👏', motion: 'motion-breathing', voice: '수고하셨습니다. 오늘도 정말 훌륭하게 마치셨어요.' }
     ]
   },
   20: {
     title: '20분 함께 운동',
     totalSeconds: 1200,
-    steps: [
-      {
-        start: 0,
-        end: 180,
-        timeLabel: '0:00 ~ 3:00',
-        title: '1단계 준비운동 (3분)',
-        primaryText: '깊은 호흡, 목, 어깨, 손목, 손가락을 고루 풀어줍니다.',
-        secondaryText: '바른 자세로 앉아 천천히 관절을 이완합니다.',
-        direction: '양쪽 함께 천천히',
-        motion: 'motion-breathing',
-        voiceText: '1단계 준비운동입니다. 호흡과 관절을 부드럽게 이완해 주세요.'
-      },
-      {
-        start: 180,
-        end: 480,
-        timeLabel: '3:00 ~ 8:00',
-        title: '2단계 상체운동 (5분)',
-        primaryText: '양팔 앞으로, 옆으로, 위로 올리고 가슴을 열며 좌우로 뻗어줍니다.',
-        secondaryText: '어깨와 등 근육을 시원하게 펴줍니다.',
-        direction: '앞으로 ➔ 가슴 열기 ➔ 위로',
-        motion: 'motion-arms-up',
-        voiceText: '2단계 상체운동입니다. 팔을 뻗고 가슴을 활짝 열어보세요.'
-      },
-      {
-        start: 480,
-        end: 780,
-        timeLabel: '8:00 ~ 13:00',
-        title: '3단계 하체운동 (5분)',
-        primaryText: '의자에 앉아 무릎 번갈아 들기, 다리 펴기, 발목·발끝·발뒤꿈치 들기.',
-        secondaryText: '무리하지 않고 가능한 범위에서 안전하게 움직입니다.',
-        direction: '왼발 ◀ ▶ 오른발',
-        motion: 'motion-left-right',
-        voiceText: '3단계 하체운동입니다. 의자에 앉은 채로 무릎과 발목을 움직여 봅니다.'
-      },
-      {
-        start: 780,
-        end: 1020,
-        timeLabel: '13:00 ~ 17:00',
-        title: '4단계 리듬운동 (4분)',
-        primaryText: '음악에 맞춰 손뼉 치기 ➔ 팔 벌리기 ➔ 무릎 들기 ➔ 좌우 팔 뻗기.',
-        secondaryText: '동작을 반복하며 리듬감과 협응력을 기릅니다.',
-        direction: '손뼉 ➔ 무릎 ➔ 좌우',
-        motion: 'motion-left-right',
-        voiceText: '4단계 리듬운동입니다. 음악에 맞춰 손뼉을 치고 팔을 벌려보세요.'
-      },
-      {
-        start: 1020,
-        end: 1200,
-        timeLabel: '17:00 ~ 20:00',
-        title: '5단계 정리운동 (3분)',
-        primaryText: '팔을 위로 천천히, 옆으로 내리며 깊은 호흡과 손 흔들기로 마무리.',
-        secondaryText: '"수고하셨어요. 오늘도 콩이와 함께 건강한 하루 보내세요."',
-        direction: '깊은 심호흡',
-        motion: 'motion-breathing',
-        voiceText: '수고하셨어요. 오늘도 콩이와 함께 건강한 하루 보내세요.'
-      }
+    actions: [
+      { start: 0, end: 180, stage: '1단계: 준비운동 (3분)', label: '전신 관절 풀기', primary: '깊은 호흡과 함께 목, 어깨, 손목, 손가락을 풉니다.', secondary: '온몸의 긴장을 풀고 편안한 호흡을 유지합니다.', dir: '양쪽 함께 천천히', motion: 'motion-breathing', voice: '1단계 준비운동입니다. 관절을 부드럽게 이완합니다.' },
+      { start: 180, end: 480, stage: '2단계: 상체운동 (5분)', label: '가슴 열기 & 상체 활력', primary: '양팔을 앞으로, 옆으로, 위로 올리고 가슴을 활짝 엽니다.', secondary: '어깨와 등 근육을 시원하게 스트레칭합니다.', dir: '앞으로 ➔ 가슴 열기 ➔ 위로', motion: 'motion-arms-up', voice: '2단계 상체운동입니다. 팔을 뻗고 가슴을 활짝 열어보세요.' },
+      { start: 480, end: 780, stage: '3단계: 하체운동 (5분)', label: '무릎 & 발목 활력', primary: '의자에 앉아 무릎 번갈아 들기, 발끝과 발뒤꿈치 들기.', secondary: '낙상 걱정 없이 안전하게 다리 근력을 기릅니다.', dir: '왼발 ◀ ▶ 오른발', motion: 'motion-leg-lift', voice: '3단계 하체운동입니다. 무릎과 발목을 천천히 움직여 봅니다.' },
+      { start: 780, end: 1020, stage: '4단계: 리듬운동 (4분)', label: '손뼉 & 협응 리듬', primary: '음악에 맞춰 손뼉 치기 ➔ 팔 벌리기 ➔ 무릎 들기 반복.', secondary: '뇌를 자극하며 즐겁게 리듬을 탑니다.', dir: '손뼉 ➔ 무릎 ➔ 좌우 🎵', motion: 'motion-left-right', voice: '4단계 리듬운동입니다. 음악에 맞춰 손뼉을 치고 팔을 벌려보세요.' },
+      { start: 1020, end: 1200, stage: '5단계: 정리운동 (3분)', label: '깊은 호흡과 마무리', primary: '팔을 위로 천천히 올리고 깊은 호흡으로 마무리합니다.', secondary: '"수고하셨어요. 오늘도 콩이와 함께 건강한 하루 보내세요."', dir: '깊은 심호흡 👏', motion: 'motion-breathing', voice: '수고하셨어요. 오늘도 콩이와 함께 건강한 하루 보내세요.' }
     ]
   }
 };
@@ -555,7 +421,7 @@ MemoryGarden.exerciseCourses = {
 // 현재 선택된 코스 상태
 MemoryGarden.activeExerciseCourse = 5;
 MemoryGarden.exerciseElapsedSec = 0;
-MemoryGarden.exerciseStepIndex = 0;
+MemoryGarden.exerciseActionIndex = -1;
 MemoryGarden.exerciseViewMode = 'anim';
 
 /**
@@ -565,25 +431,26 @@ function startExerciseCourse(minutes) {
   MemoryGarden.activeExerciseCourse = minutes;
   const courseData = MemoryGarden.exerciseCourses[minutes] || MemoryGarden.exerciseCourses[5];
   MemoryGarden.exerciseElapsedSec = 0;
-  MemoryGarden.exerciseStepIndex = -1;
+  MemoryGarden.exerciseActionIndex = -1;
   MemoryGarden.isExercisePaused = false;
 
-  // UI 요소 초기화
+  // 상단 코스 타이틀 갱신
   const tagEl = document.getElementById('currentCourseTag');
   if (tagEl) tagEl.textContent = `⏱ ${courseData.title}`;
 
+  // 일시정지 버튼 초기화
   const pauseBtn = document.getElementById('btnExercisePauseLarge');
   if (pauseBtn) {
-    pauseBtn.innerHTML = '<span>⏸</span><span>잠시 쉬기</span>';
+    pauseBtn.innerHTML = '<span>⏸</span><span>일시정지</span>';
   }
 
-  // 화면을 체조 플레이어로 전환
+  // 16:9 플레이어 화면으로 전환
   switchView('exercise-garden');
 
-  // 첫 번째 스텝 렌더링 및 음성
-  checkAndRenderExerciseStep();
+  // 첫 번째 동작 즉시 렌더링
+  checkAndRenderExerciseAction();
 
-  // 인터벌 타이머 시작
+  // 1초 단위 타이머 가동 (매초 경과 및 3~8초 단위 자동 전환)
   stopExerciseTimer();
   MemoryGarden.exerciseTimer = setInterval(() => {
     if (!MemoryGarden.isExercisePaused) {
@@ -594,15 +461,15 @@ function startExerciseCourse(minutes) {
 }
 
 /**
- * 1초마다 실행되는 체조 플레이어 틱
+ * 1초마다 실행되는 16:9 플레이어 틱 엔진
  */
 function updateExercisePlayerTick() {
-  const courseData = MemoryGarden.exerciseCourses[MemoryGarden.activeExerciseCourse];
+  const courseData = MemoryGarden.exerciseCourses[MemoryGarden.activeExerciseCourse] || MemoryGarden.exerciseCourses[5];
   const total = courseData.totalSeconds;
   const elapsed = MemoryGarden.exerciseElapsedSec;
   const remaining = Math.max(0, total - elapsed);
 
-  // 1. 남은 시간 UI 갱신
+  // 1. 남은 시간 UI 갱신 (상단 안전 헤더)
   const timerEl = document.getElementById('exerciseTimerDisplay');
   if (timerEl) {
     const mins = Math.floor(remaining / 60);
@@ -610,17 +477,17 @@ function updateExercisePlayerTick() {
     timerEl.textContent = `남은 시간: ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   }
 
-  // 2. 상단 프로그레스 바 갱신
+  // 2. 상단 프로그레스 바 부드럽게 전진
   const progressEl = document.getElementById('exerciseStepProgress');
   if (progressEl) {
     const percent = Math.min(100, (elapsed / total) * 100);
     progressEl.style.width = `${percent}%`;
   }
 
-  // 3. 현재 구간 스텝 확인 및 렌더링
-  checkAndRenderExerciseStep();
+  // 3. 현재 시간에 부합하는 세부 동작 자동 감지 및 렌더링 (3~8초 간격 자동 전환)
+  checkAndRenderExerciseAction();
 
-  // 4. 시간 종료 시 활동 종료 화면 이동
+  // 4. 코스 종료 시 축하 화면으로 자연 전환
   if (elapsed >= total) {
     stopExerciseTimer();
     completeActivity(`콩이의 ${courseData.title}`, 'exercise');
@@ -628,63 +495,82 @@ function updateExercisePlayerTick() {
 }
 
 /**
- * 현재 경과 시간에 맞는 스텝 렌더링
+ * 현재 경과 시간에 부합하는 동작을 찾아 3~8초 단위로 자동 전환
  */
-function checkAndRenderExerciseStep() {
-  const courseData = MemoryGarden.exerciseCourses[MemoryGarden.activeExerciseCourse];
+function checkAndRenderExerciseAction() {
+  const courseData = MemoryGarden.exerciseCourses[MemoryGarden.activeExerciseCourse] || MemoryGarden.exerciseCourses[5];
   const elapsed = MemoryGarden.exerciseElapsedSec;
   
-  const stepIdx = courseData.steps.findIndex(s => elapsed >= s.start && elapsed < s.end);
-  const currentStep = courseData.steps[stepIdx !== -1 ? stepIdx : courseData.steps.length - 1];
+  // 현재 시간에 해당하는 액션 찾기
+  let actionIdx = courseData.actions.findIndex(a => elapsed >= a.start && elapsed < a.end);
+  if (actionIdx === -1) {
+    actionIdx = courseData.actions.length - 1;
+  }
 
-  if (stepIdx !== MemoryGarden.exerciseStepIndex && currentStep) {
-    MemoryGarden.exerciseStepIndex = stepIdx;
-    renderCurrentExerciseStep(currentStep);
+  // 액션이 변경되었을 때 부드럽게 UI 및 모션 갱신
+  if (actionIdx !== MemoryGarden.exerciseActionIndex) {
+    MemoryGarden.exerciseActionIndex = actionIdx;
+    renderCurrentAction(courseData.actions[actionIdx]);
   }
 }
 
 /**
- * 스텝 UI 갱신 및 콩이 모션 / 음성 적용
+ * 동작 UI 갱신 및 콩이 모션 / 방향 / 음성 적용 (부드러운 전환)
  */
-function renderCurrentExerciseStep(step) {
-  // 상단 스텝 라벨
-  const leadEl = document.getElementById('currentStepNameLead');
-  if (leadEl) leadEl.textContent = step.title;
+function renderCurrentAction(action) {
+  if (!action) return;
 
-  // 대형 캡션
+  // 1. 상단 단계 및 동작명 갱신
+  const leadEl = document.getElementById('currentStepNameLead');
+  if (leadEl) leadEl.textContent = `${action.stage} · ${action.label}`;
+
+  // 2. 중앙 자막 캡션 (부드러운 페이드)
   const badgeEl = document.getElementById('captionStepBadge');
   const primEl = document.getElementById('captionPrimaryText');
   const secEl = document.getElementById('captionSecondaryText');
 
-  if (badgeEl) badgeEl.textContent = `${step.timeLabel} · ${step.title}`;
-  if (primEl) primEl.textContent = step.primaryText;
-  if (secEl) secEl.textContent = step.secondaryText;
+  if (badgeEl) badgeEl.textContent = action.label;
+  if (primEl) {
+    primEl.style.opacity = '0.4';
+    primEl.textContent = action.primary;
+    setTimeout(() => { primEl.style.opacity = '1'; }, 100);
+  }
+  if (secEl) secEl.textContent = action.secondary;
 
-  // 방향 가이드 배지
+  // 3. 방향 가이드 뱃지
   const dirText = document.getElementById('directionText');
-  if (dirText) dirText.textContent = step.direction;
+  if (dirText) dirText.textContent = action.dir;
 
-  // 콩이 캐릭터 모션 클래스 변경 (시니어 맞춤 느린 호흡 / 좌우 / 팔 뻗기)
+  // 4. 콩이 캐릭터 모션 클래스 교체 (생동감 넘치는 움직임)
   const animImg = document.getElementById('kongiExerciseAnimImg');
   if (animImg) {
-    animImg.className = `stage-kongi-character ${step.motion}`;
+    animImg.className = `stage-kongi-character ${action.motion}`;
   }
 
-  // 다정한 콩이 음성 안내
-  speakVoicePrompt(step.voiceText);
+  // 5. 음성 안내가 지정되어 있다면 친절하게 출력
+  if (action.voice) {
+    speakVoicePrompt(action.voice);
+  }
 }
 
 /**
- * 3개 메인 컨트롤 버튼 동작
+ * 3대 컨트롤 버튼: 이전 동작, 일시정지, 다음 동작
  */
 
-// 1. 처음부터
-function resetCurrentExercise() {
-  startExerciseCourse(MemoryGarden.activeExerciseCourse);
-  speakVoicePrompt('처음부터 다시 시작합니다. 천천히 따라해 보세요.');
+// 1. 이전 동작으로 이동
+function prevExerciseStep() {
+  const courseData = MemoryGarden.exerciseCourses[MemoryGarden.activeExerciseCourse] || MemoryGarden.exerciseCourses[5];
+  const currentIdx = MemoryGarden.exerciseActionIndex;
+  const prevIdx = Math.max(0, currentIdx - 1);
+  const prevAction = courseData.actions[prevIdx];
+
+  if (prevAction) {
+    MemoryGarden.exerciseElapsedSec = prevAction.start;
+    updateExercisePlayerTick();
+  }
 }
 
-// 2. 잠시 쉬기 / 계속하기
+// 2. 일시정지 / 계속하기
 function toggleExercisePause() {
   MemoryGarden.isExercisePaused = !MemoryGarden.isExercisePaused;
   const pauseBtn = document.getElementById('btnExercisePauseLarge');
@@ -697,26 +583,33 @@ function toggleExercisePause() {
     if (video) video.pause();
     speakVoicePrompt('잠시 쉬어갑니다. 편안하게 호흡하세요.');
   } else {
-    if (pauseBtn) pauseBtn.innerHTML = '<span>⏸</span><span>잠시 쉬기</span>';
+    if (pauseBtn) pauseBtn.innerHTML = '<span>⏸</span><span>일시정지</span>';
     if (animImg) animImg.style.animationPlayState = 'running';
     if (video && MemoryGarden.exerciseViewMode === 'video') video.play();
     speakVoicePrompt('운동을 계속합니다.');
   }
 }
 
-// 3. 다음 운동 (다음 스텝으로 점프)
+// 3. 다음 동작으로 즉시 넘어가기
 function nextExerciseStep() {
-  const courseData = MemoryGarden.exerciseCourses[MemoryGarden.activeExerciseCourse];
-  const nextIdx = (MemoryGarden.exerciseStepIndex + 1);
+  const courseData = MemoryGarden.exerciseCourses[MemoryGarden.activeExerciseCourse] || MemoryGarden.exerciseCourses[5];
+  const currentIdx = MemoryGarden.exerciseActionIndex;
+  const nextIdx = currentIdx + 1;
 
-  if (nextIdx < courseData.steps.length) {
-    const nextStep = courseData.steps[nextIdx];
-    MemoryGarden.exerciseElapsedSec = nextStep.start;
+  if (nextIdx < courseData.actions.length) {
+    const nextAction = courseData.actions[nextIdx];
+    MemoryGarden.exerciseElapsedSec = nextAction.start;
     updateExercisePlayerTick();
   } else {
     stopExerciseTimer();
     completeActivity(`콩이의 ${courseData.title}`, 'exercise');
   }
+}
+
+// 4. 처음부터 다시 시작
+function resetCurrentExercise() {
+  startExerciseCourse(MemoryGarden.activeExerciseCourse || 5);
+  speakVoicePrompt('처음부터 다시 시작합니다.');
 }
 
 /**
@@ -727,7 +620,6 @@ function setExerciseViewMode(mode) {
   const btnAnim = document.getElementById('btnModeAnim');
   const btnVideo = document.getElementById('btnModeVideo');
   const videoEl = document.getElementById('exerciseVideoElement');
-  const stageWrap = document.getElementById('kongiCharacterStage');
 
   if (mode === 'video') {
     if (btnVideo) btnVideo.classList.add('active');
