@@ -1,0 +1,737 @@
+/* ==========================================================================
+   기억정원 콩이 운동방 - 어르신 안심 의자 체조 전용 스타일시트
+   - 22px 이상 큰 글씨
+   - 60px 이상 큰 버튼
+   - 5개 큰 카드 메뉴
+   - 콩이 대형 캐릭터 무대
+   - 오직 4개 핵심 조작 버튼 (이전 동작, 잠깐 쉬기, 다음 동작, 그만하기)
+   ========================================================================== */
+
+:root {
+  --kr-peach-primary: #E66A23;
+  --kr-peach-hover: #C2410C;
+  --kr-peach-bg: #FFF7ED;
+  --kr-peach-border: #FDBA74;
+
+  --kr-green-primary: #2E5C38;
+  --kr-green-hover: #22462A;
+  --kr-green-bg: #F0FDF4;
+  --kr-green-border: #86EFAC;
+
+  --kr-text-title: #1C2B1E;
+  --kr-text-body: #2B3A2D;
+  --kr-text-sub: #4A5B4C;
+
+  --kr-min-font: 22px;
+  --kr-min-btn: 60px;
+}
+
+body {
+  font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--kr-min-font);
+  color: var(--kr-text-body);
+  background: linear-gradient(180deg, #FAF7F2 0%, #FFFDF9 100%);
+  margin: 0;
+  padding: 0;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   상단 글로벌 바
+   ========================================================================== */
+.kr-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid #E2E8F0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.kr-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.kr-btn-home {
+  min-height: var(--kr-min-btn);
+  padding: 12px 26px;
+  font-size: 24px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #2E5C38 0%, #1E4627 100%);
+  color: #FFFFFF !important;
+  text-decoration: none;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 14px rgba(46, 92, 56, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.kr-btn-home:hover {
+  transform: translateY(-2px);
+}
+
+.kr-room-badge {
+  min-height: var(--kr-min-btn);
+  padding: 10px 22px;
+  font-size: 24px;
+  font-weight: 900;
+  color: #C2410C;
+  background: #FFF4EC;
+  border: 2px solid #FDBA74;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kr-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.kr-senior-pill {
+  min-height: var(--kr-min-btn);
+  padding: 10px 20px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #92400E;
+  background: #FEF3C7;
+  border: 2px solid #FCD34D;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kr-ctrl-btn {
+  min-height: var(--kr-min-btn);
+  padding: 10px 22px;
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: 20px;
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  color: var(--kr-text-title);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.kr-ctrl-btn:hover {
+  background: #F1F5F9;
+  border-color: #94A3B8;
+}
+
+.kr-ctrl-btn.active {
+  background: #DCFCE7;
+  border-color: #86EFAC;
+  color: #166534;
+}
+
+/* ==========================================================================
+   화면 1: 운동방 메인 메뉴 (5개 큰 카드 버튼)
+   ========================================================================== */
+.kr-menu-stage {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 36px 20px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kr-header-banner {
+  text-align: center;
+  max-width: 900px;
+  margin-bottom: 36px;
+}
+
+.kr-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFF7ED;
+  border: 2px solid #FDBA74;
+  color: #C2410C;
+  padding: 8px 24px;
+  border-radius: 9999px;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.kr-main-title {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--kr-text-title);
+  line-height: 1.35;
+  margin: 0 0 10px;
+}
+
+.kr-main-subtitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--kr-text-sub);
+  margin: 0 0 16px;
+}
+
+.kr-safety-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FEF2F2;
+  border: 2px solid #FECACA;
+  color: #991B1B;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* 5개 메뉴 카드 그리드 */
+.kr-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 28px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.kr-menu-card {
+  background: #FFFFFF;
+  border: 4px solid #FDBA74;
+  border-radius: 32px;
+  padding: 32px 28px;
+  box-shadow: 0 10px 32px rgba(230, 106, 35, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.kr-menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(230, 106, 35, 0.16);
+  border-color: #EA580C;
+}
+
+/* 카드별 특화 테마 */
+.card-theme-5min {
+  background: linear-gradient(135deg, #FFFDF9 0%, #FFF7ED 100%);
+  border-color: #FDBA74;
+}
+.card-theme-10min {
+  background: linear-gradient(135deg, #FFFDF9 0%, #FEF3C7 100%);
+  border-color: #FCD34D;
+}
+.card-theme-20min {
+  background: linear-gradient(135deg, #FFFDF9 0%, #DCFCE7 100%);
+  border-color: #86EFAC;
+}
+.card-theme-finger {
+  background: linear-gradient(135deg, #FFFDF9 0%, #EDE9FE 100%);
+  border-color: #C4B5FD;
+}
+.card-theme-music {
+  background: linear-gradient(135deg, #FFFDF9 0%, #E0F2FE 100%);
+  border-color: #7DD3FC;
+}
+
+.kr-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.kr-card-icon {
+  font-size: 44px;
+}
+
+.kr-card-pill {
+  padding: 6px 18px;
+  border-radius: 9999px;
+  font-size: 20px;
+  font-weight: 800;
+  background: #FFFFFF;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  color: #92400E;
+}
+
+.kr-card-title {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--kr-text-title);
+  margin: 4px 0 6px;
+  line-height: 1.3;
+}
+
+.kr-card-desc {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--kr-text-sub);
+  line-height: 1.45;
+  margin: 0;
+  flex: 1;
+}
+
+.kr-card-btn {
+  min-height: 64px;
+  padding: 14px 28px;
+  font-size: 24px;
+  font-weight: 900;
+  color: #FFFFFF;
+  border-radius: 20px;
+  border: none;
+  background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card-theme-10min .kr-card-btn {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+  box-shadow: 0 6px 16px rgba(217, 119, 6, 0.3);
+}
+.card-theme-20min .kr-card-btn {
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
+}
+.card-theme-finger .kr-card-btn {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+}
+.card-theme-music .kr-card-btn {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.3);
+}
+
+/* ==========================================================================
+   화면 2: 운동 진행 화면 (Playing Stage)
+   - 콩이 캐릭터 크게 중앙 등장
+   - 하단 오직 4개 버튼 (이전 동작, 잠깐 쉬기, 다음 동작, 그만하기)
+   ========================================================================== */
+.kr-play-stage {
+  display: none;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 100px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kr-play-stage.active {
+  display: flex;
+}
+
+/* 운동 상단 단계 정보 */
+.kr-play-header-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border: 3px solid #FDBA74;
+  border-radius: 24px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.kr-play-info-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kr-program-pill {
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 22px;
+  font-weight: 800;
+  background: #FFF7ED;
+  color: #C2410C;
+  border: 2px solid #FDBA74;
+}
+
+.kr-step-indicator {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--kr-text-title);
+}
+
+.kr-step-timer {
+  font-size: 32px;
+  font-weight: 900;
+  color: #2E5C38;
+  background: #F0FDF4;
+  border: 2px solid #86EFAC;
+  padding: 6px 20px;
+  border-radius: 9999px;
+}
+
+/* 콩이 캐릭터 대형 무대 */
+.kr-stage-card {
+  width: 100%;
+  background: #FFFFFF;
+  border: 4px solid #FDBA74;
+  border-radius: 36px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 콩이 캐릭터 중앙 대형 표시 */
+.kr-character-theater {
+  width: 100%;
+  max-width: 720px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #FFF9F2 0%, #FFF2E5 100%);
+  border: 2px solid #FED7AA;
+  overflow: hidden;
+}
+
+.kr-char-giant-img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.15));
+  transition: transform 0.3s ease;
+}
+
+/* 일시 정지 오버레이 */
+.kr-pause-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  color: #FFFFFF;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  z-index: 10;
+  text-align: center;
+  padding: 20px;
+}
+
+.kr-pause-overlay.active {
+  display: flex;
+}
+
+.kr-pause-overlay h3 {
+  font-size: 36px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.kr-pause-overlay p {
+  font-size: 24px;
+  margin: 0;
+  color: #FEF3C7;
+}
+
+/* 동작 이름 및 말풍선 자막 */
+.kr-caption-card {
+  width: 100%;
+  background: #FFF7ED;
+  border: 3px solid #FDBA74;
+  border-radius: 24px;
+  padding: 20px 24px;
+  text-align: center;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+}
+
+.kr-action-name {
+  font-size: 32px;
+  font-weight: 900;
+  color: #C2410C;
+  margin-bottom: 8px;
+}
+
+.kr-action-prompt {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--kr-text-title);
+  line-height: 1.45;
+}
+
+.kr-action-guide {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--kr-text-sub);
+  margin-top: 8px;
+}
+
+/* 안전 배너 (통증/어지럼 시 중단) */
+.kr-play-safety-note {
+  font-size: 22px;
+  font-weight: 700;
+  color: #991B1B;
+  background: #FEF2F2;
+  border: 2px solid #FECACA;
+  padding: 10px 20px;
+  border-radius: 16px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   하단 4대 조작 버튼
+   - 이전 동작
+   - 잠깐 쉬기
+   - 다음 동작
+   - 그만하기
+   ========================================================================== */
+.kr-controls-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.kr-btn-ctrl {
+  min-height: 72px;
+  padding: 14px 20px;
+  font-size: 24px;
+  font-weight: 900;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.kr-btn-ctrl:hover {
+  transform: translateY(-3px);
+}
+
+.kr-btn-ctrl:active {
+  transform: translateY(0);
+}
+
+/* 1. 이전 동작 */
+.kr-btn-prev {
+  background: #F1F5F9;
+  border: 3px solid #CBD5E1;
+  color: #334155;
+}
+.kr-btn-prev:hover {
+  background: #E2E8F0;
+}
+
+/* 2. 잠깐 쉬기 */
+.kr-btn-pause {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #FFFFFF;
+}
+.kr-btn-pause:hover {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+}
+
+/* 3. 다음 동작 */
+.kr-btn-next {
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  color: #FFFFFF;
+}
+.kr-btn-next:hover {
+  background: linear-gradient(135deg, #15803D 0%, #166534 100%);
+}
+
+/* 4. 그만하기 */
+.kr-btn-exit {
+  background: #FEE2E2;
+  border: 3px solid #FCA5A5;
+  color: #991B1B;
+}
+.kr-btn-exit:hover {
+  background: #FCA5A5;
+  color: #7F1D1D;
+}
+
+/* ==========================================================================
+   화면 3: 운동 종료 및 활동 기록 화면 (Finish & Record)
+   ========================================================================== */
+.kr-finish-stage {
+  display: none;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 36px 20px 100px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kr-finish-stage.active {
+  display: flex;
+}
+
+.kr-finish-card {
+  width: 100%;
+  background: #FFFFFF;
+  border: 4px solid #86EFAC;
+  border-radius: 36px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(22, 163, 74, 0.12);
+  margin-bottom: 28px;
+  box-sizing: border-box;
+}
+
+.kr-finish-stamp {
+  font-size: 72px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.kr-finish-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: #166534;
+  margin: 0 0 12px;
+}
+
+.kr-finish-desc {
+  font-size: 26px;
+  font-weight: 700;
+  color: #15803D;
+  margin: 0 0 32px;
+}
+
+/* 참여 기록 리포트 테이블 */
+.kr-record-table {
+  width: 100%;
+  background: #FAF7F2;
+  border: 3px solid #E2E8F0;
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 32px;
+  text-align: left;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kr-record-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  border-bottom: 2px dashed #E2E8F0;
+  padding-bottom: 12px;
+}
+
+.kr-record-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.kr-record-label {
+  font-weight: 700;
+  color: var(--kr-text-sub);
+}
+
+.kr-record-val {
+  font-weight: 900;
+  color: var(--kr-text-title);
+}
+
+.kr-finish-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.kr-finish-btn {
+  min-height: 68px;
+  padding: 14px 36px;
+  font-size: 24px;
+  font-weight: 900;
+  border-radius: 22px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.kr-btn-village {
+  background: linear-gradient(135deg, #2E5C38 0%, #1E4627 100%);
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 16px rgba(46, 92, 56, 0.3);
+}
+
+.kr-btn-restart {
+  background: #FFF7ED;
+  color: #C2410C;
+  border: 3px solid #FDBA74;
+}
+
+/* 반응형 모바일 */
+@media (max-width: 840px) {
+  .kr-controls-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .kr-menu-grid {
+    grid-template-columns: 1fr;
+  }
+  .kr-character-theater {
+    height: 280px;
+  }
+}

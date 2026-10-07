@@ -1,289 +1,324 @@
-<!doctype html>
-<html lang="ko" data-season="everyday">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext y=%2727%27 font-size=%2728%27%3E%F0%9F%8D%8A%3C/text%3E%3C/svg%3E">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fff9ed">
-  <title>콩이의 운동방 · 디지털 AI 학교</title>
-  <link rel="stylesheet" href="css/senior-exercise.css?v=20260923-follow4">
-  <link rel="stylesheet" href="css/kongi-3min.css">
-<script src="js/character-voice-system.js?v=20260928-ops"></script>
-<link rel="stylesheet" href="css/character-animation.css?v=20260922"><script defer src="js/character-rig-data.js?v=20260922"></script><script defer src="js/hanbok-character.js?v=20260928-active"></script><script defer src="js/character-animation.js?v=20260928-active"></script>
-<link rel="stylesheet" href="css/senior-common-header.css?v=20260923-nav2"><script defer src="js/senior-common-header.js?v=20260928-service"></script><link rel="stylesheet" href="css/character-expressions.css?v=20260928-active"><script src="js/korean-visemes.js?v=20260928"></script>
-<link rel="stylesheet" href="css/everyday-characters.css?v=20260928-active"><script defer src="js/everyday-characters.js?v=20260928-active"></script>
-<link rel="stylesheet" href="css/service-platform.css?v=20260928"><script src="js/service-config.js?v=20260928"></script><script src="js/service-activity.js?v=20260928"></script>
-<script src="js/service-content.js?v=20260928"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>콩이의 운동방 · 기억정원 디지털 AI 학교</title>
+  <meta name="description" content="치매 및 경도인지장애 어르신을 위한 안전한 의자 건강 체조 - 콩이의 운동방">
+
+  <!-- 파비콘 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%8C%B8%3C/text%3E%3C/svg%3E">
+
+  <!-- 웹 폰트 (Pretendard) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+  <!-- 스타일시트 -->
+  <link rel="stylesheet" href="css/senior-garden-app.css">
+  <link rel="stylesheet" href="css/kongi-exercise-room.css">
 </head>
 <body>
-  <div class="se-container">
-    <!-- Top Header -->
-    <header class="se-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 20px; background: rgba(255,255,255,0.96); border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); flex-wrap: wrap;">
-      <div class="se-header-left" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-        <a class="se-back-link" href="index.html" aria-label="처음 화면으로 돌아가기" style="min-height: 60px; font-size: 24px; font-weight: 900; display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 9999px; background: #2E5C38; color: #FFFFFF; text-decoration: none; box-shadow: 0 4px 14px rgba(46,92,56,0.3);">
-          <span aria-hidden="true">🏠</span>
-          <span>처음으로</span>
-        </a>
-        <div class="se-location" style="min-height: 60px; font-size: 22px; font-weight: 800; color: #166534; background: #DCFCE7; padding: 10px 20px; border-radius: 16px; border: 2px solid #86EFAC; display: inline-flex; align-items: center;">🐶 콩이 — 운동방</div>
-      </div>
-      <div class="se-header-right">
-        <button id="btnTtsExerciseHelp" class="se-btn-tts" type="button" aria-label="콩이 운동 설명 듣기" style="min-height: 60px; font-size: 22px; font-weight: 800; padding: 10px 22px; border-radius: 16px; border: 2px solid #CBD5E1; background: #FFFFFF; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
-          <span aria-hidden="true">🔊</span>
-          <span>콩이 안내 듣기</span>
-        </button>
-      </div>
-    </header>
 
-    <!-- 콩이집 대표 화면 (Hero Greeting + Primary Seated Exercise Animation) -->
-    <section class="se-hero-greeting" style="text-align: center; padding: 24px 16px 16px;">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 8px;">
-        <img src="assets/images/chair-exercise/kongi-chair-1-wave.jpg" alt="콩이 캐릭터" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid #86efac;">
-        <div style="text-align: left;">
-          <span style="font-size: 16px; font-weight: 800; color: #e65100; background: #fff3e0; padding: 4px 10px; border-radius: 10px;">🐶 콩이의 운동방</span>
-          <h1 style="font-size: 26px; font-weight: 900; color: #1e4519; margin-top: 4px;">"오늘도 함께 몸을 움직여볼까요?"</h1>
-        </div>
-      </div>
-      <p style="font-size: 19px; color: #435b3e; font-weight: 600;">의자에 편안하게 앉아서 콩이와 함께 천천히 따라해요.</p>
-    </section>
+<div id="exerciseApp">
 
-    <!-- [대표 활동] 콩이 3분 건강 의자 체조 영상 플레이어 (음성 안내 싱크 + 오디오 덕킹 BGM) -->
-    <section id="viewExerciseMain" class="se-youtube-section" aria-label="오늘의 3분 의자 체조" style="max-width: 960px; margin: 0 auto 32px; padding: 0 16px;">
-      <div class="k3-card">
-        <!-- 상단 상태 표시 바 -->
-        <div class="k3-header-row">
-          <span class="k3-badge-main">
-            🐶 콩이의 3분 건강 의자 체조
-          </span>
-          <span id="kongiStatusLead" class="k3-status-lead">
-            🌸 콩이 동작을 보며 천천히 따라해보세요
-          </span>
-        </div>
-
-        <!-- 16:9 반응형 비디오 무대 -->
-        <div class="k3-video-wrapper" id="kongiVideoWrapper">
-          <video id="kongiExerciseVideo" class="k3-video" playsinline preload="metadata" poster="assets/videos/kongi-3min-poster.jpg" src="assets/videos/kongi-3min-exercise-master.mp4?v=20260930-sync">
-            <source src="assets/videos/kongi-3min-exercise-master.mp4?v=20260930-sync" type="video/mp4">
-            브라우저가 비디오 재생을 지원하지 않습니다.
-          </video>
-
-          <!-- 동작 단계 뱃지 (좌상단) -->
-          <div id="kongiCurrentStageBadge" class="k3-video-stage-badge">
-            1단계 · 👋 시작 인사
-          </div>
-
-          <!-- 일시정지 시 화면 중앙 재생 오버레이 -->
-          <div id="kongiVideoOverlayPlay" class="k3-video-overlay-play">
-            <div class="k3-overlay-circle">▶</div>
-            <div class="k3-overlay-label">화면을 눌러 체조 시작하기</div>
-          </div>
-        </div>
-
-        <!-- 동작별 바로가기 칩 목록 (어르신 맞춤형 원클릭 이동) -->
-        <div class="k3-chips-scroll" id="kongiStageChips" aria-label="체조 동작 순서">
-          <!-- kongi-3min-exercise.js에 의해 동적 렌더링 -->
-        </div>
-
-        <!-- 대형 실시간 안내 자막 카드 -->
-        <div class="k3-caption-card" aria-live="polite">
-          <div class="k3-caption-header">
-            <span class="k3-caption-speaker">🐶 콩이 음성 안내</span>
-          </div>
-          <p id="kongiCaptionText" class="k3-caption-text">
-            "안녕하세요. 콩이예요. 오늘도 저와 함께 천천히 체조해 볼까요?"
-          </p>
-        </div>
-
-        <!-- 체조 타임라인 진행 바 -->
-        <div class="k3-timeline-row">
-          <input type="range" id="kongiProgressSlider" class="k3-progress-slider" min="0" max="180" value="0" step="0.5" aria-label="3분 체조 진행 바">
-          <span id="kongiTimeIndicator" class="k3-time-text">0:00 / 3:00</span>
-        </div>
-
-        <!-- 어르신용 대형 메인 조작 버튼 -->
-        <div class="k3-controls-grid">
-          <button type="button" id="btnKongiPlayToggle" class="k3-btn-main" aria-label="체조 시작 및 일시정지">
-            <span>▶</span>
-            <span>3분 체조 시작하기</span>
-          </button>
-          <button type="button" id="btnKongiComplete" class="k3-btn-complete" aria-label="오늘 체조 마쳤어요">
-            <span>🌸</span>
-            <span>오늘 체조 마쳤어요!</span>
-          </button>
-        </div>
-
-        <!-- 보조 조작 버튼 바 (글자 크기, 다시보기, 건너뛰기, 소리) -->
-        <div class="k3-sub-controls">
-          <button type="button" id="btnKongiBack10" class="k3-btn-sub" title="10초 뒤로">
-            ⏪ 10초 뒤로
-          </button>
-          <button type="button" id="btnKongiReplay" class="k3-btn-sub" title="처음부터 다시">
-            🔄 처음부터 다시
-          </button>
-          <button type="button" id="btnKongiFwd10" class="k3-btn-sub" title="10초 앞으로">
-            ⏩ 10초 앞으로
-          </button>
-          <button type="button" id="btnKongiTextSize" class="k3-btn-sub" title="자막 글자 크기 변경">
-            🔠 글자 크게
-          </button>
-          <button type="button" id="btnKongiMute" class="k3-btn-sub" title="음소거 토글">
-            🔊 소리 켜짐
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 마을로 돌아가기 큰 버튼 -->
-    <div style="margin: 0 auto 36px; max-width: 900px; text-align: center; padding: 0 16px;">
-      <a href="index.html" class="service-btn-village" onclick="sessionStorage.setItem('school_home_intro_played','true')" style="display: inline-flex; align-items: center; justify-content: center; min-height: 58px; padding: 14px 36px; font-size: 20px; font-weight: 900; background: #fdf6ec; color: #8c4a00; border: 2px solid #ffd8a8; border-radius: 16px; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
-        🏡 친구들 마을로 돌아가기
+  <!-- ==========================================================================
+       상단 글로벌 헤더
+       - 전 화면 공통 '처음으로' 복귀 버튼 (60px 이상, 24px)
+       - 콩이 운동방 위치 표시
+       - 소리 및 글자 크기 편의 컨트롤
+       ========================================================================== -->
+  <header class="kr-topbar" role="banner">
+    <div class="kr-topbar-left">
+      <a href="index.html" class="kr-btn-home" aria-label="기억정원 처음 화면으로 돌아가기">
+        <span aria-hidden="true">🏠</span>
+        <span>처음으로</span>
       </a>
-      <button id="btnStart" type="button" style="display:none;" aria-hidden="true">체조 시작</button>
+      <div class="kr-room-badge">
+        <span aria-hidden="true">🐶</span>
+        <span>콩이 — 운동방</span>
+      </div>
     </div>
 
-    <!-- [상태 1] 10단계 연속 체조 준비 화면 (10분 음악체조 선택 시 진입) -->
-    <section id="viewReady" class="se-state-section se-ready-section" style="display: none;" aria-label="10단계 체조 시작 안내">
+    <div class="kr-topbar-right">
+      <div class="kr-senior-pill" aria-label="현재 참여 어르신">
+        <span aria-hidden="true">👵</span>
+        <span>김순자 어르신 (사랑반)</span>
+      </div>
 
-    <!-- [상태 2] 운동 진행 중 화면 (Playing / Paused State) -->
-    <section id="viewPlaying" class="se-state-section se-playing-section" style="display: none;" aria-label="체조 진행 화면">
-      <!-- 콩이 실시간 응원 말풍선 -->
-      <div class="se-playing-speech-card">
-        <div class="se-playing-avatar-box">🐶</div>
-        <div class="se-playing-speech-text">
-          <span class="se-playing-speech-author">콩이의 응원</span>
-          <p id="kongiSpeechLead" class="se-speech-lead">"편안하게 앉아서 천천히 따라해요. 호흡을 부드럽게 유지하세요!"</p>
+      <button type="button" class="kr-ctrl-btn active" id="btnTopSound" aria-label="선생님 음성 안내 소리 토글">
+        <span aria-hidden="true">🔊</span>
+        <span>소리 켜짐</span>
+      </button>
+
+      <button type="button" class="kr-ctrl-btn" id="btnTopFont" aria-label="글자 크기 크게 확대하기">
+        <span aria-hidden="true">🔤</span>
+        <span>글자 크게</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       1. 운동방 메인 메뉴 (5개 큰 카드 버튼)
+       1. 5분 가벼운 운동
+       2. 10분 아침 체조
+       3. 20분 전신 운동
+       4. 손가락 운동
+       5. 음악과 함께 운동
+       ========================================================================== -->
+  <main id="viewMenuStage" class="kr-menu-stage" role="main">
+    
+    <div class="kr-header-banner">
+      <div class="kr-header-badge">
+        <span aria-hidden="true">🌿</span>
+        <span>의자에 앉아서 하는 안전한 건강 체조</span>
+      </div>
+      <h1 class="kr-main-title">"오늘은 콩이와 어떤 운동을 해볼까요?"</h1>
+      <p class="kr-main-subtitle">
+        의자에 편안하게 앉아서 마음에 드는 운동 카드를 꾹 눌러보세요.
+      </p>
+      <div class="kr-safety-banner" role="note">
+        <span aria-hidden="true">🛡️</span>
+        <span>모든 운동은 의자에 앉아 진행됩니다 · 통증이나 어지러움을 느끼시면 즉시 쉬어주세요</span>
+      </div>
+    </div>
+
+    <!-- 5개 큰 카드 메뉴 그리드 -->
+    <div class="kr-menu-grid" aria-label="5대 의자 체조 프로그램">
+
+      <!-- 1. 5분 가벼운 운동 -->
+      <a href="#play" class="kr-menu-card card-theme-5min" data-program="5min" aria-label="1번, 5분 가벼운 운동 시작하기">
+        <div class="kr-card-header">
+          <span class="kr-card-icon" aria-hidden="true">🌸</span>
+          <span class="kr-card-pill">⏱️ 5분 코스</span>
+        </div>
+        <div>
+          <h2 class="kr-card-title">1. 5분 가벼운 운동</h2>
+          <p class="kr-card-desc">목과 어깨, 팔을 부드럽게 깨우는 아침 스트레칭</p>
+        </div>
+        <div class="kr-card-btn">
+          <span aria-hidden="true">🏃</span>
+          <span>5분 운동 시작하기 ▶</span>
+        </div>
+      </a>
+
+      <!-- 2. 10분 아침 체조 -->
+      <a href="#play" class="kr-menu-card card-theme-10min" data-program="10min" aria-label="2번, 10분 아침 체조 시작하기">
+        <div class="kr-card-header">
+          <span class="kr-card-icon" aria-hidden="true">☀️</span>
+          <span class="kr-card-pill">⏱️ 10분 코스</span>
+        </div>
+        <div>
+          <h2 class="kr-card-title">2. 10분 아침 체조</h2>
+          <p class="kr-card-desc">상체와 다리를 골고루 움직이며 활력을 돋우는 건강 체조</p>
+        </div>
+        <div class="kr-card-btn">
+          <span aria-hidden="true">🏃</span>
+          <span>10분 체조 시작하기 ▶</span>
+        </div>
+      </a>
+
+      <!-- 3. 20분 전신 운동 -->
+      <a href="#play" class="kr-menu-card card-theme-20min" data-program="20min" aria-label="3번, 20분 전신 운동 시작하기">
+        <div class="kr-card-header">
+          <span class="kr-card-icon" aria-hidden="true">🌿</span>
+          <span class="kr-card-pill">⏱️ 20분 코스</span>
+        </div>
+        <div>
+          <h2 class="kr-card-title">3. 20분 전신 운동</h2>
+          <p class="kr-card-desc">호흡부터 목, 어깨, 팔, 다리, 발목까지 전신 순환 체조</p>
+        </div>
+        <div class="kr-card-btn">
+          <span aria-hidden="true">🏃</span>
+          <span>20분 운동 시작하기 ▶</span>
+        </div>
+      </a>
+
+      <!-- 4. 손가락 운동 -->
+      <a href="#play" class="kr-menu-card card-theme-finger" data-program="finger" aria-label="4번, 손가락 운동 시작하기">
+        <div class="kr-card-header">
+          <span class="kr-card-icon" aria-hidden="true">🖐️</span>
+          <span class="kr-card-pill">🧠 뇌 활력 체조</span>
+        </div>
+        <div>
+          <h2 class="kr-card-title">4. 손가락 운동</h2>
+          <p class="kr-card-desc">주먹 쥐고 펴기, 손끝 마주치기로 뇌를 깨우는 손가락 놀이</p>
+        </div>
+        <div class="kr-card-btn">
+          <span aria-hidden="true">🖐️</span>
+          <span>손가락 운동 시작 ▶</span>
+        </div>
+      </a>
+
+      <!-- 5. 음악과 함께 운동 -->
+      <a href="#play" class="kr-menu-card card-theme-music" data-program="music" aria-label="5번, 음악과 함께 운동 시작하기">
+        <div class="kr-card-header">
+          <span class="kr-card-icon" aria-hidden="true">🎵</span>
+          <span class="kr-card-pill">🎶 신나는 리듬</span>
+        </div>
+        <div>
+          <h2 class="kr-card-title">5. 음악과 함께 운동</h2>
+          <p class="kr-card-desc">정겨운 노래에 맞춰 즐겁게 손뼉 치고 발 구르는 리듬 운동</p>
+        </div>
+        <div class="kr-card-btn">
+          <span aria-hidden="true">🎵</span>
+          <span>음악 체조 시작 ▶</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- 마을로 돌아가기 하단 안심 버튼 -->
+    <div style="text-align: center; margin-top: 10px;">
+      <a href="index.html" class="kr-btn-home" style="padding: 14px 40px;">
+        <span aria-hidden="true">🏡</span>
+        <span>친구들 마을로 돌아가기</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ==========================================================================
+       2. 운동 진행 화면 (Playing Stage)
+       - 화면 중앙에 콩이 캐릭터가 크게 등장
+       - 하단에는 오직 4개 버튼만 표시:
+         1. 이전 동작
+         2. 잠깐 쉬기 (계속하기)
+         3. 다음 동작
+         4. 그만하기
+       ========================================================================== -->
+  <section id="viewPlayStage" class="kr-play-stage" aria-label="운동 진행 화면">
+    
+    <!-- 상단 운동 정보 바 -->
+    <div class="kr-play-header-box">
+      <div class="kr-play-info-left">
+        <span id="currentProgramBadge" class="kr-program-pill">🐶 콩이 — 10분 아침 체조</span>
+        <span id="stepProgressIndicator" class="kr-step-indicator">1 / 8 동작</span>
+      </div>
+      <div id="stepTimerDisplay" class="kr-step-timer" aria-live="polite">⏱️ 40초</div>
+    </div>
+
+    <!-- 콩이 캐릭터 대형 무대 카드 -->
+    <div class="kr-stage-card">
+
+      <!-- 화면 중앙 콩이 대형 캐릭터 등장 영역 -->
+      <div class="kr-character-theater">
+        <img id="giantKongiImg" src="assets/images/chair-exercise/kongi-chair-exercise.gif" alt="의자에 앉아 체조 동작을 보여주는 콩이 캐릭터" class="kr-char-giant-img">
+
+        <!-- 잠깐 쉬기 시 활성화되는 일시 정지 안내 오버레이 -->
+        <div id="pauseOverlay" class="kr-pause-overlay" aria-live="assertive">
+          <span style="font-size: 64px;" aria-hidden="true">☕</span>
+          <h3>잠깐 쉬어갑니다</h3>
+          <p>편안하게 숨을 고르세요. 몸이 불편하시면 언제든 [그만하기]를 누르셔도 괜찮습니다.</p>
         </div>
       </div>
 
-      <!-- 메인 16:9 체조 영상 카드 -->
-      <main id="playerCard" class="se-player-card" aria-label="체조 진행 화면">
-        <div class="se-current-heading"><span id="exerciseCounter">1 / 10</span><h2 id="exerciseTitle">시작 인사</h2></div><div id="stageWrapper" class="se-stage-wrapper"><video id="sceneVideo" class="se-scene-video" muted playsinline loop preload="metadata" hidden aria-label="현재 운동 영상"></video>
-          <img id="sceneBack" class="se-scene-layer" alt="" aria-hidden="true" style="opacity: 0;">
-          <img id="sceneFront" class="se-scene-layer" src="assets/exercise-20min/exercise_wave.gif" alt="체조 안내 영상">
-          
-          <!-- Top Overlay Info (Big High Contrast) -->
-          <div class="se-stage-overlay">
-            <div id="sceneBadge" class="se-scene-badge">1 / 10 시작 인사</div>
-            <span id="characterTag" class="se-character-tag" style="background-color: #e6a100;">🐶 콩이</span>
-          </div>
-
-          <!-- Big Count Badge (1, 2, 3, 4) -->
-          <div id="countBadge" class="se-count-badge" hidden>1</div>
-        </div>
-
-        <!-- Large Caption & Subtitle Area -->
-        <div id="captionContainer" class="se-caption-container">
-          <div class="se-caption-text-group"><p class="se-guide-name">🐶 콩이</p>
-            <div class="se-caption-header">
-              <span id="cueLead" class="se-cue-lead">시작 인사</span>
-              <span id="stepProgressIndicator" class="se-step-progress-tag">1 / 10 동작 진행 중</span>
-            </div>
-            <h2 id="captionText" class="se-caption-h2">오늘도 천천히 함께해요</h2>
-          </div>
-        </div>
-
-        <!-- Timeline & Progress Bar -->
-        <div class="se-timeline-bar">
-          <input type="range" id="progressTimeline" class="se-progress" min="0" max="740" value="0" step="0.5" aria-label="전체 체조 진행 바">
-          <span id="timeIndicator" class="se-time-indicator">00:00 / 12:20</span>
-        </div>
-
-        <!-- Status Helper Msg -->
-        <div id="statusMsg" class="se-status-msg" role="status">
-          편안하게 앉아서 천천히 따라해요. 무리하지 마세요.
-        </div>
-      </main>
-
-      <!-- 운동 중 조작 버튼 바 -->
-      <div class="se-playing-controls-card" aria-label="체조 조작 제어">
-        <div class="se-controls-main-row">
-          <button id="btnPrev" class="se-btn se-btn-step" type="button" disabled>◀ 이전</button>
-          <button id="btnPause" class="se-btn se-btn-playpause" type="button">⏸ 잠깐 쉬기</button>
-          <button id="btnExerciseReplay" class="se-btn se-btn-step" type="button">다시 보기</button>
-          <button id="btnNext" class="se-btn se-btn-step" type="button">다음 ▶</button>
-        </div>
-        <details class="se-extra-controls"><summary>운동 설정</summary><button id="btnExerciseSlow" class="se-btn" type="button" aria-pressed="false">🐢 천천히</button><button id="btnRestart" class="se-btn se-btn-restart" type="button">
-            🔄 처음부터 다시
-          </button><div class="se-controls-sub-row">
-          <button id="btnTextSize" class="se-btn se-btn-sub" type="button">
-            🔠 글자 크게
-          </button>
-          <button id="btnBgm" class="se-btn se-btn-sub" type="button" aria-pressed="true">
-            🎵 배경음악 켜짐
-          </button>
-          <button id="btnMute" class="se-btn se-btn-sub" type="button" aria-pressed="false">
-            🔊 음성 켜짐
-          </button>
-          <button id="btnFullscreen" class="se-btn se-btn-sub" type="button">
-            ⛶ 큰 화면
-          </button>
-          <button id="btnBackToReady" class="se-btn se-btn-sub" type="button">
-            📋 준비 화면으로
-          </button>
-        </div>
-      </details>
+      <!-- 실시간 안내 말풍선 자막 카드 -->
+      <div class="kr-caption-card" aria-live="polite">
+        <div id="actionNameText" class="kr-action-name">🌸 1단계: 천천히 깊게 호흡하기</div>
+        <div id="actionPromptText" class="kr-action-prompt">"의자에 등을 편안히 기대고, 숨을 깊게 들이쉬고 내쉬어 볼까요?"</div>
+        <div id="actionGuideText" class="kr-action-guide">의자에 편안하게 앉아 코로 숨을 들이쉬고 입으로 천천히 내쉽니다.</div>
       </div>
 
-      <!-- 10 Scenes Thumbnail Navigator -->
-      <details class="se-movement-list"><summary>전체 동작 보기</summary><section class="se-gallery-section" aria-label="10개 체조 동작 순서">
-        <div class="se-gallery-header">
-          <h3 class="se-gallery-title">📋 10개 체조 동작 순서</h3>
-          <p class="se-gallery-sub">원하는 동작을 누르면 바로 이동해요. 완료한 동작에는 초록색 체크(✅)가 붙습니다.</p>
-        </div>
-        <div id="sceneGrid" class="se-scene-grid">
-          <!-- Dynamically rendered scene cards -->
-        </div>
-      </section></details>
-    </section>
+      <!-- 상시 안전 안내 문구 -->
+      <div class="kr-play-safety-note" role="note">
+        🛡️ 통증이나 어지러움을 느끼시면 즉시 동작을 멈추고 [잠깐 쉬기]를 눌러주세요.
+      </div>
+    </div>
 
-    <!-- [상태 3] 운동 완료 후 화면 (Completed State - 오직 10개 동작 완료 후에만 노출) -->
-    <section id="viewCompleted" class="se-state-section se-completed-section" style="display: none;" aria-label="체조 완료 축하">
-      <div id="exerciseCompleteModal" class="se-completed-card" style="display: none;" hidden>
-        <span class="se-celebrate-emoji">🌸</span>
-        <div id="exerciseStampBadge" class="se-stamp-badge">
-          🌸 건강 꽃 도장 획득!
-        </div>
-        <h2 class="se-completed-title">
-          오늘도 정말 잘하셨어요!
-        </h2>
-        <p class="se-completed-desc">
-          콩이, 토리, 나비, 보리와 함께 10가지 건강 의자 체조를 모두 끝마치셨습니다.<br>
-          몸도 한결 가볍고 마음도 건강해졌어요. 오늘도 정말 훌륭하게 해내셨습니다!
-        </p>
+    <!-- ========================================================================
+         하단 4대 조작 버튼 (요청 사항에 명시된 4개 버튼만 정확히 표시)
+         1. 이전 동작
+         2. 잠깐 쉬기
+         3. 다음 동작
+         4. 그만하기
+         ======================================================================== -->
+    <nav class="kr-controls-bar" aria-label="체조 조작 메뉴">
+      
+      <!-- 1. 이전 동작 -->
+      <button type="button" class="kr-btn-ctrl kr-btn-prev" id="btnActionPrev" aria-label="이전 체조 동작으로 돌아가기">
+        <span aria-hidden="true">◀</span>
+        <span>이전 동작</span>
+      </button>
 
-        <div class="se-completed-summary-box">
-          <div class="se-summary-item">
-            <span class="se-sum-num">10 / 10</span>
-            <span class="se-sum-label">완료한 동작</span>
-          </div>
-          <div class="se-summary-item">
-            <span class="se-sum-num">12:20</span>
-            <span class="se-sum-label">총 운동 시간</span>
-          </div>
-          <div class="se-summary-item">
-            <span class="se-sum-num">+1개</span>
-            <span class="se-sum-label">건강 도장</span>
-          </div>
-        </div>
+      <!-- 2. 잠깐 쉬기 / 계속하기 -->
+      <button type="button" class="kr-btn-ctrl kr-btn-pause" id="btnPlayPause" aria-label="체조 잠깐 쉬기 또는 계속하기">
+        <span aria-hidden="true">⏸</span>
+        <span>잠깐 쉬기</span>
+      </button>
 
-        <div class="se-completed-actions">
-          <button id="btnReplayExercise" class="se-completed-btn replay" type="button">
-            다시 운동하기
-          </button>
-          <a href="index.html" class="se-completed-btn home">
-            🏠 학교 홈
-          </a>
+      <!-- 3. 다음 동작 -->
+      <button type="button" class="kr-btn-ctrl kr-btn-next" id="btnActionNext" aria-label="다음 체조 동작으로 넘어가기">
+        <span>다음 동작</span>
+        <span aria-hidden="true">▶</span>
+      </button>
+
+      <!-- 4. 그만하기 -->
+      <button type="button" class="kr-btn-ctrl kr-btn-exit" id="btnActionExit" aria-label="체조 운동을 그만하고 저장하기">
+        <span aria-hidden="true">🛑</span>
+        <span>그만하기</span>
+      </button>
+
+    </nav>
+
+  </section>
+
+  <!-- ==========================================================================
+       3. 운동 종료 및 기록 화면 (Finish & Record Stage)
+       - 참여 날짜
+       - 운동 종류
+       - 참여 시간
+       - 완료 여부
+       - 중간 중단 여부
+       ========================================================================== -->
+  <section id="viewFinishStage" class="kr-finish-stage" aria-label="운동 참여 완료 및 기록">
+    <div class="kr-finish-card">
+      <div class="kr-finish-stamp" id="finishStampIcon" aria-hidden="true">🌸</div>
+      <h2 class="kr-finish-title" id="finishMainTitle">어르신, 오늘도 정말 훌륭하게 마치셨어요!</h2>
+      <p class="kr-finish-desc" id="finishMainDesc">
+        콩이와 함께 건강하고 안전하게 몸을 움직이셨습니다.
+      </p>
+
+      <!-- 참여 기록 리포트 테이블 -->
+      <div class="kr-record-table" aria-label="오늘 참여한 운동 기록">
+        <div class="kr-record-row">
+          <span class="kr-record-label">📅 참여 날짜</span>
+          <span class="kr-record-val" id="reportDate">2026년 10월 7일</span>
+        </div>
+        <div class="kr-record-row">
+          <span class="kr-record-label">🏃 운동 종류</span>
+          <span class="kr-record-val" id="reportType">10분 아침 체조</span>
+        </div>
+        <div class="kr-record-row">
+          <span class="kr-record-label">⏱️ 참여 시간</span>
+          <span class="kr-record-val" id="reportTime">6분 40초</span>
+        </div>
+        <div class="kr-record-row">
+          <span class="kr-record-label">✅ 완료 여부</span>
+          <span class="kr-record-val" id="reportCompleted" style="color: #166534;">완료</span>
+        </div>
+        <div class="kr-record-row">
+          <span class="kr-record-label">📋 중간 중단 여부</span>
+          <span class="kr-record-val" id="reportStatus" style="color: #C2410C;">정상 완료</span>
         </div>
       </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="se-footer">
-      <p>💡 콩이(노랑), 토리(분홍), 나비(보라), 보리(파랑) 캐릭터와 어르신이 함께하는 연속 자동재생 AI 체조 영상입니다.</p>
-      <p style="margin-top: 8px;"><a href="index.html" class="se-footer-link">디지털 AI 학교 처음으로 돌아가기</a></p>
-    </footer>
-  </div>
+      <!-- 복귀 및 재참여 버튼 -->
+      <div class="kr-finish-actions">
+        <a href="index.html" class="kr-finish-btn kr-btn-village" aria-label="기억정원 마을 홈으로 돌아가기">
+          <span aria-hidden="true">🏠</span>
+          <span>마을 홈으로 가기</span>
+        </a>
+        <button type="button" class="kr-finish-btn kr-btn-restart" id="btnRestartMenu" aria-label="다른 운동 선택하러 가기">
+          <span aria-hidden="true">🔄</span>
+          <span>다른 운동 하기</span>
+        </button>
+      </div>
+    </div>
+  </section>
 
-  <script src="js/senior-exercise.js?v=20260928-service"></script>
-  <script src="js/kongi-3min-exercise.js"></script>
+</div>
+
+<!-- 코어 스크립트 로드 -->
+<script src="js/kongi-exercise-room.js"></script>
+
 </body>
 </html>
