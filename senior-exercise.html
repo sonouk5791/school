@@ -18,17 +18,18 @@
 <body>
   <div class="se-container">
     <!-- Top Header -->
-    <header class="se-header">
-      <div class="se-header-left">
-        <a class="se-back-link" href="index.html" aria-label="친구들 마을로 돌아가기">
-          🏡 친구들 마을로 돌아가기
+    <header class="se-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 20px; background: rgba(255,255,255,0.96); border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); flex-wrap: wrap;">
+      <div class="se-header-left" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+        <a class="se-back-link" href="index.html" aria-label="처음 화면으로 돌아가기" style="min-height: 60px; font-size: 24px; font-weight: 900; display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 9999px; background: #2E5C38; color: #FFFFFF; text-decoration: none; box-shadow: 0 4px 14px rgba(46,92,56,0.3);">
+          <span aria-hidden="true">🏠</span>
+          <span>처음으로</span>
         </a>
-        <div class="se-location" style="font-size: 18px; font-weight: 800; color: #166534; background: #dcfce7; padding: 6px 14px; border-radius: 12px; border: 1px solid #86efac;">🐶 콩이집 · 운동방</div>
+        <div class="se-location" style="min-height: 60px; font-size: 22px; font-weight: 800; color: #166534; background: #DCFCE7; padding: 10px 20px; border-radius: 16px; border: 2px solid #86EFAC; display: inline-flex; align-items: center;">🐶 콩이 — 운동방</div>
       </div>
       <div class="se-header-right">
-        <button id="btnTtsExerciseHelp" class="se-btn-tts" type="button" aria-label="콩이 운동 설명 듣기">
-          <span>🔊</span>
-          <span>콩이 안내</span>
+        <button id="btnTtsExerciseHelp" class="se-btn-tts" type="button" aria-label="콩이 운동 설명 듣기" style="min-height: 60px; font-size: 22px; font-weight: 800; padding: 10px 22px; border-radius: 16px; border: 2px solid #CBD5E1; background: #FFFFFF; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+          <span aria-hidden="true">🔊</span>
+          <span>콩이 안내 듣기</span>
         </button>
       </div>
     </header>

@@ -1,0 +1,819 @@
+/* ==========================================================================
+   기억정원 디지털 AI 학교 - 어르신 친화 디자인 시스템 & 접근성 스타일
+   - 한국어 전용
+   - 최소 글자 크기 22px 이상
+   - 버튼 높이 최소 60px 이상
+   - 버튼 간격 충분히 확보 (20px 이상)
+   - 어려운 영어 사용 금지
+   - 아이콘과 글자 동시 표기
+   - 부드러운 전환 (갑작스러운 애니메이션 금지)
+   - 모든 화면에 '처음으로' 버튼 제공
+   - PC, 태블릿, 모바일 완벽 반응형
+   ========================================================================== */
+
+:root {
+  /* 색상 팔레트: 따뜻한 정원 테마 */
+  --sga-bg-garden: #FAF7F2;
+  --sga-bg-card: #FFFFFF;
+  --sga-primary-green: #2E5C38;
+  --sga-primary-green-hover: #22462A;
+  --sga-light-green: #E8F5E9;
+  --sga-border-green: #A3CFAB;
+  
+  /* 캐릭터별 온화한 고유 톤 */
+  --sga-kongi-peach: #E66A23;
+  --sga-kongi-bg: #FFF4EC;
+  --sga-kongi-border: #FDBA74;
+
+  --sga-tori-pink: #D93874;
+  --sga-tori-bg: #FFF0F6;
+  --sga-tori-border: #F9A8D4;
+
+  --sga-nabi-purple: #6D28D9;
+  --sga-nabi-bg: #F5F0FF;
+  --sga-nabi-border: #C4B5FD;
+
+  --sga-bori-blue: #0369A1;
+  --sga-bori-bg: #F0F9FF;
+  --sga-bori-border: #7DD3FC;
+
+  /* 시니어 텍스트 색상 (높은 명암비) */
+  --sga-text-title: #1C2B1E;
+  --sga-text-body: #2B3A2D;
+  --sga-text-sub: #4A5B4C;
+  --sga-text-muted: #5F7061;
+
+  /* 최소 규격 토큰 */
+  --sga-min-font: 22px;
+  --sga-min-btn-height: 60px;
+}
+
+/* 폰트 및 전역 초기화 */
+html, body {
+  font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--sga-min-font);
+  color: var(--sga-text-body);
+  background-color: var(--sga-bg-garden);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 글자 크기 확대 모드 */
+body.font-zoomed {
+  font-size: 26px !important;
+}
+body.font-zoomed .char-room-name {
+  font-size: 34px !important;
+}
+body.font-zoomed .char-room-desc {
+  font-size: 26px !important;
+}
+body.font-zoomed .sga-main-title {
+  font-size: 42px !important;
+}
+
+/* 모든 버튼 최소 높이 및 글자 크기 보장 */
+button, .sga-btn, a.sga-btn {
+  font-family: inherit;
+  font-size: var(--sga-min-font);
+  min-height: var(--sga-min-btn-height);
+  box-sizing: border-box;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* ==========================================================================
+   상단 글로벌 헤더 (어르신 안심 상단바)
+   ========================================================================== */
+.sga-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid #E2E8F0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.sga-brand-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sga-brand-emblem {
+  font-size: 38px;
+  line-height: 1;
+}
+
+.sga-brand-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--sga-primary-green);
+  letter-spacing: -0.5px;
+}
+
+.sga-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* 어르신 프로필 뱃지 */
+.sga-senior-pill {
+  min-height: 60px;
+  padding: 10px 22px;
+  background: #FFFBEB;
+  border: 2px solid #FCD34D;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #92400E;
+}
+
+/* 상단 편의 버튼 (소리 듣기, 글자 크게, 처음으로) */
+.sga-ctrl-btn {
+  min-height: 60px;
+  padding: 10px 22px;
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: 9999px;
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  color: var(--sga-text-title);
+}
+
+.sga-ctrl-btn:hover {
+  background: #F1F5F9;
+  border-color: #94A3B8;
+  transform: translateY(-2px);
+}
+
+.sga-ctrl-btn.active {
+  background: #DCFCE7;
+  border-color: #86EFAC;
+  color: #166534;
+}
+
+/* 모든 화면 공통 '처음으로' 메인 버튼 */
+.sga-home-btn {
+  min-height: 60px;
+  padding: 12px 28px;
+  font-size: 24px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #2E5C38 0%, #1E4627 100%);
+  color: #FFFFFF !important;
+  border: none;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px rgba(46, 92, 56, 0.3);
+}
+
+.sga-home-btn:hover {
+  background: linear-gradient(135deg, #3A7246 0%, #265431 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(46, 92, 56, 0.4);
+}
+
+/* ==========================================================================
+   메인 화면: 기억정원 마을 정원 배경 & 4대 캐릭터 공간
+   ========================================================================== */
+.sga-garden-stage {
+  min-height: calc(100vh - 88px);
+  background: linear-gradient(180deg, rgba(250, 247, 242, 0.90) 0%, rgba(255, 253, 249, 0.94) 100%),
+              url('../assets/images/lilac-village-illustration.jpg') center/cover no-repeat fixed;
+  padding: 36px 24px 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* 상단 온화한 안내 문구 영역 */
+.sga-welcome-header {
+  text-align: center;
+  max-width: 900px;
+  margin-bottom: 36px;
+}
+
+.sga-welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #E8F5E9;
+  border: 2px solid #86EFAC;
+  color: #166534;
+  padding: 8px 24px;
+  border-radius: 9999px;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.sga-main-title {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--sga-text-title);
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
+.sga-main-subtitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--sga-text-sub);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   화면 중앙: 4개의 캐릭터 공간 (큰 버튼 형태)
+   1. 콩이 — 운동방
+   2. 토리 — 놀이방
+   3. 나비 — 학습방
+   4. 보리 — 취미방
+   ========================================================================== */
+.char-rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto 36px;
+}
+
+/* 캐릭터 공간 큰 카드 (카드 전체가 하나의 대형 터치 버튼) */
+.char-room-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 32px;
+  border-radius: 36px;
+  background: #FFFFFF;
+  border: 4px solid transparent;
+  box-shadow: 0 12px 36px rgba(46, 92, 56, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  min-height: 240px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.char-room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(46, 92, 56, 0.15);
+}
+
+.char-room-card:active {
+  transform: translateY(-1px);
+}
+
+/* 1. 콩이 — 운동방 */
+.char-room-kongi {
+  background: linear-gradient(135deg, #FFF9F2 0%, #FFF1E6 100%);
+  border-color: var(--sga-kongi-border);
+}
+.char-room-kongi:hover {
+  border-color: var(--sga-kongi-peach);
+}
+.char-room-kongi .char-room-badge {
+  background: #FFE8D6;
+  color: #C2410C;
+  border: 2px solid #FDBA74;
+}
+.char-room-kongi .char-room-enter-btn {
+  background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+}
+
+/* 2. 토리 — 놀이방 */
+.char-room-tori {
+  background: linear-gradient(135deg, #FFF5F9 0%, #FCE7F3 100%);
+  border-color: var(--sga-tori-border);
+}
+.char-room-tori:hover {
+  border-color: var(--sga-tori-pink);
+}
+.char-room-tori .char-room-badge {
+  background: #FCE7F3;
+  color: #BE185D;
+  border: 2px solid #F9A8D4;
+}
+.char-room-tori .char-room-enter-btn {
+  background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%);
+}
+
+/* 3. 나비 — 학습방 */
+.char-room-nabi {
+  background: linear-gradient(135deg, #FAF7FF 0%, #EDE9FE 100%);
+  border-color: var(--sga-nabi-border);
+}
+.char-room-nabi:hover {
+  border-color: var(--sga-nabi-purple);
+}
+.char-room-nabi .char-room-badge {
+  background: #EDE9FE;
+  color: #6D28D9;
+  border: 2px solid #C4B5FD;
+}
+.char-room-nabi .char-room-enter-btn {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+}
+
+/* 4. 보리 — 취미방 */
+.char-room-bori {
+  background: linear-gradient(135deg, #F4FAFF 0%, #E0F2FE 100%);
+  border-color: var(--sga-bori-border);
+}
+.char-room-bori:hover {
+  border-color: var(--sga-bori-blue);
+}
+.char-room-bori .char-room-badge {
+  background: #E0F2FE;
+  color: #0369A1;
+  border: 2px solid #7DD3FC;
+}
+.char-room-bori .char-room-enter-btn {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+}
+
+/* 캐릭터 일러스트 영역 (공간 앞에 서 있는 캐릭터) */
+.char-room-avatar-wrap {
+  flex-shrink: 0;
+  width: 170px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.char-room-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
+  transition: transform 0.25s ease;
+}
+
+.char-room-card:hover .char-room-avatar {
+  transform: scale(1.05);
+}
+
+/* 방 정보 및 설명 텍스트 */
+.char-room-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.char-room-badge {
+  align-self: flex-start;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  font-size: 22px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.char-room-name {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--sga-text-title);
+  line-height: 1.25;
+}
+
+.char-room-desc {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--sga-text-sub);
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+
+/* 방 들어가기 버튼 (최소 60px 이상) */
+.char-room-enter-btn {
+  min-height: 64px;
+  padding: 12px 28px;
+  font-size: 24px;
+  font-weight: 900;
+  color: #FFFFFF !important;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   화면 하단 추가 메뉴 (작게 배치)
+   - 오늘의 활동
+   - 기억정원 산책
+   - 내 활동 기록
+   - 관리자
+   ========================================================================== */
+.sga-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  border-top: 2px solid #E2E8F0;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.06);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 150;
+  flex-wrap: wrap;
+}
+
+.sga-bottom-btn {
+  min-height: 60px;
+  padding: 12px 26px;
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: 20px;
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  color: var(--sga-text-title);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.sga-bottom-btn:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  transform: translateY(-2px);
+}
+
+.sga-bottom-btn.active {
+  background: #E8F5E9;
+  border-color: #4CAF50;
+  color: #166534;
+}
+
+/* 관리자 버튼은 단정하고 덜 화려하게 구별 */
+.sga-bottom-btn.btn-admin {
+  background: #F8FAFC;
+  color: #475569;
+}
+
+/* ==========================================================================
+   서브 화면 (한 화면에는 한 가지 주요 기능만 배치)
+   - view-today-activities (오늘의 활동)
+   - view-garden-tour (기억정원 산책)
+   - view-my-records (내 활동 기록)
+   - view-care-dashboard (관리자)
+   ========================================================================== */
+.sga-subview {
+  display: none;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px 140px;
+}
+
+.sga-subview.active {
+  display: block;
+}
+
+.sga-subview-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sga-subview-title-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sga-subview-badge {
+  font-size: 32px;
+}
+
+.sga-subview-heading {
+  font-size: 34px;
+  font-weight: 900;
+  color: var(--sga-text-title);
+}
+
+.sga-subview-desc {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--sga-text-sub);
+  margin-top: 4px;
+}
+
+/* 공통 서브 카드 */
+.sga-content-card {
+  background: #FFFFFF;
+  border-radius: 32px;
+  border: 3px solid #E2E8F0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  padding: 36px 32px;
+  margin-bottom: 28px;
+}
+
+/* 오늘의 활동 시간표 항목 */
+.today-act-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.today-act-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-radius: 28px;
+  border: 3px solid #E2E8F0;
+  background: #FAF7F2;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.today-act-item.highlight {
+  background: #FFF7ED;
+  border-color: #FDBA74;
+}
+
+.today-act-time-col {
+  min-width: 180px;
+}
+
+.today-act-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 20px;
+  font-weight: 800;
+  background: #E8F5E9;
+  color: #166534;
+  margin-bottom: 6px;
+}
+
+.today-act-time {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--sga-text-title);
+}
+
+.today-act-info-col {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 260px;
+}
+
+.today-act-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #86EFAC;
+  background: #FFFFFF;
+}
+
+.today-act-name {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--sga-text-title);
+}
+
+.today-act-subtext {
+  font-size: 22px;
+  color: var(--sga-text-sub);
+}
+
+.btn-act-start {
+  min-height: 64px;
+  padding: 14px 34px;
+  font-size: 24px;
+  font-weight: 900;
+  border-radius: 20px;
+  background: #2E5C38;
+  color: #FFFFFF !important;
+  border: none;
+  box-shadow: 0 4px 14px rgba(46, 92, 56, 0.3);
+}
+
+.btn-act-start:hover {
+  background: #22462A;
+  transform: translateY(-2px);
+}
+
+/* 기억정원 산책 랜드마크 그리드 */
+.garden-tour-map-wrap {
+  border-radius: 28px;
+  overflow: hidden;
+  border: 3px solid #CBD5E1;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.garden-tour-map-img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+.garden-landmarks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.garden-landmark-card {
+  background: #FAF7F2;
+  border: 3px solid #E2E8F0;
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.landmark-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.landmark-icon {
+  font-size: 32px;
+}
+
+.landmark-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--sga-text-title);
+}
+
+.landmark-desc {
+  font-size: 22px;
+  color: var(--sga-text-sub);
+  line-height: 1.45;
+}
+
+/* 내 활동 기록 도장판 */
+.stamp-board-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.stamp-box {
+  background: #FFF9F2;
+  border: 3px dashed #FDBA74;
+  border-radius: 28px;
+  padding: 28px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.stamp-box.completed {
+  background: #F0FDF4;
+  border: 3px solid #86EFAC;
+}
+
+.stamp-mark {
+  font-size: 54px;
+  line-height: 1;
+}
+
+.stamp-day {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--sga-text-title);
+}
+
+.stamp-activity-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #166534;
+}
+
+.stamp-status {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  font-size: 20px;
+  font-weight: 800;
+  background: #DCFCE7;
+  color: #166534;
+}
+
+/* 관리자 탭 공간 */
+.admin-tab-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.admin-tab-btn {
+  min-height: 60px;
+  padding: 12px 24px;
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: 18px;
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  color: var(--sga-text-title);
+}
+
+.admin-tab-btn.active {
+  background: #2E5C38;
+  color: #FFFFFF;
+  border-color: #2E5C38;
+}
+
+/* 반응형 미디어 쿼리 */
+@media (max-width: 960px) {
+  .char-rooms-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .char-room-card {
+    padding: 24px 24px;
+  }
+  .char-room-avatar-wrap {
+    width: 140px;
+    height: 170px;
+  }
+  .stamp-board-grid {
+    grid-template-columns: 1fr;
+  }
+  .garden-landmarks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .sga-topbar {
+    padding: 12px 16px;
+  }
+  .sga-brand-title {
+    font-size: 24px;
+  }
+  .sga-garden-stage {
+    padding: 24px 16px 160px;
+  }
+  .char-room-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  .char-room-badge {
+    align-self: center;
+  }
+  .char-room-avatar-wrap {
+    width: 160px;
+    height: 180px;
+  }
+  .sga-bottom-bar {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .sga-bottom-btn {
+    min-height: 60px;
+    font-size: 20px;
+    padding: 10px 16px;
+    flex: 1 1 calc(50% - 10px);
+  }
+}

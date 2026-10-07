@@ -217,13 +217,19 @@
 </head>
 <body data-activity-room="nabi" data-activity-status="select">
 
-  <header class="nl-header">
-    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-      <a class="nl-back-link" href="index.html" aria-label="친구들 마을로 돌아가기">🏡 친구들 마을로 돌아가기</a>
-      <span class="nl-location"><strong>🐱 나비집 · 생각방</strong></span>
+  <header class="nl-header" style="padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <a class="nl-back-link" href="index.html" aria-label="처음 화면으로 돌아가기" style="min-height: 60px; font-size: 24px; font-weight: 900; display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 9999px; background: #2E5C38; color: #FFFFFF; text-decoration: none; box-shadow: 0 4px 14px rgba(46,92,56,0.3); border: none;">
+        <span aria-hidden="true">🏠</span>
+        <span>처음으로</span>
+      </a>
+      <span class="nl-location" style="min-height: 60px; font-size: 22px; font-weight: 800; color: #6D28D9; background: #EDE9FE; padding: 10px 20px; border-radius: 16px; border: 2px solid #C4B5FD; display: inline-flex; align-items: center;">🐱 나비 — 학습방</span>
     </div>
-    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-      <button id="btnNabiVoice" class="nl-voice-btn" type="button">🔊 나비 안내</button>
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <button id="btnNabiVoice" class="nl-voice-btn" type="button" style="min-height: 60px; font-size: 22px; font-weight: 800; padding: 10px 22px; border-radius: 16px; border: 2px solid #C4B5FD; background: #FFFFFF; color: #6D28D9; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+        <span aria-hidden="true">🔊</span>
+        <span>나비 안내 듣기</span>
+      </button>
     </div>
   </header>
 

@@ -137,10 +137,20 @@
 <script src="js/service-content.js?v=20260928"></script>
 </head>
 <body data-activity-room="bori" data-activity-status="select">
-<header class="bh-header">
-  <a href="index.html" class="bh-back-link">🏡 친구들 마을로 돌아가기</a>
-  <div class="bh-location"><strong>🐻 보리집 · 취미방</strong></div>
-  <button type="button" class="bh-voice-btn" id="btnBhVoice">🔊 보리 안내</button>
+<header class="bh-header" style="padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+  <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+    <a href="index.html" class="bh-back-link" aria-label="처음 화면으로 돌아가기" style="min-height: 60px; font-size: 24px; font-weight: 900; display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 9999px; background: #2E5C38; color: #FFFFFF; text-decoration: none; box-shadow: 0 4px 14px rgba(46,92,56,0.3); border: none;">
+      <span aria-hidden="true">🏠</span>
+      <span>처음으로</span>
+    </a>
+    <div class="bh-location" style="min-height: 60px; font-size: 22px; font-weight: 800; color: #0369A1; background: #E0F2FE; padding: 10px 20px; border-radius: 16px; border: 2px solid #7DD3FC; display: inline-flex; align-items: center;">🐻 보리 — 취미방</div>
+  </div>
+  <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+    <button type="button" class="bh-voice-btn" id="btnBhVoice" style="min-height: 60px; font-size: 22px; font-weight: 800; padding: 10px 22px; border-radius: 16px; border: 2px solid #7DD3FC; background: #FFFFFF; color: #0369A1; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+      <span aria-hidden="true">🔊</span>
+      <span>보리 안내 듣기</span>
+    </button>
+  </div>
 </header>
 <section class="bh-hero">
   <img src="assets/images/everyday/bori-active.png" alt="보리 캐릭터" class="bh-char-img" onerror="this.src='assets/images/friend-bori.png'">

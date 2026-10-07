@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>기억정원 - AI와 함께 즐기는 어르신의 하루</title>
+  <meta name="description" content="운동하고, 생각하고, 이야기하고, 함께 웃는 어르신을 위한 따뜻한 디지털 활동 플랫폼 기억정원">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
+
+  <!-- Web Fonts (Pretendard) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/memory-garden.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ==========================================================================
+       Global Top Navigation Bar
+       ========================================================================== -->
+  <header class="mg-topbar">
+    <div class="mg-brand-badge" data-view-target="gateway">
+      <div class="mg-brand-leaf">🌱</div>
+      <div>
+        <h1 class="mg-brand-title">기억정원</h1>
+        <p class="mg-brand-subtitle">AI와 함께 즐기는 어르신의 하루</p>
+      </div>
+    </div>
+
+    <!-- Active Senior Indicator & Role Selector -->
+    <div class="mg-nav-actions">
+      <!-- 어르신 프로필 뱃지 (클릭 시 다른 어르신으로 변경 가능) -->
+      <div class="mg-senior-profile-pill" id="currentSeniorPill" title="클릭하여 이용 어르신 변경">
+        <span>👵</span>
+        <span id="topbarSeniorName">김순자 어르신 (사랑반)</span>
+        <span style="font-size: 12px; color: var(--garden-primary);">▼</span>
+      </div>
+
+      <!-- 역할 전환 탭 (어르신 / 사회복지사 / 기관 관리자) -->
+      <nav class="mg-role-switch" aria-label="사용자 모드 선택">
+        <button class="mg-role-btn active" data-role="senior">어르신 정원</button>
+        <button class="mg-role-btn" data-role="care">사회복지사 (Care)</button>
+        <button class="mg-role-btn" data-role="admin">기관 관리자 (Admin)</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       1. 기억정원 시작 화면 (Gateway / Welcome Screen)
+       ========================================================================== -->
+  <main id="view-gateway" class="mg-view view-gateway active">
+    <div class="gateway-hero">
+      <div class="gateway-emblem">🌸</div>
+      <h2 class="gateway-title">기억정원</h2>
+      <p class="gateway-slogan">AI와 함께 즐기는 어르신의 하루</p>
+      <p class="gateway-subtext">운동하고, 생각하고, 이야기하고, 함께 웃는 따뜻한 디지털 공간</p>
+
+      <div class="gateway-actions">
+        <!-- 가장 크고 눈에 잘 띄는 어르신 활동 시작 버튼 -->
+        <button class="btn-gateway-senior" data-view-target="senior-main" id="btnGatewaySenior">
+          <span>🌿</span>
+          <span>어르신 활동 시작</span>
+          <span style="font-size: 26px;">➔</span>
+        </button>
+
+        <!-- 사회복지사 및 기관 관리자 버튼 -->
+        <div class="gateway-sub-actions">
+          <button class="btn-gateway-sub" data-view-target="care-dashboard" id="btnGatewayCare">
+            <span>📋</span>
+            <span>사회복지사 (Care)</span>
+          </button>
+          <button class="btn-gateway-sub" data-view-target="admin-dashboard" id="btnGatewayAdmin">
+            <span>🏛️</span>
+            <span>기관 관리자 (Admin)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       2. 어르신 메인 화면 & 화면 터치형 가상카드
+       ========================================================================== -->
+  <main id="view-senior-main" class="mg-view">
+    <!-- 상단 환영 배너 -->
+    <div class="senior-welcome-banner">
+      <div class="senior-welcome-text">
+        <h2>오늘도 기억정원에 오신 것을 환영합니다.</h2>
+        <p>원하시는 카드를 손으로 가볍게 톡 눌러보세요.</p>
+      </div>
+      <div class="senior-header-shortcuts">
+        <button class="btn-pill-action" data-view-target="today-activities">
+          <span>📅</span> 오늘의 활동
+        </button>
+        <button class="btn-pill-action" data-view-target="garden-tour">
+          <span>🗺️</span> 기억정원 둘러보기
+        </button>
+      </div>
+    </div>
+
+    <!-- 6대 화면 터치형 가상카드 그리드 -->
+    <div class="virtual-cards-grid">
+
+      <!-- 1. 내 기억카드 (Personal Memory Card) -->
+      <article class="v-card v-card-personal" data-card-id="memory-card-personal" id="cardPersonal">
+        <div class="v-card-header">
+          <span class="v-card-tag">🌸 개인 맞춤 카드</span>
+          <span style="font-size: 14px; font-weight: 700; color: #386641;">터치하여 시작</span>
+        </div>
+        <div class="v-card-body">
+          <div class="v-card-character-wrap">
+            <img src="assets/images/friend-kongi.png" alt="담당 캐릭터 콩이" id="personalCardAvatar">
+          </div>
+          <div class="v-card-content" style="width: 100%;">
+            <h3 class="v-card-title">내 기억카드</h3>
+            <p class="v-card-desc">어르신만을 위해 준비된 오늘의 활동을 확인하고 시작합니다.</p>
+            <div class="personal-info-grid">
+              <div class="personal-info-item">
+                <span class="personal-info-label">이용자</span>
+                <span class="personal-info-val" id="personalCardName">김순자 어르신</span>
+              </div>
+              <div class="personal-info-item">
+                <span class="personal-info-label">담당 캐릭터</span>
+                <span class="personal-info-val" id="personalCardChar">콩이</span>
+              </div>
+              <div class="personal-info-item">
+                <span class="personal-info-label">오늘의 추천</span>
+                <span class="personal-info-val" id="personalCardToday">콩이와 의자 체조</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="v-card-footer">
+          <div class="v-card-touch-indicator">
+            <span class="circle-icon">👆</span>
+            <span>카드를 누르면 맞춤 활동 화면으로 이동합니다</span>
+          </div>
+          <span style="font-size: 13px; color: var(--text-muted);">고유 ID: memory-card-personal</span>
+        </div>
+      </article>
+
+      <!-- 2. 콩이 운동카드 -->
+      <article class="v-card v-card-exercise" data-card-id="activity-card-exercise" id="cardExercise">
+        <div class="v-card-header">
+          <span class="v-card-tag">🏃 신체 활동</span>
+          <span style="font-size: 20px;">💪</span>
+        </div>
+        <div class="v-card-body">
+          <div class="v-card-character-wrap">
+            <img src="assets/images/friend-kongi.png" alt="콩이 캐릭터">
+          </div>
+          <div class="v-card-content">
+            <h3 class="v-card-title">콩이와 운동해요</h3>
+            <p class="v-card-desc">활기찬 콩이와 함께 의자에 앉아 시원하게 몸을 움직여요.</p>
+          </div>
+        </div>
+        <div class="v-card-footer">
+          <div class="v-card-touch-indicator">
+            <span class="circle-icon">👆</span>
+            <span>운동정원으로 이동</span>
+          </div>
+          <span style="font-size: 13px; color: var(--text-muted);">activity-card-exercise</span>
+        </div>
+      </article>
+
+      <!-- 3. 나비 두뇌카드 -->
+      <article class="v-card v-card-cognitive" data-card-id="activity-card-cognitive" id="cardCognitive">
+        <div class="v-card-header">
+          <span class="v-card-tag">🧠 두뇌 쑥쑥</span>
+          <span style="font-size: 20px;">🧩</span>
+        </div>
+        <div class="v-card-body">
+          <div class="v-card-character-wrap">
+            <img src="assets/images/friend-nabi.png" alt="나비 캐릭터">
+          </div>
+          <div class="v-card-content">
+            <h3 class="v-card-title">나비와 생각해요</h3>
+            <p class="v-card-desc">지혜로운 나비와 함께 그림을 찾으며 재미있는 문제를 풀어요.</p>
+          </div>
+        </div>
+        <div class="v-card-footer">
+          <div class="v-card-touch-indicator">
+            <span class="circle-icon">👆</span>
+            <span>두뇌정원으로 이동</span>
+          </div>
+          <span style="font-size: 13px; color: var(--text-muted);">activity-card-cognitive</span>
+        </div>
+      </article>
+
+      <!-- 4. 토리 추억카드 -->
+      <article class="v-card v-card-remembrance" data-card-id="activity-card-remembrance" id="cardRemembrance">
+        <div class="v-card-header">
+          <span class="v-card-tag">🌾 정다운 회상</span>
+          <span style="font-size: 20px;">📸</span>
+        </div>
+        <div class="v-card-body">
+          <div class="v-card-character-wrap">
+            <img src="assets/images/friend-tori.png" alt="토리 캐릭터">
+          </div>
+          <div class="v-card-content">
+            <h3 class="v-card-title">토리와 추억을 이야기해요</h3>
+            <p class="v-card-desc">다정한 토리와 함께 정겨운 옛 사진을 보며 이야기를 나눠요.</p>
+          </div>
+        </div>
+        <div class="v-card-footer">
+          <div class="v-card-touch-indicator">
+            <span class="circle-icon">👆</span>
+            <span>추억정원으로 이동</span>
+          </div>
+          <span style="font-size: 13px; color: var(--text-muted);">activity-card-remembrance</span>
+        </div>
+      </article>
+
+      <!-- 5. 곰이 음악카드 -->
+      <article class="v-card v-card-music" data-card-id="activity-card-music" id="cardMusic">
+        <div class="v-card-header">
+          <span class="v-card-tag">🎶 음악 감상</span>
+          <span style="font-size: 20px;">🎵</span>
+        </div>
+        <div class="v-card-body">
+          <div class="v-card-character-wrap">
+            <img src="assets/images/friend-bori.png" alt="곰이 캐릭터">
+          </div>
+          <div class="v-card-content">
+            <h3 class="v-card-title">곰이와 노래를 들어요</h3>
+            <p class="v-card-desc">편안한 곰이와 함께 흥겨운 추억의 가요를 들으며 박수를 쳐요.</p>
+          </div>
+        </div>
+        <div class="v-card-footer">
+          <div class="v-card-touch-indicator">
+            <span class="circle-icon">👆</span>
+            <span>음악정원으로 이동</span>
+          </div>
+          <span style="font-size: 13px; color: var(--text-muted);">activity-card-music</span>
+        </div>
+      </article>
+
+      <!-- 6. 놀이카드 -->
+      <article class="v-card v-card-play" data-card-id="activity-card-play" id="cardPlay">
+        <div class="v-card-header">
+          <span class="v-card-tag">✨ 함께하는 시간</span>
+          <span style="font-size: 20px;">🎉</span>
+        </div>
+        <div class="v-card-body">
+          <div class="v-card-character-wrap">
+            <img src="assets/images/friend-tori.png" alt="친구들과 놀이">
+          </div>
+          <div class="v-card-content">
+            <h3 class="v-card-title">함께 놀아요</h3>
+            <p class="v-card-desc">기억정원 친구들과 함께 웃으며 즐거운 게임을 시작해요.</p>
+          </div>
+        </div>
+        <div class="v-card-footer">
+          <div class="v-card-touch-indicator">
+            <span class="circle-icon">👆</span>
+            <span>놀이활동으로 이동</span>
+          </div>
+          <span style="font-size: 13px; color: var(--text-muted);">activity-card-play</span>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- 가상 NFC 시뮬레이터 배너 (현장 테스트 및 개발 검증용 독) -->
+    <div class="nfc-simulator-dock">
+      <div>
+        <strong>🏷️ 가상 카드 태그 시뮬레이터</strong>
+        <span style="color: var(--text-secondary); margin-left: 8px;">(향후 실제 NFC 태그 부착 시 연동될 고유 ID 테스트)</span>
+      </div>
+      <div class="nfc-badge-group">
+        <button class="nfc-chip-btn" data-nfc-id="memory-card-personal">내기억 태그</button>
+        <button class="nfc-chip-btn" data-nfc-id="activity-card-exercise">운동 태그</button>
+        <button class="nfc-chip-btn" data-nfc-id="activity-card-cognitive">두뇌 태그</button>
+        <button class="nfc-chip-btn" data-nfc-id="activity-card-remembrance">추억 태그</button>
+        <button class="nfc-chip-btn" data-nfc-id="activity-card-music">음악 태그</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       3. 오늘의 활동 화면 (Today's Scheduled Activities)
+       ========================================================================== -->
+  <main id="view-today-activities" class="mg-view">
+    <div class="activity-page-header">
+      <h2>오늘 기억정원에서 함께해요</h2>
+      <p>사회복지사 선생님과 함께 약속된 즐거운 활동 순서입니다.</p>
+    </div>
+
+    <div class="daily-schedule-list">
+      <!-- 1. 오전 활동: 현재 해야 할 활동 (가장 크게 강조) -->
+      <section class="daily-schedule-item featured">
+        <div class="schedule-badge-col">
+          <span class="schedule-period">오전 활동 · 지금 할 시간</span>
+          <span class="schedule-time">10:30 ~ 11:10</span>
+        </div>
+        <div class="schedule-info-col">
+          <div class="schedule-avatar">
+            <img src="assets/images/friend-kongi.png" alt="콩이">
+          </div>
+          <div class="schedule-text">
+            <h3>콩이와 의자 체조</h3>
+            <p>의자에 편안히 앉아 어깨와 다리를 부드럽게 펴주는 활력 체조</p>
+          </div>
+        </div>
+        <button class="btn-schedule-start" data-view-target="exercise-select">
+          <span>시작하기</span>
+          <span>▶</span>
+        </button>
+      </section>
+
+      <!-- 2. 오후 활동 -->
+      <section class="daily-schedule-item">
+        <div class="schedule-badge-col">
+          <span class="schedule-period" style="background:#FAF0E6; color:#A36B17;">오후 활동</span>
+          <span class="schedule-time">14:00 ~ 14:40</span>
+        </div>
+        <div class="schedule-info-col">
+          <div class="schedule-avatar">
+            <img src="assets/images/friend-tori.png" alt="토리">
+          </div>
+          <div class="schedule-text">
+            <h3>옛날 시장 이야기</h3>
+            <p>정겨운 남대문 시장 옛 사진을 보며 따뜻한 추억 나누기</p>
+          </div>
+        </div>
+        <button class="btn-schedule-start" data-view-target="remembrance-garden" style="background:#558564;">
+          <span>시작하기</span>
+          <span>▶</span>
+        </button>
+      </section>
+
+      <!-- 3. 음악 시간 -->
+      <section class="daily-schedule-item">
+        <div class="schedule-badge-col">
+          <span class="schedule-period" style="background:#F5EEF0; color:#8F4756;">음악 시간</span>
+          <span class="schedule-time">15:30 ~ 16:00</span>
+        </div>
+        <div class="schedule-info-col">
+          <div class="schedule-avatar">
+            <img src="assets/images/friend-bori.png" alt="곰이">
+          </div>
+          <div class="schedule-text">
+            <h3>추억의 노래 듣기</h3>
+            <p>곰이와 함께 흥겨운 '고향의 봄'과 가요를 감상하며 손뼉 치기</p>
+          </div>
+        </div>
+        <button class="btn-schedule-start" data-view-target="music-garden" style="background:#558564;">
+          <span>시작하기</span>
+          <span>▶</span>
+        </button>
+      </section>
+    </div>
+
+    <div style="text-align: center; margin-top: 32px;">
+      <button class="btn-pill-action" data-view-target="senior-main" style="margin: 0 auto;">
+        <span>🏠</span> 메인 카드로 돌아가기
+      </button>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       4. 세부 활동 1: 운동정원 (Exercise Garden)
+       ========================================================================== -->
+  <!-- ==========================================================================
+       4. 콩이 건강체조 1: 코스 선택 화면 (오늘 어떤 운동을 해볼까요?)
+       ========================================================================== -->
+  <main id="view-exercise-select" class="mg-view">
+    <div class="activity-top-nav" style="margin-bottom: 24px;">
+      <button class="btn-back-garden" data-view-target="senior-main">◀ 메인 화면</button>
+      <span style="font-size: 18px; font-weight: 800; color: #C0582D; background: #FFF3EB; padding: 6px 18px; border-radius: var(--radius-pill);">
+        🐶 콩이와 함께하는 의자 건강체조
+      </span>
+    </div>
+
+    <div class="exercise-select-hero">
+      <h2 class="exercise-select-title">오늘 어떤 운동을 해볼까요?</h2>
+      <p class="exercise-select-subtitle">의자에 편안하게 앉아서 콩이와 함께 천천히 따라해요.</p>
+    </div>
+
+    <!-- 3가지 길이의 대형 터치 코스 카드 (5분 / 10분 / 20분) -->
+    <div class="exercise-course-grid">
+      <!-- 1. 5분 가볍게 -->
+      <div class="exercise-course-card card-5min" onclick="startExerciseCourse(5)">
+        <span class="course-time-badge">⏱ 5분 코스 · 가벼운 몸풀기</span>
+        <div class="course-kongi-avatar">
+          <img src="assets/images/chair-exercise/kongi-chair-1-wave.jpg" alt="5분 가볍게 콩이">
+        </div>
+        <h3 class="course-title">5분 가볍게</h3>
+        <p class="course-desc">
+          인사 ➔ 호흡 ➔ 목·어깨 ➔ 팔 ➔ 다리 ➔ 정리운동<br>
+          <strong style="color: #C0582D;">가벼운 관절 풀기와 기분 전환에 좋아요</strong>
+        </p>
+        <button class="btn-start-course">시작하기 ▶</button>
+      </div>
+
+      <!-- 2. 10분 건강체조 -->
+      <div class="exercise-course-card card-10min" onclick="startExerciseCourse(10)">
+        <span class="course-time-badge">⏱ 10분 코스 · 활력 맞춤</span>
+        <div class="course-kongi-avatar">
+          <img src="assets/images/chair-exercise/kongi-chair-exercise.gif" alt="10분 건강체조 콩이">
+        </div>
+        <h3 class="course-title">10분 건강체조</h3>
+        <p class="course-desc">
+          준비운동 2분 ➔ 상체 3분 ➔ 하체 3분 ➔ 리듬 1분 ➔ 정리 1분<br>
+          <strong style="color: #386641;">상하체 균형을 맞춰주는 표준 체조</strong>
+        </p>
+        <button class="btn-start-course" style="background: var(--garden-secondary);">시작하기 ▶</button>
+      </div>
+
+      <!-- 3. 20분 함께 운동 -->
+      <div class="exercise-course-card card-20min" onclick="startExerciseCourse(20)">
+        <span class="course-time-badge">⏱ 20분 코스 · 전신 활력</span>
+        <div class="course-kongi-avatar">
+          <img src="assets/images/friend-kongi.png" alt="20분 함께 운동 콩이">
+        </div>
+        <h3 class="course-title">20분 함께 운동</h3>
+        <p class="course-desc">
+          1단계 준비 ➔ 2단계 상체 ➔ 3단계 하체 ➔ 4단계 리듬 ➔ 5단계 정리<br>
+          <strong style="color: #1F4226;">온몸의 혈액순환과 활력을 높이는 정규 코스</strong>
+        </p>
+        <button class="btn-start-course" style="background: var(--garden-primary);">시작하기 ▶</button>
+      </div>
+    </div>
+
+    <!-- 하단 안전 원칙 안내 문구 -->
+    <div class="exercise-safety-notice" style="max-width: 900px; margin: 0 auto;">
+      <span>⚠️</span>
+      <span>몸이 불편하거나 통증이 있으면 잠시 쉬어 주세요. (의자에 편안히 앉아서 무리하지 마세요)</span>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       4. 콩이 건강체조 2: 전체화면 플레이어 무대 (Seated Chair Exercise Player)
+       ========================================================================== -->
+  <!-- ==========================================================================
+       4. 콩이 건강체조 2: 16:9 시네마틱 플레이어 무대 (Seated Chair Exercise 16:9 Cinema)
+       ========================================================================== -->
+  <main id="view-exercise-garden" class="mg-view" style="padding: 10px 16px; justify-content: center; align-items: center;">
+    <div class="exercise-cinema-frame">
+      <!-- 1. 16:9 상단 안전 헤더 바 -->
+      <header class="cinema-header-bar">
+        <div class="cinema-header-left">
+          <button class="btn-back-garden" onclick="switchView('exercise-select')">◀ 코스 선택</button>
+          <span class="cinema-course-pill" id="currentCourseTag">⏱ 5분 가볍게</span>
+          <span class="cinema-step-title" id="currentStepNameLead">1단계: 콩이 인사</span>
+        </div>
+        <div class="cinema-timer-badge" id="exerciseTimerDisplay">
+          남은 시간: 05:00
+        </div>
+      </header>
+
+      <!-- 2. 진행 바 -->
+      <div class="cinema-progress-line">
+        <div class="cinema-progress-fill" id="exerciseStepProgress"></div>
+      </div>
+
+      <!-- 3. 16:9 중앙 대형 무대 (비율 유지 & 콩이 대폭 확대) -->
+      <div class="cinema-stage-area">
+        <!-- 배경 운동실 창문 -->
+        <div class="cinema-gym-bg">
+          <div class="cinema-window"></div>
+          <div style="text-align: center; color: #8F8474; font-size: 14px; font-weight: 700; margin-top: 6px;">
+            🌸 기억정원 건강 운동실 · 의자 체조
+          </div>
+          <div class="cinema-window"></div>
+        </div>
+
+        <!-- 상단 방향 가이드 뱃지 -->
+        <div class="cinema-direction-badge" id="exerciseDirectionBadge">
+          <span id="directionIcon">↔</span>
+          <span id="directionText">양쪽 함께 천천히</span>
+        </div>
+
+        <!-- 중앙 콩이 대형 캐릭터 및 의자 (화면의 90% 높이 차지) -->
+        <div class="stage-seated-kongi-wrap" id="kongiCharacterStage">
+          <div class="stage-wooden-chair"></div>
+          <img src="assets/images/chair-exercise/kongi-chair-exercise.gif" 
+               alt="의자에 앉아 체조하는 콩이" 
+               class="stage-kongi-character motion-breathing" 
+               id="kongiExerciseAnimImg">
+        </div>
+
+        <!-- 실제 비디오 엘리먼트 -->
+        <video id="exerciseVideoElement" class="exercise-video-embed" playsinline loop>
+          <source src="assets/videos/friends-exercise-20min.mp4" type="video/mp4">
+        </video>
+
+        <!-- 중앙 하단 플로팅 자막 캡션 바 (콩이 발치 오버레이) -->
+        <div class="cinema-floating-caption">
+          <span class="caption-action-badge" id="captionStepBadge">동작 1/6</span>
+          <div class="caption-action-text" id="captionPrimaryText">"안녕하세요! 콩이와 함께 가볍게 몸을 움직여 볼까요?"</div>
+          <div class="caption-action-sub" id="captionSecondaryText">의자에 편안히 앉아 바른 자세로 준비합니다.</div>
+        </div>
+      </div>
+
+      <!-- 4. 16:9 하단 컨트롤 바 (이전 / 일시정지 / 다음 + 모드전환 + 안전문구) -->
+      <footer class="cinema-bottom-bar">
+        <!-- 안전 안내 문구 태그 -->
+        <div class="cinema-safety-tag">
+          <span>⚠️</span>
+          <span>몸이 불편하거나 통증이 있으면 잠시 쉬어 주세요.</span>
+        </div>
+
+        <!-- 이전 / 일시정지 / 다음 3대 메인 버튼 -->
+        <div class="cinema-controls-center">
+          <button class="btn-cinema-ctrl sec" onclick="prevExerciseStep()">
+            <span>◀</span>
+            <span>이전</span>
+          </button>
+          <button class="btn-cinema-ctrl pri" id="btnExercisePauseLarge" onclick="toggleExercisePause()">
+            <span id="pauseIcon">⏸</span>
+            <span id="pauseText">일시정지</span>
+          </button>
+          <button class="btn-cinema-ctrl sec" onclick="nextExerciseStep()">
+            <span>다음</span>
+            <span>▶</span>
+          </button>
+        </div>
+
+        <!-- 콩이 가이드 / 실제 영상 모드 전환 버튼 -->
+        <div class="cinema-mode-toggle">
+          <button class="btn-mode-pill active" id="btnModeAnim" onclick="setExerciseViewMode('anim')">콩이 가이드</button>
+          <button class="btn-mode-pill" id="btnModeVideo" onclick="setExerciseViewMode('video')">실제 영상</button>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       4. 세부 활동 2: 두뇌정원 (Cognitive Garden)
+       ========================================================================== -->
+  <main id="view-cognitive-garden" class="mg-view">
+    <div class="activity-arena">
+      <div class="activity-top-nav">
+        <button class="btn-back-garden" data-view-target="senior-main">◀ 메인 화면</button>
+        <h2 style="font-size: 28px; font-weight: 800; color: var(--garden-primary);">나비와 생각해요</h2>
+        <span style="font-size: 16px; font-weight: 700; color: var(--text-secondary);">담당: 나비</span>
+      </div>
+
+      <!-- 한 화면에 단 하나의 직관적 문제 -->
+      <h3 class="cognitive-question-text">같은 그림을 찾아보세요.</h3>
+
+      <!-- 3개의 큰 그림 카드 (빨간 X 배제, 온화한 선택지) -->
+      <div class="cognitive-cards-row">
+        <div class="cognitive-choice-card" onclick="handleCognitiveChoice(true, this)">
+          <div class="cognitive-choice-img">🍎</div>
+          <div class="cognitive-choice-label">사과</div>
+        </div>
+        <div class="cognitive-choice-card" onclick="handleCognitiveChoice(false, this)">
+          <div class="cognitive-choice-img">🍇</div>
+          <div class="cognitive-choice-label">포도</div>
+        </div>
+        <div class="cognitive-choice-card" onclick="handleCognitiveChoice(false, this)">
+          <div class="cognitive-choice-img">🍌</div>
+          <div class="cognitive-choice-label">바나나</div>
+        </div>
+      </div>
+
+      <!-- 친절한 피드백 영역 -->
+      <div class="cognitive-feedback-box" id="cognitiveFeedback">
+        아래 보기에서 맛있는 사과를 찾아보세요.
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       4. 세부 활동 3: 추억정원 (Remembrance Garden)
+       ========================================================================== -->
+  <main id="view-remembrance-garden" class="mg-view">
+    <div class="activity-arena">
+      <div class="activity-top-nav">
+        <button class="btn-back-garden" data-view-target="senior-main">◀ 메인 화면</button>
+        <h2 style="font-size: 28px; font-weight: 800; color: var(--garden-primary);">토리와 추억을 이야기해요</h2>
+        <span style="font-size: 16px; font-weight: 700; color: var(--text-secondary);">담당: 토리</span>
+      </div>
+
+      <div class="remembrance-photo-box">
+        <img id="remembrancePhotoImg" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1000&auto=format&fit=crop&q=80" alt="옛날 시장 모습">
+      </div>
+      <p id="remembrancePhotoTitle" style="font-size: 19px; font-weight: 700; color: var(--text-muted); margin-bottom: 12px;">그 시절 활기찼던 남대문 시장</p>
+
+      <h3 class="remembrance-question">“이 모습을 보신 적 있으세요?”</h3>
+
+      <div class="remembrance-btn-row">
+        <button class="btn-remembrance yes" onclick="answerRemembrance(true)">네, 생각나요</button>
+        <button class="btn-remembrance no" onclick="answerRemembrance(false)">잘 모르겠어요</button>
+      </div>
+
+      <!-- 사회복지사용 간단 메모 기록 영역 -->
+      <div class="remembrance-worker-memo">
+        <label for="workerMemoInput">✏️ 사회복지사 활동 관찰 메모:</label>
+        <textarea id="workerMemoInput" placeholder="어르신께서 말씀하신 옛 기억이나 표정, 반응을 간단히 기록해 주세요."></textarea>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       4. 세부 활동 4: 음악정원 (Music Garden)
+       ========================================================================== -->
+  <main id="view-music-garden" class="mg-view">
+    <div class="activity-arena">
+      <div class="activity-top-nav">
+        <button class="btn-back-garden" data-view-target="senior-main">◀ 메인 화면</button>
+        <h2 style="font-size: 28px; font-weight: 800; color: var(--garden-primary);">곰이와 노래를 들어요</h2>
+        <span style="font-size: 16px; font-weight: 700; color: var(--text-secondary);">담당: 곰이</span>
+      </div>
+
+      <!-- 회전하는 따뜻한 LP 턴테이블 애니메이션 -->
+      <div class="music-turntable-box" id="musicTurntable">
+        <div class="music-turntable-center">🎵</div>
+      </div>
+
+      <h3 class="music-song-title" id="musicCurrentTitle">고향의 봄</h3>
+      <p class="music-song-artist" id="musicCurrentArtist">이원수 작사 / 홍난파 작곡</p>
+
+      <!-- 복잡한 재생목록 없이 3개 버튼만 제공 -->
+      <div class="music-controls-row">
+        <button class="btn-act-control secondary" onclick="updateMusicDisplay()">처음부터</button>
+        <button class="btn-act-control primary" id="btnMusicPlay" onclick="toggleMusicPlay()">노래 듣기 ▶</button>
+        <button class="btn-act-control secondary" onclick="nextMusicTrack()">다음 노래 ⏭</button>
+      </div>
+
+      <div style="margin-top: 36px;">
+        <button class="btn-pill-action" onclick="completeActivity('추억의 노래 듣기', 'music')">
+          <span>🏁</span> 음악 활동 마치기
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       4. 세부 활동 5: 활동 종료 화면 (Activity Finish Screen)
+       ========================================================================== -->
+  <main id="view-activity-finish" class="mg-view">
+    <div class="activity-arena">
+      <div class="finish-celebrate-box">
+        <img src="assets/images/friend-kongi.png" alt="축하 캐릭터" class="finish-char-img" id="finishCharacterImg">
+        <h2 class="finish-title">오늘도 정말 잘하셨어요.</h2>
+        <p class="finish-subtext" id="finishActivityTitle">오늘의 활동을 훌륭하게 마치셨습니다.</p>
+
+        <div class="finish-stamp-card">
+          <span style="font-size: 28px;">💮</span>
+          <span>기억정원 건강 출석 도장이 등록되었습니다!</span>
+        </div>
+
+        <button class="btn-finish-home" data-view-target="senior-main">
+          <span>활동 마치기</span>
+        </button>
+
+        <p style="margin-top: 20px; font-size: 15px; color: var(--text-muted);">
+          ※ 사회복지사 선생님의 일지에 참여 결과가 안전하게 기록되었습니다.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       5. 기억정원 둘러보기 (라일락 마을 기본 화면)
+       ========================================================================== -->
+  <main id="view-garden-tour" class="mg-view">
+    <div class="garden-tour-wrapper">
+      <div class="garden-tour-header">
+        <div>
+          <h2 style="font-size: 30px; font-weight: 800; color: var(--garden-primary);">기억정원 둘러보기</h2>
+          <p style="font-size: 17px; color: var(--text-secondary);">친구들이 살고 있는 아름다운 라일락 마을과 정원을 산책해 보세요.</p>
+        </div>
+        <button class="btn-pill-action" data-view-target="senior-main">
+          <span>◀</span> 메인으로 돌아가기
+        </button>
+      </div>
+
+      <!-- 2D / 2.5D 정원 지도 컨테이너 -->
+      <div class="garden-map-container">
+        <img src="assets/images/lilac-village-illustration.jpg" alt="라일락 마을 정원 지도" class="garden-map-bg">
+
+        <!-- 랜드마크 핀 7개 -->
+        <div class="map-pin" style="top: 50%; left: 50%;" onclick="openLandmarkInfo('plaza')">
+          <span class="map-pin-icon">🌸</span>
+          <span>기억정원 중앙광장</span>
+        </div>
+
+        <div class="map-pin" style="top: 25%; left: 45%;" onclick="openLandmarkInfo('shelter')">
+          <span class="map-pin-icon">🏡</span>
+          <span>라일락 마을 쉼터</span>
+        </div>
+
+        <div class="map-pin" style="top: 35%; left: 22%;" onclick="openLandmarkInfo('kongi-house')">
+          <span class="map-pin-icon">🏃</span>
+          <span>콩이 집</span>
+        </div>
+
+        <div class="map-pin" style="top: 70%; left: 28%;" onclick="openLandmarkInfo('nabi-house')">
+          <span class="map-pin-icon">📖</span>
+          <span>나비 집</span>
+        </div>
+
+        <div class="map-pin" style="top: 38%; left: 76%;" onclick="openLandmarkInfo('tori-house')">
+          <span class="map-pin-icon">🌳</span>
+          <span>토리 집</span>
+        </div>
+
+        <div class="map-pin" style="top: 72%; left: 74%;" onclick="openLandmarkInfo('bori-house')">
+          <span class="map-pin-icon">🎵</span>
+          <span>곰이 집</span>
+        </div>
+
+        <div class="map-pin" style="top: 82%; left: 48%;" onclick="openLandmarkInfo('garden-field')">
+          <span class="map-pin-icon">🌱</span>
+          <span>라일락 텃밭</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       6. 기억정원 Care (사회복지사용 화면)
+       ========================================================================== -->
+  <main id="view-care-dashboard" class="mg-view">
+    <div class="care-header-block">
+      <h2 class="care-header-title">기억정원 Care</h2>
+      <p class="care-header-subtitle">오늘도 어르신과 함께 따뜻한 하루를 만들어 주세요.</p>
+    </div>
+
+    <!-- 대시보드 요약 지표 카드 4종 -->
+    <div class="care-stats-grid">
+      <div class="care-stat-card">
+        <span class="care-stat-label">오늘 프로그램</span>
+        <span class="care-stat-value">3건</span>
+      </div>
+      <div class="care-stat-card">
+        <span class="care-stat-label">참여 어르신</span>
+        <span class="care-stat-value">12명</span>
+      </div>
+      <div class="care-stat-card">
+        <span class="care-stat-label">완료 활동</span>
+        <span class="care-stat-value">8건</span>
+      </div>
+      <div class="care-stat-card">
+        <span class="care-stat-label">작성할 수업일지</span>
+        <span class="care-stat-value" style="color: #D97706;">2건</span>
+      </div>
+    </div>
+
+    <!-- 사회복지사 6대 메뉴 탭 -->
+    <div class="care-nav-tabs">
+      <button class="care-tab-btn active" data-tab="lesson">오늘 수업</button>
+      <button class="care-tab-btn" data-tab="users">이용자 관리</button>
+      <button class="care-tab-btn" data-tab="records">활동기록</button>
+      <button class="care-tab-btn" data-tab="journal">수업일지</button>
+      <button class="care-tab-btn" data-tab="programs">프로그램 관리</button>
+      <button class="care-tab-btn" data-tab="stats">통계</button>
+    </div>
+
+    <!-- 탭 1: 오늘 수업 진행 흐름 (8단계 인터랙티브 플로우) -->
+    <div id="careTab-lesson" class="care-tab-content">
+      <div class="lesson-flow-wrapper">
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--garden-primary); margin-bottom: 8px;">
+          사회복지사 수업 진행 흐름
+        </h3>
+        <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px;">
+          아래 단계를 클릭하여 어르신의 수업 시작부터 종료 및 수업일지 작성까지 원스톱으로 진행할 수 있습니다.
+        </p>
+
+        <!-- 8단계 프로세스 바 -->
+        <div class="flow-step-bar">
+          <div class="flow-step-item completed" onclick="handleCareFlowStep(1)">
+            <div class="flow-step-circle">1</div>
+            <span class="flow-step-name">대상자 선택</span>
+          </div>
+          <div class="flow-step-item completed" onclick="handleCareFlowStep(2)">
+            <div class="flow-step-circle">2</div>
+            <span class="flow-step-name">프로그램 선택</span>
+          </div>
+          <div class="flow-step-item completed" onclick="handleCareFlowStep(3)">
+            <div class="flow-step-circle">3</div>
+            <span class="flow-step-name">수업 시작</span>
+          </div>
+          <div class="flow-step-item active" onclick="handleCareFlowStep(4)">
+            <div class="flow-step-circle">4</div>
+            <span class="flow-step-name">활동 종료</span>
+          </div>
+          <div class="flow-step-item" onclick="handleCareFlowStep(5)">
+            <div class="flow-step-circle">5</div>
+            <span class="flow-step-name">참여도 선택</span>
+          </div>
+          <div class="flow-step-item" onclick="handleCareFlowStep(6)">
+            <div class="flow-step-circle">6</div>
+            <span class="flow-step-name">반응 체크</span>
+          </div>
+          <div class="flow-step-item" onclick="handleCareFlowStep(7)">
+            <div class="flow-step-circle">7</div>
+            <span class="flow-step-name">특이사항</span>
+          </div>
+          <div class="flow-step-item" onclick="handleCareFlowStep(8)">
+            <div class="flow-step-circle">8</div>
+            <span class="flow-step-name">기록 저장</span>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-subtle); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px;">
+          <h4 id="careFlowMessage" style="font-size: 18px; font-weight: 800; color: var(--garden-primary); margin-bottom: 8px;">
+            4단계: 활동 종료 및 데이터 수집
+          </h4>
+          <p style="font-size: 15px; color: var(--text-secondary);">
+            김순자 어르신의 [콩이와 의자 체조] 활동이 성공적으로 마무리되었습니다. 아래에서 참여도와 반응을 체크해 주세요.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <label style="font-size: 15px; font-weight: 800; display: block; margin-bottom: 8px;">참여도 평가</label>
+            <select style="width: 100%; padding: 12px; border-radius: 10px; border: 1.5px solid #CBD5E1; font-size: 15px;">
+              <option>매우 적극적 (동작을 끝까지 잘 따라하심)</option>
+              <option>보통 (선생님의 구호에 맞춰 호응하심)</option>
+              <option>관찰 필요 (약간의 피로감 호소)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 15px; font-weight: 800; display: block; margin-bottom: 8px;">주요 반응</label>
+            <select style="width: 100%; padding: 12px; border-radius: 10px; border: 1.5px solid #CBD5E1; font-size: 15px;">
+              <option>밝은 미소와 박수로 화답하심</option>
+              <option>차분하게 집중하여 끝까지 참여하심</option>
+              <option>옛날 생각나신다며 흥미를 표현하심</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <label style="font-size: 15px; font-weight: 800; display: block; margin-bottom: 8px;">특이사항 메모 (AI 수업일지 자동생성 연동 예정)</label>
+          <textarea style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 10px; padding: 12px; font-size: 15px; min-height: 80px;" placeholder="체조 중 어깨 통증 여부나 기억나는 말씀 등을 기재합니다."></textarea>
+        </div>
+
+        <div style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
+          <button class="btn-pill-action" data-view-target="senior-main" style="border: none; background: #FAF7F2;">
+            어르신 화면으로 전환
+          </button>
+          <button class="btn-schedule-start" onclick="handleCareFlowStep(8)" style="padding: 12px 28px; font-size: 18px;">
+            수업일지 저장 및 완료
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 탭 2: 이용자 관리 -->
+    <div id="careTab-users" class="care-tab-content" style="display: none;">
+      <div class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>이용자명</th>
+              <th>소속 반</th>
+              <th>담당 캐릭터</th>
+              <th>오늘 예정 활동</th>
+              <th>최근 참여 기록</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>김순자 어르신</strong></td>
+              <td>사랑반</td>
+              <td>콩이 (신체운동)</td>
+              <td>콩이와 의자 체조</td>
+              <td>어제 (노래 교실)</td>
+              <td><button class="nfc-chip-btn" onclick="selectSenior('senior-001')">수업 시작</button></td>
+            </tr>
+            <tr>
+              <td><strong>박영수 어르신</strong></td>
+              <td>행복반</td>
+              <td>나비 (인지학습)</td>
+              <td>나비와 숫자 짝맞추기</td>
+              <td>어제 (과일 퀴즈)</td>
+              <td><button class="nfc-chip-btn" onclick="selectSenior('senior-002')">수업 시작</button></td>
+            </tr>
+            <tr>
+              <td><strong>이정애 어르신</strong></td>
+              <td>사랑반</td>
+              <td>토리 (회상놀이)</td>
+              <td>추억의 장터 이야기</td>
+              <td>3일 전 (체조)</td>
+              <td><button class="nfc-chip-btn" onclick="selectSenior('senior-003')">수업 시작</button></td>
+            </tr>
+            <tr>
+              <td><strong>최동철 어르신</strong></td>
+              <td>희망반</td>
+              <td>곰이 (음악취미)</td>
+              <td>가요 감상과 박수 치기</td>
+              <td>2일 전 (노래)</td>
+              <td><button class="nfc-chip-btn" onclick="selectSenior('senior-004')">수업 시작</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 탭 3: 활동기록 -->
+    <div id="careTab-records" class="care-tab-content" style="display: none;">
+      <div class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>일시</th>
+              <th>이용자</th>
+              <th>활동명</th>
+              <th>영역</th>
+              <th>소요시간</th>
+              <th>참여도</th>
+              <th>복지사 소견</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>오늘 10:45</td>
+              <td>김순자 어르신</td>
+              <td>콩이와 의자 체조</td>
+              <td>신체</td>
+              <td>15분</td>
+              <td><span style="color:#2F855A; font-weight:800;">매우 적극적</span></td>
+              <td>동작을 활기차게 소화하시며 기분 좋아하심</td>
+            </tr>
+            <tr>
+              <td>오늘 09:30</td>
+              <td>박영수 어르신</td>
+              <td>나비와 생각해요</td>
+              <td>인지</td>
+              <td>12분</td>
+              <td><span style="color:#2F855A; font-weight:800;">보통</span></td>
+              <td>문제 2문항 정확히 선택</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 탭 4: 수업일지 -->
+    <div id="careTab-journal" class="care-tab-content" style="display: none;">
+      <div style="background: white; border-radius: var(--radius-xl); padding: 28px; border: 1px solid rgba(88, 129, 87, 0.15);">
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--garden-primary); margin-bottom: 12px;">오늘의 통합 수업일지</h3>
+        <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 20px;">
+          (향후 AI 수업일지 생성 기능과 원클릭 연동되도록 표준 서식을 지원합니다.)
+        </p>
+        <div style="background: #FDFBF7; border: 1px solid #E5DDCF; border-radius: 12px; padding: 20px; font-size: 16px; line-height: 1.7;">
+          <p><strong>[수업 개요]</strong> 2026년 9월 30일(수) 오전 신체 및 인지 통합 돌봄 프로그램</p>
+          <p><strong>[참여 인원]</strong> 총 12명 (사랑반 6명, 행복반 6명)</p>
+          <p><strong>[주요 내용]</strong> 콩이의 의자 체조 10분 진행 후, 남대문 시장 옛 사진을 통한 정다운 회상 교실 진행.</p>
+          <p><strong>[특이사항]</strong> 김순자 어르신께서 옛 시장 회상 시 높은 인지 반응과 언어 표현력을 보여주심.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 탭 5: 프로그램 관리 -->
+    <div id="careTab-programs" class="care-tab-content" style="display: none;">
+      <div style="background: white; border-radius: var(--radius-xl); padding: 28px; border: 1px solid rgba(88, 129, 87, 0.15);">
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--garden-primary); margin-bottom: 16px;">주간 프로그램 편성표</h3>
+        <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 20px;">기관 일정에 맞춰 활동 순서 및 담당 캐릭터를 유연하게 배정할 수 있습니다.</p>
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+          <div style="background:#FAF8F5; padding:16px; border-radius:12px; text-align:center;">
+            <strong>월요일</strong><br><small>콩이 의자체조<br>나비 퀴즈</small>
+          </div>
+          <div style="background:#FAF8F5; padding:16px; border-radius:12px; text-align:center;">
+            <strong>화요일</strong><br><small>토리 옛이야기<br>곰이 노래</small>
+          </div>
+          <div style="background:#EBF5EE; border: 2px solid #588157; padding:16px; border-radius:12px; text-align:center;">
+            <strong>수요일 (오늘)</strong><br><small>콩이 체조<br>남대문 시장</small>
+          </div>
+          <div style="background:#FAF8F5; padding:16px; border-radius:12px; text-align:center;">
+            <strong>목요일</strong><br><small>나비 과일찾기<br>친구들과 놀이</small>
+          </div>
+          <div style="background:#FAF8F5; padding:16px; border-radius:12px; text-align:center;">
+            <strong>금요일</strong><br><small>신나는 노래방<br>기억정원 산책</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 탭 6: 통계 -->
+    <div id="careTab-stats" class="care-tab-content" style="display: none;">
+      <div style="background: white; border-radius: var(--radius-xl); padding: 28px; border: 1px solid rgba(88, 129, 87, 0.15);">
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--garden-primary); margin-bottom: 16px;">주간 어르신 활동 참여 통계</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          <div style="background:#FAF8F5; padding:20px; border-radius:14px;">
+            <div style="font-size: 14px; color: var(--text-muted);">평균 출석 및 참여율</div>
+            <div style="font-size: 32px; font-weight: 900; color: #2F855A; margin-top: 4px;">96.4%</div>
+          </div>
+          <div style="background:#FAF8F5; padding:20px; border-radius:14px;">
+            <div style="font-size: 14px; color: var(--text-muted);">신체 활동 수행도</div>
+            <div style="font-size: 32px; font-weight: 900; color: #386641; margin-top: 4px;">92.0%</div>
+          </div>
+          <div style="background:#FAF8F5; padding:20px; border-radius:14px;">
+            <div style="font-size: 14px; color: var(--text-muted);">정서 만족도 지수</div>
+            <div style="font-size: 32px; font-weight: 900; color: #E78C69; margin-top: 4px;">98.5점</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       7. 기억정원 Admin (기관 관리자 화면)
+       ========================================================================== -->
+  <main id="view-admin-dashboard" class="mg-view">
+    <div class="care-header-block">
+      <h2 class="care-header-title">기억정원 Admin</h2>
+      <p class="care-header-subtitle">기관 디지털 돌봄 운영 현황 및 시설 통합 관리 대시보드</p>
+    </div>
+
+    <!-- 관리자 지표 카드 6종 -->
+    <div class="admin-stats-grid">
+      <div class="admin-stat-card">
+        <div class="admin-stat-label">등록 이용자</div>
+        <div class="admin-stat-val">48명</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-label">등록 직원</div>
+        <div class="admin-stat-val">8명</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-label">오늘 프로그램</div>
+        <div class="admin-stat-val">6개 세션</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-label">월간 활동 시간</div>
+        <div class="admin-stat-val">142시간</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-label">참여 현황</div>
+        <div class="admin-stat-val" style="color: #2F855A;">94.2%</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-label">최근 안전 특이사항</div>
+        <div class="admin-stat-val" style="color: #386641;">0건</div>
+      </div>
+    </div>
+
+    <!-- 관리자 메뉴 탭 -->
+    <div class="care-nav-tabs">
+      <button class="care-tab-btn admin-tab-btn active" data-admin-tab="overview">대시보드</button>
+      <button class="care-tab-btn admin-tab-btn" data-admin-tab="users">이용자 관리</button>
+      <button class="care-tab-btn admin-tab-btn" data-admin-tab="staff">직원 관리</button>
+      <button class="care-tab-btn admin-tab-btn" data-admin-tab="programs">프로그램 관리</button>
+      <button class="care-tab-btn admin-tab-btn" data-admin-tab="logs">기록 관리</button>
+      <button class="care-tab-btn admin-tab-btn" data-admin-tab="settings">기관 설정</button>
+    </div>
+
+    <!-- 대시보드 오버뷰 -->
+    <div id="adminTab-overview" class="admin-tab-content">
+      <div class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>기관명</th>
+              <th>설치 디바이스</th>
+              <th>가상카드 매핑 현황</th>
+              <th>네트워크 상태</th>
+              <th>보안 및 개인정보</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>햇살 주간보호센터 (본원)</strong></td>
+              <td>대형 터치스크린 2대, 태블릿 6대</td>
+              <td>정상 바인딩 (6종 카드 활성)</td>
+              <td><span style="color:#2F855A; font-weight:800;">● 정상 연결</span></td>
+              <td>암호화 보호 적용 중</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 이용자 관리 -->
+    <div id="adminTab-users" class="admin-tab-content" style="display: none;">
+      <div class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>등록번호</th>
+              <th>이용자 성명</th>
+              <th>생년월일</th>
+              <th>케어 등급</th>
+              <th>보호자 연락처</th>
+              <th>가상카드 ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MG-2026-001</td>
+              <td>김순자</td>
+              <td>1942.05.12</td>
+              <td>장기요양 3등급</td>
+              <td>010-3456-7890 (자녀)</td>
+              <td>memory-card-senior-001</td>
+            </tr>
+            <tr>
+              <td>MG-2026-002</td>
+              <td>박영수</td>
+              <td>1939.11.20</td>
+              <td>장기요양 4등급</td>
+              <td>010-4567-8901 (배우자)</td>
+              <td>memory-card-senior-002</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 직원 관리 -->
+    <div id="adminTab-staff" class="admin-tab-content" style="display: none;">
+      <div class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>직원명</th>
+              <th>직책</th>
+              <th>배정 학급</th>
+              <th>접근 권한</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>이서연</td>
+              <td>선임 사회복지사</td>
+              <td>사랑반</td>
+              <td>기억정원 Care 전담</td>
+              <td><span style="color:#2F855A; font-weight:800;">재직 중</span></td>
+            </tr>
+            <tr>
+              <td>정우진</td>
+              <td>생활지도원</td>
+              <td>행복반</td>
+              <td>활동 모니터링</td>
+              <td><span style="color:#2F855A; font-weight:800;">재직 중</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 프로그램 관리 -->
+    <div id="adminTab-programs" class="admin-tab-content" style="display: none;">
+      <div style="background: white; border-radius: var(--radius-xl); padding: 24px; border: 1px solid rgba(0,0,0,0.08);">
+        <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 12px;">기관 표준 디지털 프로그램 라이브러리</h3>
+        <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 16px;">
+          국민건강보험공단 인지활동 가이드라인에 부합하는 기억정원 공식 프로그램 모듈입니다.
+        </p>
+        <ul style="padding-left: 20px; line-height: 2;">
+          <li>신체 활력: 콩이와 함께하는 10분 관절 스트레칭 및 의자 체조</li>
+          <li>인지 자극: 나비와 함께하는 계절 과일 및 동물 짝맞추기</li>
+          <li>회상 치유: 토리와 함께하는 옛 장터 및 명절 이야기 나눔</li>
+          <li>정서 안정: 곰이와 함께하는 추억의 가요 및 동요 감상</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 기록 관리 -->
+    <div id="adminTab-logs" class="admin-tab-content" style="display: none;">
+      <div class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>기록 일자</th>
+              <th>프로그램 건수</th>
+              <th>누적 참가 인원</th>
+              <th>공단 청구 서식 연계</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026.09.30</td>
+              <td>6회 세션 완료</td>
+              <td>42명 참가</td>
+              <td><button class="nfc-chip-btn">엑셀 다운로드</button></td>
+            </tr>
+            <tr>
+              <td>2026.09.29</td>
+              <td>6회 세션 완료</td>
+              <td>40명 참가</td>
+              <td><button class="nfc-chip-btn">엑셀 다운로드</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 기관 설정 -->
+    <div id="adminTab-settings" class="admin-tab-content" style="display: none;">
+      <div style="background: white; border-radius: var(--radius-xl); padding: 24px; border: 1px solid rgba(0,0,0,0.08); max-width: 600px;">
+        <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 16px;">기관 환경 및 개인정보 동의 설정</h3>
+        <div style="margin-bottom: 14px;">
+          <label style="font-weight: 700; display: block; margin-bottom: 6px;">기관명</label>
+          <input type="text" value="햇살 주간보호센터" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CBD5E1;">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label style="font-weight: 700; display: block; margin-bottom: 6px;">영상 및 음성 피드백 볼륨</label>
+          <input type="range" min="0" max="100" value="85" style="width: 100%;">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label style="font-weight: 700; display: block; margin-bottom: 6px;">개인정보 및 초상권 수집 동의 관리</label>
+          <p style="font-size: 14px; color: var(--text-muted);">전체 이용자 48명 중 48명 동의 완료 (100%)</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       어르신 선택 팝업 모달 (사회복지사용 전환 편의)
+       ========================================================================== -->
+  <div class="mg-modal-overlay" id="seniorSelectModal">
+    <div class="mg-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-size: 22px; font-weight: 800; color: var(--garden-primary);">이용 어르신 선택</h3>
+        <button onclick="closeModal('seniorSelectModal')" style="border: none; background: transparent; font-size: 22px; cursor: pointer;">✕</button>
+      </div>
+      <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 16px;">
+        현재 가상카드 및 개인 활동을 진행할 어르신을 선택해 주세요.
+      </p>
+      <div id="seniorSelectList">
+        <!-- JS 렌더링 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 화면 하단 음성 배너 안내 (Senior Voice Toast) -->
+  <div id="seniorVoiceToast" class="senior-voice-toast">
+    <span>💬</span>
+    <span>기억정원에 오신 것을 환영합니다.</span>
+  </div>
+
+</div>
+
+<!-- Core Script -->
+<script src="js/memory-garden.js"></script>
+
+</body>
+</html>
