@@ -300,10 +300,15 @@
 
         <!-- 동작 안내 카드 -->
         <div class="exercise-info-box">
-          <div class="step-badge">
-            <span>🐻 보리 & 🐶 콩이</span>
-            <span id="stepNumberBadge">1 / 6 동작</span>
+          <div class="step-badge" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+            <div>
+              <span>🐻 든든한 보리 & 🐶 반가운 친구 콩이</span>
+            </div>
+            <button id="viewKongiProfileBtn" style="background:#FFF; border:2px solid #81C784; color:#2E7D32; border-radius:18px; padding:4px 12px; font-weight:800; cursor:pointer; font-size:1.05rem;">
+              🐶 콩이 소개보기
+            </button>
           </div>
+          <span id="stepNumberBadge" style="display:inline-block; font-size:1.25rem; font-weight:800; color:#2E7D32; margin-bottom:8px;">1 / 6 동작</span>
           <h2 class="exercise-action-title" id="actionTitle">두 손 번쩍 하늘 위로!</h2>
           <p class="exercise-action-desc" id="actionDesc">“의자에 바르게 앉아 두 손을 하늘 높이 쭉 뻗어보세요. 시원하게 기지개를 켭니다.”</p>
           
@@ -387,6 +392,23 @@
           </a>
         </div>
       </div>
+    <!-- 콩이 공식 프로필 모달 -->
+    <div id="kongiModal" class="modal-overlay hidden">
+      <div class="modal-content" style="max-width: 720px; padding: 24px;">
+        <div class="modal-header">
+          <span class="modal-room-icon">🐶</span>
+          <h3 class="modal-room-title">언제나 반가운 친구, 콩이</h3>
+        </div>
+        <p style="font-size: 1.35rem; color: #4E342E; margin-bottom: 16px;">
+          “작은 인사가 큰 행복이 되는 기억정원에서, 콩이와 함께!”
+        </p>
+        <div style="border-radius: 20px; overflow: hidden; border: 3px solid #81C784; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+          <img src="./assets/kongi_sheet.jpg" alt="공식 콩이 캐릭터 시트" style="width: 100%; display: block;">
+        </div>
+        <button id="closeKongiModalBtn" class="modal-btn confirm-btn" style="margin-top: 18px; width: 100%;">
+          확인했습니다 ↩
+        </button>
+      </div>
     </div>
 
   </div>
@@ -394,6 +416,27 @@
   <script>
     // 콩이 운동방 인터랙션 및 구령 스크립트
     document.addEventListener('DOMContentLoaded', () => {
+      
+      // 콩이 프로필 모달
+      const kongiModal = document.getElementById('kongiModal');
+      const viewKongiBtn = document.getElementById('viewKongiProfileBtn');
+      const closeKongiBtn = document.getElementById('closeKongiModalBtn');
+
+      if (viewKongiBtn && kongiModal) {
+        viewKongiBtn.addEventListener('click', () => {
+          kongiModal.classList.remove('hidden');
+        });
+      }
+      if (closeKongiBtn && kongiModal) {
+        closeKongiBtn.addEventListener('click', () => {
+          kongiModal.classList.add('hidden');
+        });
+      }
+      if (kongiModal) {
+        kongiModal.addEventListener('click', (e) => {
+          if (e.target === kongiModal) kongiModal.classList.add('hidden');
+        });
+      }
       
       // 6가지 안전 의자 체조 동작 데이터
       const exerciseSteps = [
