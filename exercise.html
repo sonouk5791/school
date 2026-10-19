@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>콩이 운동방 | 기억정원 라일락마을</title>
+  <meta name="description" content="치매 어르신을 위한 안전하고 쉬운 의자 체조 활동 공간">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================================================
+       콩이 운동방 전용 스타일 (스프링 그린 & 활력 테마)
+       ========================================================================== */
+    .exercise-stage {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 32px;
+      align-items: center;
+      padding: 24px 8px;
+    }
+
+    /* 시연 비주얼 영역 */
+    .exercise-visual-card {
+      background: #FFFFFF;
+      border-radius: 36px;
+      padding: 16px;
+      box-shadow: 0 16px 40px rgba(46, 125, 50, 0.15);
+      border: 4px solid #E8F5E9;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exercise-image-wrap {
+      position: relative;
+      border-radius: 26px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background: #E8F5E9;
+    }
+
+    .exercise-main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    /* 동작 펄스 가이드 오버레이 */
+    .motion-indicator {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(46, 125, 50, 0.9);
+      color: #FFF;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(6px);
+    }
+
+    .pulse-dot {
+      width: 14px;
+      height: 14px;
+      background: #81C784;
+      border-radius: 50%;
+      animation: pulseAnim 1.2s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.4); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
+    }
+
+    /* 우측: 체조 동작 설명 및 조작 패널 */
+    .exercise-control-card {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .exercise-info-box {
+      background: #FFFFFF;
+      border-radius: 32px;
+      padding: 28px 32px;
+      border: 3px solid #C8E6C9;
+      border-left: 12px solid #2E7D32;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #E8F5E9;
+      color: #2E7D32;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 1.35rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .exercise-action-title {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: #1B5E20;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .exercise-action-desc {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #37474F;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    /* 구령 카운트 박스 */
+    .count-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #F1F8E9;
+      border: 2px dashed #81C784;
+      border-radius: 22px;
+      padding: 14px 24px;
+    }
+
+    .count-label {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #33691E;
+    }
+
+    .count-number {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #2E7D32;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* 큼직한 컨트롤 버튼 그룹 */
+    .exercise-btns-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .main-play-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      width: 100%;
+      min-height: 95px;
+      background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 32px;
+      font-size: 2rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(46, 125, 50, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .main-play-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 16px 32px rgba(46, 125, 50, 0.45);
+    }
+
+    .sub-control-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .sub-nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 80px;
+      border-radius: 26px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: 3px solid #C8E6C9;
+      background: #FFFFFF;
+      color: #2E7D32;
+      transition: all 0.2s ease;
+    }
+
+    .sub-nav-btn:hover {
+      background: #E8F5E9;
+      transform: translateY(-2px);
+    }
+
+    /* 6단계 동작 빠른 선택 탭 */
+    .steps-pill-container {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px;
+    }
+
+    .step-pill {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #FFF;
+      border: 2px solid #E0E0E0;
+      color: #616161;
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .step-pill.active {
+      background: #2E7D32;
+      color: #FFF;
+      border-color: #1B5E20;
+    }
+
+    @media (max-width: 1100px) {
+      .exercise-stage {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="village-container">
+    
+    <!-- 상단 헤더 -->
+    <header class="top-header">
+      <div class="brand-group">
+        <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+          <span class="sprout-badge">🌱</span>
+          <h1 class="brand-title">기억정원 <span class="village-tag">라일락마을</span></h1>
+        </a>
+      </div>
+
+      <div class="header-center-info">
+        <span class="current-date">🏃 콩이 운동방</span>
+        <span class="weather-pill">🪑 안전한 의자 건강 체조</span>
+      </div>
+
+      <div class="quick-controls">
+        <button id="exVoiceBtn" class="control-btn" title="보리와 콩이 구령 듣기">
+          <span class="ctrl-icon">🔊</span>
+          <span class="ctrl-label">구령 소리</span>
+        </button>
+        <button id="fontSizeBtn" class="control-btn" title="글씨 크기 키우기">
+          <span class="ctrl-icon">🔍</span>
+          <span class="ctrl-label">글씨 크게</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 메인 무대: 체조 시연 및 안내 -->
+    <main class="exercise-stage">
+      
+      <!-- 좌측: 보리와 콩이의 시연 일러스트 카드 -->
+      <section class="exercise-visual-card">
+        <div class="exercise-image-wrap">
+          <img src="./assets/bori_exercise.jpg" alt="의자에 앉아 함께 체조하는 보리와 콩이" class="exercise-main-image" id="motionImg">
+          <div class="motion-indicator">
+            <span class="pulse-dot"></span>
+            <span id="indicatorText">1단계 : 두 손 번쩍 들기</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 우측: 체조 동작 설명 및 대형 버튼 조작부 -->
+      <section class="exercise-control-card">
+        
+        <!-- 6단계 탭 -->
+        <div class="steps-pill-container" role="tablist">
+          <button class="step-pill active" data-step="0">1. 손 들기</button>
+          <button class="step-pill" data-step="1">2. 손뼉 치기</button>
+          <button class="step-pill" data-step="2">3. 어깨 돌리기</button>
+          <button class="step-pill" data-step="3">4. 좌우 흔들기</button>
+          <button class="step-pill" data-step="4">5. 팔 뻗기</button>
+          <button class="step-pill" data-step="5">6. 무릎 들기</button>
+        </div>
+
+        <!-- 동작 안내 카드 -->
+        <div class="exercise-info-box">
+          <div class="step-badge">
+            <span>🐻 보리 & 🐶 콩이</span>
+            <span id="stepNumberBadge">1 / 6 동작</span>
+          </div>
+          <h2 class="exercise-action-title" id="actionTitle">두 손 번쩍 하늘 위로!</h2>
+          <p class="exercise-action-desc" id="actionDesc">“의자에 바르게 앉아 두 손을 하늘 높이 쭉 뻗어보세요. 시원하게 기지개를 켭니다.”</p>
+          
+          <div class="count-display">
+            <span class="count-label">구령 박자</span>
+            <span class="count-number" id="countNum">하나! 둘!</span>
+          </div>
+        </div>
+
+        <!-- 대형 조작 버튼들 -->
+        <div class="exercise-btns-grid">
+          
+          <!-- 메인 체조 시작 버튼 -->
+          <button id="startExerciseBtn" class="main-play-btn">
+            <span id="playIcon">▶</span>
+            <span id="playLabel">체조 시작하기</span>
+          </button>
+
+          <!-- 서브 버튼: 다시 보기 & 다음 동작 -->
+          <div class="sub-control-row">
+            <button id="prevStepBtn" class="sub-nav-btn">
+              <span>↩ 이전 동작</span>
+            </button>
+            <button id="nextStepBtn" class="sub-nav-btn" style="background: #E8F5E9; border-color: #81C784;">
+              <span>다음 동작 ➔</span>
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+    </main>
+
+    <!-- 하단 고정 바 -->
+    <footer class="bottom-bar">
+      <a href="index.html" style="text-decoration: none;">
+        <button class="footer-btn home-btn">
+          <span class="f-icon">🏡</span>
+          <span class="f-text">처음 화면 (마을 마당)</span>
+        </button>
+      </a>
+
+      <div class="center-cheer">
+        <span class="cheer-dot"></span>
+        <span class="cheer-text">의자에 등을 기대고 안전하게 따라 해주세요</span>
+        <span class="cheer-dot"></span>
+      </div>
+
+      <div class="footer-right-group">
+        <a href="shelter.html" style="text-decoration: none;">
+          <button class="footer-btn" style="background:#FFF3E0; color:#E65100; border:2px solid #FFB74D;">
+            <span class="f-icon">🍵</span>
+            <span class="f-text">보리의 쉼터</span>
+          </button>
+        </a>
+        <button class="footer-btn helper-btn" id="callHelperBtn">
+          <span class="f-icon">🔔</span>
+          <span class="f-text">선생님 부르기</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- 체조 완료 축하 모달 -->
+    <div id="completeModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-room-icon">🎉</span>
+          <h3 class="modal-room-title">참 잘하셨습니다!</h3>
+        </div>
+        <p class="modal-room-desc">보리와 콩이와 함께 오늘의 건강 체조를 멋지게 마쳤어요!</p>
+        
+        <div class="modal-guide-box">
+          <img src="./assets/bori_exercise.jpg" alt="체조 완료 도장" class="modal-bori-thumb">
+          <p class="modal-bori-talk">“어르신, 몸이 한결 개운해지셨죠? 라일락 건강 도장을 쾅 찍어드렸어요! 🌸”</p>
+        </div>
+
+        <div class="modal-actions">
+          <button id="restartExBtn" class="modal-btn confirm-btn">한 번 더 하기 🔄</button>
+          <a href="index.html" style="text-decoration: none; flex: 1;">
+            <button class="modal-btn cancel-btn" style="width: 100%;">마당으로 가기 🏡</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 콩이 운동방 인터랙션 및 구령 스크립트
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 6가지 안전 의자 체조 동작 데이터
+      const exerciseSteps = [
+        {
+          step: 1,
+          name: "두 손 번쩍 하늘 위로!",
+          desc: "의자에 바르게 앉아 두 손을 하늘 높이 쭉 뻗어보세요. 시원하게 기지개를 켭니다.",
+          voice: "의자에 앉아 두 손을 하늘 높이 쭉 뻗어보세요. 하나, 둘, 셋, 넷!",
+          counts: ["하나! 둘!", "셋! 넷!", "다섯! 여섯!", "일곱! 여덟!"]
+        },
+        {
+          step: 2,
+          name: "박자에 맞춰 손뼉 치기!",
+          desc: "보리와 콩이를 보며 손뼉을 짝! 짝! 짝! 혈액순환이 솔솔 잘 됩니다.",
+          voice: "보리와 함께 손뼉을 쳐볼까요? 짝! 짝! 짝! 아주 잘하십니다!",
+          counts: ["짝! 짝!", "짝! 짝!", "얼쑤! 좋다!", "참 잘하셨어요!"]
+        },
+        {
+          step: 3,
+          name: "어깨를 동글동글 돌리기",
+          desc: "두 손을 어깨에 가볍게 얹고, 어깨를 앞으로 뒤로 부드럽게 굴려주세요.",
+          voice: "어깨를 동글동글 뒤로 천천히 굴려보세요. 뭉친 어깨가 사르르 풀립니다.",
+          counts: ["하나! 둘!", "셋! 넷!", "천천히 둥글게", "숨 쉬면서 후-"]
+        },
+        {
+          step: 4,
+          name: "상체를 좌우로 살랑살랑",
+          desc: "의자를 잡고 상체를 왼쪽으로 살랑, 오른쪽으로 살랑 가볍게 기울여요.",
+          voice: "봄바람처럼 왼쪽으로 살랑, 오른쪽으로 살랑 움직여보세요.",
+          counts: ["왼쪽으로~", "오른쪽으로~", "살랑살랑~", "참 좋습니다!"]
+        },
+        {
+          step: 5,
+          name: "두 팔을 앞으로 쭉 뻗기",
+          desc: "가슴을 펴고 두 팔을 앞으로 시원하게 뻗었다가 가슴으로 당겨옵니다.",
+          voice: "두 팔을 앞으로 시원하게 뻗었다가 당겨보세요. 가슴이 활짝 열립니다.",
+          counts: ["앞으로 쭉~", "당기고~", "앞으로 쭉~", "당기고~"]
+        },
+        {
+          step: 6,
+          name: "의자에 앉아 무릎 콩콩 들기",
+          desc: "안전하게 의자를 잡고, 왼쪽 무릎 콩! 오른쪽 무릎 콩! 가볍게 들어올려요.",
+          voice: "마지막 동작이에요! 의자를 꼭 잡고 무릎을 한쪽씩 콩, 콩 들어보세요.",
+          counts: ["왼발 콩!", "오른발 콩!", "하나! 둘!", "체조 끝! 대단하세요!"]
+        }
+      ];
+
+      let currentStepIndex = 0;
+      let isPlaying = false;
+      let timerInterval = null;
+      let countIndex = 0;
+
+      // 오디오 신시사이저
+      let audioCtx = null;
+      function playTone(freq = 523.25, dur = 0.3) {
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + dur);
+        } catch (e) {}
+      }
+
+      // TTS 보리/콩이 음성
+      function speakVoice(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const ut = new SpeechSynthesisUtterance(text);
+        ut.lang = 'ko-KR';
+        ut.rate = 0.88;
+        ut.pitch = 1.08;
+        const voices = window.speechSynthesis.getVoices();
+        const kv = voices.find(v => v.lang.includes('ko'));
+        if (kv) ut.voice = kv;
+        window.speechSynthesis.speak(ut);
+      }
+
+      // UI 요소들
+      const actionTitle = document.getElementById('actionTitle');
+      const actionDesc = document.getElementById('actionDesc');
+      const stepNumberBadge = document.getElementById('stepNumberBadge');
+      const countNum = document.getElementById('countNum');
+      const indicatorText = document.getElementById('indicatorText');
+      const startBtn = document.getElementById('startExerciseBtn');
+      const playIcon = document.getElementById('playIcon');
+      const playLabel = document.getElementById('playLabel');
+      const prevBtn = document.getElementById('prevStepBtn');
+      const nextBtn = document.getElementById('nextStepBtn');
+      const completeModal = document.getElementById('completeModal');
+      const restartExBtn = document.getElementById('restartExBtn');
+      const pills = document.querySelectorAll('.step-pill');
+
+      // 화면 렌더링
+      function renderStep(idx) {
+        currentStepIndex = idx;
+        const data = exerciseSteps[idx];
+        actionTitle.textContent = data.name;
+        actionDesc.textContent = `“${data.desc}”`;
+        stepNumberBadge.textContent = `${data.step} / ${exerciseSteps.length} 동작`;
+        indicatorText.textContent = `${data.step}단계 : ${data.name.split(' ')[0]}`;
+        countNum.textContent = data.counts[0];
+        
+        pills.forEach((p, i) => {
+          if (i === idx) p.classList.add('active');
+          else p.classList.remove('active');
+        });
+
+        stopAutoPlay();
+      }
+
+      // 자동 카운트 및 구령
+      function startStepExercise() {
+        isPlaying = true;
+        playIcon.textContent = '⏸';
+        playLabel.textContent = '잠시 멈춤';
+
+        const data = exerciseSteps[currentStepIndex];
+        speakVoice(data.voice);
+
+        countIndex = 0;
+        timerInterval = setInterval(() => {
+          countIndex = (countIndex + 1) % data.counts.length;
+          countNum.textContent = data.counts[countIndex];
+          playTone(440 + countIndex * 60, 0.2);
+
+          // 4회 카운트 완료 시 다음 동작 자동 전환
+          if (countIndex === data.counts.length - 1) {
+            setTimeout(() => {
+              if (currentStepIndex < exerciseSteps.length - 1) {
+                renderStep(currentStepIndex + 1);
+                startStepExercise();
+              } else {
+                stopAutoPlay();
+                showCompleteModal();
+              }
+            }, 1800);
+          }
+        }, 1500);
+      }
+
+      function stopAutoPlay() {
+        isPlaying = false;
+        clearInterval(timerInterval);
+        playIcon.textContent = '▶';
+        playLabel.textContent = '체조 시작하기';
+      }
+
+      function showCompleteModal() {
+        playTone(659.25, 0.4);
+        setTimeout(() => playTone(783.99, 0.5), 150);
+        speakVoice("오늘 체조를 모두 마치셨습니다! 참 잘하셨어요!");
+        completeModal.classList.remove('hidden');
+      }
+
+      // 이벤트 바인딩
+      startBtn.addEventListener('click', () => {
+        if (isPlaying) {
+          stopAutoPlay();
+          window.speechSynthesis.cancel();
+        } else {
+          startStepExercise();
+        }
+      });
+
+      nextBtn.addEventListener('click', () => {
+        playTone(523.25);
+        if (currentStepIndex < exerciseSteps.length - 1) {
+          renderStep(currentStepIndex + 1);
+          speakVoice(exerciseSteps[currentStepIndex].voice);
+        } else {
+          showCompleteModal();
+        }
+      });
+
+      prevBtn.addEventListener('click', () => {
+        playTone(440);
+        if (currentStepIndex > 0) {
+          renderStep(currentStepIndex - 1);
+          speakVoice(exerciseSteps[currentStepIndex].voice);
+        }
+      });
+
+      pills.forEach(p => {
+        p.addEventListener('click', () => {
+          playTone(523.25);
+          const s = parseInt(p.getAttribute('data-step'), 10);
+          renderStep(s);
+          speakVoice(exerciseSteps[s].voice);
+        });
+      });
+
+      restartExBtn.addEventListener('click', () => {
+        completeModal.classList.add('hidden');
+        renderStep(0);
+        startStepExercise();
+      });
+
+      // 구령 소리 듣기 버튼
+      document.getElementById('exVoiceBtn').addEventListener('click', () => {
+        speakVoice(exerciseSteps[currentStepIndex].voice);
+      });
+
+      // 글씨 확대
+      document.getElementById('fontSizeBtn').addEventListener('click', () => {
+        document.body.classList.toggle('font-large');
+      });
+
+      // 도우미 호출
+      document.getElementById('callHelperBtn').addEventListener('click', () => {
+        alert("🔔 담당 선생님께 알림을 드렸습니다.\n잠시만 쉬고 계시면 곧 오실 거예요! 😊");
+      });
+
+    });
+  </script>
+</body>
+</html>
