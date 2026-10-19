@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보리 취미정원 | 기억정원 라일락마을</title>
+  <meta name="description" content="치매 어르신을 위한 평화롭고 따뜻한 정원 가꾸기 및 취미 활동 공간">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================================================
+       보리 취미정원 전용 스타일 (라일락 퍼플 & 따뜻한 가든 테마)
+       ========================================================================== */
+    .garden-stage {
+      display: grid;
+      grid-template-columns: 1.05fr 1.15fr;
+      gap: 30px;
+      align-items: center;
+      padding: 20px 8px;
+    }
+
+    .garden-visual-card {
+      background: #FFFFFF;
+      border-radius: 36px;
+      padding: 16px;
+      box-shadow: 0 16px 40px rgba(106, 27, 154, 0.12);
+      border: 4px solid #E1BEE7;
+      position: relative;
+    }
+
+    .garden-image-wrap {
+      border-radius: 26px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background: #F3E5F5;
+      position: relative;
+    }
+
+    .garden-main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .garden-host-bubble {
+      margin-top: 16px;
+      background: #FCF9FE;
+      border-radius: 26px;
+      padding: 20px 24px;
+      border: 3px solid #E1BEE7;
+      border-left: 10px solid #8E24AA;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+    }
+
+    .host-tags {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .host-name {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #6A1B9A;
+    }
+
+    .host-quote {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #372A3E;
+      line-height: 1.4;
+    }
+
+    /* 우측: 원터치 가꾸기 & 취미 패널 */
+    .garden-card-panel {
+      background: #FFFFFF;
+      border-radius: 36px;
+      padding: 28px 32px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+      border: 4px solid #E1BEE7;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-height: 520px;
+      justify-content: space-between;
+    }
+
+    .garden-tabs-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .garden-tab {
+      flex: 1;
+      padding: 12px;
+      border-radius: 20px;
+      background: #F3E5F5;
+      border: 2px solid #CE93D8;
+      color: #6A1B9A;
+      font-size: 1.25rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .garden-tab.active {
+      background: #8E24AA;
+      color: #FFFFFF;
+      border-color: #6A1B9A;
+      box-shadow: 0 4px 12px rgba(142, 36, 170, 0.3);
+    }
+
+    /* 취미 작업 안내 상자 */
+    .garden-prompt-box {
+      background: #FAF4FE;
+      border-radius: 24px;
+      padding: 18px 24px;
+      text-align: center;
+      border: 2px dashed #BA68C8;
+    }
+
+    .garden-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #4A148C;
+      letter-spacing: -0.5px;
+    }
+
+    .garden-subtitle {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #61526B;
+      margin-top: 4px;
+    }
+
+    /* 인터랙티브 화분 / 텃밭 스테이지 */
+    .garden-interactive-stage {
+      background: linear-gradient(135deg, #FFFDE7 0%, #F1F8E9 100%);
+      border: 3px solid #DCE775;
+      border-radius: 28px;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .plant-visual-center {
+      font-size: 5rem;
+      line-height: 1;
+      margin-bottom: 8px;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .plant-visual-center.grow {
+      transform: scale(1.2);
+    }
+
+    .plant-state-text {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #2E7D32;
+    }
+
+    /* 원터치 가꾸기 도구 버튼 그룹 */
+    .garden-tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .tool-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 10px;
+      border-radius: 22px;
+      background: #FFFFFF;
+      border: 3px solid #E1BEE7;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .tool-btn:hover {
+      background: #F3E5F5;
+      border-color: #8E24AA;
+      transform: translateY(-2px);
+    }
+
+    .tool-emoji {
+      font-size: 2.6rem;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .tool-text {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #4A148C;
+    }
+
+    /* 피드백 바 */
+    .garden-feedback-bar {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: #6A1B9A;
+      text-align: center;
+      background: #FAF4FE;
+      border-radius: 20px;
+      padding: 8px 16px;
+    }
+
+    /* 하단 조작 */
+    .garden-actions-row {
+      display: flex;
+      gap: 14px;
+    }
+
+    .garden-next-btn {
+      flex: 1;
+      min-height: 75px;
+      background: linear-gradient(135deg, #8E24AA 0%, #6A1B9A 100%);
+      color: #FFF;
+      font-size: 1.6rem;
+      font-weight: 900;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(106, 27, 154, 0.3);
+      transition: all 0.2s;
+    }
+
+    .garden-next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(106, 27, 154, 0.4);
+    }
+
+    @media (max-width: 1100px) {
+      .garden-stage {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="village-container">
+    
+    <!-- 상단 헤더 -->
+    <header class="top-header">
+      <div class="brand-group">
+        <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+          <span class="sprout-badge">🌱</span>
+          <h1 class="brand-title">기억정원 <span class="village-tag">라일락마을</span></h1>
+        </a>
+      </div>
+
+      <div class="header-center-info">
+        <span class="current-date">🎨 보리 취미정원</span>
+        <span class="weather-pill">🌸 향기로운 꽃과 가꾸기</span>
+      </div>
+
+      <div class="quick-controls">
+        <button id="gardenVoiceBtn" class="control-btn" title="보리 음성 듣기">
+          <span class="ctrl-icon">🔊</span>
+          <span class="ctrl-label">보리 목소리</span>
+        </button>
+        <button id="fontSizeBtn" class="control-btn" title="글씨 크게">
+          <span class="ctrl-icon">🔍</span>
+          <span class="ctrl-label">글씨 크게</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 메인 무대: 취미정원 -->
+    <main class="garden-stage">
+      
+      <!-- 좌측: 보리의 꽃정원 카드 -->
+      <section class="garden-visual-card">
+        <div class="garden-image-wrap">
+          <img src="./assets/bori_lilac_home.jpg" alt="라일락 정원에서 꽃과 함께 반갑게 맞이하는 보리" class="garden-main-image">
+          <div class="petal petal-1">🌸</div>
+          <div class="petal petal-2">🌸</div>
+          <div class="petal petal-3">🌸</div>
+        </div>
+
+        <div class="garden-host-bubble">
+          <div class="host-tags">
+            <span class="host-name">🐻 언제나 든든한 보리</span>
+            <button id="viewBoriSheetBtn" style="background:#FFF; border:2px solid #BA68C8; color:#6A1B9A; border-radius:16px; padding:3px 10px; font-weight:800; cursor:pointer; font-size:1rem;">
+              🌱 보리 소개보기
+            </button>
+          </div>
+          <p class="host-quote" id="gardenHostTalk">
+            “어르신, 보리와 함께 꽃을 심어볼까요? 작지만 큰 행복을 함께 키워봐요. 좋은 기억이 언제나 피어납니다. 🌸”
+          </p>
+        </div>
+      </section>
+
+      <!-- 우측: 원터치 정원 가꾸기 & 컬러링 패널 -->
+      <section class="garden-card-panel">
+        
+        <!-- 취미 테마 탭 -->
+        <div class="garden-tabs-row" role="tablist">
+          <button class="garden-tab active" data-hobby="0">1. 꽃 심기 🌸</button>
+          <button class="garden-tab" data-hobby="1">2. 텃밭 가꾸기 🥕</button>
+          <button class="garden-tab" data-hobby="2">3. 알록달록 색칠 🎨</button>
+        </div>
+
+        <!-- 질문 및 가이드 -->
+        <div class="garden-prompt-box">
+          <h2 class="garden-title" id="hobbyTitle">라일락 화분에 예쁜 꽃을 피워보아요!</h2>
+          <p class="garden-subtitle" id="hobbySub">아래 도구를 차례대로 콕 눌러 물을 줘보세요.</p>
+        </div>
+
+        <!-- 인터랙티브 화단 스테이지 -->
+        <div class="garden-interactive-stage">
+          <div class="plant-visual-center" id="plantEmoji">🪴</div>
+          <div class="plant-state-text" id="plantStateText">영양 가득한 흙 화분이 준비되었어요</div>
+        </div>
+
+        <!-- 3개 대형 도구 버튼 -->
+        <div class="garden-tools-grid" id="toolsGrid">
+          <button class="tool-btn" id="tool1Btn">
+            <span class="tool-emoji">🌱</span>
+            <span class="tool-text" id="t1Text">씨앗 심기</span>
+          </button>
+          <button class="tool-btn" id="tool2Btn">
+            <span class="tool-emoji">💧</span>
+            <span class="tool-text" id="t2Text">물 주기</span>
+          </button>
+          <button class="tool-btn" id="tool3Btn">
+            <span class="tool-emoji">☀️</span>
+            <span class="tool-text" id="t3Text">햇살 쬐기</span>
+          </button>
+        </div>
+
+        <!-- 피드백 바 -->
+        <div class="garden-feedback-bar" id="gardenFeedback">
+          씨앗 심기를 눌러 새싹을 틔워보세요 😊
+        </div>
+
+        <!-- 하단 다음 버튼 -->
+        <div class="garden-actions-row">
+          <button id="flowerResetBtn" class="game-hint-btn" style="border-color:#BA68C8; color:#6A1B9A;">
+            <span>🔄 다시 심기</span>
+          </button>
+          <button id="nextHobbyBtn" class="garden-next-btn">
+            <span>다음 활동으로 가기 ➔</span>
+          </button>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- 하단 고정 바 -->
+    <footer class="bottom-bar">
+      <a href="index.html" style="text-decoration: none;">
+        <button class="footer-btn home-btn">
+          <span class="f-icon">🏡</span>
+          <span class="f-text">처음 화면 (마을 마당)</span>
+        </button>
+      </a>
+
+      <div class="center-cheer">
+        <span class="cheer-dot" style="background:#8E24AA;"></span>
+        <span class="cheer-text">좋은 기억이 라일락 꽃처럼 언제나 피어납니다</span>
+        <span class="cheer-dot" style="background:#8E24AA;"></span>
+      </div>
+
+      <div class="footer-right-group">
+        <a href="study.html" style="text-decoration: none;">
+          <button class="footer-btn" style="background:#E3F2FD; color:#1565C0; border:2px solid #90CAF9;">
+            <span class="f-icon">📖</span>
+            <span class="f-text">나비 학습방</span>
+          </button>
+        </a>
+        <button class="footer-btn helper-btn" id="callHelperBtn">
+          <span class="f-icon">🔔</span>
+          <span class="f-text">선생님 부르기</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- 보리 공식 캐릭터 시트 모달 -->
+    <div id="boriModal" class="modal-overlay hidden">
+      <div class="modal-content" style="max-width: 720px; padding: 24px;">
+        <div class="modal-header">
+          <span class="modal-room-icon">🐻</span>
+          <h3 class="modal-room-title">언제나 든든한 우리의 보리</h3>
+        </div>
+        <p style="font-size: 1.35rem; color: #4E342E; margin-bottom: 16px;">
+          “함께라서 참 좋은 오늘! 작지만 큰 행복을 전하는 보리입니다 ♡”
+        </p>
+        <div style="border-radius: 20px; overflow: hidden; border: 3px solid #BA68C8; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+          <img src="./assets/bori_sheet.jpg" alt="공식 보리 캐릭터 시트" style="width: 100%; display: block;">
+        </div>
+        <button id="closeBoriModalBtn" class="modal-btn confirm-btn" style="margin-top: 18px; width: 100%; background: #8E24AA;">
+          확인했습니다 ↩
+        </button>
+      </div>
+    </div>
+
+    <!-- 꽃 피우기 완성 축하 모달 -->
+    <div id="flowerCompleteModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-room-icon">🌸</span>
+          <h3 class="modal-room-title">꽃이 활짝 피었습니다!</h3>
+        </div>
+        <p class="modal-room-desc">어르신의 따뜻한 손길로 예쁜 라일락 정원이 완성되었어요!</p>
+        
+        <div class="modal-guide-box" style="background:#F3E5F5; border-color:#CE93D8;">
+          <img src="./assets/bori_lilac_home.jpg" alt="정원 완성 축하" class="modal-bori-thumb" style="border-color:#8E24AA;">
+          <p class="modal-bori-talk" style="color:#4A148C;">“어르신, 참 아름답죠? 마음속에도 향기로운 봄꽃이 활짝 피어났어요! 🌸”</p>
+        </div>
+
+        <div class="modal-actions">
+          <button id="plantAnotherBtn" class="modal-btn confirm-btn" style="background:#8E24AA;">한 번 더 가꾸기 🔄</button>
+          <a href="index.html" style="text-decoration: none; flex: 1;">
+            <button class="modal-btn cancel-btn" style="width: 100%;">마당으로 가기 🏡</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 보리 취미정원 가꾸기 스크립트
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 사운드 신시사이저
+      let audioCtx = null;
+      function playTone(freq = 523.25, dur = 0.3) {
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + dur);
+        } catch (e) {}
+      }
+
+      function playBloomChord() {
+        playTone(523.25, 0.4); // 도
+        setTimeout(() => playTone(659.25, 0.4), 100); // 미
+        setTimeout(() => playTone(783.99, 0.4), 200); // 솔
+        setTimeout(() => playTone(1046.50, 0.6), 300); // 도
+      }
+
+      // TTS 보리 음성
+      function speakVoice(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const ut = new SpeechSynthesisUtterance(text);
+        ut.lang = 'ko-KR';
+        ut.rate = 0.88;
+        ut.pitch = 1.05;
+        const voices = window.speechSynthesis.getVoices();
+        const kv = voices.find(v => v.lang.includes('ko'));
+        if (kv) ut.voice = kv;
+        window.speechSynthesis.speak(ut);
+      }
+
+      // 3가지 취미 테마 데이터
+      const hobbyThemes = [
+        {
+          id: 0,
+          title: "라일락 화분에 예쁜 꽃을 피워보아요!",
+          sub: "씨앗 심기 ➔ 물 주기 ➔ 햇살 쬐기를 눌러보세요.",
+          stages: [
+            { emoji: "🪴", text: "영양 가득한 흙 화분이 준비되었어요", desc: "씨앗 심기를 콕 눌러주세요!" },
+            { emoji: "🌱", text: "파릇파릇 귀여운 새싹이 돋았어요!", desc: "이제 촉촉하게 물을 줘볼까요?" },
+            { emoji: "🌿", text: "잎사귀가 쑥쑥 자라나고 있어요!", desc: "따스한 햇살을 쬐어주세요!" },
+            { emoji: "🌸", text: "향기로운 라일락 꽃이 활짝 피었습니다!", desc: "얼쑤! 참 아름답습니다!" }
+          ],
+          t1: "🌱 씨앗 심기",
+          t2: "💧 물 주기",
+          t3: "☀️ 햇살 쬐기"
+        },
+        {
+          id: 1,
+          title: "보리와 함께 채소 텃밭을 가꿔요!",
+          sub: "당근과 토마토 모종을 심어볼까요?",
+          stages: [
+            { emoji: "🟫", text: "고운 흙이 깔린 텃밭이에요", desc: "당근 모종을 심어보세요!" },
+            { emoji: "🥕", text: "주홍빛 당근이 쑥 자랐어요!", desc: "토마토도 심어볼까요?" },
+            { emoji: "🍅", text: "탐스러운 빨간 토마토가 맺혔어요!", desc: "마지막으로 물을 듬뿍 줘요!" },
+            { emoji: "🧺", text: "풍성한 가을 텃밭 수확 바구니 완성!", desc: "보리가 신나게 박수를 칩니다!" }
+          ],
+          t1: "🥕 당근 심기",
+          t2: "🍅 토마토 심기",
+          t3: "💧 물 듬뿍 주기"
+        },
+        {
+          id: 2,
+          title: "꽃잎에 고운 색을 입혀보아요!",
+          sub: "마음에 드는 색 물감을 콕 찍어보세요.",
+          stages: [
+            { emoji: "🤍", text: "하얀 꽃잎 스케치예요", desc: "분홍 물감을 칠해볼까요?" },
+            { emoji: "🩷", text: "사랑스러운 분홍빛이 물들었어요", desc: "노란 꽃술을 칠해주세요!" },
+            { emoji: "💛", text: "노란 꽃술이 환하게 빛나요", desc: "초록 잎사귀를 칠해요!" },
+            { emoji: "💐", text: "알록달록 아름다운 꽃다발 완성!", desc: "어르신의 솜씨가 최고예요!" }
+          ],
+          t1: "🩷 분홍 칠하기",
+          t2: "💛 노랑 칠하기",
+          t3: "💚 초록 칠하기"
+        }
+      ];
+
+      let currentHobbyIdx = 0;
+      let currentStage = 0;
+
+      const hobbyTitle = document.getElementById('hobbyTitle');
+      const hobbySub = document.getElementById('hobbySub');
+      const plantEmoji = document.getElementById('plantEmoji');
+      const plantStateText = document.getElementById('plantStateText');
+      const gardenFeedback = document.getElementById('gardenFeedback');
+      const tabs = document.querySelectorAll('.garden-tab');
+      const t1Btn = document.getElementById('tool1Btn');
+      const t2Btn = document.getElementById('tool2Btn');
+      const t3Btn = document.getElementById('tool3Btn');
+      const t1Text = document.getElementById('t1Text');
+      const t2Text = document.getElementById('t2Text');
+      const t3Text = document.getElementById('t3Text');
+      const nextBtn = document.getElementById('nextHobbyBtn');
+      const resetBtn = document.getElementById('flowerResetBtn');
+      const completeModal = document.getElementById('flowerCompleteModal');
+      const plantAnotherBtn = document.getElementById('plantAnotherBtn');
+
+      function loadHobby(idx) {
+        currentHobbyIdx = idx;
+        currentStage = 0;
+        const h = hobbyThemes[idx];
+
+        hobbyTitle.textContent = h.title;
+        hobbySub.textContent = h.sub;
+        t1Text.textContent = h.t1;
+        t2Text.textContent = h.t2;
+        t3Text.textContent = h.t3;
+
+        tabs.forEach((t, i) => {
+          if (i === idx) t.classList.add('active');
+          else t.classList.remove('active');
+        });
+
+        updateStageUI(0);
+        speakVoice(h.title);
+      }
+
+      function updateStageUI(stageIdx) {
+        currentStage = stageIdx;
+        const h = hobbyThemes[currentHobbyIdx];
+        const s = h.stages[stageIdx];
+
+        plantEmoji.classList.remove('grow');
+        setTimeout(() => {
+          plantEmoji.textContent = s.emoji;
+          plantEmoji.classList.add('grow');
+        }, 50);
+
+        plantStateText.textContent = s.text;
+        gardenFeedback.textContent = s.desc;
+
+        if (stageIdx === h.stages.length - 1) {
+          playBloomChord();
+          speakVoice(`${s.text} 참 잘하셨습니다!`);
+          setTimeout(() => {
+            completeModal.classList.remove('hidden');
+          }, 1500);
+        }
+      }
+
+      function advanceStage(btnNum) {
+        playTone(440 + btnNum * 80, 0.3);
+        const h = hobbyThemes[currentHobbyIdx];
+        if (currentStage < h.stages.length - 1) {
+          updateStageUI(currentStage + 1);
+        } else {
+          completeModal.classList.remove('hidden');
+        }
+      }
+
+      t1Btn.addEventListener('click', () => advanceStage(1));
+      t2Btn.addEventListener('click', () => advanceStage(2));
+      t3Btn.addEventListener('click', () => advanceStage(3));
+
+      // 다음 활동 탭
+      nextBtn.addEventListener('click', () => {
+        playTone(523.25);
+        const nextIdx = (currentHobbyIdx + 1) % hobbyThemes.length;
+        loadHobby(nextIdx);
+      });
+
+      resetBtn.addEventListener('click', () => {
+        playTone(440);
+        updateStageUI(0);
+      });
+
+      tabs.forEach(t => {
+        t.addEventListener('click', () => {
+          playTone(523.25);
+          const i = parseInt(t.getAttribute('data-hobby'), 10);
+          loadHobby(i);
+        });
+      });
+
+      plantAnotherBtn.addEventListener('click', () => {
+        completeModal.classList.add('hidden');
+        loadHobby(currentHobbyIdx);
+      });
+
+      // 보리 공식 시트 모달
+      const boriModal = document.getElementById('boriModal');
+      document.getElementById('viewBoriSheetBtn').addEventListener('click', () => {
+        boriModal.classList.remove('hidden');
+      });
+      document.getElementById('closeBoriModalBtn').addEventListener('click', () => {
+        boriModal.classList.add('hidden');
+      });
+      if (boriModal) {
+        boriModal.addEventListener('click', (e) => {
+          if (e.target === boriModal) boriModal.classList.add('hidden');
+        });
+      }
+
+      // 음성 듣기
+      document.getElementById('gardenVoiceBtn').addEventListener('click', () => {
+        speakVoice(hobbyThemes[currentHobbyIdx].title);
+      });
+
+      // 글씨 확대
+      document.getElementById('fontSizeBtn').addEventListener('click', () => {
+        document.body.classList.toggle('font-large');
+      });
+
+      // 복지사 호출
+      document.getElementById('callHelperBtn').addEventListener('click', () => {
+        alert("🔔 담당 선생님께 알림을 드렸습니다. 편안하게 꽃을 가꾸고 계시면 곧 오실 거예요! 😊");
+      });
+
+      // 초기 로드
+      loadHobby(0);
+    });
+  </script>
+</body>
+</html>
