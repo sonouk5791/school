@@ -1,0 +1,716 @@
+/* ==========================================================================
+   기억정원 - 라일락마을 시니어 친화적 디자인 시스템 (style.css)
+   ========================================================================== */
+
+:root {
+  /* 라일락마을 자연 테마 컬러 */
+  --bg-spring-cream: #FCF9F2;
+  --bg-lilac-mist: #F6F0FA;
+  
+  --lilac-primary: #7C4DFF;
+  --lilac-deep: #5A27A8;
+  --lilac-soft: #EFE7FA;
+
+  /* 4대 활동방 테마 */
+  --exercise-green: #2E7D32;
+  --exercise-bg: #E8F5E9;
+  --exercise-border: #81C784;
+
+  --play-orange: #D84315;
+  --play-bg: #FBE9E7;
+  --play-border: #FF8A65;
+
+  --study-blue: #1565C0;
+  --study-bg: #E3F2FD;
+  --study-border: #64B5F6;
+
+  --garden-purple: #6A1B9A;
+  --garden-bg: #F3E5F5;
+  --garden-border: #BA68C8;
+
+  /* 시니어 텍스트 & 버튼 규격 */
+  --text-main: #2C2623;
+  --text-muted: #59524C;
+  --font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+  
+  --shadow-warm: 0 12px 32px rgba(124, 77, 255, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 8px 24px rgba(44, 38, 35, 0.08);
+  --shadow-hover: 0 16px 36px rgba(44, 38, 35, 0.15);
+}
+
+/* 글씨 크기 확대 모드 */
+body.font-large {
+  font-size: 115%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, #FCF8F2 0%, #F5ECF9 50%, #EDF7F2 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* 컨테이너 */
+.village-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 16px 24px;
+}
+
+/* ==========================================================================
+   1. 상단 헤더
+   ========================================================================== */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-warm);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sprout-badge {
+  font-size: 2rem;
+  background: #E8F5E9;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.15);
+}
+
+.brand-title {
+  font-size: 1.85rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #382C1E;
+}
+
+.village-tag {
+  color: var(--lilac-primary);
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.header-center-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.current-date {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #4A3E3D;
+  background: #FFF;
+  padding: 6px 18px;
+  border-radius: 30px;
+  border: 1px solid #EFE4D6;
+}
+
+.weather-pill {
+  font-size: 1.15rem;
+  font-weight: 700;
+  background: #FFF8E1;
+  color: #F57F17;
+  padding: 6px 14px;
+  border-radius: 30px;
+  border: 1px solid #FFE082;
+}
+
+.quick-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  border: 2px solid #E2D9EE;
+  background: #FFFFFF;
+  color: #3B2A57;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.control-btn:hover, .control-btn:active {
+  background: var(--lilac-soft);
+  transform: translateY(-2px);
+  border-color: var(--lilac-primary);
+}
+
+/* ==========================================================================
+   2. 메인 무대 레이아웃 (보리 + 4대 활동방)
+   ========================================================================== */
+.main-stage {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 24px 8px;
+}
+
+/* 캐릭터 및 말풍선 섹션 */
+.character-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+
+.character-card {
+  background: #FFFFFF;
+  border-radius: 36px;
+  padding: 14px;
+  box-shadow: var(--shadow-card);
+  border: 3px solid #FFF;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-wrapper {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: #EFE7FA;
+}
+
+.bori-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.character-card:hover .bori-image {
+  transform: scale(1.02);
+}
+
+/* 햇살 & 꽃잎 부유 효과 */
+.sun-glimmer {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255, 238, 173, 0.7) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+.petal {
+  position: absolute;
+  font-size: 1.5rem;
+  user-select: none;
+  pointer-events: none;
+  animation: floatPetal 6s infinite ease-in-out;
+}
+
+.petal-1 { top: 15%; right: 12%; animation-delay: 0s; }
+.petal-2 { top: 40%; left: 8%; animation-delay: 2s; }
+.petal-3 { bottom: 20%; right: 25%; animation-delay: 4s; }
+
+@keyframes floatPetal {
+  0% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
+  50% { transform: translateY(-16px) rotate(20deg); opacity: 1; }
+  100% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
+}
+
+/* 보리 말풍선 */
+.speech-bubble {
+  background: #FFFFFF;
+  border-radius: 28px;
+  padding: 22px 28px;
+  box-shadow: var(--shadow-card);
+  border: 3px solid #E8DFF5;
+  position: relative;
+  border-left: 10px solid var(--lilac-primary);
+}
+
+.speech-name-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F0E8FF;
+  color: var(--lilac-deep);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.speech-content .greeting-line {
+  line-height: 1.5;
+  color: #332B25;
+}
+
+.speech-content .primary {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #2D241C;
+  margin-bottom: 4px;
+}
+
+.speech-content .secondary {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #6A3BB8;
+  margin-bottom: 6px;
+}
+
+.speech-content .action {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #4A423D;
+}
+
+.bubble-listen-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background: #FFF4E5;
+  border: 2px solid #FFB74D;
+  color: #E65100;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bubble-listen-btn:hover {
+  background: #FFE0B2;
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   3. 4대 활동방 버튼 그리드 (어르신 맞춤 대형 타깃)
+   ========================================================================== */
+.activity-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.activity-card {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 110px;
+  padding: 16px 26px;
+  border-radius: var(--radius-lg);
+  border: 3px solid transparent;
+  cursor: pointer;
+  position: relative;
+  text-align: left;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.activity-card:hover, .activity-card:focus-visible {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: var(--shadow-hover);
+  outline: none;
+}
+
+.card-icon-wrap {
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.7rem;
+  margin-right: 22px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.card-texts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.card-subtitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #554D48;
+}
+
+.card-arrow {
+  font-size: 1.35rem;
+  font-weight: 800;
+  padding: 10px 18px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+}
+
+/* 방별 색상 배정 */
+/* 1) 운동방 */
+.exercise-card {
+  background: linear-gradient(135deg, #F1FBF2 0%, #E8F5E9 100%);
+  border-color: var(--exercise-border);
+}
+.exercise-card .card-title { color: var(--exercise-green); }
+.exercise-card .card-icon-wrap { background: #C8E6C9; }
+.exercise-card .card-arrow { color: var(--exercise-green); border: 2px solid #A5D6A7; }
+
+/* 2) 놀이방 */
+.play-card {
+  background: linear-gradient(135deg, #FFF6F3 0%, #FBE9E7 100%);
+  border-color: var(--play-border);
+}
+.play-card .card-title { color: var(--play-orange); }
+.play-card .card-icon-wrap { background: #FFCCBC; }
+.play-card .card-arrow { color: var(--play-orange); border: 2px solid #FFAB91; }
+
+/* 3) 학습방 */
+.study-card {
+  background: linear-gradient(135deg, #F0F7FF 0%, #E3F2FD 100%);
+  border-color: var(--study-border);
+}
+.study-card .card-title { color: var(--study-blue); }
+.study-card .card-icon-wrap { background: #BBDEFB; }
+.study-card .card-arrow { color: var(--study-blue); border: 2px solid #90CAF9; }
+
+/* 4) 취미정원 */
+.garden-card {
+  background: linear-gradient(135deg, #FAF4FF 0%, #F3E5F5 100%);
+  border-color: var(--garden-border);
+}
+.garden-card .card-title { color: var(--garden-purple); }
+.garden-card .card-icon-wrap { background: #E1BEE7; }
+.garden-card .card-arrow { color: var(--garden-purple); border: 2px solid #CE93D8; }
+
+/* ==========================================================================
+   4. 하단 고정 바 (복지사 & 귀환 안내)
+   ========================================================================== */
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-warm);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  margin-top: 10px;
+}
+
+.footer-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 35px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.home-btn {
+  background: #FFF3E0;
+  color: #E65100;
+  border: 2px solid #FFB74D;
+}
+
+.home-btn:hover {
+  background: #FFE0B2;
+  transform: translateY(-2px);
+}
+
+.center-cheer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cheer-dot {
+  width: 8px;
+  height: 8px;
+  background: #B39DDB;
+  border-radius: 50%;
+}
+
+.cheer-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #655866;
+}
+
+.footer-right-group {
+  display: flex;
+  gap: 12px;
+}
+
+.helper-btn {
+  background: #E8F5E9;
+  color: #2E7D32;
+  border: 2px solid #A5D6A7;
+}
+
+.helper-btn:hover {
+  background: #C8E6C9;
+}
+
+.admin-btn {
+  background: #ECEFF1;
+  color: #455A64;
+  border: 2px solid #CFD8DC;
+}
+
+.admin-btn:hover {
+  background: #CFD8DC;
+}
+
+/* ==========================================================================
+   5. 모달 팝업 스타일
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 34, 54, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-content {
+  background: #FFFFFF;
+  border-radius: 36px;
+  padding: 36px 42px;
+  max-width: 620px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  border: 4px solid var(--lilac-soft);
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.modal-room-icon {
+  font-size: 3rem;
+}
+
+.modal-room-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #2D241C;
+}
+
+.modal-room-desc {
+  font-size: 1.45rem;
+  color: #5C524B;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.modal-guide-box {
+  background: #FAF7FC;
+  border-radius: 24px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+  border: 2px dashed #D1C4E9;
+}
+
+.modal-bori-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #7C4DFF;
+  flex-shrink: 0;
+}
+
+.modal-bori-talk {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4A3A69;
+  text-align: left;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.modal-btn {
+  padding: 16px 36px;
+  border-radius: 35px;
+  font-size: 1.5rem;
+  font-weight: 900;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #7C4DFF 0%, #5E35B1 100%);
+  color: #FFF;
+  box-shadow: 0 8px 20px rgba(124, 77, 255, 0.3);
+  flex: 1.2;
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(124, 77, 255, 0.4);
+}
+
+.cancel-btn {
+  background: #F5F5F5;
+  color: #616161;
+  border: 2px solid #E0E0E0;
+  flex: 1;
+}
+
+.cancel-btn:hover {
+  background: #EEEEEE;
+}
+
+/* 관리자 모드 카드 */
+.admin-card {
+  text-align: left;
+}
+
+.admin-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: #37474F;
+}
+
+.admin-card p {
+  color: #78909C;
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+}
+
+.admin-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ECEFF1;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.toggle-pill {
+  background: #2E7D32;
+  color: #FFF;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+/* 반응형 가이드 */
+@media (max-width: 1100px) {
+  .main-stage {
+    grid-template-columns: 1fr;
+  }
+  .character-card {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .speech-bubble {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}

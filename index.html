@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기억정원 - 라일락마을 | 보리와 함께하는 즐거운 하루</title>
+  <meta name="description" content="치매 어르신과 주간보호센터를 위한 따뜻한 디지털 노인복지 플랫폼 기억정원 라일락마을">
+  <!-- Google Fonts: Pretendard or Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="village-container">
+    <!-- 상단 헤더: 날짜, 플랫폼명, 편의 도구 -->
+    <header class="top-header">
+      <div class="brand-group">
+        <span class="sprout-badge">🌱</span>
+        <h1 class="brand-title">기억정원 <span class="village-tag">라일락마을</span></h1>
+      </div>
+
+      <div class="header-center-info">
+        <span class="current-date" id="currentDate">2026년 10월 19일 월요일</span>
+        <span class="weather-pill">☀️ 따스한 햇살</span>
+      </div>
+
+      <div class="quick-controls">
+        <button id="ttsPlayBtn" class="control-btn" title="보리 음성 듣기">
+          <span class="ctrl-icon">🔊</span>
+          <span class="ctrl-label">보리 목소리</span>
+        </button>
+        <button id="fontSizeBtn" class="control-btn" title="글씨 크기 키우기">
+          <span class="ctrl-icon">🔍</span>
+          <span class="ctrl-label">글씨 크게</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 메인 무대: 보리와 라일락마을 전경 + 대형 활동 메뉴 -->
+    <main class="main-stage">
+      
+      <!-- 좌측/중앙: 보리와 대화 영역 -->
+      <section class="character-section">
+        <!-- 보리 일러스트 캔버스/카드 -->
+        <div class="character-card">
+          <div class="image-wrapper">
+            <img src="./assets/bori_lilac_home.jpg" alt="라일락마을에서 반갑게 손을 흔드는 보리" class="bori-image" id="boriImg">
+            <div class="sun-glimmer"></div>
+            <!-- 떠다니는 라일락 꽃잎 효과 -->
+            <div class="petal petal-1">🌸</div>
+            <div class="petal petal-2">🌸</div>
+            <div class="petal petal-3">🌸</div>
+          </div>
+        </div>
+
+        <!-- 보리의 친근한 인사말 풍선 -->
+        <div class="speech-bubble-container" role="region" aria-label="보리의 안내 인사">
+          <div class="speech-bubble">
+            <div class="speech-name-tag">
+              <span class="bear-icon">🐻</span>
+              <strong>우리의 친구 보리</strong>
+            </div>
+            <div class="speech-content">
+              <p class="greeting-line primary">“안녕하세요! 저는 <strong>보리</strong>예요.”</p>
+              <p class="greeting-line secondary">“오늘도 함께해서 참 좋은 날이에요. 🌸”</p>
+              <p class="greeting-line action">“어르신, 오늘은 어떤 활동을 해볼까요? 아래 큰 단추를 콕 눌러보세요!”</p>
+            </div>
+            <button id="reListenBtn" class="bubble-listen-btn">
+              <span>▶ 다시 듣기</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 우측: 4대 활동 대형 선택 버튼 -->
+      <section class="activity-section" aria-label="활동 공간 선택">
+        <h2 class="sr-only">활동방 선택 메뉴</h2>
+        <div class="activity-grid">
+          
+          <!-- 1. 운동방 -->
+          <button class="activity-card exercise-card" data-room="운동방" data-desc="의자 체조와 신나는 스트레칭">
+            <div class="card-icon-wrap green-glow">
+              <span class="card-emoji">🏃</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title">운동방</span>
+              <span class="card-subtitle">기운찬 체조와 스트레칭</span>
+            </div>
+            <span class="card-arrow">입장하기 ➔</span>
+          </button>
+
+          <!-- 2. 놀이방 -->
+          <button class="activity-card play-card" data-room="놀이방" data-desc="재미있는 카드 짝맞추기와 퍼즐">
+            <div class="card-icon-wrap orange-glow">
+              <span class="card-emoji">🧩</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title">놀이방</span>
+              <span class="card-subtitle">오순도순 카드 짝맞추기</span>
+            </div>
+            <span class="card-arrow">입장하기 ➔</span>
+          </button>
+
+          <!-- 3. 학습방 -->
+          <button class="activity-card study-card" data-room="학습방" data-desc="추억의 옛 노래와 시장 셈하기">
+            <div class="card-icon-wrap blue-glow">
+              <span class="card-emoji">📖</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title">학습방</span>
+              <span class="card-subtitle">또박또박 옛 노래와 셈</span>
+            </div>
+            <span class="card-arrow">입장하기 ➔</span>
+          </button>
+
+          <!-- 4. 취미정원 -->
+          <button class="activity-card garden-card" data-room="취미정원" data-desc="마음이 편안해지는 그림과 음악">
+            <div class="card-icon-wrap purple-glow">
+              <span class="card-emoji">🎨</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title">취미정원</span>
+              <span class="card-subtitle">꽃피는 색칠하기와 음악</span>
+            </div>
+            <span class="card-arrow">입장하기 ➔</span>
+          </button>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- 하단 고정 바: 길 잃음 방지 & 현장 지원 도구 -->
+    <footer class="bottom-bar">
+      <button class="footer-btn home-btn" id="homeRefreshBtn">
+        <span class="f-icon">🏡</span>
+        <span class="f-text">처음 화면</span>
+      </button>
+
+      <div class="center-cheer">
+        <span class="cheer-dot"></span>
+        <span class="cheer-text">천천히 편안하게 누르셔도 괜찮습니다</span>
+        <span class="cheer-dot"></span>
+      </div>
+
+      <div class="footer-right-group">
+        <button class="footer-btn helper-btn" id="callHelperBtn">
+          <span class="f-icon">🔔</span>
+          <span class="f-text">선생님 부르기</span>
+        </button>
+        <button class="footer-btn admin-btn" id="adminBtn" title="사회복지사 전용 (길게 누르기)">
+          <span class="f-icon">⚙️</span>
+          <span class="f-text">복지사용</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- 활동방 안내 모달 팝업 -->
+    <div id="roomModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-room-icon" id="modalRoomIcon">🌸</span>
+          <h3 id="modalRoomTitle" class="modal-room-title">운동방으로 이동합니다</h3>
+        </div>
+        <p id="modalRoomDesc" class="modal-room-desc">보리와 함께 신나게 체조를 시작해볼까요?</p>
+        
+        <div class="modal-guide-box">
+          <img src="./assets/bori_lilac_home.jpg" alt="안내하는 보리" class="modal-bori-thumb">
+          <p class="modal-bori-talk">“준비되셨으면 아래의 <strong>[시작하기]</strong>를 콕 눌러주세요!”</p>
+        </div>
+
+        <div class="modal-actions">
+          <button id="modalConfirmBtn" class="modal-btn confirm-btn">시작하기 ➔</button>
+          <button id="modalCloseBtn" class="modal-btn cancel-btn">돌아가기 ↩</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 복지사 모드 팝업 -->
+    <div id="adminModal" class="modal-overlay hidden">
+      <div class="modal-content admin-card">
+        <h3>📋 주간보호센터 관리자 모드</h3>
+        <p>어르신의 활동 참여 시간 및 오늘 추천 활동을 관리합니다.</p>
+        <div class="admin-items">
+          <div class="admin-item">
+            <span>📺 TV 단체 미러링 모드</span>
+            <button class="toggle-pill active">켜짐</button>
+          </div>
+          <div class="admin-item">
+            <span>🔊 기본 음성 안내 볼륨</span>
+            <input type="range" min="0" max="100" value="90">
+          </div>
+          <div class="admin-item">
+            <span>🌸 오늘의 추천 코스</span>
+            <strong>운동방 ➔ 놀이방</strong>
+          </div>
+        </div>
+        <button id="closeAdminBtn" class="modal-btn confirm-btn" style="margin-top:20px;">닫기</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
