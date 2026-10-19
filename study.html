@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나비 학습방 | 기억정원 라일락마을</title>
+  <meta name="description" content="치매 어르신을 위한 부담 없고 다정한 인지 자극 학습 공간">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================================================
+       나비 학습방 전용 스타일 (하늘 파랑 & 지혜 테마)
+       ========================================================================== */
+    .study-stage {
+      display: grid;
+      grid-template-columns: 1.05fr 1.15fr;
+      gap: 30px;
+      align-items: center;
+      padding: 20px 8px;
+    }
+
+    .study-visual-card {
+      background: #FFFFFF;
+      border-radius: 36px;
+      padding: 16px;
+      box-shadow: 0 16px 40px rgba(21, 101, 192, 0.12);
+      border: 4px solid #BBDEFB;
+      position: relative;
+    }
+
+    .study-image-wrap {
+      border-radius: 26px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background: #E3F2FD;
+    }
+
+    .study-main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .study-host-bubble {
+      margin-top: 16px;
+      background: #F8FBFE;
+      border-radius: 26px;
+      padding: 20px 24px;
+      border: 3px solid #BBDEFB;
+      border-left: 10px solid #1976D2;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+    }
+
+    .host-tags {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .host-name {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #0D47A1;
+    }
+
+    .host-quote {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #263238;
+      line-height: 1.4;
+    }
+
+    /* 우측 문제 풀이 영역 (1문제 + 3선택지 구조) */
+    .study-card-panel {
+      background: #FFFFFF;
+      border-radius: 36px;
+      padding: 28px 32px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+      border: 4px solid #BBDEFB;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-height: 520px;
+      justify-content: space-between;
+    }
+
+    .study-tabs-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .study-tab {
+      flex: 1;
+      padding: 12px;
+      border-radius: 20px;
+      background: #E3F2FD;
+      border: 2px solid #90CAF9;
+      color: #1565C0;
+      font-size: 1.25rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .study-tab.active {
+      background: #1976D2;
+      color: #FFFFFF;
+      border-color: #0D47A1;
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    }
+
+    /* 질문 상자 */
+    .study-prompt-box {
+      background: #E3F2FD;
+      border-radius: 24px;
+      padding: 20px 24px;
+      text-align: center;
+      border: 2px dashed #64B5F6;
+    }
+
+    .study-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #0D47A1;
+      letter-spacing: -0.5px;
+    }
+
+    .study-visual-hint {
+      font-size: 3.5rem;
+      margin: 10px 0;
+      letter-spacing: 6px;
+    }
+
+    .study-subtitle {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #37474F;
+    }
+
+    /* 3지선다 선택지 버튼 목록 */
+    .choices-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 6px 0;
+    }
+
+    .choice-btn {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+      border-radius: 24px;
+      background: #FAFAFA;
+      border: 3px solid #CFD8DC;
+      cursor: pointer;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #263238;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .choice-btn:hover {
+      background: #E8EAF6;
+      border-color: #1976D2;
+      transform: translateY(-2px);
+    }
+
+    .choice-btn.selected {
+      background: #E8F5E9;
+      border-color: #2E7D32;
+      color: #1B5E20;
+    }
+
+    .choice-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #E0E0E0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .choice-btn.selected .choice-num {
+      background: #4CAF50;
+      color: #FFF;
+    }
+
+    /* 실시간 격려 바 */
+    .study-feedback-bar {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: #1565C0;
+      text-align: center;
+      background: #F1F8FE;
+      border-radius: 20px;
+      padding: 8px 16px;
+    }
+
+    .study-actions-row {
+      display: flex;
+      gap: 14px;
+    }
+
+    .study-next-btn {
+      flex: 1;
+      min-height: 75px;
+      background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
+      color: #FFF;
+      font-size: 1.6rem;
+      font-weight: 900;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3);
+      transition: all 0.2s;
+    }
+
+    .study-next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(25, 118, 210, 0.4);
+    }
+
+    @media (max-width: 1100px) {
+      .study-stage {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="village-container">
+    
+    <!-- 상단 헤더 -->
+    <header class="top-header">
+      <div class="brand-group">
+        <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+          <span class="sprout-badge">🌱</span>
+          <h1 class="brand-title">기억정원 <span class="village-tag">라일락마을</span></h1>
+        </a>
+      </div>
+
+      <div class="header-center-info">
+        <span class="current-date">📖 나비 학습방</span>
+        <span class="weather-pill">🐢 천천히 나누는 소중한 기억</span>
+      </div>
+
+      <div class="quick-controls">
+        <button id="studyVoiceBtn" class="control-btn" title="나비 목소리 듣기">
+          <span class="ctrl-icon">🔊</span>
+          <span class="ctrl-label">문제 읽어주기</span>
+        </button>
+        <button id="fontSizeBtn" class="control-btn" title="글씨 크게">
+          <span class="ctrl-icon">🔍</span>
+          <span class="ctrl-label">글씨 크게</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 메인 무대: 학습 활동 -->
+    <main class="study-stage">
+      
+      <!-- 좌측: 보리와 거북이 친구 시연 카드 -->
+      <section class="study-visual-card">
+        <div class="study-image-wrap">
+          <img src="./assets/bori_study.jpg" alt="보리와 거북이 친구가 칠판 앞에서 다정하게 맞이하는 모습" class="study-main-image">
+        </div>
+
+        <div class="study-host-bubble">
+          <div class="host-tags">
+            <span class="host-name">🐢 천천히 함께하는 나비</span>
+            <button id="viewTurtleSheetBtn" style="background:#FFF; border:2px solid #90CAF9; color:#1565C0; border-radius:16px; padding:3px 10px; font-weight:800; cursor:pointer; font-size:1rem;">
+              🌱 나비 소개보기
+            </button>
+          </div>
+          <p class="host-quote" id="studyHostTalk">
+            “어르신, 반갑습니다. 서두르지 않고 천천히 생각해보셔도 괜찮아요. 함께 재미난 이야기를 나눠볼까요?”
+          </p>
+        </div>
+      </section>
+
+      <!-- 우측: 1문제 3선택지 학습 패널 -->
+      <section class="study-card-panel">
+        
+        <!-- 학습 주제 탭 -->
+        <div class="study-tabs-row" role="tablist">
+          <button class="study-tab active" data-tab="0">1. 계절 맞추기 🍁</button>
+          <button class="study-tab" data-tab="1">2. 과일 세기 🍎</button>
+          <button class="study-tab" data-tab="2">3. 추억의 간식 🍠</button>
+        </div>
+
+        <!-- 질문 및 시각 자료 -->
+        <div class="study-prompt-box">
+          <h2 class="study-title" id="questionTitle">바람이 솔솔 불고 낙엽이 지는 지금은 어떤 계절일까요?</h2>
+          <div class="study-visual-hint" id="visualHint">🍁 🍂 🌾</div>
+          <p class="study-subtitle" id="questionSub">가장 마음에 드는 계절을 콕 눌러보세요.</p>
+        </div>
+
+        <!-- 선택지 목록 -->
+        <div class="choices-list" id="choicesContainer">
+          <!-- JS로 동적 생성 -->
+        </div>
+
+        <!-- 격려 피드백 바 -->
+        <div class="study-feedback-bar" id="studyFeedback">
+          어르신의 생각을 편안하게 골라보세요 😊
+        </div>
+
+        <!-- 하단 다음 버튼 -->
+        <div class="study-actions-row">
+          <button id="readQuestionBtn" class="game-hint-btn" style="border-color:#90CAF9; color:#1565C0;">
+            <span>🔊 다시 읽어주기</span>
+          </button>
+          <button id="nextQuestionBtn" class="study-next-btn">
+            <span>다음 이야기로 가기 ➔</span>
+          </button>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- 하단 고정 바 -->
+    <footer class="bottom-bar">
+      <a href="index.html" style="text-decoration: none;">
+        <button class="footer-btn home-btn">
+          <span class="f-icon">🏡</span>
+          <span class="f-text">처음 화면 (마을 마당)</span>
+        </button>
+      </a>
+
+      <div class="center-cheer">
+        <span class="cheer-dot" style="background:#1976D2;"></span>
+        <span class="cheer-text">정답보다 어르신과 함께하는 시간이 가장 소중합니다</span>
+        <span class="cheer-dot" style="background:#1976D2;"></span>
+      </div>
+
+      <div class="footer-right-group">
+        <a href="play.html" style="text-decoration: none;">
+          <button class="footer-btn" style="background:#FFF3E0; color:#E65100; border:2px solid #FFB74D;">
+            <span class="f-icon">🧩</span>
+            <span class="f-text">토리 놀이방</span>
+          </button>
+        </a>
+        <button class="footer-btn helper-btn" id="callHelperBtn">
+          <span class="f-icon">🔔</span>
+          <span class="f-text">선생님 부르기</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- 거북이 나비 공식 캐릭터 시트 모달 -->
+    <div id="turtleModal" class="modal-overlay hidden">
+      <div class="modal-content" style="max-width: 720px; padding: 24px;">
+        <div class="modal-header">
+          <span class="modal-room-icon">🐢</span>
+          <h3 class="modal-room-title">천천히, 함께 기억을 지키는 나비</h3>
+        </div>
+        <p style="font-size: 1.35rem; color: #37474F; margin-bottom: 16px;">
+          “작은 걸음도 소중한 기억을 만드는 길이에요 ♡”
+        </p>
+        <div style="border-radius: 20px; overflow: hidden; border: 3px solid #90CAF9; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+          <img src="./assets/nabi_turtle_sheet.jpg" alt="공식 거북이 캐릭터 시트" style="width: 100%; display: block;">
+        </div>
+        <button id="closeTurtleModalBtn" class="modal-btn confirm-btn" style="margin-top: 18px; width: 100%; background: #1976D2;">
+          확인했습니다 ↩
+        </button>
+      </div>
+    </div>
+
+    <!-- 학습 완료 축하 모달 -->
+    <div id="studySuccessModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-room-icon">🌸</span>
+          <h3 class="modal-room-title">훌륭하십니다!</h3>
+        </div>
+        <p class="modal-room-desc">보리와 나비와 함께 오늘도 멋진 배움의 시간을 가졌어요.</p>
+        
+        <div class="modal-guide-box" style="background:#E3F2FD; border-color:#90CAF9;">
+          <img src="./assets/bori_study.jpg" alt="학습 축하" class="modal-bori-thumb" style="border-color:#1976D2;">
+          <p class="modal-bori-talk" style="color:#0D47A1;">“어르신, 오늘도 기억정원에 지혜의 꽃이 활짝 피었습니다! 참 잘하셨어요! 🌸”</p>
+        </div>
+
+        <div class="modal-actions">
+          <button id="restartStudyBtn" class="modal-btn confirm-btn" style="background:#1976D2;">처음부터 다시 보기 🔄</button>
+          <a href="index.html" style="text-decoration: none; flex: 1;">
+            <button class="modal-btn cancel-btn" style="width: 100%;">마당으로 가기 🏡</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 나비 학습방 인터랙션 스크립트
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 오디오 신시사이저
+      let audioCtx = null;
+      function playTone(freq = 523.25, dur = 0.35) {
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + dur);
+        } catch (e) {}
+      }
+
+      function playSuccessChime() {
+        playTone(523.25, 0.3);
+        setTimeout(() => playTone(659.25, 0.3), 120);
+        setTimeout(() => playTone(783.99, 0.4), 240);
+      }
+
+      // TTS 나비의 온화하고 침착한 음성
+      function speakVoice(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const ut = new SpeechSynthesisUtterance(text);
+        ut.lang = 'ko-KR';
+        ut.rate = 0.84; // 여유롭고 차분한 속도
+        ut.pitch = 1.02;
+        const voices = window.speechSynthesis.getVoices();
+        const kv = voices.find(v => v.lang.includes('ko'));
+        if (kv) ut.voice = kv;
+        window.speechSynthesis.speak(ut);
+      }
+
+      // 3가지 학습 콘텐츠 데이터
+      const studyQuestions = [
+        {
+          id: 0,
+          tabName: "1. 계절 맞추기 🍁",
+          question: "바람이 솔솔 불고 낙엽이 지는 지금은 어떤 계절일까요?",
+          visual: "🍁 🍂 🌾",
+          sub: "마음에 드는 계절을 콕 눌러보세요.",
+          voice: "바람이 솔솔 불고 낙엽이 지는 지금은 어떤 계절일까요? 아래에서 골라보세요.",
+          choices: [
+            { text: "화사한 봄 🌸", isBest: false, comment: "봄도 참 아름답죠! 따스한 봄날이 떠오르네요." },
+            { text: "단풍 곱게 물든 가을 🍁", isBest: true, comment: "정답이에요! 울긋불긋 고운 가을이 맞습니다! 👏" },
+            { text: "하얀 눈 내리는 겨울 ❄️", isBest: false, comment: "겨울 풍경도 멋지죠! 눈사람 만들던 생각이 나네요." }
+          ]
+        },
+        {
+          id: 1,
+          tabName: "2. 과일 세기 🍎",
+          question: "나무 아래 바구니에 빨간 사과가 몇 개 있을까요?",
+          visual: "🍎  🍎  🍎",
+          sub: "사과 개수를 세어 콕 눌러보세요.",
+          voice: "빨간 사과가 몇 개 보이나요? 하나, 둘, 셋! 함께 세어보아요.",
+          choices: [
+            { text: "사과 1개 🍎", isBest: false, comment: "사과가 조금 더 모여있어요! 천천히 세어볼까요?" },
+            { text: "사과 2개 🍎🍎", isBest: false, comment: "거의 다 맞추셨어요! 하나 더 있어요!" },
+            { text: "탐스러운 사과 3개 🍎🍎🍎", isBest: true, comment: "얼쑤! 하나, 둘, 셋! 사과 세 개가 맞습니다! 🎉" }
+          ]
+        },
+        {
+          id: 2,
+          tabName: "3. 추억의 간식 🍠",
+          question: "어르신, 어릴 적 따뜻한 화로 앞에서 먹던 최고의 간식은 무엇인가요?",
+          visual: "🍠  🌽  🥔",
+          sub: "어르신이 가장 좋아하시는 간식을 골라보세요.",
+          voice: "어릴 적 정겨운 화로 앞에서 드시던 간식 중 어떤 것을 가장 좋아하셨나요?",
+          choices: [
+            { text: "달콤하고 따끈한 군고구마 🍠", isBest: true, comment: "달콤한 군고구마! 김치 한 점 얹어 먹으면 꿀맛이었죠! 😋" },
+            { text: "구수한 노란 찐옥수수 🌽", isBest: true, comment: "알알이 톡톡 터지는 구수한 옥수수! 정말 그립네요! 🌽" },
+            { text: "포슬포슬 분나는 찐감자 🥔", isBest: true, comment: "소금이나 설탕 솔솔 뿌려 먹던 포슬포슬 감자! 최고예요! 🥔" }
+          ]
+        }
+      ];
+
+      let currentIdx = 0;
+
+      const qTitle = document.getElementById('questionTitle');
+      const vHint = document.getElementById('visualHint');
+      const qSub = document.getElementById('questionSub');
+      const choicesWrap = document.getElementById('choicesContainer');
+      const feedbackBar = document.getElementById('studyFeedback');
+      const tabs = document.querySelectorAll('.study-tab');
+      const nextBtn = document.getElementById('nextQuestionBtn');
+      const readBtn = document.getElementById('readQuestionBtn');
+      const successModal = document.getElementById('studySuccessModal');
+      const restartBtn = document.getElementById('restartStudyBtn');
+
+      function loadQuestion(idx) {
+        currentIdx = idx;
+        const q = studyQuestions[idx];
+
+        qTitle.textContent = q.question;
+        vHint.textContent = q.visual;
+        qSub.textContent = q.sub;
+        feedbackBar.textContent = "어르신의 생각을 편안하게 골라보세요 😊";
+        feedbackBar.style.color = "#1565C0";
+
+        tabs.forEach((t, i) => {
+          if (i === idx) t.classList.add('active');
+          else t.classList.remove('active');
+        });
+
+        choicesWrap.innerHTML = '';
+        q.choices.forEach((c, index) => {
+          const btn = document.createElement('button');
+          btn.className = 'choice-btn';
+          btn.innerHTML = `
+            <span class="choice-num">${index + 1}</span>
+            <span class="choice-text">${c.text}</span>
+          `;
+
+          btn.addEventListener('click', () => {
+            // 모든 선택지 active 해제 후 현재 것 강조
+            document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            playSuccessChime();
+            feedbackBar.textContent = c.comment;
+            feedbackBar.style.color = "#1B5E20";
+            speakVoice(c.comment);
+
+            // 마지막 질문인 경우 모달 안내
+            if (currentIdx === studyQuestions.length - 1) {
+              setTimeout(() => {
+                successModal.classList.remove('hidden');
+              }, 2000);
+            }
+          });
+
+          choicesWrap.appendChild(btn);
+        });
+
+        speakVoice(q.voice);
+      }
+
+      // 다음 문제
+      nextBtn.addEventListener('click', () => {
+        playTone(523.25);
+        if (currentIdx < studyQuestions.length - 1) {
+          loadQuestion(currentIdx + 1);
+        } else {
+          successModal.classList.remove('hidden');
+        }
+      });
+
+      // 탭 전환
+      tabs.forEach(t => {
+        t.addEventListener('click', () => {
+          playTone(523.25);
+          const i = parseInt(t.getAttribute('data-tab'), 10);
+          loadQuestion(i);
+        });
+      });
+
+      // 다시 읽어주기
+      readBtn.addEventListener('click', () => {
+        speakVoice(studyQuestions[currentIdx].voice);
+      });
+      document.getElementById('studyVoiceBtn').addEventListener('click', () => {
+        speakVoice(studyQuestions[currentIdx].voice);
+      });
+
+      // 거북이 시트 모달
+      const turtleModal = document.getElementById('turtleModal');
+      document.getElementById('viewTurtleSheetBtn').addEventListener('click', () => {
+        turtleModal.classList.remove('hidden');
+      });
+      document.getElementById('closeTurtleModalBtn').addEventListener('click', () => {
+        turtleModal.classList.add('hidden');
+      });
+      if (turtleModal) {
+        turtleModal.addEventListener('click', (e) => {
+          if (e.target === turtleModal) turtleModal.classList.add('hidden');
+        });
+      }
+
+      restartBtn.addEventListener('click', () => {
+        successModal.classList.add('hidden');
+        loadQuestion(0);
+      });
+
+      // 글씨 확대
+      document.getElementById('fontSizeBtn').addEventListener('click', () => {
+        document.body.classList.toggle('font-large');
+      });
+
+      // 복지사 호출
+      document.getElementById('callHelperBtn').addEventListener('click', () => {
+        alert("🔔 담당 선생님께 알림을 드렸습니다. 잠시만 기다려주세요!");
+      });
+
+      // 첫 질문 로드
+      loadQuestion(0);
+    });
+  </script>
+</body>
+</html>
