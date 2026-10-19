@@ -46,8 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => playChime(783.99, 'sine', 0.6), 200); // 솔
   }
 
-  // 3. 다정한 보리의 음성 안내 (Web Speech API TTS)
+  // 3. 다정한 보리의 음성 안내 (Web Speech API TTS) & 실시간 립싱크 모션
   const greetingScript = "안녕하세요! 저는 보리예요. 오늘도 함께해서 참 좋은 날이에요. 하고 싶은 활동을 골라보세요!";
+  const boriCard = document.getElementById('boriCard');
   
   function speakBoriVoice(customText = null) {
     if (!('speechSynthesis' in window)) {
@@ -67,8 +68,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const koreanVoice = voices.find(v => v.lang.includes('ko') || v.lang.includes('KO'));
     if (koreanVoice) utterance.voice = koreanVoice;
 
+    // 말하기 시작할 때 입모양 립싱크 활성화
+    utterance.onstart = () => {
+      if (boriCard) boriCard.classList.add('talking');
+    };
+    // 말이 끝나면 입모양 반달 미소로 복귀
+    utterance.onend = () => {
+      if (boriCard) boriCard.classList.remove('talking');
+    };
+    utterance.onerror = () => {
+      if (boriCard) boriCard.classList.remove('talking');
+    };
+
     window.speechSynthesis.speak(utterance);
   }
+
+  // 보리 모션 컨트롤러 툴바 이벤트 바인딩
+  const motionBtns = document.querySelectorAll('.motion-tool-btn');
+  motionBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const motion = btn.getAttribute('data-motion');
+      playChime(523.25, 'sine', 0.2);
+
+      motionBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (boriCard) {
+        // 기존 모션 클래스 모두 제거
+        boriCard.classList.remove('motion-wave', 'motion-bow', 'motion-nod', 'motion-point', 'motion-walk', 'motion-sit');
+        boriCard.classList.add(`motion-${motion}`);
+      }
+
+      // 모션별 보리 한마디
+      const motionMessages = {
+        'wave': '어르신, 반갑습니다! 손을 반갑게 흔들어요!',
+        'bow': '정성껏 배꼽손 인사를 드려요. 오늘도 참 반갑습니다.',
+        'nod': '네, 어르신 말씀이 맞아요. 보리가 귀 기울여 듣고 있어요.',
+        'point': '저기 활동방 버튼들을 콕 눌러보세요!',
+        'walk': '보리와 함께 라일락마을 오솔길을 산책해볼까요?',
+        'sit': '편안히 의자에 앉아 푹 쉬어가셔도 괜찮아요.'
+      };
+      if (motionMessages[motion]) {
+        speakBoriVoice(motionMessages[motion]);
+      }
+    });
+  });
 
   // 음성 듣기 버튼 이벤트
   const ttsBtn = document.getElementById('ttsPlayBtn');

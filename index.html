@@ -42,15 +42,112 @@
       
       <!-- 좌측/중앙: 보리와 대화 영역 -->
       <section class="character-section">
-        <!-- 보리 일러스트 캔버스/카드 -->
-        <div class="character-card">
+        <!-- 보리 인터랙티브 라이브 애니메이션 카드 -->
+        <div class="character-card motion-wave" id="boriCard">
           <div class="image-wrapper">
-            <img src="./assets/bori_lilac_home.jpg" alt="라일락마을에서 반갑게 손을 흔드는 보리" class="bori-image" id="boriImg">
+            <!-- 라일락마을 아름다운 정원 배경 -->
+            <img src="./assets/bori_lilac_home.jpg" alt="라일락마을 정원 배경" class="bori-image" id="boriBgImg" style="filter: brightness(0.92) contrast(1.02);">
             <div class="sun-glimmer"></div>
+            
+            <!-- 보리 인터랙티브 라이브 애니메이션 퍼펫 (SVG) -->
+            <div class="bori-puppet-container" id="boriPuppetWrap">
+              <svg class="bori-svg-character" viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg">
+                <!-- 하체 & 통통한 두 다리 -->
+                <g class="bori-lower-body">
+                  <ellipse cx="118" cy="320" rx="28" ry="24" fill="#A06A3F"/>
+                  <ellipse cx="182" cy="320" rx="28" ry="24" fill="#A06A3F"/>
+                  <!-- 발바닥 패드 -->
+                  <ellipse cx="118" cy="326" rx="16" ry="12" fill="#8D5528"/>
+                  <ellipse cx="182" cy="326" rx="16" ry="12" fill="#8D5528"/>
+                </g>
+
+                <!-- 상체 (상체 숙이기 모션 축) -->
+                <g class="bori-upper-body">
+                  
+                  <!-- 왼팔 (살포시 얹음) -->
+                  <g class="bori-left-arm">
+                    <path d="M 85 200 Q 55 240 75 270 Q 95 275 105 245 Z" fill="#2B6CB0"/>
+                    <circle cx="75" cy="272" r="18" fill="#A06A3F"/>
+                  </g>
+
+                  <!-- 든든한 몸통 (코발트 블루 후드티) -->
+                  <path d="M 90 190 Q 75 250 85 295 Q 150 310 215 295 Q 225 250 210 190 Z" fill="#2B6CB0"/>
+                  <!-- 후드티 캥거루 주머니 -->
+                  <path d="M 110 255 Q 150 270 190 255 L 180 290 Q 150 298 120 290 Z" fill="#1E5494"/>
+
+                  <!-- 가슴 정중앙 공식 연두 새싹 로고 🌱 -->
+                  <g class="sprout-logo" transform="translate(140, 218)">
+                    <!-- 줄기 -->
+                    <path d="M 10 22 Q 10 12 11 4" stroke="#8BC34A" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                    <!-- 왼쪽 잎 -->
+                    <path d="M 10 12 Q 0 8 2 2 Q 8 2 10 10 Z" fill="#8BC34A"/>
+                    <!-- 오른쪽 잎 -->
+                    <path d="M 10 8 Q 18 2 20 6 Q 16 12 10 10 Z" fill="#8BC34A"/>
+                  </g>
+
+                  <!-- 오른팔 (손 흔들기 / 손짓 / 인사 모션 회전체) -->
+                  <g class="bori-right-arm" id="boriRightArm">
+                    <path d="M 210 195 Q 248 180 250 145 Q 230 135 200 170 Z" fill="#2B6CB0"/>
+                    <!-- 든든한 곰 손바닥과 발바닥 젤리 패드 -->
+                    <circle cx="250" cy="138" r="22" fill="#A06A3F"/>
+                    <circle cx="250" cy="138" r="12" fill="#8D5528"/>
+                    <circle cx="242" cy="122" r="4.5" fill="#8D5528"/>
+                    <circle cx="252" cy="120" r="4.5" fill="#8D5528"/>
+                    <circle cx="262" cy="124" r="4.5" fill="#8D5528"/>
+                  </g>
+
+                  <!-- 머리 그룹 (고개 끄덕임 모션 축) -->
+                  <g class="bori-head-group">
+                    <!-- 둥근 귀 2개 -->
+                    <circle cx="95" cy="75" r="26" fill="#A06A3F"/>
+                    <circle cx="95" cy="75" r="16" fill="#8D5528"/>
+                    <circle cx="205" cy="75" r="26" fill="#A06A3F"/>
+                    <circle cx="205" cy="75" r="16" fill="#8D5528"/>
+
+                    <!-- 푸근한 둥근 찹쌀떡 얼굴 -->
+                    <ellipse cx="150" cy="130" rx="72" ry="65" fill="#A06A3F"/>
+
+                    <!-- 은은한 복숭앗빛 볼홍조 -->
+                    <ellipse cx="102" cy="142" rx="14" ry="9" fill="#FFAAA6" opacity="0.85"/>
+                    <ellipse cx="198" cy="142" rx="14" ry="9" fill="#FFAAA6" opacity="0.85"/>
+
+                    <!-- 부드러운 라떼 크림 베이지 주둥이 -->
+                    <ellipse cx="150" cy="150" rx="34" ry="25" fill="#F2DFCA"/>
+                    <!-- 흑갈색 동글 코 -->
+                    <ellipse cx="150" cy="138" rx="13" ry="9" fill="#3D271D"/>
+
+                    <!-- 똘망똘망한 눈 (눈 깜빡임 애니메이션) -->
+                    <g class="bori-eyes">
+                      <ellipse cx="115" cy="115" rx="9" ry="13" fill="#3D271D"/>
+                      <circle cx="112" cy="110" r="3.5" fill="#FFFFFF"/>
+                      <ellipse cx="185" cy="115" rx="9" ry="13" fill="#3D271D"/>
+                      <circle cx="182" cy="110" r="3.5" fill="#FFFFFF"/>
+                    </g>
+
+                    <!-- 입모양 (평소: 온화한 반달 미소 / 말할 때: 립싱크 열림) -->
+                    <g class="bori-mouth-wrap">
+                      <path class="bori-mouth-smile" d="M 136 155 Q 150 168 164 155" stroke="#3D271D" stroke-width="4" stroke-linecap="round" fill="none"/>
+                      <path class="bori-mouth-open" d="M 138 152 Q 150 178 162 152 Z" fill="#D81B60"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
             <!-- 떠다니는 라일락 꽃잎 효과 -->
             <div class="petal petal-1">🌸</div>
             <div class="petal petal-2">🌸</div>
             <div class="petal petal-3">🌸</div>
+          </div>
+
+          <!-- 보리 모션 컨트롤러 (움직임 자유 선택 툴바) -->
+          <div class="bori-motion-toolbar" role="toolbar" aria-label="보리 동작 선택">
+            <button class="motion-tool-btn active" data-motion="wave" title="반갑게 손 흔들기">👋 손 흔들기</button>
+            <button class="motion-tool-btn" data-motion="bow" title="정중히 인사하기">🙇 배꼽 인사</button>
+            <button class="motion-tool-btn" data-motion="nod" title="다정하게 끄덕이기">😊 끄덕끄덕</button>
+            <button class="motion-tool-btn" data-motion="point" title="버튼 손짓 안내">👉 버튼 손짓</button>
+            <button class="motion-tool-btn" data-motion="walk" title="아장아장 걷기">🚶 걸어가기</button>
+            <button class="motion-tool-btn" data-motion="sit" title="편안히 앉아 쉬기">🪑 편히 앉기</button>
           </div>
         </div>
 
