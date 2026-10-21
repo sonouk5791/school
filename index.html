@@ -175,75 +175,65 @@
         <h2 class="sr-only">활동방 선택 메뉴</h2>
         <div class="activity-grid">
           
-          <!-- 0. 보리의 쉼터 (특별 링크 버튼) -->
-          <a href="shelter.html" style="text-decoration: none; width: 100%;">
-            <button class="activity-card shelter-card" style="background: linear-gradient(135deg, #FFF9F2 0%, #FFF3E0 100%); border-color: #FFB74D;">
-              <div class="card-icon-wrap" style="background: #FFE0B2;">
-                <span class="card-emoji">🍵</span>
-              </div>
-              <div class="card-texts">
-                <span class="card-title" style="color: #D84315;">보리의 쉼터</span>
-                <span class="card-subtitle">마음 편안한 휴식과 안부 나누기</span>
-              </div>
-              <span class="card-arrow" style="color: #D84315; border: 2px solid #FFB74D;">쉬어가기 ➔</span>
-            </button>
-          </a>
+          <!-- 0. 보리의 쉼터 -->
+          <button class="activity-card shelter-card" data-room="보리의 쉼터" data-desc="마음 편안한 휴식과 따뜻한 이야기 나누기" data-target="shelter.html" style="background: linear-gradient(135deg, #FFF9F2 0%, #FFF3E0 100%); border-color: #FFB74D;">
+            <div class="card-icon-wrap" style="background: #FFE0B2;">
+              <span class="card-emoji">🍵</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title" style="color: #D84315;">보리의 쉼터</span>
+              <span class="card-subtitle">마음 편안한 휴식과 안부 나누기</span>
+            </div>
+            <span class="card-arrow" style="color: #D84315; border: 2px solid #FFB74D;">쉬어가기 ➔</span>
+          </button>
 
-          <!-- 1. 콩이 운동방 (직접 링크) -->
-          <a href="exercise.html" style="text-decoration: none; width: 100%;">
-            <button class="activity-card exercise-card" data-room="콩이 운동방" data-desc="의자 체조와 신나는 스트레칭">
-              <div class="card-icon-wrap green-glow">
-                <span class="card-emoji">🏃</span>
-              </div>
-              <div class="card-texts">
-                <span class="card-title">콩이 운동방</span>
-                <span class="card-subtitle">기운찬 체조와 스트레칭</span>
-              </div>
-              <span class="card-arrow">입장하기 ➔</span>
-            </button>
-          </a>
+          <!-- 1. 콩이 운동방 -->
+          <button class="activity-card exercise-card" data-room="콩이 운동방" data-desc="의자 체조와 신나는 스트레칭" data-target="exercise.html">
+            <div class="card-icon-wrap green-glow">
+              <span class="card-emoji">🏃</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title">콩이 운동방</span>
+              <span class="card-subtitle">기운찬 체조와 스트레칭</span>
+            </div>
+            <span class="card-arrow">입장하기 ➔</span>
+          </button>
 
-          <!-- 2. 토리 놀이방 (직접 링크) -->
-          <a href="play.html" style="text-decoration: none; width: 100%;">
-            <button class="activity-card play-card" data-room="토리 놀이방" data-desc="재미있는 카드 짝맞추기와 퍼즐">
-              <div class="card-icon-wrap orange-glow">
-                <span class="card-emoji">🧩</span>
-              </div>
-              <div class="card-texts">
-                <span class="card-title">토리 놀이방</span>
-                <span class="card-subtitle">오순도순 카드 짝맞추기</span>
-              </div>
-              <span class="card-arrow">입장하기 ➔</span>
-            </button>
-          </a>
+          <!-- 2. 토리 놀이방 -->
+          <button class="activity-card play-card" data-room="토리 놀이방" data-desc="재미있는 카드 짝맞추기와 두뇌 퍼즐" data-target="play.html">
+            <div class="card-icon-wrap orange-glow">
+              <span class="card-emoji">🧩</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title">토리 놀이방</span>
+              <span class="card-subtitle">오순도순 카드 짝맞추기</span>
+            </div>
+            <span class="card-arrow">입장하기 ➔</span>
+          </button>
 
-          <!-- 3. 나비 학습방 (직접 링크) -->
-          <a href="study.html" style="text-decoration: none; width: 100%;">
-            <button class="activity-card study-card" data-room="나비 학습방" data-desc="추억의 옛 노래와 시장 셈하기">
-              <div class="card-icon-wrap blue-glow">
-                <span class="card-emoji">📖</span>
-              </div>
-              <div class="card-texts">
-                <span class="card-title">나비 학습방</span>
-                <span class="card-subtitle">또박또박 옛 노래와 셈</span>
-              </div>
-              <span class="card-arrow">입장하기 ➔</span>
-            </button>
-          </a>
+          <!-- 3. 나비 학습방 -->
+          <button class="activity-card study-card" data-room="나비 학습방" data-desc="추억의 옛 노래와 시장 바구니 셈하기" data-target="study.html">
+            <div class="card-icon-wrap blue-glow">
+              <span class="card-emoji">📖</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title">나비 학습방</span>
+              <span class="card-subtitle">또박또박 옛 노래와 셈</span>
+            </div>
+            <span class="card-arrow">입장하기 ➔</span>
+          </button>
 
-          <!-- 4. 보리 취미정원 (직접 링크) -->
-          <a href="garden.html" style="text-decoration: none; width: 100%;">
-            <button class="activity-card garden-card" data-room="보리 취미정원" data-desc="마음이 편안해지는 그림과 음악">
-              <div class="card-icon-wrap purple-glow">
-                <span class="card-emoji">🎨</span>
-              </div>
-              <div class="card-texts">
-                <span class="card-title">보리 취미정원</span>
-                <span class="card-subtitle">꽃피는 색칠하기와 가꾸기</span>
-              </div>
-              <span class="card-arrow">입장하기 ➔</span>
-            </button>
-          </a>
+          <!-- 4. 보리 취미정원 -->
+          <button class="activity-card garden-card" data-room="보리 취미정원" data-desc="마음이 편안해지는 원터치 정원 가꾸기와 음악" data-target="garden.html">
+            <div class="card-icon-wrap purple-glow">
+              <span class="card-emoji">🎨</span>
+            </div>
+            <div class="card-texts">
+              <span class="card-title">보리 취미정원</span>
+              <span class="card-subtitle">꽃피는 색칠하기와 가꾸기</span>
+            </div>
+            <span class="card-arrow">입장하기 ➔</span>
+          </button>
 
         </div>
       </section>

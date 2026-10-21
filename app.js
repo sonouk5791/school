@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. 활동방 모달 처리
+  // 5. 활동방 모달 처리 & 실제 페이지 전환
   const roomModal = document.getElementById('roomModal');
   const modalRoomIcon = document.getElementById('modalRoomIcon');
   const modalRoomTitle = document.getElementById('modalRoomTitle');
@@ -151,17 +151,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalConfirmBtn = document.getElementById('modalConfirmBtn');
 
   const roomIcons = {
-    '운동방': '🏃',
-    '놀이방': '🧩',
-    '학습방': '📖',
-    '취미정원': '🎨'
+    '보리의 쉼터': '🍵',
+    '콩이 운동방': '🏃',
+    '토리 놀이방': '🧩',
+    '나비 학습방': '📖',
+    '보리 취미정원': '🎨'
   };
+
+  let currentRoomTarget = 'exercise.html';
 
   document.querySelectorAll('.activity-card').forEach(card => {
     card.addEventListener('click', () => {
       playChord();
       const room = card.getAttribute('data-room');
       const desc = card.getAttribute('data-desc');
+      currentRoomTarget = card.getAttribute('data-target') || 'index.html';
 
       modalRoomIcon.textContent = roomIcons[room] || '🌸';
       modalRoomTitle.textContent = `${room}으로 가볼까요?`;
@@ -185,8 +189,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (modalConfirmBtn) {
     modalConfirmBtn.addEventListener('click', () => {
       playChord();
-      alert(`🎉 ${modalRoomTitle.textContent} 활동 프로그램이 곧 시작됩니다!`);
-      roomModal.classList.add('hidden');
+      modalConfirmBtn.textContent = '입장하는 중... 🌸';
+      setTimeout(() => {
+        window.location.href = currentRoomTarget;
+      }, 300);
     });
   }
 
