@@ -1,0 +1,39 @@
+{
+  "buildCommand": "node scripts/build.mjs",
+  "outputDirectory": "public",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'sha256-1i2RjkyHfm8g3ar3D7KQ+H9hPIpZo2ALnHXd2+lfTug=' 'sha256-/H/al0EC5VlQaUX+g/zhhOhSr7DVWrxJLWXWEpkNe7M=' 'sha256-TdcFmAeqcvBwSfDuKaJ70tOnnFGnKKleMIbJGt1hHB8=' 'sha256-b5l4H9pjPXUsgUUrzMwv58GU9L3bPlhTExT19Siq+s4=' 'sha256-zc3zvkwo1aoQALwFhKO4WUpMwsQhs1+tI+yPejPz46I='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000"
+        }
+      ]
+    }
+  ]
+}
