@@ -80,107 +80,57 @@
 
     <!-- ========================================================================
          라일락 마을 파노라마 맵 (하나의 통합된 따뜻한 정원 풍경)
-         - 라일락 꽃, 산책길, 작은 집, 나무, 벤치, 울타리, 가로등, 햇살 반영
-         - 콩이네, 토리네, 나비네, 보리네 집 핫스팟 및 안내
+         - 집 간판 1개 + 행동 중심 버튼 1개 구조
+         - 배경 일러스트 텍스트와 겹침 없이 자연스러운 마을 일체형 UI
          ======================================================================== -->
     <section class="lilac-map-viewport" aria-label="라일락 마을 정원 전경 지도">
       
-      <!-- 마을 메인 일러스트 파노라마 -->
+      <!-- 마을 메인 일러스트 파노라마 & 각 집 전용 액션 앵커 -->
       <div class="village-canvas-wrap">
         <img src="assets/images/lilac-village-illustration.jpg" alt="라일락 꽃과 산책길, 벤치, 울타리, 가로등이 어우러진 따뜻한 라일락 마을 정원 풍경과 친구들의 집" class="village-canvas-img">
 
-        <!-- 1. 🐶 콩이네 운동집 핫스팟 (상단 좌측) -->
-        <a href="senior-exercise.html" class="village-hotspot hotspot-kongi char-room-card" data-room-key="kongi" data-title="콩이네 운동집" aria-label="콩이네 운동집으로 가기: 의자에 앉아 시원하게 건강 체조하기">
-          <div class="hotspot-pulse-ring"></div>
-          <div class="hotspot-sign">
-            <span class="hotspot-badge">🏃 운동방</span>
-            <span class="hotspot-title">콩이네 운동집 ▶</span>
-          </div>
-        </a>
+        <!-- 1. 🐶 콩이집 (상단 좌측) : 집 이름 1개 + 버튼 1개 -->
+        <div class="village-anchor anchor-kongi">
+          <span class="village-house-tag">콩이집</span>
+          <a href="senior-exercise.html" class="village-action-btn btn-kongi char-room-card" data-room-key="kongi" data-title="콩이집" aria-label="콩이집 운동하러 가기">
+            <span>운동하러 가기 ▶</span>
+          </a>
+        </div>
 
-        <!-- 2. 🐰 토리네 놀이집 핫스팟 (상단 우측) -->
-        <a href="tori-play.html" class="village-hotspot hotspot-tori char-room-card" data-room-key="tori" data-title="토리네 놀이집" aria-label="토리네 놀이집으로 가기: 재미있는 짝 맞추기와 퍼즐 추억 놀이하기">
-          <div class="hotspot-pulse-ring"></div>
-          <div class="hotspot-sign">
-            <span class="hotspot-badge">🧩 놀이방</span>
-            <span class="hotspot-title">토리네 놀이집 ▶</span>
-          </div>
-        </a>
+        <!-- 2. 🐰 토리집 (상단 우측) : 집 이름 1개 + 버튼 1개 -->
+        <div class="village-anchor anchor-tori">
+          <span class="village-house-tag">토리집</span>
+          <a href="tori-play.html" class="village-action-btn btn-tori char-room-card" data-room-key="tori" data-title="토리집" aria-label="토리집 놀이하러 가기">
+            <span>놀이하러 가기 ▶</span>
+          </a>
+        </div>
 
-        <!-- 3. 🐱 나비네 배움집 핫스팟 (하단 좌측) -->
-        <a href="nabi-learn.html" class="village-hotspot hotspot-nabi char-room-card" data-room-key="nabi" data-title="나비네 배움집" aria-label="나비네 배움집으로 가기: 오늘 날짜와 계절 정다운 옛 속담 배우기">
-          <div class="hotspot-pulse-ring"></div>
-          <div class="hotspot-sign">
-            <span class="hotspot-badge">📚 학습방</span>
-            <span class="hotspot-title">나비네 배움집 ▶</span>
-          </div>
-        </a>
+        <!-- 3. 🐱 나비집 (하단 좌측) : 집 이름 1개 + 버튼 1개 -->
+        <div class="village-anchor anchor-nabi">
+          <span class="village-house-tag">나비집</span>
+          <a href="nabi-learn.html" class="village-action-btn btn-nabi char-room-card" data-room-key="nabi" data-title="나비집" aria-label="나비집 배움하러 가기">
+            <span>배움하러 가기 ▶</span>
+          </a>
+        </div>
 
-        <!-- 4. 🐻 보리네 취미집 핫스팟 (하단 우측) -->
-        <a href="bori-hobby.html" class="village-hotspot hotspot-bori char-room-card" data-room-key="bori" data-title="보리네 취미집" aria-label="보리네 취미집으로 가기: 정겨운 옛 노래 감상과 알록달록 색칠하기">
-          <div class="hotspot-pulse-ring"></div>
-          <div class="hotspot-sign">
-            <span class="hotspot-badge">🎵 취미방</span>
-            <span class="hotspot-title">보리네 취미집 ▶</span>
-          </div>
-        </a>
+        <!-- 4. 🐻 보리집 (하단 우측) : 집 이름 1개 + 버튼 1개 -->
+        <div class="village-anchor anchor-bori">
+          <span class="village-house-tag">보리집</span>
+          <a href="bori-hobby.html" class="village-action-btn btn-bori char-room-card" data-room-key="bori" data-title="보리집" aria-label="보리집 취미하러 가기">
+            <span>취미하러 가기 ▶</span>
+          </a>
+        </div>
 
-        <!-- 5. 🌸 중앙 라일락 마을 쉼터 핫스팟 (중앙 정자 벤치) -->
-        <div class="village-hotspot hotspot-shelter btn-shelter-tour" role="button" tabindex="0" data-view="garden-tour" aria-label="라일락 마을 쉼터 둘러보기">
-          <div class="hotspot-pulse-ring shelter-ring"></div>
-          <div class="hotspot-sign shelter-sign">
-            <span>🌸 라일락 쉼터 둘러보기</span>
-          </div>
+        <!-- 5. 🌸 중앙 쉼터 : 이름 + 한줄 설명 + 쉼터 둘러보기 버튼 -->
+        <div class="village-anchor anchor-shelter">
+          <span class="village-shelter-title">라일락 마을 쉼터</span>
+          <span class="village-shelter-desc">꽃길 따라 천천히 쉬어가요</span>
+          <button type="button" class="village-action-btn btn-shelter btn-shelter-tour" data-view="garden-tour" aria-label="라일락 마을 쉼터 둘러보기">
+            <span>쉼터 둘러보기 ▶</span>
+          </button>
         </div>
 
       </div>
-
-      <!-- 마을 정원 산책로 길목 큰 팻말 버튼 바 (어르신 안심 4대 집 바로가기) -->
-      <nav class="village-path-signs-bar" aria-label="마을 산책길 친구들의 집 바로가기">
-        <a href="senior-exercise.html" class="path-wood-sign sign-kongi char-room-card" data-room-key="kongi" data-title="콩이네 운동집">
-          <span class="sign-avatar-wrap">
-            <img src="assets/images/friend-kongi.png" alt="콩이" class="sign-avatar-thumb">
-          </span>
-          <div class="sign-text-col">
-            <span class="sign-role">🏃 건강 체조</span>
-            <strong class="sign-name">콩이네 운동집</strong>
-          </div>
-          <span class="sign-go-btn" aria-hidden="true">들어가기 ▶</span>
-        </a>
-
-        <a href="tori-play.html" class="path-wood-sign sign-tori char-room-card" data-room-key="tori" data-title="토리네 놀이집">
-          <span class="sign-avatar-wrap">
-            <img src="assets/images/friend-tori.png" alt="토리" class="sign-avatar-thumb">
-          </span>
-          <div class="sign-text-col">
-            <span class="sign-role">🧩 추억 놀이</span>
-            <strong class="sign-name">토리네 놀이집</strong>
-          </div>
-          <span class="sign-go-btn" aria-hidden="true">들어가기 ▶</span>
-        </a>
-
-        <a href="nabi-learn.html" class="path-wood-sign sign-nabi char-room-card" data-room-key="nabi" data-title="나비네 배움집">
-          <span class="sign-avatar-wrap">
-            <img src="assets/images/friend-nabi.png" alt="나비" class="sign-avatar-thumb">
-          </span>
-          <div class="sign-text-col">
-            <span class="sign-role">📚 인지 배움</span>
-            <strong class="sign-name">나비네 배움집</strong>
-          </div>
-          <span class="sign-go-btn" aria-hidden="true">들어가기 ▶</span>
-        </a>
-
-        <a href="bori-hobby.html" class="path-wood-sign sign-bori char-room-card" data-room-key="bori" data-title="보리네 취미집">
-          <span class="sign-avatar-wrap">
-            <img src="assets/images/friend-bori.png" alt="보리" class="sign-avatar-thumb">
-          </span>
-          <div class="sign-text-col">
-            <span class="sign-role">🎵 음악 취미</span>
-            <strong class="sign-name">보리네 취미집</strong>
-          </div>
-          <span class="sign-go-btn" aria-hidden="true">들어가기 ▶</span>
-        </a>
-      </nav>
 
     </section>
 

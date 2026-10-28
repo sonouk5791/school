@@ -299,279 +299,205 @@ button, .sga-btn, a.sga-btn {
   transition: transform 0.4s ease;
 }
 
-/* 🌸 3. 마을 내 각 집 인터랙티브 핫스팟 */
-.village-hotspot {
+/* 🌸 3. 마을 내 각 집 전용 액션 앵커 (집 이름 1개 + 행동 버튼 1개) */
+.village-anchor {
   position: absolute;
-  text-decoration: none;
-  cursor: pointer;
-  border-radius: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding-bottom: 12px;
-  box-sizing: border-box;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  outline: none;
-}
-
-.village-hotspot:hover,
-.village-hotspot:focus-visible {
-  transform: scale(1.05);
+  gap: 6px;
   z-index: 15;
+  pointer-events: auto;
 }
 
-/* 핫스팟 위치 좌표 매핑 (공식 일러스트 기준 정밀 좌표) */
-/* 1. 콩이네 운동집 (상단 좌측) */
-.hotspot-kongi {
-  top: 8%;
-  left: 14%;
-  width: 25%;
-  height: 38%;
+/* 1. 콩이집 앵커 (상단 좌측) */
+.anchor-kongi {
+  top: 36.5%;
+  left: 27%;
+  transform: translate(-50%, -50%);
 }
 
-/* 2. 토리네 놀이집 (상단 우측) */
-.hotspot-tori {
-  top: 8%;
-  right: 14%;
-  width: 25%;
-  height: 38%;
+/* 2. 토리집 앵커 (상단 우측) */
+.anchor-tori {
+  top: 36.5%;
+  left: 72.5%;
+  transform: translate(-50%, -50%);
 }
 
-/* 3. 나비네 배움집 (하단 좌측) */
-.hotspot-nabi {
-  top: 50%;
-  left: 13%;
-  width: 26%;
-  height: 40%;
+/* 3. 나비집 앵커 (하단 좌측) */
+.anchor-nabi {
+  top: 84%;
+  left: 25.5%;
+  transform: translate(-50%, -50%);
 }
 
-/* 4. 보리네 취미집 (하단 우측) */
-.hotspot-bori {
+/* 4. 보리집 앵커 (하단 우측) */
+.anchor-bori {
+  top: 84%;
+  left: 78.5%;
+  transform: translate(-50%, -50%);
+}
+
+/* 5. 라일락 마을 쉼터 앵커 (중앙) */
+.anchor-shelter {
   top: 51%;
-  right: 13%;
-  width: 26%;
-  height: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 5px;
 }
 
-/* 5. 라일락 마을 쉼터 (중앙 정자 벤치) */
-.hotspot-shelter {
-  top: 36%;
-  left: 38%;
-  width: 24%;
-  height: 27%;
+/* 집 간판 (짧은 이름 1개만 단정하게 표시) */
+.village-house-tag {
+  background: #FFFBEB;
+  border: 2.5px solid #D97706;
+  color: #78350F;
+  font-size: 20px;
+  font-weight: 900;
+  padding: 3px 16px;
   border-radius: 9999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  letter-spacing: -0.5px;
+  white-space: nowrap;
 }
 
-/* 핫스팟 햇살 펄스 링 */
-.hotspot-pulse-ring {
-  position: absolute;
-  inset: 0;
-  border: 4px solid rgba(255, 255, 255, 0.85);
-  border-radius: 32px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.village-hotspot:hover .hotspot-pulse-ring,
-.village-hotspot:focus-visible .hotspot-pulse-ring {
-  opacity: 1;
-  animation: sunGlowPulse 2s infinite;
-}
-
-.shelter-ring {
-  border-radius: 9999px;
-}
-
-@keyframes sunGlowPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(254, 240, 138, 0.8), inset 0 0 16px rgba(254, 240, 138, 0.4);
-    border-color: #FACC15;
-  }
-  50% {
-    box-shadow: 0 0 0 14px rgba(254, 240, 138, 0), inset 0 0 28px rgba(254, 240, 138, 0.7);
-    border-color: #FEF08A;
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(254, 240, 138, 0), inset 0 0 16px rgba(254, 240, 138, 0.4);
-    border-color: #FACC15;
-  }
-}
-
-/* 핫스팟 하단 안내 팻말 버튼 */
-.hotspot-sign {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(8px);
-  padding: 8px 20px;
+/* 행동 중심 버튼 (운동하러 가기 / 놀이하러 가기 / 배움하러 가기 / 취미하러 가기) */
+.village-action-btn {
+  min-height: 52px;
+  padding: 10px 24px;
   border-radius: 9999px;
   font-size: 21px;
   font-weight: 900;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
-  white-space: nowrap;
-  pointer-events: auto;
-  border: 3px solid;
-  transition: transform 0.25s ease, background-color 0.25s ease;
-}
-
-.village-hotspot:hover .hotspot-sign {
-  transform: translateY(-4px) scale(1.05);
-}
-
-.hotspot-kongi .hotspot-sign { border-color: #22C55E; color: #15803D; }
-.hotspot-tori .hotspot-sign { border-color: #EC4899; color: #BE185D; }
-.hotspot-nabi .hotspot-sign { border-color: #8B5CF6; color: #6D28D9; }
-.hotspot-bori .hotspot-sign { border-color: #0284C7; color: #0369A1; }
-.shelter-sign { border-color: #A855F7; color: #7E22CE; background: #FAF5FF; }
-
-.hotspot-badge {
-  font-size: 18px;
-  padding: 2px 10px;
-  border-radius: 9999px;
-  background: rgba(0, 0, 0, 0.06);
-}
-
-/* 🌸 4. 마을 정원 산책로 길목 큰 팻말 버튼 바 (어르신 안심 4대 집 바로가기) */
-.village-path-signs-bar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  width: 100%;
-}
-
-.path-wood-sign {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 20px;
-  background: #FFFFFF;
-  border-radius: 28px;
-  border: 3px solid #E2E8F0;
-  box-shadow: 0 10px 24px rgba(46, 92, 56, 0.08);
+  color: #FFFFFF !important;
   text-decoration: none;
-  color: inherit;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-.path-wood-sign:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 36px rgba(109, 40, 217, 0.14);
-}
-
-.sign-avatar-wrap {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
-  background: #FAF7F2;
-  display: flex;
+  white-space: nowrap;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  border: 2px solid rgba(0, 0, 0, 0.06);
+  gap: 8px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
 }
 
-.sign-avatar-thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.village-action-btn:hover,
+.village-action-btn:focus-visible {
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
 }
 
-.sign-text-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+/* 버튼별 테마 색상 (시인성 높은 고대비) */
+.btn-kongi {
+  background: linear-gradient(135deg, #15803D 0%, #166534 100%);
+  box-shadow: 0 8px 20px rgba(21, 128, 61, 0.4);
 }
 
-.sign-role {
+.btn-tori {
+  background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%);
+  box-shadow: 0 8px 20px rgba(219, 39, 119, 0.4);
+}
+
+.btn-nabi {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+}
+
+.btn-bori {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.4);
+}
+
+/* 중앙 쉼터 스타일 */
+.village-shelter-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #4C1D95;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 4px 18px;
+  border-radius: 9999px;
+  border: 2px solid #C4B5FD;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+}
+
+.village-shelter-desc {
   font-size: 18px;
   font-weight: 800;
-  color: #64748B;
+  color: #6D28D9;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 3px 14px;
+  border-radius: 9999px;
+  border: 1.5px solid #DDD6FE;
+  white-space: nowrap;
 }
 
-.sign-name {
-  font-size: 24px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-}
-
-.sign-go-btn {
+.btn-shelter {
+  background: linear-gradient(135deg, #9333EA 0%, #7E22CE 100%);
+  box-shadow: 0 8px 20px rgba(147, 51, 234, 0.4);
+  min-height: 48px;
+  padding: 8px 22px;
   font-size: 20px;
-  font-weight: 800;
-  color: #94A3B8;
-  flex-shrink: 0;
 }
 
-.path-wood-sign:hover .sign-go-btn {
-  color: #0F172A;
-}
-
-/* 4대 팻말별 전용 테마 */
-.sign-kongi { border-color: #86EFAC; background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 100%); }
-.sign-kongi:hover { border-color: #22C55E; }
-.sign-kongi .sign-name { color: #166534; }
-
-.sign-tori { border-color: #F9A8D4; background: linear-gradient(135deg, #FFF1F7 0%, #FFFFFF 100%); }
-.sign-tori:hover { border-color: #EC4899; }
-.sign-tori .sign-name { color: #9D174D; }
-
-.sign-nabi { border-color: #C4B5FD; background: linear-gradient(135deg, #F5F3FF 0%, #FFFFFF 100%); }
-.sign-nabi:hover { border-color: #8B5CF6; }
-.sign-nabi .sign-name { color: #5B21B6; }
-
-.sign-bori { border-color: #93C5FD; background: linear-gradient(135deg, #F0F9FF 0%, #FFFFFF 100%); }
-.sign-bori:hover { border-color: #0284C7; }
-.sign-bori .sign-name { color: #075985; }
-
-/* 🌸 5. 반응형 최적화 (태블릿 & 모바일) */
-@media (max-width: 1100px) {
-  .village-path-signs-bar {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-  .hotspot-sign {
+/* 🌸 4. 반응형 최적화 (태블릿 & 모바일 글씨 겹침 방지) */
+@media (max-width: 1024px) {
+  .village-house-tag {
     font-size: 18px;
-    padding: 6px 14px;
+    padding: 2px 12px;
+  }
+  .village-action-btn {
+    min-height: 46px;
+    padding: 8px 18px;
+    font-size: 18px;
+  }
+  .village-shelter-title {
+    font-size: 19px;
+  }
+  .village-shelter-desc {
+    font-size: 16px;
   }
 }
 
 @media (max-width: 768px) {
   .sga-garden-stage.lilac-village-panorama-stage {
-    padding: 20px 12px 120px;
+    padding: 18px 10px 120px;
   }
   .lilac-welcome-banner {
-    padding: 18px 16px;
-    border-radius: 24px;
+    padding: 16px 14px;
+    border-radius: 20px;
   }
   .lilac-main-title {
-    font-size: 30px;
+    font-size: 28px;
   }
   .lilac-main-subtitle {
-    font-size: 22px;
+    font-size: 20px;
   }
   .lilac-main-subtext {
-    font-size: 19px;
+    font-size: 18px;
   }
   .village-canvas-wrap {
-    border-radius: 28px;
+    border-radius: 24px;
   }
-  .hotspot-sign {
+  .village-house-tag {
     font-size: 15px;
-    padding: 4px 10px;
+    padding: 2px 10px;
   }
-  .hotspot-badge {
-    display: none; /* 작은 모바일 화면에서는 버튼 간결화 */
+  .village-action-btn {
+    min-height: 40px;
+    padding: 6px 14px;
+    font-size: 15px;
   }
-  .village-path-signs-bar {
-    grid-template-columns: 1fr;
-    gap: 12px;
+  .village-shelter-title {
+    font-size: 16px;
+    padding: 2px 12px;
   }
-  .path-wood-sign {
-    padding: 12px 16px;
+  .village-shelter-desc {
+    display: none; /* 모바일 작은 폭에서는 설명 숨김으로 겹침 완벽 차단 */
+  }
+  .btn-shelter {
+    min-height: 40px;
+    padding: 6px 14px;
+    font-size: 15px;
   }
 }
 
