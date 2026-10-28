@@ -201,6 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // 마을 쉼터 핫스팟 클릭 이벤트 (산책 뷰로 이동)
+  document.querySelectorAll('.btn-shelter-tour').forEach(btn => {
+    btn.addEventListener('click', () => {
+      SeniorGardenApp.switchView('garden-tour');
+    });
+  });
+
   // 관리자 탭 전환 이벤트
   document.querySelectorAll('.admin-tab-btn').forEach(tabBtn => {
     tabBtn.addEventListener('click', () => {
@@ -216,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 초기 안내 멘트 (페이지 진입 후 0.6초 뒤 온화하게 발화)
   setTimeout(() => {
     if (SeniorGardenApp.soundEnabled) {
-      SeniorGardenApp.speak('라일락 마을에 오신 것을 환영해요. 꽃길 따라 천천히 걸으며, 가고 싶은 집을 눌러보세요.');
+      SeniorGardenApp.speak('안녕하세요! 라일락 마을에 오신 것을 환영해요. 오늘도 즐겁고 편안한 시간을 함께해요. 가고 싶은 집이나 활동을 편안하게 눌러보세요.');
     }
   }, 600);
 });
