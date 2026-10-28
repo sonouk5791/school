@@ -191,33 +191,42 @@ button, .sga-btn, a.sga-btn {
 }
 
 /* ==========================================================================
-   메인 화면: 기억정원 마을 정원 배경 & 4대 캐릭터 공간
+   메인 화면: 라일락 마을 전체 정원 전경 & 4대 친구들의 집 지도
    ========================================================================== */
-.sga-garden-stage {
+.sga-garden-stage.lilac-village-main-stage {
   min-height: calc(100vh - 88px);
-  background: linear-gradient(180deg, rgba(250, 247, 242, 0.90) 0%, rgba(255, 253, 249, 0.94) 100%),
+  background: radial-gradient(circle at 50% 12%, rgba(245, 240, 255, 0.95) 0%, rgba(237, 233, 254, 0.88) 55%, rgba(254, 252, 246, 0.98) 100%),
               url('../assets/images/lilac-village-illustration.jpg') center/cover no-repeat fixed;
-  padding: 36px 24px 140px;
+  padding: 32px 20px 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  overflow-x: hidden;
 }
 
-/* 상단 온화한 안내 문구 영역 */
-.sga-welcome-header {
+/* 🌸 1. 상단 라일락 마을 환영 안내판 */
+.lilac-welcome-banner {
   text-align: center;
-  max-width: 900px;
-  margin-bottom: 36px;
+  max-width: 960px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border: 3px solid #DDD6FE;
+  border-radius: 36px;
+  padding: 24px 32px 28px;
+  margin-bottom: 32px;
+  box-shadow: 0 14px 40px rgba(109, 40, 217, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+  position: relative;
 }
 
-.sga-welcome-badge {
+.lilac-welcome-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: #E8F5E9;
-  border: 2px solid #86EFAC;
-  color: #166534;
+  gap: 10px;
+  background: #F3E8FF;
+  border: 2px solid #C4B5FD;
+  color: #6D28D9;
   padding: 8px 24px;
   border-radius: 9999px;
   font-size: 22px;
@@ -225,205 +234,496 @@ button, .sga-btn, a.sga-btn {
   margin-bottom: 12px;
 }
 
-.sga-main-title {
-  font-size: 40px;
+.lilac-pulse-icon {
+  animation: lilacSway 3s ease-in-out infinite;
+}
+
+@keyframes lilacSway {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(12deg) scale(1.15); }
+}
+
+.lilac-main-title {
+  font-size: 42px;
   font-weight: 900;
-  color: var(--sga-text-title);
-  line-height: 1.35;
+  color: #3B0764;
+  line-height: 1.3;
   margin-bottom: 10px;
+  letter-spacing: -0.5px;
 }
 
-.sga-main-subtitle {
-  font-size: 24px;
+.lilac-main-subtitle {
+  font-size: 26px;
+  font-weight: 800;
+  color: #581C87;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.lilac-main-subtext {
+  font-size: 23px;
   font-weight: 700;
-  color: var(--sga-text-sub);
-  line-height: 1.45;
+  color: #7E22CE;
+  line-height: 1.4;
 }
 
-/* ==========================================================================
-   화면 중앙: 4개의 캐릭터 공간 (큰 버튼 형태)
-   1. 콩이 — 운동방
-   2. 토리 — 놀이방
-   3. 나비 — 학습방
-   4. 보리 — 취미방
-   ========================================================================== */
-.char-rooms-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
+/* 🌸 2. 라일락 마을 전경 지도 컨테이너 */
+.lilac-village-landscape {
   max-width: 1280px;
   width: 100%;
-  margin: 0 auto 36px;
-}
-
-/* 캐릭터 공간 큰 카드 (카드 전체가 하나의 대형 터치 버튼) */
-.char-room-card {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 28px 32px;
-  border-radius: 36px;
-  background: #FFFFFF;
-  border: 4px solid transparent;
-  box-shadow: 0 12px 36px rgba(46, 92, 56, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-  min-height: 240px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
 
-.char-room-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 48px rgba(46, 92, 56, 0.15);
+/* 마을 중앙 정원 산책로 (꽃길 효과) */
+.village-path-layer {
+  position: absolute;
+  top: 40px;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.char-room-card:active {
-  transform: translateY(-1px);
+.path-gravel-road {
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(254, 243, 199, 0.75) 0px,
+    rgba(253, 230, 138, 0.65) 30px,
+    rgba(254, 243, 199, 0.75) 60px
+  );
+  border-left: 4px dashed rgba(217, 119, 6, 0.35);
+  border-right: 4px dashed rgba(217, 119, 6, 0.35);
+  border-radius: 60px;
+  filter: blur(0.5px);
 }
 
-/* 1. 콩이 — 운동방 */
-.char-room-kongi {
-  background: linear-gradient(135deg, #FFF9F2 0%, #FFF1E6 100%);
-  border-color: var(--sga-kongi-border);
+.path-flower-strip {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  background-image: radial-gradient(#F472B6 20%, transparent 20%), radial-gradient(#C084FC 20%, transparent 20%);
+  background-size: 20px 40px;
+  background-position: 0 0, 10px 20px;
+  opacity: 0.8;
 }
-.char-room-kongi:hover {
-  border-color: var(--sga-kongi-peach);
-}
-.char-room-kongi .char-room-badge {
-  background: #FFE8D6;
-  color: #C2410C;
-  border: 2px solid #FDBA74;
-}
-.char-room-kongi .char-room-enter-btn {
-  background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+.path-flower-strip.left { left: -14px; }
+.path-flower-strip.right { right: -14px; }
+
+/* 🌸 3. 마을 중앙 이정표 (나무 표지판) */
+.village-center-signpost {
+  z-index: 10;
+  background: #FFFBEB;
+  border: 3px solid #D97706;
+  border-radius: 28px;
+  padding: 16px 28px;
+  box-shadow: 0 8px 24px rgba(217, 119, 6, 0.18), 0 2px 6px rgba(0,0,0,0.04);
+  text-align: center;
+  position: relative;
+  max-width: 680px;
+  width: 100%;
 }
 
-/* 2. 토리 — 놀이방 */
-.char-room-tori {
-  background: linear-gradient(135deg, #FFF5F9 0%, #FCE7F3 100%);
-  border-color: var(--sga-tori-border);
-}
-.char-room-tori:hover {
-  border-color: var(--sga-tori-pink);
-}
-.char-room-tori .char-room-badge {
-  background: #FCE7F3;
-  color: #BE185D;
-  border: 2px solid #F9A8D4;
-}
-.char-room-tori .char-room-enter-btn {
-  background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%);
+.village-center-signpost::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 18px;
+  background: #B45309;
+  border-radius: 0 0 6px 6px;
 }
 
-/* 3. 나비 — 학습방 */
-.char-room-nabi {
-  background: linear-gradient(135deg, #FAF7FF 0%, #EDE9FE 100%);
-  border-color: var(--sga-nabi-border);
-}
-.char-room-nabi:hover {
-  border-color: var(--sga-nabi-purple);
-}
-.char-room-nabi .char-room-badge {
-  background: #EDE9FE;
-  color: #6D28D9;
-  border: 2px solid #C4B5FD;
-}
-.char-room-nabi .char-room-enter-btn {
-  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+.signpost-top-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 26px;
+  font-weight: 900;
+  color: #92400E;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px dashed #FCD34D;
+  width: 100%;
+  justify-content: center;
 }
 
-/* 4. 보리 — 취미방 */
-.char-room-bori {
-  background: linear-gradient(135deg, #F4FAFF 0%, #E0F2FE 100%);
-  border-color: var(--sga-bori-border);
-}
-.char-room-bori:hover {
-  border-color: var(--sga-bori-blue);
-}
-.char-room-bori .char-room-badge {
-  background: #E0F2FE;
-  color: #0369A1;
-  border: 2px solid #7DD3FC;
-}
-.char-room-bori .char-room-enter-btn {
-  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+.signpost-signs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 18px;
 }
 
-/* 캐릭터 일러스트 영역 (공간 앞에 서 있는 캐릭터) */
-.char-room-avatar-wrap {
-  flex-shrink: 0;
-  width: 170px;
-  height: 200px;
+.sign-tag {
+  background: #FFFFFF;
+  border: 2px solid #FDE68A;
+  border-radius: 16px;
+  padding: 8px 16px;
+  font-size: 22px;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  color: #78350F;
+}
+
+.sign-tag.sign-kongi { border-color: #86EFAC; color: #166534; }
+.sign-tag.sign-tori { border-color: #F9A8D4; color: #9D174D; }
+.sign-tag.sign-nabi { border-color: #C4B5FD; color: #5B21B6; }
+.sign-tag.sign-bori { border-color: #93C5FD; color: #075985; }
+
+.sign-arrow {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+/* 🌸 4. 마을 친구들의 집 클러스터 (4대 집) */
+.village-houses-cluster {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px 40px;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+}
+
+/* 집 카드 아이템 */
+.village-house-card {
+  position: relative;
+  border-radius: 36px;
+  background: #FFFFFF;
+  box-shadow: 0 16px 44px rgba(46, 92, 56, 0.09), 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 4px solid #E2E8F0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.village-house-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 24px 60px rgba(109, 40, 217, 0.16);
+}
+
+.village-house-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* 집 지붕 & 굴뚝 */
+.house-roof-wrap {
+  position: relative;
+  padding: 18px 24px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.06);
+}
+
+.house-chimney {
+  font-size: 22px;
   position: relative;
 }
 
-.char-room-avatar {
+.chimney-smoke {
+  display: inline-block;
+  animation: smokeFloat 2.8s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+@keyframes smokeFloat {
+  0% { transform: translateY(0) scale(0.9); opacity: 0.3; }
+  50% { transform: translateY(-8px) scale(1.2); opacity: 0.9; }
+  100% { transform: translateY(-16px) scale(1.4); opacity: 0; }
+}
+
+.house-roof-badge {
+  font-size: 22px;
+  font-weight: 800;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  border: 2px solid currentColor;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* 집 몸체 및 앞마당 레이아웃 */
+.house-body {
+  padding: 24px 28px 28px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+/* 집 창문 & 정원 울타리 */
+.house-facade {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.8;
+}
+
+.house-window {
+  font-size: 26px;
+  background: #FEF9C3;
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 2px solid #FDE047;
+}
+
+.house-garden-fence {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+/* 앞마당 캐릭터 에셋 */
+.house-frontyard {
+  flex-shrink: 0;
+  width: 175px;
+  height: 215px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  background: radial-gradient(ellipse at bottom, rgba(220, 252, 231, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 28px;
+}
+
+.village-resident-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
-  transition: transform 0.25s ease;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.15));
+  transition: transform 0.3s ease;
 }
 
-.char-room-card:hover .char-room-avatar {
-  transform: scale(1.05);
+.village-house-card:hover .village-resident-img {
+  transform: scale(1.06) translateY(-4px);
 }
 
-/* 방 정보 및 설명 텍스트 */
-.char-room-info {
+/* 집 문패 & 정보 영역 */
+.house-info-box {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
 }
 
-.char-room-badge {
-  align-self: flex-start;
-  padding: 6px 18px;
-  border-radius: 9999px;
-  font-size: 22px;
-  font-weight: 800;
+.house-wood-nameplate {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
 }
 
-.char-room-name {
-  font-size: 30px;
+.house-name {
+  font-size: 34px;
   font-weight: 900;
-  color: var(--sga-text-title);
   line-height: 1.25;
+  letter-spacing: -0.5px;
+  margin: 0;
 }
 
-.char-room-desc {
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--sga-text-sub);
+.house-subdesc {
+  font-size: 23px;
+  font-weight: 700;
   line-height: 1.45;
-  margin-bottom: 8px;
+  color: var(--sga-text-sub);
+  margin: 0;
 }
 
-/* 방 들어가기 버튼 (최소 60px 이상) */
-.char-room-enter-btn {
+/* 집 큰 버튼 (대형 터치 진입로) */
+.house-enter-door-btn {
+  margin-top: 10px;
   min-height: 64px;
   padding: 12px 28px;
+  border-radius: 20px;
   font-size: 24px;
   font-weight: 900;
-  color: #FFFFFF !important;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  color: #FFFFFF;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.village-house-card:hover .house-enter-door-btn {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* 🌿 1. 콩이네 운동집 전용 테마 */
+.house-kongi {
+  border-color: #86EFAC;
+  background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 65%, #DCFCE7 100%);
+}
+.house-kongi:hover { border-color: #22C55E; }
+.house-kongi .house-roof-wrap { background: linear-gradient(90deg, #DCFCE7 0%, #BBF7D0 100%); }
+.house-kongi .house-roof-badge { color: #166534; border-color: #86EFAC; }
+.house-kongi .house-name { color: #166534; }
+.house-kongi .house-enter-door-btn {
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
+}
+
+/* 🌸 2. 토리네 놀이집 전용 테마 */
+.house-tori {
+  border-color: #F9A8D4;
+  background: linear-gradient(135deg, #FFF1F7 0%, #FFFFFF 65%, #FCE7F3 100%);
+}
+.house-tori:hover { border-color: #EC4899; }
+.house-tori .house-roof-wrap { background: linear-gradient(90deg, #FCE7F3 0%, #FBCFE8 100%); }
+.house-tori .house-roof-badge { color: #9D174D; border-color: #F9A8D4; }
+.house-tori .house-name { color: #9D174D; }
+.house-tori .house-enter-door-btn {
+  background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%);
+  box-shadow: 0 6px 18px rgba(219, 39, 119, 0.35);
+}
+
+/* 📚 3. 나비네 배움집 전용 테마 */
+.house-nabi {
+  border-color: #C4B5FD;
+  background: linear-gradient(135deg, #F5F3FF 0%, #FFFFFF 65%, #EDE9FE 100%);
+}
+.house-nabi:hover { border-color: #8B5CF6; }
+.house-nabi .house-roof-wrap { background: linear-gradient(90deg, #EDE9FE 0%, #DDD6FE 100%); }
+.house-nabi .house-roof-badge { color: #5B21B6; border-color: #C4B5FD; }
+.house-nabi .house-name { color: #5B21B6; }
+.house-nabi .house-enter-door-btn {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35);
+}
+
+/* 🎵 4. 보리네 취미집 전용 테마 */
+.house-bori {
+  border-color: #93C5FD;
+  background: linear-gradient(135deg, #F0F9FF 0%, #FFFFFF 65%, #E0F2FE 100%);
+}
+.house-bori:hover { border-color: #3B82F6; }
+.house-bori .house-roof-wrap { background: linear-gradient(90deg, #E0F2FE 0%, #BAE6FD 100%); }
+.house-bori .house-roof-badge { color: #075985; border-color: #93C5FD; }
+.house-bori .house-name { color: #075985; }
+.house-bori .house-enter-door-btn {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+}
+
+/* 🌸 5. 마을 하단 쉼터 벤치 & 정원 디테일 */
+.village-garden-amenity {
+  margin-top: 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 12px;
-  width: 100%;
+  z-index: 5;
+}
+
+.amenity-bench {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid #CBD5E1;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #334155;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.bench-icon { font-size: 28px; }
+
+.village-flowers-border {
+  font-size: 24px;
+  letter-spacing: 12px;
+  opacity: 0.9;
+}
+
+/* 🌸 6. 반응형 대응 (태블릿 & 모바일) */
+@media (max-width: 1080px) {
+  .village-houses-cluster {
+    grid-template-columns: 1fr;
+    max-width: 760px;
+    gap: 30px;
+  }
+  .village-path-layer {
+    display: none; /* 모바일/태블릿에서는 세로 산책로 간결화 */
+  }
+  .house-body {
+    padding: 20px 24px;
+  }
+  .house-frontyard {
+    width: 150px;
+    height: 190px;
+  }
+  .house-name {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sga-garden-stage.lilac-village-main-stage {
+    padding: 20px 14px 120px;
+  }
+  .lilac-welcome-banner {
+    padding: 20px 16px;
+    border-radius: 24px;
+  }
+  .lilac-main-title {
+    font-size: 32px;
+  }
+  .lilac-main-subtitle {
+    font-size: 22px;
+  }
+  .lilac-main-subtext {
+    font-size: 20px;
+  }
+  .house-body {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  .house-frontyard {
+    width: 160px;
+    height: 180px;
+  }
+  .house-facade {
+    position: static;
+    justify-content: center;
+    margin-bottom: 6px;
+  }
+  .house-wood-nameplate {
+    justify-content: center;
+  }
+  .house-enter-door-btn {
+    width: 100%;
+  }
+  .signpost-signs-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ==========================================================================

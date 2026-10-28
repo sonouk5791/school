@@ -53,7 +53,7 @@ const SeniorGardenApp = {
       if (mainStage) mainStage.style.display = 'flex';
       subviews.forEach(v => v.classList.remove('active'));
       if (topHomeBtn) topHomeBtn.style.display = 'none';
-      this.speak('기억정원 마을 메인 화면입니다. 함께할 친구를 눌러보세요.');
+      this.speak('라일락 마을 메인 화면입니다. 꽃길 따라 가고 싶은 친구의 집을 눌러보세요.');
     } else {
       if (mainStage) mainStage.style.display = 'none';
       subviews.forEach(v => {
@@ -120,10 +120,10 @@ const SeniorGardenApp = {
   // 캐릭터 방 이동 처리
   enterRoom(roomKey, roomUrl, roomTitle) {
     const messages = {
-      kongi: '콩이의 운동방으로 이동합니다. 의자에 앉아 시원하게 몸을 움직여요.',
-      tori: '토리의 놀이방으로 이동합니다. 재미있는 그림 찾기와 퍼즐 놀이를 해요.',
-      nabi: '나비의 학습방으로 이동합니다. 오늘 날짜와 정다운 옛이야기를 배워요.',
-      bori: '보리의 취미방으로 이동합니다. 추억의 노래를 듣고 예쁘게 색칠해요.'
+      kongi: '콩이네 운동집으로 놀러갑니다. 의자에 앉아 시원하게 몸을 풀어요.',
+      tori: '토리네 놀이집으로 놀러갑니다. 재미있는 짝 맞추기와 추억 놀이를 해요.',
+      nabi: '나비네 배움집으로 놀러갑니다. 오늘 날짜와 정다운 옛이야기를 배워요.',
+      bori: '보리네 취미집으로 놀러갑니다. 정겨운 옛 노래를 듣고 색칠을 해요.'
     };
 
     const msg = messages[roomKey] || `${roomTitle}으로 이동합니다.`;
@@ -173,9 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 메인 화면 4대 캐릭터 공간 카드 클릭 이벤트
-  document.querySelectorAll('.char-room-card').forEach(card => {
+  // 메인 화면 4대 캐릭터 집 및 카드 클릭 이벤트
+  document.querySelectorAll('.char-room-card, .village-house-item').forEach(card => {
     card.addEventListener('click', (e) => {
+      // 내부 링크 클릭 기본 동작 방지하고 부드러운 음성 안내 후 이동
       e.preventDefault();
       const roomKey = card.getAttribute('data-room-key');
       const roomUrl = card.getAttribute('href') || card.getAttribute('data-url');
@@ -215,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 초기 안내 멘트 (페이지 진입 후 0.6초 뒤 온화하게 발화)
   setTimeout(() => {
     if (SeniorGardenApp.soundEnabled) {
-      SeniorGardenApp.speak('기억정원 디지털 AI 학교에 오신 것을 환영합니다. 함께할 친구를 눌러보세요.');
+      SeniorGardenApp.speak('라일락 마을에 오신 것을 환영해요. 꽃길 따라 천천히 걸으며, 가고 싶은 집을 눌러보세요.');
     }
   }, 600);
 });
